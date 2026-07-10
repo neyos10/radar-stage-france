@@ -436,7 +436,9 @@ def render_dashboard(offers: list[dict], new_ids: set) -> None:
       </article>""")
 
     filter_btns = "".join(
-        f'<button class="fchip source-chip" onclick="setSource(this,\'{s}\')">{s}</button>' for s in sources
+        f'<button class="fchip source-chip" onclick="setSource(this,\'{source}\')">'
+        f'{source} <b>({sum(o["source"] == source for o in offers)})</b></button>'
+        for source in SOURCE_NAMES
     )
 
     html = f"""<!DOCTYPE html>
