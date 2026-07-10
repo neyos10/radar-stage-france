@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
 <title>Radar Stage France — Dashboard</title>
 <style>
-:root{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598}
+:root{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598;--err:#FF7B7B}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}
 .wrap{max-width:840px;margin:0 auto}
 h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 .hero{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}
-.scan-btn{background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}
+.hero-actions{text-align:right}
+.scan-btn{display:inline-block;background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}
+.scan-hint{color:var(--encre2);font-size:11px;margin-top:6px;max-width:220px}
 .profile-note{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}
+.sources-panel{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.src-stat{font-size:11.5px;border-radius:8px;padding:5px 9px;border:1px solid rgba(255,255,255,.08);color:var(--encre2);background:rgba(255,255,255,.02)}
+.src-stat.st-ok{border-color:rgba(62,213,152,.35);color:var(--ok)}
+.src-stat.st-warn{border-color:rgba(245,184,65,.3);color:var(--saf)}
+.src-stat.st-bad{border-color:rgba(255,123,123,.4);color:var(--err)}
+.src-stat.st-muted{opacity:.6}
 .filter-panel{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}
 .filter-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}
 .filter-label{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}
 .fchip{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}
 .fchip.on{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}
+.reset-btn{border-color:rgba(255,123,123,.35);color:#FFA8A8}
+.active-filters{color:var(--encre2);font-size:12px}
 .job{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}
 .job.is-new{border-left:3px solid var(--saf)}
 .job.applied{opacity:.72;border-color:rgba(62,213,152,.35)}
@@ -34,248 +45,339 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 .tag.src{background:#212D44;color:var(--encre2);font-weight:500}
 .empty{color:var(--encre2);text-align:center;padding:30px 10px}
 .storage-note{color:#66748A;font-size:11px;text-align:center;margin-top:18px}
-@media(max-width:620px){.hero{display:block}.scan-btn{display:inline-block;margin-top:12px}.job-top{display:block}.apply-btn{margin-top:10px}.filter-label{width:100%}}
+@media(max-width:620px){.hero{display:block}.hero-actions{text-align:left;margin-top:12px}.scan-hint{max-width:none}.job-top{display:block}.apply-btn{margin-top:10px}.filter-label{width:100%}}
 </style></head>
 <body><div class="wrap">
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : 10/07/2026 12:56 UTC · 18 offres des 7 derniers jours · Sources : Indeed, LinkedIn</p></div>
-<a class="scan-btn" href="https://github.com/neyos10/radar-stage-france/actions/workflows/scan.yml" target="_blank" rel="noopener">↻ Relancer le scan</a></div>
+<p class="sub">Dernier scan : 10/07/2026 14:03 UTC · 25 offres des 7 derniers jours · durée du scan : 33 s</p></div>
+<div class="hero-actions"><a class="scan-btn" href="https://github.com/neyos10/radar-stage-france/actions/workflows/scan.yml" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
+<p class="scan-hint">Puis cliquez sur « Run workflow » pour lancer un scan manuel.</p></div></div>
 <p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
+<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 10 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 10 offres</span><span class="src-stat st-warn"><b>Glassdoor</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 5 offres</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
-    <button class="fchip status-chip on" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
-    <button class="fchip status-chip" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
-    <button class="fchip status-chip" onclick="setStatus(this,'all')">Tous</button>
+    <button class="fchip status-chip on" data-status="todo" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" data-status="applied" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" data-status="all" onclick="setStatus(this,'all')">Tous</button>
   </div>
-  <div class="filter-group"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" onclick="setSource(this,'*')">Toutes</button><button class="fchip source-chip" onclick="setSource(this,'LinkedIn')">LinkedIn <b>(11)</b></button><button class="fchip source-chip" onclick="setSource(this,'Indeed')">Indeed <b>(7)</b></button><button class="fchip source-chip" onclick="setSource(this,'Glassdoor')">Glassdoor <b>(0)</b></button><button class="fchip source-chip" onclick="setSource(this,'Google Jobs')">Google Jobs <b>(0)</b></button><button class="fchip source-chip" onclick="setSource(this,'APEC')">APEC <b>(0)</b></button><button class="fchip source-chip" onclick="setSource(this,'Adzuna')">Adzuna <b>(0)</b></button><button class="fchip source-chip" onclick="setSource(this,'France Travail')">France Travail <b>(0)</b></button>
+  <div class="filter-group" translate="no"><span class="filter-label">Source</span>
+    <button class="fchip source-chip on" data-src="*" onclick="setSource(this,'*')">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" onclick="setSource(this,'LinkedIn')">LinkedIn <b>(10)</b></button><button class="fchip source-chip" data-src="Indeed" onclick="setSource(this,'Indeed')">Indeed <b>(10)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Aucune offre reçue" onclick="setSource(this,'Glassdoor')">Glassdoor <b>(0)</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" onclick="setSource(this,'Google Jobs')">Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" onclick="setSource(this,'APEC')">APEC <b>(5)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" onclick="setSource(this,'Adzuna')">Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" onclick="setSource(this,'France Travail')">France Travail <b>non configuré</b></button>
   </div>
-  <div class="filter-group"><span class="filter-label">Options</span>
+  <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="visaFilter" class="fchip" aria-pressed="false" onclick="toggleVisa(this)">✓ Visa-friendly probable</button>
+  </div>
+  <div class="filter-group"><span class="filter-label">Actifs</span>
+    <span id="activeFilters" class="active-filters" translate="no"></span>
+    <button id="resetBtn" class="fchip reset-btn" onclick="resetFilters()" hidden>✕ Réinitialiser les filtres</button>
   </div>
 </div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
 <div id="jobs">
+      <article class="job is-new" data-id="5cda6feb48095c09"
+               data-src="APEC" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089883W" target="_blank" rel="noopener noreferrer">Amélioration des Outils et Processus de Gestion de Projet Qualité F/H</a></h3>
+          <div class="meta">Proaxian · Bordeaux - 33</div>
+          <div class="published">Publiée aujourd'hui · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'5cda6feb48095c09')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          
+          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="4396e25234815597"
+               data-src="APEC" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089985W" target="_blank" rel="noopener noreferrer">Auditeur junior F/H</a></h3>
+          <div class="meta">Proaxian · Toulouse - 31</div>
+          <div class="published">Publiée aujourd'hui · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'4396e25234815597')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          
+          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
+      </article>
       <article class="job is-new" data-id="2c5b4a3af46f98bc"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=20152093a8c2b42c" target="_blank" rel="noopener">Stage – Business Data Analyst CRM (H/F)</a></h3>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=20152093a8c2b42c" target="_blank" rel="noopener noreferrer">Stage – Business Data Analyst CRM (H/F)</a></h3>
           <div class="meta">Prosol · France</div>
           <div class="published">Publiée aujourd'hui · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'2c5b4a3af46f98bc')">✓ Marquer comme postulé</button></div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="b98bbf7180e023cc"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=5cb40761da5645e7" target="_blank" rel="noopener noreferrer">Stagiaire Finance et Contrôle de Gestion H/F</a></h3>
+          <div class="meta">SONEMA · France</div>
+          <div class="published">Publiée aujourd'hui · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'b98bbf7180e023cc')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="aa985d0c9b2934f8"
+               data-src="APEC" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089909W" target="_blank" rel="noopener noreferrer">Stagiaire RH Analytics F/H</a></h3>
+          <div class="meta">Proaxian · Issy-les-Moulineaux - 92</div>
+          <div class="published">Publiée aujourd'hui · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'aa985d0c9b2934f8')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          
+          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job " data-id="a24a61394021d125"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=2585b8c95a4c4b29" target="_blank" rel="noopener noreferrer">Alternant ou Stagiaire Data Analyst - Performance Commerciale - 6 mois (F/H)</a></h3>
+          <div class="meta">HORUS PHARMA · France</div>
+          <div class="published">Publiée hier · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'a24a61394021d125')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="285c8920f7c6ea8b"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=0b2abe881b873922" target="_blank" rel="noopener noreferrer">Data Analyst (Stage) - H/F</a></h3>
+          <div class="meta">IceRoll (OUR FOOD) · France</div>
+          <div class="published">Publiée hier · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'285c8920f7c6ea8b')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="8388aa9a524b89cb"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=336c4ec29b64c975" target="_blank" rel="noopener noreferrer">Junior Business Analyst - Stage (H/F/N)</a></h3>
+          <div class="meta">Believe · France</div>
+          <div class="published">Publiée hier · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'8388aa9a524b89cb')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="4994b719a64290f1"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437376932" target="_blank" rel="noopener">Stagiaire ou Alternant Data Analyst - Performance Commerciale – 6 mois (F/H)</a></h3>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437376932" target="_blank" rel="noopener noreferrer">Stagiaire ou Alternant Data Analyst - Performance Commerciale – 6 mois (F/H)</a></h3>
           <div class="meta">Horus Pharma · France</div>
           <div class="published">Publiée hier · 09/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'4994b719a64290f1')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job is-new" data-id="17f7a5995c6347b7"
-               data-src="LinkedIn" data-visa="0">
+      <article class="job is-new" data-id="f99a08035d5c107a"
+               data-src="APEC" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4435683130" target="_blank" rel="noopener">Stage - Market & Business Intelligence (MVNx) H/F</a></h3>
-          <div class="meta">TRANSATEL (an NTT company) · France</div>
-          <div class="published">Publiée hier · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'17f7a5995c6347b7')">✓ Marquer comme postulé</button></div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="285c8920f7c6ea8b"
-               data-src="Indeed" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=0b2abe881b873922" target="_blank" rel="noopener">Data Analyst (Stage) - H/F</a></h3>
-          <div class="meta">IceRoll (OUR FOOD) · France</div>
-          <div class="published">Publiée hier · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'285c8920f7c6ea8b')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
-      </article>
-      <article class="job " data-id="a24a61394021d125"
-               data-src="Indeed" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=2585b8c95a4c4b29" target="_blank" rel="noopener">Alternant ou Stagiaire Data Analyst - Performance Commerciale - 6 mois (F/H)</a></h3>
-          <div class="meta">HORUS PHARMA · France</div>
-          <div class="published">Publiée hier · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'a24a61394021d125')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
-      </article>
-      <article class="job " data-id="e449c48b5253d563"
-               data-src="LinkedIn" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438231923" target="_blank" rel="noopener">Stage - Développeur / Data engineer</a></h3>
-          <div class="meta">AppASO Group · France</div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178803058W" target="_blank" rel="noopener noreferrer">Assistant Consultant Paid Media - SEA et SMA F/H</a></h3>
+          <div class="meta">MISSION GAGARINE · Levallois-Perret - 92</div>
           <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'e449c48b5253d563')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'f99a08035d5c107a')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
           
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
       </article>
       <article class="job " data-id="92352271e94303f7"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437078338" target="_blank" rel="noopener">Stage - Data Analyst - Paris - H/F</a></h3>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437078338" target="_blank" rel="noopener noreferrer">Stage - Data Analyst - Paris - H/F</a></h3>
           <div class="meta">Groupe iliad · France</div>
           <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'92352271e94303f7')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="99a6dcd428ac2fb1"
-               data-src="LinkedIn" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437023685" target="_blank" rel="noopener">[STAGE] Data Analyst – Sûreté de Fonctionnement F/H</a></h3>
-          <div class="meta">LGM · France</div>
-          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'99a6dcd428ac2fb1')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="776ce2adadc82cab"
-               data-src="LinkedIn" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438254487" target="_blank" rel="noopener">STAGE - ASSISTANT(E) DATA ANALYST - (F/H/X)</a></h3>
-          <div class="meta">CANAL+ Group · France</div>
-          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'776ce2adadc82cab')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
       <article class="job " data-id="4c1faf3ec825820f"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=6608e3b7648d6bd4" target="_blank" rel="noopener">Stage - Data Analyst - Paris - H/F</a></h3>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6608e3b7648d6bd4" target="_blank" rel="noopener noreferrer">Stage - Data Analyst - Paris - H/F</a></h3>
           <div class="meta">Iliad · France</div>
           <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'4c1faf3ec825820f')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="9637ea8de0338bc0"
+      <article class="job " data-id="99a6dcd428ac2fb1"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4408197066" target="_blank" rel="noopener">STAGE - DATA ENGINEER F/H</a></h3>
-          <div class="meta">Cdiscount · France</div>
-          <div class="published">Publiée il y a 3 jours · 07/07/2026</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437023685" target="_blank" rel="noopener noreferrer">[STAGE] Data Analyst – Sûreté de Fonctionnement F/H</a></h3>
+          <div class="meta">LGM · France</div>
+          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'9637ea8de0338bc0')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'99a6dcd428ac2fb1')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
       <article class="job " data-id="abdbc66426f40fb8"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4434554593" target="_blank" rel="noopener">Assistant Data Analyst H/F - STAGE</a></h3>
-          <div class="meta">GALEC - Groupement d'Achats E.LECLERC · France</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4434554593" target="_blank" rel="noopener noreferrer">Assistant Data Analyst H/F - STAGE</a></h3>
+          <div class="meta">GALEC - Groupement d&#x27;Achats E.LECLERC · France</div>
           <div class="published">Publiée il y a 3 jours · 07/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'abdbc66426f40fb8')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job " data-id="634048f213433dd6"
+      <article class="job " data-id="9637ea8de0338bc0"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4436238770" target="_blank" rel="noopener">Stage - Data analyst (H/F)</a></h3>
-          <div class="meta">Petzl · France</div>
-          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4408197066" target="_blank" rel="noopener noreferrer">STAGE - DATA ENGINEER F/H</a></h3>
+          <div class="meta">Cdiscount · France</div>
+          <div class="published">Publiée il y a 3 jours · 07/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'634048f213433dd6')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'9637ea8de0338bc0')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job " data-id="f6fcd62bed3380c0"
+      <article class="job is-new" data-id="090ddb11fb373808"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=15e7c1161221db6d" target="_blank" rel="noopener">Stage - Data analyst (H/F)</a></h3>
-          <div class="meta">PETZL · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=24b23479a8be2704" target="_blank" rel="noopener noreferrer">FP&amp;A Analyst Intern</a></h3>
+          <div class="meta">Plug In Digital · France</div>
           <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'f6fcd62bed3380c0')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'090ddb11fb373808')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="1ca59cc72b707649"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=27ac27b353011c30" target="_blank" rel="noopener">Portfolio Data Analyst - Stage (H/F)</a></h3>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=27ac27b353011c30" target="_blank" rel="noopener noreferrer">Portfolio Data Analyst - Stage (H/F)</a></h3>
           <div class="meta">Corum · France</div>
           <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'1ca59cc72b707649')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="a337fc805602cb52"
+      <article class="job " data-id="634048f213433dd6"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4116582667" target="_blank" rel="noopener">[STAGE] - DATA Engineer F/H</a></h3>
-          <div class="meta">SOCOTEC · France</div>
-          <div class="published">Publiée il y a 5 jours · 05/07/2026</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4436238770" target="_blank" rel="noopener noreferrer">Stage - Data analyst (H/F)</a></h3>
+          <div class="meta">Petzl · France</div>
+          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'a337fc805602cb52')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'634048f213433dd6')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job " data-id="8f2426224294bea6"
+      <article class="job " data-id="f6fcd62bed3380c0"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=15e7c1161221db6d" target="_blank" rel="noopener noreferrer">Stage - Data analyst (H/F)</a></h3>
+          <div class="meta">PETZL · France</div>
+          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'f6fcd62bed3380c0')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="598c696d74f84313"
+               data-src="APEC" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179006511W" target="_blank" rel="noopener noreferrer">Stagiaire – Gestion des Données &amp; Amélioration des Processus F/H</a></h3>
+          <div class="meta">ANTALIS RESSOURCES ET SERVICES · Boulogne-Billancourt - 92</div>
+          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'598c696d74f84313')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          
+          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job " data-id="6059b473b8489e87"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4417506617" target="_blank" rel="noopener">Stage – Data Analyst / Business Intelligence H/F</a></h3>
-          <div class="meta">Covivio · France</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4407643120" target="_blank" rel="noopener noreferrer">Stage - Assistant.e Chef de Projet M.O.A Business Intelligence &amp; Visualisation Data (H/F/X)</a></h3>
+          <div class="meta">CHANEL · France</div>
           <div class="published">Publiée il y a 5 jours · 05/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'8f2426224294bea6')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'6059b473b8489e87')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
       <article class="job " data-id="185d798cf4fd8e12"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=bfa60e353a25043d" target="_blank" rel="noopener">Stage Business Intelligence RH et Sourcing Consultants</a></h3>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=bfa60e353a25043d" target="_blank" rel="noopener noreferrer">Stage Business Intelligence RH et Sourcing Consultants</a></h3>
           <div class="meta">Entreprise non précisée · France</div>
           <div class="published">Publiée il y a 5 jours · 05/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'185d798cf4fd8e12')">✓ Marquer comme postulé</button></div>
-        <div class="tags">
+        <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="8f2426224294bea6"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4417506617" target="_blank" rel="noopener noreferrer">Stage – Data Analyst / Business Intelligence H/F</a></h3>
+          <div class="meta">Covivio · France</div>
+          <div class="published">Publiée il y a 5 jours · 05/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'8f2426224294bea6')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="a337fc805602cb52"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4116582667" target="_blank" rel="noopener noreferrer">[STAGE] - DATA Engineer F/H</a></h3>
+          <div class="meta">SOCOTEC · France</div>
+          <div class="published">Publiée il y a 5 jours · 05/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'a337fc805602cb52')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="b95e9a06fb6d1a2e"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4367814585" target="_blank" rel="noopener noreferrer">STAGE - Assistant Chef de Projet Data et Business Intelligence (H/F)</a></h3>
+          <div class="meta">Hermès · France</div>
+          <div class="published">Publiée il y a 6 jours · 04/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'b95e9a06fb6d1a2e')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article></div>
 <p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
 </div>
 <script>
 const STORAGE_KEY='radar-stage-france-applied-v1';
+const STATUS_LABELS={todo:'À postuler',applied:'Déjà postulé',all:'Tous'};
 let activeSource='*', activeStatus='todo', visaOnly=false;
 function readApplied(){
   try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}
@@ -296,6 +398,22 @@ function setStatus(btn,status){
 function toggleVisa(btn){
   visaOnly=!visaOnly;btn.classList.toggle('on',visaOnly);
   btn.setAttribute('aria-pressed',visaOnly?'true':'false');refresh();
+}
+function resetFilters(){
+  activeSource='*';activeStatus='todo';visaOnly=false;
+  document.querySelectorAll('.source-chip').forEach(b=>b.classList.toggle('on',b.dataset.src==='*'));
+  document.querySelectorAll('.status-chip').forEach(b=>b.classList.toggle('on',b.dataset.status==='todo'));
+  const visa=document.getElementById('visaFilter');
+  visa.classList.remove('on');visa.setAttribute('aria-pressed','false');
+  refresh();
+}
+function updateActiveFilters(){
+  const parts=['Statut : '+STATUS_LABELS[activeStatus],
+               'Source : '+(activeSource==='*'?'Toutes':activeSource)];
+  if(visaOnly)parts.push('Visa-friendly uniquement');
+  document.getElementById('activeFilters').textContent=parts.join(' · ');
+  const isDefault=activeStatus==='todo'&&activeSource==='*'&&!visaOnly;
+  document.getElementById('resetBtn').hidden=isDefault;
 }
 function toggleApplied(event,id){
   event.preventDefault();
@@ -318,7 +436,17 @@ function refresh(){
   });
   document.getElementById('todoCount').textContent='('+todo+')';
   document.getElementById('appliedCount').textContent='('+done+')';
-  document.getElementById('emptyState').hidden=visible!==0;
+  const empty=document.getElementById('emptyState');
+  if(visible===0){
+    let msg='Aucune offre ne correspond à ces filtres.';
+    if(activeSource!=='*'){
+      const chip=document.querySelector('.source-chip[data-src="'+activeSource+'"]');
+      if(chip&&chip.dataset.note){msg=activeSource+' : '+chip.dataset.note+' — aucune offre à afficher.';}
+    }
+    empty.textContent=msg;
+  }
+  empty.hidden=visible!==0;
+  updateActiveFilters();
 }
 refresh();
 </script>

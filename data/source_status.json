@@ -1,0 +1,107 @@
+{
+ "generated_at": "2026-07-10T14:03:27+00:00",
+ "scan_duration_s": 33.3,
+ "sources": [
+  {
+   "source": "LinkedIn",
+   "status": "success",
+   "raw_count": 70,
+   "accepted_count": 10,
+   "rejected_count": 60,
+   "reject_reasons": {
+    "pas un stage": 43,
+    "date absente ou invalide": 4,
+    "hors ciblage CV": 8,
+    "plus de 7 jours": 2,
+    "exclusion Data Science/ML": 1,
+    "doublon": 2
+   },
+   "duration_s": 33.3,
+   "http_error": "",
+   "note": "",
+   "label": "10 offres"
+  },
+  {
+   "source": "Indeed",
+   "status": "success",
+   "raw_count": 52,
+   "accepted_count": 10,
+   "rejected_count": 42,
+   "reject_reasons": {
+    "exclusion Data Science/ML": 3,
+    "pas un stage": 32,
+    "plus de 7 jours": 1,
+    "hors ciblage CV": 4,
+    "doublon": 2
+   },
+   "duration_s": 6.6,
+   "http_error": "",
+   "note": "",
+   "label": "10 offres"
+  },
+  {
+   "source": "Glassdoor",
+   "status": "empty",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "duration_s": 7.4,
+   "http_error": "",
+   "note": "",
+   "label": "Aucune offre reçue"
+  },
+  {
+   "source": "Google Jobs",
+   "status": "empty",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "duration_s": 4.6,
+   "http_error": "",
+   "note": "",
+   "label": "Aucune offre reçue"
+  },
+  {
+   "source": "APEC",
+   "status": "success",
+   "raw_count": 90,
+   "accepted_count": 5,
+   "rejected_count": 85,
+   "reject_reasons": {
+    "hors ciblage CV": 18,
+    "exclusion Data Science/ML": 1,
+    "plus de 7 jours": 66
+   },
+   "duration_s": 6.4,
+   "http_error": "",
+   "note": "",
+   "label": "5 offres"
+  },
+  {
+   "source": "Adzuna",
+   "status": "disabled_missing_credentials",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "secrets ADZUNA_APP_ID / ADZUNA_APP_KEY absents",
+   "label": "Non configuré — identifiants manquants"
+  },
+  {
+   "source": "France Travail",
+   "status": "disabled_missing_credentials",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "secrets FT_CLIENT_ID / FT_CLIENT_SECRET absents",
+   "label": "Non configuré — identifiants manquants"
+  }
+ ]
+}

@@ -12,20 +12,31 @@ Sources :
   7. France Travail (API officielle)             — si secrets fournis
 
 Chaque source est optionnelle et tolérante aux pannes : si un site bloque
-(429) ou si une clé manque, on continue avec les autres.
+(403/429) ou si une clé manque, on continue avec les autres. Un circuit
+breaker évite de marteler une source bloquée pendant le run courant ; elle
+est retentée automatiquement au cron suivant.
+
+Diagnostics : chaque source produit un SourceStatus (statut, nombre brut,
+acceptés, rejetés avec raisons, durée, erreur HTTP) affiché dans les logs,
+sauvegardé dans data/source_status.json et rendu sur le dashboard.
 
 Sorties :
   - Email HTML si nouvelles offres (SMTP)
   - docs/index.html : LE dashboard (GitHub Pages) avec toutes les offres
   - data/seen_offers.json : mémoire des offres déjà vues (delta detection)
+  - data/source_status.json : diagnostic détaillé du dernier scan
 """
 
 import hashlib
+import html
 import json
 import os
 import re
 import smtplib
 import sys
+import time
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -87,8 +98,26 @@ PROFILE_TITLE_EXCLUDE = re.compile(
     re.I,
 )
 
+# Repêchage par description : le titre garde le poids le plus fort, la
+# description ne sauve une offre que si elle décrit de vraies missions
+# Data/BI (cas "Stagiaire RH Analytics" dont les missions sont Data
+# Analytics / Business Intelligence). Pas de mots vagues type "données".
+PROFILE_DESCRIPTION_MUST_MATCH = re.compile(
+    r"\b(data\s*analytics?|business\s+intelligence|informatique\s+d[eé]cisionnelle|"
+    r"data\s+engineer(?:ing)?|ing[eé]nierie\s+(?:de\s+la\s+|des\s+)?donn[ée]es|"
+    r"data\s+warehouse|entrep[ôo]t\s+de\s+donn[ée]es|etl|talend|power\s*bi|"
+    r"pyspark|spark)\b",
+    re.I,
+)
+
 # On ne conserve que les offres publiées récemment.
 MAX_OFFER_AGE_DAYS = 7
+
+# Réseau / robustesse
+REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
+MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source (run courant)
+MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
+APEC_DETAIL_MAX_CALLS = 25    # budget de lectures du texte complet APEC par run
 
 VISA_FRIENDLY_KEYWORDS = [
     "capgemini", "sopra", "alten", "cgi", "inetum", "accenture", "devoteam",
@@ -101,7 +130,102 @@ VISA_FRIENDLY_KEYWORDS = [
 ]
 
 SEEN_FILE = Path("data/seen_offers.json")
+STATUS_FILE = Path("data/source_status.json")
 DOCS_INDEX = Path("docs/index.html")
+
+# Raisons de rejet (diagnostic)
+REASON_NO_TITLE = "titre manquant"
+REASON_NOT_INTERNSHIP = "pas un stage"
+REASON_EXCLUDED = "exclusion Data Science/ML"
+REASON_NO_DATE = "date absente ou invalide"
+REASON_TOO_OLD = f"plus de {MAX_OFFER_AGE_DAYS} jours"
+REASON_NOT_PROFILE = "hors ciblage CV"
+REASON_DUPLICATE = "doublon"
+
+# ============================================================
+# STATUT PAR SOURCE
+# ============================================================
+
+@dataclass
+class SourceStatus:
+    """Diagnostic d'une source pour un run.
+
+    status : success | empty | blocked | error | disabled_missing_credentials
+    """
+    source: str
+    status: str = "empty"
+    raw_count: int = 0
+    accepted_count: int = 0
+    rejected_count: int = 0
+    reject_reasons: dict = field(default_factory=dict)
+    duration_s: float = 0.0
+    http_error: str = ""
+    note: str = ""
+
+    def add_reject(self, reason: str | None) -> None:
+        reason = reason or "raison inconnue"
+        self.rejected_count += 1
+        self.reject_reasons[reason] = self.reject_reasons.get(reason, 0) + 1
+
+    def finalize(self) -> None:
+        if self.status in ("blocked", "error", "disabled_missing_credentials"):
+            return
+        self.status = "success" if self.accepted_count else "empty"
+
+
+BLOCK_CODE_RE = re.compile(r"\b(403|429)\b")
+
+
+def block_code(exc: Exception) -> str | None:
+    """Extrait un code HTTP de blocage (403/429) du message d'une exception."""
+    match = BLOCK_CODE_RE.search(str(exc))
+    return match.group(1) if match else None
+
+
+def status_label(st: SourceStatus, final_count: int | None = None) -> str:
+    """Libellé lisible pour les logs et le dashboard. Ne montre jamais un
+    simple « 0 » pour une source qui n'a pas été appelée."""
+    count = st.accepted_count if final_count is None else final_count
+    if st.status == "disabled_missing_credentials":
+        return "Non configuré — identifiants manquants"
+    if st.status == "blocked":
+        return f"Bloqué temporairement — {st.http_error or 'HTTP 403/429'}"
+    if st.status == "error":
+        return f"Erreur — {(st.note or st.http_error or 'voir logs')[:90]}"
+    if count == 0:
+        if st.raw_count:
+            return f"0 accepté / {st.raw_count} reçus"
+        return "Aucune offre reçue"
+    return f"{count} offre{'s' if count > 1 else ''}"
+
+
+def chip_hint(st: SourceStatus, final_count: int) -> str:
+    """Version courte du statut pour les puces de filtre du dashboard."""
+    if final_count:
+        return f"({final_count})"
+    if st.status == "disabled_missing_credentials":
+        return "non configuré"
+    if st.status == "blocked":
+        code = st.http_error.replace("HTTP ", "") if st.http_error else "403/429"
+        return f"bloqué {code}"
+    if st.status == "error":
+        return "erreur"
+    if st.raw_count:
+        return f"0 accepté / {st.raw_count} reçus"
+    return "(0)"
+
+
+def register_offer(status: SourceStatus, offers: dict,
+                   offer: dict | None, reason: str | None) -> None:
+    """Comptabilise une offre évaluée : acceptée, rejetée ou doublon."""
+    if offer is None:
+        status.add_reject(reason)
+    elif offer["id"] in offers:
+        status.add_reject(REASON_DUPLICATE)
+    else:
+        offers[offer["id"]] = offer
+        status.accepted_count += 1
+
 
 # ============================================================
 # HELPERS
@@ -126,6 +250,14 @@ def clean_text(value, default="") -> str:
     return text
 
 
+def safe_url(url) -> str:
+    """URL sûre pour un attribut href : http(s) uniquement, échappée."""
+    url = clean_text(url)
+    if url.startswith(("http://", "https://")):
+        return html.escape(url, quote=True)
+    return ""
+
+
 def parse_offer_date(value) -> datetime | None:
     raw = "" if value is None else str(value).strip()
     if not raw or raw.lower() in {"nan", "nat", "none"}:
@@ -143,19 +275,27 @@ def parse_offer_date(value) -> datetime | None:
 
 
 def make_offer(title, company, location, url, source, date="",
-               confirmed_internship=False) -> dict | None:
+               confirmed_internship=False, description="") -> tuple[dict | None, str | None]:
+    """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
     title = clean_text(title)
-    if not title or (not confirmed_internship and not TITLE_MUST_MATCH.search(title)):
-        return None
+    if not title:
+        return None, REASON_NO_TITLE
+    if not confirmed_internship and not TITLE_MUST_MATCH.search(title):
+        return None, REASON_NOT_INTERNSHIP
+    # Exclusions fortes, toujours sur le titre : la description ne peut pas
+    # sauver une offre Data Science / ML / Deep Learning / NLP / Vision.
     if PROFILE_TITLE_EXCLUDE.search(title):
-        return None
-    if not PROFILE_TITLE_MUST_MATCH.search(title):
-        return None
+        return None, REASON_EXCLUDED
     published_at = parse_offer_date(date)
     if not published_at:
-        return None
+        return None, REASON_NO_DATE
     if published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
-        return None
+        return None, REASON_TOO_OLD
+    # Le titre a le poids le plus fort ; à défaut, une description contenant
+    # de vraies missions Data/BI repêche l'offre.
+    if not PROFILE_TITLE_MUST_MATCH.search(title):
+        if not (description and PROFILE_DESCRIPTION_MUST_MATCH.search(description)):
+            return None, REASON_NOT_PROFILE
     company = clean_text(company, "Entreprise non précisée")
     location = clean_text(location, "France")
     url = clean_text(url)
@@ -168,7 +308,13 @@ def make_offer(title, company, location, url, source, date="",
         "source": source,
         "date": published_at.date().isoformat(),
         "visa_friendly": is_visa_friendly(company),
-    }
+    }, None
+
+
+def sort_offers(offers: list[dict]) -> list[dict]:
+    """Plus récentes d'abord ; tri secondaire stable sur le titre."""
+    return sorted(sorted(offers, key=lambda o: o.get("title", "")),
+                  key=lambda o: o.get("date", ""), reverse=True)
 
 
 def publication_age(date_value: str) -> str:
@@ -181,180 +327,413 @@ def publication_age(date_value: str) -> str:
     return f"il y a {days} jours"
 
 
+def human_duration(seconds: float) -> str:
+    seconds = int(round(seconds))
+    if seconds < 60:
+        return f"{seconds} s"
+    return f"{seconds // 60} min {seconds % 60:02d} s"
+
+
 # ============================================================
-# SOURCE 1-4 : JobSpy (LinkedIn / Indeed / Glassdoor / Google)
+# SOURCES 1-4 : JobSpy (LinkedIn / Indeed / Glassdoor / Google)
 # ============================================================
 
-def fetch_jobspy(query: str) -> list[dict]:
-    try:
-        from jobspy import scrape_jobs
-    except ImportError:
-        print("[WARN] python-jobspy non installé — sources LinkedIn/Indeed/Glassdoor/Google ignorées", file=sys.stderr)
-        return []
+def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict], SourceStatus]:
+    """Interroge un seul site JobSpy pour toutes les requêtes.
 
-    offers = []
-    # On sépare les sites pour qu'un blocage n'entraîne pas les autres
-    for site in (["linkedin"], ["indeed", "glassdoor"], ["google"]):
+    Chaque site est isolé : une panne Glassdoor n'influence jamais Indeed.
+    Un circuit breaker arrête la source après MAX_CONSECUTIVE_BLOCKS
+    blocages 403/429 consécutifs (elle sera retentée au prochain cron).
+    """
+    status = SourceStatus(source=label)
+    started = time.monotonic()
+    if scrape_fn is None:
         try:
-            kwargs = dict(
-                site_name=site,
-                search_term=query,
-                location="France",
-                results_wanted=15,
-                country_indeed="France",
-                job_type="internship",
-                hours_old=MAX_OFFER_AGE_DAYS * 24,
+            from jobspy import scrape_jobs as scrape_fn
+        except ImportError:
+            status.status = "error"
+            status.note = "python-jobspy non installé"
+            status.duration_s = round(time.monotonic() - started, 1)
+            return [], status
+
+    offers: dict[str, dict] = {}
+    consecutive_blocks = attempted = failed = 0
+    for query in QUERIES:
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            status.note = (f"circuit breaker : requêtes restantes ignorées après "
+                           f"{consecutive_blocks} blocages consécutifs")
+            break
+        attempted += 1
+        kwargs = dict(
+            site_name=[site],
+            search_term=query,
+            location="France",
+            results_wanted=15,
+            country_indeed="France",
+            job_type="internship",
+            hours_old=MAX_OFFER_AGE_DAYS * 24,
+            verbose=1,
+        )
+        if site == "google":
+            # google_search_term remplace toute la requête côté JobSpy : on
+            # évite la redondance « stage … stage » et on garde une syntaxe
+            # Google propre (la requête contient déjà « stage »).
+            kwargs["google_search_term"] = f"{query} France"
+            kwargs.pop("job_type")
+        try:
+            df = scrape_fn(**kwargs)
+        except Exception as exc:
+            failed += 1
+            code = block_code(exc)
+            if code:
+                consecutive_blocks += 1
+                status.http_error = f"HTTP {code}"
+                print(f"[WARN] {label} '{query}' bloqué ({status.http_error})", file=sys.stderr)
+            else:
+                status.http_error = status.http_error or str(exc)[:200]
+                print(f"[WARN] {label} '{query}' a échoué : {exc}", file=sys.stderr)
+            continue
+        consecutive_blocks = 0
+        raw = len(df)
+        status.raw_count += raw
+        print(f"[INFO] {label} '{query}' : {raw} résultats bruts")
+        for _, row in df.iterrows():
+            offer, reason = make_offer(
+                row.get("title"), row.get("company"),
+                ", ".join(filter(None, [str(row.get("city") or ""), str(row.get("state") or "")])) or "France",
+                row.get("job_url"), label, row.get("date_posted"),
+                description=clean_text(row.get("description")),
             )
-            if site == ["google"]:
-                # Google Jobs exige sa propre syntaxe de recherche
-                kwargs["google_search_term"] = f"{query} France stage"
-                kwargs.pop("job_type", None)
-            df = scrape_jobs(**kwargs)
-            for _, row in df.iterrows():
-                o = make_offer(
-                    row.get("title"), row.get("company"),
-                    ", ".join(filter(None, [str(row.get("city") or ""), str(row.get("state") or "")])) or "France",
-                    row.get("job_url"),
-                    {"linkedin": "LinkedIn", "indeed": "Indeed", "glassdoor": "Glassdoor", "google": "Google Jobs"}.get(str(row.get("site")), str(row.get("site"))),
-                    row.get("date_posted"),
-                )
-                if o:
-                    offers.append(o)
-        except Exception as e:
-            print(f"[WARN] JobSpy {site} '{query}' a échoué (blocage probable, on continue) : {e}", file=sys.stderr)
-    return offers
+            register_offer(status, offers, offer, reason)
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
+            attempted and failed == attempted and status.http_error.startswith("HTTP")):
+        status.status = "blocked"
+    elif attempted and failed == attempted:
+        status.status = "error"
+    else:
+        status.finalize()
+    return list(offers.values()), status
 
 
 # ============================================================
 # SOURCE 5 : APEC (recherche publique de stages, sans compte)
 # ============================================================
 
-def fetch_apec(query: str) -> list[dict]:
+APEC_HEADERS = {"Accept": "application/json", "User-Agent": "radar-stage-france/1.0"}
+
+
+def apec_search_payload(query: str) -> dict:
+    return {
+        "motsCles": query,
+        "lieux": [], "fonctions": [], "statutPoste": [],
+        "typesContrat": [597171],  # identifiant APEC officiel : STAGE
+        "typesConvention": [], "niveauxExperience": [],
+        "idsEtablissement": [], "secteursActivite": [],
+        "typesTeletravail": [], "idNomZonesDeplacement": [],
+        "positionNumbersExcluded": [], "typeClient": "CADRE",
+        "sorts": [{"type": "DATE", "direction": "DESCENDING"}],
+        # Une seule page large pour couvrir les 7 derniers jours sans
+        # multiplier les appels à la recherche publique.
+        "pagination": {"range": 100, "startIndex": 0},
+        "activeFiltre": True, "pointGeolocDeReference": {},
+    }
+
+
+def fetch_apec_detail_description(number: str) -> str:
+    """Texte complet d'une offre APEC (le snippet de recherche est
+    tronqué vers 280 caractères, souvent avant les missions)."""
     try:
-        resp = requests.post(
-            "https://www.apec.fr/cms/webservices/rechercheOffre",
-            json={
-                "motsCles": query,
-                "lieux": [], "fonctions": [], "statutPoste": [],
-                "typesContrat": [597171],  # identifiant APEC officiel : STAGE
-                "typesConvention": [], "niveauxExperience": [],
-                "idsEtablissement": [], "secteursActivite": [],
-                "typesTeletravail": [], "idNomZonesDeplacement": [],
-                "positionNumbersExcluded": [], "typeClient": "CADRE",
-                "sorts": [{"type": "DATE", "direction": "DESCENDING"}],
-                # Une seule page large pour couvrir les 7 derniers jours sans
-                # multiplier les appels à la recherche publique.
-                "pagination": {"range": 100, "startIndex": 0},
-                "activeFiltre": True, "pointGeolocDeReference": {},
-            },
-            headers={"Accept": "application/json",
-                     "User-Agent": "radar-stage-france/1.0"},
-            timeout=20,
+        resp = requests.get(
+            "https://www.apec.fr/cms/webservices/offre/public",
+            params={"numeroOffre": number},
+            headers=APEC_HEADERS, timeout=REQUEST_TIMEOUT,
         )
         resp.raise_for_status()
-        offers = []
-        for r in resp.json().get("resultats", []):
-            number = r.get("numeroOffre", "")
-            url = f"https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/{number}"
-            o = make_offer(
-                r.get("intitule"), r.get("nomCommercial"), r.get("lieuTexte"),
-                url, "APEC", r.get("datePublication"), confirmed_internship=True,
+        data = resp.json() or {}
+        blocks = [data.get("texteHtml"), data.get("texteHtmlProfil"),
+                  data.get("texteHtmlEntreprise")]
+        text = " ".join(str(b) for b in blocks if b)
+        return re.sub(r"<[^>]+>", " ", text)
+    except Exception as exc:
+        print(f"[WARN] APEC détail {number} a échoué : {exc}", file=sys.stderr)
+        return ""
+
+
+def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
+    """APEC : correspondance CV sur titre + texteOffre (poids au titre),
+    lecture bornée du texte complet quand le snippet ne suffit pas."""
+    status = SourceStatus(source="APEC")
+    started = time.monotonic()
+
+    raw_by_number: dict[str, dict] = {}
+    failed = 0
+    for query in APEC_QUERIES:
+        try:
+            resp = requests.post(
+                "https://www.apec.fr/cms/webservices/rechercheOffre",
+                json=apec_search_payload(query),
+                headers=APEC_HEADERS, timeout=REQUEST_TIMEOUT,
             )
-            if o:
-                offers.append(o)
-        return offers
-    except Exception as e:
-        print(f"[WARN] APEC '{query}' a échoué : {e}", file=sys.stderr)
-        return []
+            resp.raise_for_status()
+            results = resp.json().get("resultats", [])
+        except Exception as exc:
+            failed += 1
+            code = block_code(exc)
+            status.http_error = f"HTTP {code}" if code else (status.http_error or str(exc)[:200])
+            print(f"[WARN] APEC '{query}' a échoué : {exc}", file=sys.stderr)
+            continue
+        print(f"[INFO] APEC '{query}' : {len(results)} résultats bruts")
+        for r in results:
+            number = str(r.get("numeroOffre") or "")
+            if number:
+                raw_by_number.setdefault(number, r)  # dédoublonnage inter-requêtes
+    status.raw_count = len(raw_by_number)
+
+    offers: dict[str, dict] = {}
+    detail_budget = APEC_DETAIL_MAX_CALLS
+    for number, r in raw_by_number.items():
+        url = f"https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/{number}"
+        args = (r.get("intitule"), r.get("nomCommercial"), r.get("lieuTexte"),
+                url, "APEC", r.get("datePublication"))
+        offer, reason = make_offer(*args, confirmed_internship=True,
+                                   description=clean_text(r.get("texteOffre")))
+        if offer is None and reason == REASON_NOT_PROFILE and detail_budget > 0:
+            # Titre insuffisant et snippet tronqué : lire le texte complet
+            # avant de rejeter (ex. « Stagiaire RH Analytics » dont les
+            # missions réelles sont Data Analytics / BI).
+            detail_budget -= 1
+            full_text = fetch_apec_detail_description(number)
+            if full_text:
+                offer, reason = make_offer(*args, confirmed_internship=True,
+                                           description=full_text)
+        register_offer(status, offers, offer, reason)
+    if detail_budget == 0:
+        status.note = f"budget de {APEC_DETAIL_MAX_CALLS} lectures de détail épuisé"
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if failed == len(APEC_QUERIES):
+        status.status = "blocked" if status.http_error.startswith("HTTP") else "error"
+    else:
+        status.finalize()
+    return list(offers.values()), status
 
 
 # ============================================================
 # SOURCE 6 : Adzuna (API officielle gratuite)
 # ============================================================
 
-def fetch_adzuna(query: str) -> list[dict]:
+def fetch_adzuna_all() -> tuple[list[dict], SourceStatus]:
+    status = SourceStatus(source="Adzuna")
+    started = time.monotonic()
     app_id = os.environ.get("ADZUNA_APP_ID")
     app_key = os.environ.get("ADZUNA_APP_KEY")
     if not app_id or not app_key:
-        return []
-    try:
-        resp = requests.get(
-            "https://api.adzuna.com/v1/api/jobs/fr/search/1",
-            params={
-                "app_id": app_id, "app_key": app_key,
-                "what": query, "where": "France",
-                "results_per_page": 20, "sort_by": "date",
-                "content-type": "application/json",
-            },
-            timeout=20,
-        )
-        resp.raise_for_status()
-        offers = []
-        for r in resp.json().get("results", []):
-            o = make_offer(
+        status.status = "disabled_missing_credentials"
+        status.note = "secrets ADZUNA_APP_ID / ADZUNA_APP_KEY absents"
+        return [], status
+
+    offers: dict[str, dict] = {}
+    consecutive_blocks = attempted = failed = 0
+    for query in QUERIES:
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            status.note = "circuit breaker : requêtes restantes ignorées"
+            break
+        attempted += 1
+        try:
+            resp = requests.get(
+                "https://api.adzuna.com/v1/api/jobs/fr/search/1",
+                params={
+                    "app_id": app_id, "app_key": app_key,
+                    "what": query, "where": "France",
+                    "results_per_page": 20, "sort_by": "date",
+                    "content-type": "application/json",
+                },
+                timeout=REQUEST_TIMEOUT,
+            )
+            resp.raise_for_status()
+            results = resp.json().get("results", [])
+        except Exception as exc:
+            failed += 1
+            code = block_code(exc)
+            if code:
+                consecutive_blocks += 1
+                status.http_error = f"HTTP {code}"
+            else:
+                status.http_error = status.http_error or str(exc)[:200]
+            print(f"[WARN] Adzuna '{query}' a échoué : {exc}", file=sys.stderr)
+            continue
+        consecutive_blocks = 0
+        status.raw_count += len(results)
+        print(f"[INFO] Adzuna '{query}' : {len(results)} résultats bruts")
+        for r in results:
+            offer, reason = make_offer(
                 r.get("title"), (r.get("company") or {}).get("display_name"),
                 (r.get("location") or {}).get("display_name"),
-                r.get("redirect_url"), "Adzuna", r.get("created", "")[:10],
+                r.get("redirect_url"), "Adzuna", (r.get("created") or "")[:10],
+                description=clean_text(r.get("description")),
             )
-            if o:
-                offers.append(o)
-        return offers
-    except Exception as e:
-        print(f"[WARN] Adzuna '{query}' a échoué : {e}", file=sys.stderr)
-        return []
+            register_offer(status, offers, offer, reason)
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
+            attempted and failed == attempted and status.http_error.startswith("HTTP")):
+        status.status = "blocked"
+    elif attempted and failed == attempted:
+        status.status = "error"
+    else:
+        status.finalize()
+    return list(offers.values()), status
 
 
 # ============================================================
-# SOURCE 7 : France Travail (API officielle)
+# SOURCE 7 : France Travail (API officielle Offres d'emploi v2)
 # ============================================================
 
-def ft_token() -> str | None:
-    cid = os.environ.get("FT_CLIENT_ID")
-    csec = os.environ.get("FT_CLIENT_SECRET")
-    if not cid or not csec:
-        return None
+def ft_token(client_id: str, client_secret: str) -> str | None:
     try:
         resp = requests.post(
             "https://entreprise.francetravail.fr/connexion/oauth2/access_token?realm=%2Fpartenaire",
-            data={"grant_type": "client_credentials", "client_id": cid,
-                  "client_secret": csec, "scope": "api_offresdemploiv2 o2dsoffre"},
+            data={"grant_type": "client_credentials", "client_id": client_id,
+                  "client_secret": client_secret,
+                  "scope": "api_offresdemploiv2 o2dsoffre"},
             headers={"Content-Type": "application/x-www-form-urlencoded"},
-            timeout=20,
+            timeout=REQUEST_TIMEOUT,
         )
         resp.raise_for_status()
         return resp.json()["access_token"]
-    except Exception as e:
-        print(f"[WARN] Auth France Travail échouée : {e}", file=sys.stderr)
+    except Exception as exc:
+        # Ne jamais inclure client_id / client_secret dans les logs.
+        print(f"[WARN] Auth France Travail échouée : {type(exc).__name__} {block_code(exc) or ''}",
+              file=sys.stderr)
         return None
 
 
-def fetch_france_travail(token: str, query: str) -> list[dict]:
-    try:
-        resp = requests.get(
-            "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search",
-            headers={"Authorization": f"Bearer {token}"},
-            params={"motsCles": query, "typeContrat": "FS", "sort": "1", "range": "0-19"},
-            timeout=20,
-        )
-        if resp.status_code == 204:
-            return []
-        resp.raise_for_status()
-        offers = []
-        for r in resp.json().get("resultats", []):
+def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
+    status = SourceStatus(source="France Travail")
+    started = time.monotonic()
+    client_id = os.environ.get("FT_CLIENT_ID")
+    client_secret = os.environ.get("FT_CLIENT_SECRET")
+    if not client_id or not client_secret:
+        status.status = "disabled_missing_credentials"
+        status.note = "secrets FT_CLIENT_ID / FT_CLIENT_SECRET absents"
+        return [], status
+
+    token = ft_token(client_id, client_secret)
+    if not token:
+        status.status = "error"
+        status.note = "authentification OAuth échouée (voir logs)"
+        status.duration_s = round(time.monotonic() - started, 1)
+        return [], status
+
+    offers: dict[str, dict] = {}
+    consecutive_blocks = attempted = failed = 0
+    for query in FRANCE_TRAVAIL_QUERIES:
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            status.note = "circuit breaker : requêtes restantes ignorées"
+            break
+        attempted += 1
+        try:
+            resp = requests.get(
+                "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search",
+                headers={"Authorization": f"Bearer {token}"},
+                # Les stages n'ont pas de code typeContrat dans l'API v2 :
+                # c'est natureContrat=FS (convention de stage).
+                params={"motsCles": query, "natureContrat": "FS",
+                        "publieeDepuis": 7, "sort": "1", "range": "0-49"},
+                timeout=REQUEST_TIMEOUT,
+            )
+            if resp.status_code == 204:  # aucune offre pour cette requête
+                results = []
+            else:
+                resp.raise_for_status()
+                results = resp.json().get("resultats", [])
+        except Exception as exc:
+            failed += 1
+            code = block_code(exc)
+            if code:
+                consecutive_blocks += 1
+                status.http_error = f"HTTP {code}"
+            else:
+                status.http_error = status.http_error or str(exc)[:200]
+            print(f"[WARN] France Travail '{query}' a échoué : {exc}", file=sys.stderr)
+            continue
+        consecutive_blocks = 0
+        status.raw_count += len(results)
+        print(f"[INFO] France Travail '{query}' : {len(results)} résultats bruts")
+        for r in results:
             url = (r.get("origineOffre") or {}).get("urlOrigine") or \
                   f"https://candidat.francetravail.fr/offres/recherche/detail/{r.get('id')}"
-            o = make_offer(
+            offer, reason = make_offer(
                 r.get("intitule"), (r.get("entreprise") or {}).get("nom"),
                 (r.get("lieuTravail") or {}).get("libelle"),
                 url, "France Travail", (r.get("dateCreation") or "")[:10],
                 confirmed_internship=True,
+                description=clean_text(r.get("description")),
             )
-            if o:
-                offers.append(o)
-        return offers
-    except Exception as e:
-        print(f"[WARN] France Travail '{query}' a échoué : {e}", file=sys.stderr)
-        return []
+            register_offer(status, offers, offer, reason)
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
+            attempted and failed == attempted and status.http_error.startswith("HTTP")):
+        status.status = "blocked"
+    elif attempted and failed == attempted:
+        status.status = "error"
+    else:
+        status.finalize()
+    return list(offers.values()), status
+
+
+# ============================================================
+# ORCHESTRATION
+# ============================================================
+
+def run_all_sources() -> tuple[dict[str, dict], list[SourceStatus]]:
+    """Lance toutes les sources avec un parallélisme borné.
+
+    Chaque source reste séquentielle en interne (pas de martèlement d'un
+    même site) ; une source en panne n'arrête jamais les autres.
+    """
+    tasks = {
+        "LinkedIn": lambda: fetch_jobspy_site("linkedin", "LinkedIn"),
+        "Indeed": lambda: fetch_jobspy_site("indeed", "Indeed"),
+        "Glassdoor": lambda: fetch_jobspy_site("glassdoor", "Glassdoor"),
+        "Google Jobs": lambda: fetch_jobspy_site("google", "Google Jobs"),
+        "APEC": fetch_apec_all,
+        "Adzuna": fetch_adzuna_all,
+        "France Travail": fetch_france_travail_all,
+    }
+    results: dict[str, tuple[list[dict], SourceStatus]] = {}
+    with ThreadPoolExecutor(max_workers=MAX_PARALLEL_SOURCES) as pool:
+        futures = {name: pool.submit(fn) for name, fn in tasks.items()}
+        for name, future in futures.items():
+            try:
+                results[name] = future.result()
+            except Exception as exc:  # ceinture : jamais d'arrêt global
+                print(f"[ERREUR] {name} : {exc}", file=sys.stderr)
+                results[name] = ([], SourceStatus(source=name, status="error",
+                                                  http_error=str(exc)[:200]))
+
+    all_offers: dict[str, dict] = {}
+    statuses: list[SourceStatus] = []
+    for name in SOURCE_NAMES:
+        offers, st = results[name]
+        for o in offers:
+            all_offers.setdefault(o["id"], o)  # dédoublonnage inter-sources
+        statuses.append(st)
+    return all_offers, statuses
+
+
+def save_status_json(statuses: list[SourceStatus], scan_duration_s: float) -> None:
+    STATUS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "scan_duration_s": round(scan_duration_s, 1),
+        "sources": [dict(asdict(st), label=status_label(st)) for st in statuses],
+    }
+    STATUS_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=1),
+                           encoding="utf-8")
 
 
 # ============================================================
@@ -386,14 +765,17 @@ def send_email(new_offers: list[dict], dashboard_url: str) -> None:
 
     parts = [f"<h2>{n} nouvelle{'s' if n>1 else ''} offre{'s' if n>1 else ''}</h2>"]
     for src, lst in sorted(by_source.items()):
-        parts.append(f"<h3>{src} ({len(lst)})</h3>")
+        parts.append(f"<h3>{html.escape(src)} ({len(lst)})</h3>")
         for o in lst:
             badge = " ✅ <b>visa-friendly probable</b>" if o["visa_friendly"] else ""
+            url = safe_url(o["url"])
+            title = html.escape(o["title"])
+            link = f"<a href='{url}'><b>{title}</b></a>" if url else f"<b>{title}</b>"
             parts.append(
-                f"<p><a href='{o['url']}'><b>{o['title']}</b></a><br>"
-                f"{o['company']} · {o['location']}{badge}</p>"
+                f"<p>{link}<br>"
+                f"{html.escape(o['company'])} · {html.escape(o['location'])}{badge}</p>"
             )
-    parts.append(f"<hr><p><a href='{dashboard_url}'>📊 Ouvrir le dashboard complet</a></p>")
+    parts.append(f"<hr><p><a href='{html.escape(dashboard_url, quote=True)}'>📊 Ouvrir le dashboard complet</a></p>")
     parts.append("<p style='color:#888;font-size:12px'>Pipeline GitHub Actions · JobSpy + APEC + Adzuna + France Travail</p>")
 
     msg = MIMEMultipart("alternative")
@@ -409,56 +791,104 @@ def send_email(new_offers: list[dict], dashboard_url: str) -> None:
         s.sendmail(smtp_user, [to_addr], msg.as_string())
 
 
-def render_dashboard(offers: list[dict], new_ids: set) -> None:
+STATUS_CSS = {
+    "success": "ok",
+    "empty": "warn",
+    "blocked": "bad",
+    "error": "bad",
+    "disabled_missing_credentials": "muted",
+}
+
+
+def render_dashboard(offers: list[dict], new_ids: set,
+                     statuses: list[SourceStatus] | None = None,
+                     scan_duration_s: float = 0.0) -> None:
     DOCS_INDEX.parent.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
-    sources = sorted({o["source"] for o in offers})
+    statuses = statuses or [SourceStatus(source=name) for name in SOURCE_NAMES]
     repository = os.environ.get("GITHUB_REPOSITORY", "neyos10/radar-stage-france")
     actions_url = f"https://github.com/{repository}/actions/workflows/scan.yml"
 
+    final_counts = {name: 0 for name in SOURCE_NAMES}
+    for o in offers:
+        final_counts[o["source"]] = final_counts.get(o["source"], 0) + 1
+
     cards = []
-    for o in sorted(offers, key=lambda x: x.get("date", ""), reverse=True)[:150]:
+    for o in sort_offers(offers)[:150]:
         is_new = o["id"] in new_ids
         published = datetime.fromisoformat(o["date"]).strftime("%d/%m/%Y")
         age = publication_age(o["date"])
+        oid = html.escape(str(o["id"]), quote=True)
+        title = html.escape(o["title"])
+        company = html.escape(o["company"])
+        location = html.escape(o["location"])
+        source = html.escape(o["source"], quote=True)
+        url = safe_url(o["url"])
+        link = (f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+                if url else title)
         cards.append(f"""
-      <article class="job {'is-new' if is_new else ''}" data-id="{o['id']}"
-               data-src="{o['source']}" data-visa="{'1' if o['visa_friendly'] else '0'}">
+      <article class="job {'is-new' if is_new else ''}" data-id="{oid}"
+               data-src="{source}" data-visa="{'1' if o['visa_friendly'] else '0'}">
         <div class="job-top"><div>
-          <h3><a href="{o['url']}" target="_blank" rel="noopener">{o['title']}</a></h3>
-          <div class="meta">{o['company']} · {o['location']}</div>
+          <h3>{link}</h3>
+          <div class="meta">{company} · {location}</div>
           <div class="published">Publiée {age} · {published}</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'{o['id']}')">✓ Marquer comme postulé</button></div>
-        <div class="tags">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'{oid}')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
           {'<span class="tag visa">✓ visa-friendly</span>' if o['visa_friendly'] else ''}
-          <span class="tag match">Profil CV</span><span class="tag src">{o['source']}</span></div>
+          <span class="tag match">Profil CV</span><span class="tag src">{source}</span></div>
       </article>""")
 
-    filter_btns = "".join(
-        f'<button class="fchip source-chip" onclick="setSource(this,\'{source}\')">'
-        f'{source} <b>({sum(o["source"] == source for o in offers)})</b></button>'
-        for source in SOURCE_NAMES
+    status_rows = "".join(
+        f'<span class="src-stat st-{STATUS_CSS.get(st.status, "warn")}">'
+        f'<b>{html.escape(st.source)}</b> · '
+        f'{html.escape(status_label(st, final_counts.get(st.source, 0)))}</span>'
+        for st in statuses
     )
 
-    html = f"""<!DOCTYPE html>
+    source_chips = []
+    for st in statuses:
+        name = html.escape(st.source, quote=True)
+        count = final_counts.get(st.source, 0)
+        hint = html.escape(chip_hint(st, count))
+        note_attr = ("" if count else
+                     f' data-note="{html.escape(status_label(st, count), quote=True)}"')
+        source_chips.append(
+            f'<button class="fchip source-chip" data-src="{name}"{note_attr} '
+            f"onclick=\"setSource(this,'{name}')\">{name} <b>{hint}</b></button>"
+        )
+    filter_btns = "".join(source_chips)
+
+    html_page = f"""<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
 <title>Radar Stage France — Dashboard</title>
 <style>
-:root{{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598}}
+:root{{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598;--err:#FF7B7B}}
 *{{box-sizing:border-box;margin:0;padding:0}}
 body{{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}}
 .wrap{{max-width:840px;margin:0 auto}}
 h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .hero{{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}}
-.scan-btn{{background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}}
+.hero-actions{{text-align:right}}
+.scan-btn{{display:inline-block;background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}}
+.scan-hint{{color:var(--encre2);font-size:11px;margin-top:6px;max-width:220px}}
 .profile-note{{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}}
+.sources-panel{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}}
+.src-stat{{font-size:11.5px;border-radius:8px;padding:5px 9px;border:1px solid rgba(255,255,255,.08);color:var(--encre2);background:rgba(255,255,255,.02)}}
+.src-stat.st-ok{{border-color:rgba(62,213,152,.35);color:var(--ok)}}
+.src-stat.st-warn{{border-color:rgba(245,184,65,.3);color:var(--saf)}}
+.src-stat.st-bad{{border-color:rgba(255,123,123,.4);color:var(--err)}}
+.src-stat.st-muted{{opacity:.6}}
 .filter-panel{{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}}
 .filter-group{{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}}
 .filter-label{{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}}
 .fchip{{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}}
 .fchip.on{{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}}
+.reset-btn{{border-color:rgba(255,123,123,.35);color:#FFA8A8}}
+.active-filters{{color:var(--encre2);font-size:12px}}
 .job{{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}}
 .job.is-new{{border-left:3px solid var(--saf)}}
 .job.applied{{opacity:.72;border-color:rgba(62,213,152,.35)}}
@@ -477,24 +907,30 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .tag.src{{background:#212D44;color:var(--encre2);font-weight:500}}
 .empty{{color:var(--encre2);text-align:center;padding:30px 10px}}
 .storage-note{{color:#66748A;font-size:11px;text-align:center;margin-top:18px}}
-@media(max-width:620px){{.hero{{display:block}}.scan-btn{{display:inline-block;margin-top:12px}}.job-top{{display:block}}.apply-btn{{margin-top:10px}}.filter-label{{width:100%}}}}
+@media(max-width:620px){{.hero{{display:block}}.hero-actions{{text-align:left;margin-top:12px}}.scan-hint{{max-width:none}}.job-top{{display:block}}.apply-btn{{margin-top:10px}}.filter-label{{width:100%}}}}
 </style></head>
 <body><div class="wrap">
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · Sources : {", ".join(sources) if sources else "—"}</p></div>
-<a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener">↻ Relancer le scan</a></div>
+<p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · durée du scan : {human_duration(scan_duration_s)}</p></div>
+<div class="hero-actions"><a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
+<p class="scan-hint">Puis cliquez sur « Run workflow » pour lancer un scan manuel.</p></div></div>
 <p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
+<div class="sources-panel" translate="no">{status_rows}</div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
-    <button class="fchip status-chip on" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
-    <button class="fchip status-chip" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
-    <button class="fchip status-chip" onclick="setStatus(this,'all')">Tous</button>
+    <button class="fchip status-chip on" data-status="todo" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" data-status="applied" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" data-status="all" onclick="setStatus(this,'all')">Tous</button>
   </div>
-  <div class="filter-group"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" onclick="setSource(this,'*')">Toutes</button>{filter_btns}
+  <div class="filter-group" translate="no"><span class="filter-label">Source</span>
+    <button class="fchip source-chip on" data-src="*" onclick="setSource(this,'*')">Toutes</button>{filter_btns}
   </div>
-  <div class="filter-group"><span class="filter-label">Options</span>
+  <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="visaFilter" class="fchip" aria-pressed="false" onclick="toggleVisa(this)">✓ Visa-friendly probable</button>
+  </div>
+  <div class="filter-group"><span class="filter-label">Actifs</span>
+    <span id="activeFilters" class="active-filters" translate="no"></span>
+    <button id="resetBtn" class="fchip reset-btn" onclick="resetFilters()" hidden>✕ Réinitialiser les filtres</button>
   </div>
 </div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
@@ -503,6 +939,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 </div>
 <script>
 const STORAGE_KEY='radar-stage-france-applied-v1';
+const STATUS_LABELS={{todo:'À postuler',applied:'Déjà postulé',all:'Tous'}};
 let activeSource='*', activeStatus='todo', visaOnly=false;
 function readApplied(){{
   try{{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}}
@@ -523,6 +960,22 @@ function setStatus(btn,status){{
 function toggleVisa(btn){{
   visaOnly=!visaOnly;btn.classList.toggle('on',visaOnly);
   btn.setAttribute('aria-pressed',visaOnly?'true':'false');refresh();
+}}
+function resetFilters(){{
+  activeSource='*';activeStatus='todo';visaOnly=false;
+  document.querySelectorAll('.source-chip').forEach(b=>b.classList.toggle('on',b.dataset.src==='*'));
+  document.querySelectorAll('.status-chip').forEach(b=>b.classList.toggle('on',b.dataset.status==='todo'));
+  const visa=document.getElementById('visaFilter');
+  visa.classList.remove('on');visa.setAttribute('aria-pressed','false');
+  refresh();
+}}
+function updateActiveFilters(){{
+  const parts=['Statut : '+STATUS_LABELS[activeStatus],
+               'Source : '+(activeSource==='*'?'Toutes':activeSource)];
+  if(visaOnly)parts.push('Visa-friendly uniquement');
+  document.getElementById('activeFilters').textContent=parts.join(' · ');
+  const isDefault=activeStatus==='todo'&&activeSource==='*'&&!visaOnly;
+  document.getElementById('resetBtn').hidden=isDefault;
 }}
 function toggleApplied(event,id){{
   event.preventDefault();
@@ -545,12 +998,22 @@ function refresh(){{
   }});
   document.getElementById('todoCount').textContent='('+todo+')';
   document.getElementById('appliedCount').textContent='('+done+')';
-  document.getElementById('emptyState').hidden=visible!==0;
+  const empty=document.getElementById('emptyState');
+  if(visible===0){{
+    let msg='Aucune offre ne correspond à ces filtres.';
+    if(activeSource!=='*'){{
+      const chip=document.querySelector('.source-chip[data-src="'+activeSource+'"]');
+      if(chip&&chip.dataset.note){{msg=activeSource+' : '+chip.dataset.note+' — aucune offre à afficher.';}}
+    }}
+    empty.textContent=msg;
+  }}
+  empty.hidden=visible!==0;
+  updateActiveFilters();
 }}
 refresh();
 </script>
 </body></html>"""
-    DOCS_INDEX.write_text(html, encoding="utf-8")
+    DOCS_INDEX.write_text(html_page, encoding="utf-8")
 
 
 # ============================================================
@@ -558,50 +1021,44 @@ refresh();
 # ============================================================
 
 def main() -> None:
-    all_offers: dict[str, dict] = {}
-
-    # --- JobSpy : LinkedIn + Indeed + Glassdoor + Google Jobs ---
-    for q in QUERIES:
-        for o in fetch_jobspy(q):
-            all_offers.setdefault(o["id"], o)
-
-    # --- APEC ---
-    for q in APEC_QUERIES:
-        for o in fetch_apec(q):
-            all_offers.setdefault(o["id"], o)
-
-    # --- Adzuna ---
-    for q in QUERIES:
-        for o in fetch_adzuna(q):
-            all_offers.setdefault(o["id"], o)
-
-    # --- France Travail ---
-    token = ft_token()
-    if token:
-        for q in FRANCE_TRAVAIL_QUERIES:
-            for o in fetch_france_travail(token, q):
-                all_offers.setdefault(o["id"], o)
+    started = time.monotonic()
+    all_offers, statuses = run_all_sources()
+    scan_duration = time.monotonic() - started
 
     seen = load_seen()
     new_offers = [o for oid, o in all_offers.items() if oid not in seen]
     new_ids = {o["id"] for o in new_offers}
 
-    print(f"Total : {len(all_offers)} offres · Nouvelles : {len(new_offers)}")
-    by_src = {}
+    final_counts = {name: 0 for name in SOURCE_NAMES}
     for o in all_offers.values():
-        by_src[o["source"]] = by_src.get(o["source"], 0) + 1
-    for source in SOURCE_NAMES:
-        print(f"  - {source}: {by_src.get(source, 0)}")
+        final_counts[o["source"]] = final_counts.get(o["source"], 0) + 1
+
+    print(f"\nTotal : {len(all_offers)} offres · Nouvelles : {len(new_offers)} · "
+          f"Durée : {human_duration(scan_duration)}")
+    for st in statuses:
+        reasons = ", ".join(
+            f"{k} ×{v}" for k, v in sorted(st.reject_reasons.items(), key=lambda kv: -kv[1])
+        ) or "—"
+        extra = f" · {st.note}" if st.note else ""
+        http = f" · {st.http_error}" if st.http_error else ""
+        print(f"  - {st.source}: {status_label(st, final_counts[st.source])} "
+              f"[{st.status}] bruts={st.raw_count} acceptés={st.accepted_count} "
+              f"rejetés={st.rejected_count} durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
+
+    save_status_json(statuses, scan_duration)
 
     dashboard_url = os.environ.get("DASHBOARD_URL", "")
-    if new_offers and os.environ.get("SMTP_USER"):
-        try:
-            send_email(new_offers, dashboard_url)
-            print("Email envoyé.")
-        except Exception as e:
-            print(f"[ERREUR] email : {e}", file=sys.stderr)
+    if new_offers:
+        if os.environ.get("SMTP_USER") and os.environ.get("SMTP_PASS"):
+            try:
+                send_email(new_offers, dashboard_url)
+                print("Email envoyé.")
+            except Exception as e:
+                print(f"[ERREUR] email : {e}", file=sys.stderr)
+        else:
+            print("[INFO] SMTP non configuré (SMTP_USER/SMTP_PASS absents) — pas d'email envoyé.")
 
-    render_dashboard(list(all_offers.values()), new_ids)
+    render_dashboard(list(all_offers.values()), new_ids, statuses, scan_duration)
     save_seen(seen | set(all_offers.keys()))
 
 

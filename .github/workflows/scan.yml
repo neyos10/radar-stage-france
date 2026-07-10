@@ -8,6 +8,12 @@ on:
 permissions:
   contents: write
 
+# Jamais deux scans simultanés : le suivant attend la fin du précédent
+# (cancel-in-progress: false pour ne pas interrompre un scan en cours).
+concurrency:
+  group: radar-stage-france-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -19,9 +25,16 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+          cache: pip
 
       - name: Dépendances
-        run: pip install requests python-jobspy
+        run: pip install -r requirements.txt
+
+      - name: Vérification syntaxe
+        run: python -m py_compile scan.py
+
+      - name: Tests
+        run: python -m unittest discover -s tests -v
 
       - name: Scan multi-sources
         env:
@@ -38,10 +51,31 @@ jobs:
           DASHBOARD_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: python scan.py
 
-      - name: Commit résultats (mémoire + dashboard)
+      - name: Commit résultats (mémoire + dashboard + statut)
         run: |
           git config user.name "radar-stage-bot"
           git config user.email "actions@github.com"
-          git add data/seen_offers.json docs/index.html
-          git diff --quiet --cached || git commit -m "Scan $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git push
+          git add data/seen_offers.json data/source_status.json docs/index.html
+          if git diff --quiet --cached; then
+            echo "Aucun changement à committer — rien à pousser."
+            exit 0
+          fi
+          git commit -m "Scan $(date -u +'%Y-%m-%d %H:%M UTC')"
+          # Push avec rebase + retry borné (jamais de force push) : évite les
+          # échecs "fetch first" si main a avancé pendant le scan.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort
+              echo "Conflit de rebase inattendu — abandon sans force push."
+              exit 1
+            fi
+            if git push origin main; then
+              echo "Push réussi (tentative $attempt)."
+              exit 0
+            fi
+            echo "Push refusé (tentative $attempt), nouvel essai…"
+            sleep 5
+          done
+          echo "Échec du push après 3 tentatives."
+          exit 1
