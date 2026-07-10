@@ -39,14 +39,24 @@ import requests
 QUERIES = [
     "stage data engineer",
     "stage data engineering PFE",
-    "stage data scientist",
-    "stage machine learning",
+    "stage big data",
+    "stage ETL",
     "stage business intelligence",
+    "stage data analyst Power BI",
 ]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
-TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfe)\b", re.I)
+TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfa|pfe)\b", re.I)
+
+# Ciblage issu du CV : Data Engineering / Big Data / ETL / BI.
+PROFILE_TITLE_MUST_MATCH = re.compile(
+    r"\b(data\s*(?:engineer(?:ing)?|analyst|warehouse|pipeline|quality|governance|"
+    r"management|ops|intern(?:ship)?)|analytics?\s+engineer(?:ing)?|big\s+data|"
+    r"business\s+intelligence|informatique\s+d[eé]cisionnelle|ing[eé]nieur(?:e)?\s+"
+    r"(?:big\s+)?data|etl|talend|pyspark|spark|power\s*bi|bi)\b",
+    re.I,
+)
 
 # On ne conserve que les offres publiées récemment.
 MAX_OFFER_AGE_DAYS = 7
@@ -98,6 +108,8 @@ def make_offer(title, company, location, url, source, date="") -> dict | None:
     title = (title or "").strip()
     if not title or not TITLE_MUST_MATCH.search(title):
         return None
+    if not PROFILE_TITLE_MUST_MATCH.search(title):
+        return None
     published_at = parse_offer_date(date)
     if not published_at:
         return None
@@ -114,6 +126,16 @@ def make_offer(title, company, location, url, source, date="") -> dict | None:
         "date": published_at.date().isoformat(),
         "visa_friendly": is_visa_friendly(company),
     }
+
+
+def publication_age(date_value: str) -> str:
+    published = datetime.fromisoformat(date_value).date()
+    days = max(0, (datetime.now(timezone.utc).date() - published).days)
+    if days == 0:
+        return "aujourd'hui"
+    if days == 1:
+        return "hier"
+    return f"il y a {days} jours"
 
 
 # ============================================================
@@ -304,22 +326,30 @@ def render_dashboard(offers: list[dict], new_ids: set) -> None:
     DOCS_INDEX.parent.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
     sources = sorted({o["source"] for o in offers})
+    repository = os.environ.get("GITHUB_REPOSITORY", "neyos10/radar-stage-france")
+    actions_url = f"https://github.com/{repository}/actions/workflows/scan.yml"
 
     cards = []
     for o in sorted(offers, key=lambda x: x.get("date", ""), reverse=True)[:150]:
         is_new = o["id"] in new_ids
         published = datetime.fromisoformat(o["date"]).strftime("%d/%m/%Y")
+        age = publication_age(o["date"])
         cards.append(f"""
-      <div class="job {'is-new' if is_new else ''}" data-src="{o['source']}">
-        <h3><a href="{o['url']}" target="_blank" rel="noopener">{o['title']}</a></h3>
-        <div class="meta">{o['company']} · {o['location']} · Publiée le {published}</div>
+      <article class="job {'is-new' if is_new else ''}" data-id="{o['id']}"
+               data-src="{o['source']}" data-visa="{'1' if o['visa_friendly'] else '0'}">
+        <div class="job-top"><div>
+          <h3><a href="{o['url']}" target="_blank" rel="noopener">{o['title']}</a></h3>
+          <div class="meta">{o['company']} · {o['location']}</div>
+          <div class="published">Publiée {age} · {published}</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'{o['id']}')">✓ Marquer comme postulé</button></div>
         <div class="tags">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
           {'<span class="tag visa">✓ visa-friendly</span>' if o['visa_friendly'] else ''}
-          <span class="tag src">{o['source']}</span></div>
-      </div>""")
+          <span class="tag match">Profil CV</span><span class="tag src">{o['source']}</span></div>
+      </article>""")
 
     filter_btns = "".join(
-        f'<button class="fchip" onclick="flt(this,\'{s}\')">{s}</button>' for s in sources
+        f'<button class="fchip source-chip" onclick="setSource(this,\'{s}\')">{s}</button>' for s in sources
     )
 
     html = f"""<!DOCTYPE html>
@@ -331,35 +361,104 @@ def render_dashboard(offers: list[dict], new_ids: set) -> None:
 *{{box-sizing:border-box;margin:0;padding:0}}
 body{{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}}
 .wrap{{max-width:840px;margin:0 auto}}
-h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin:6px 0 16px}}
-.filters{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}}
+h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
+.hero{{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}}
+.scan-btn{{background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}}
+.profile-note{{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}}
+.filter-panel{{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}}
+.filter-group{{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}}
+.filter-label{{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}}
 .fchip{{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}}
 .fchip.on{{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}}
 .job{{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}}
 .job.is-new{{border-left:3px solid var(--saf)}}
+.job.applied{{opacity:.72;border-color:rgba(62,213,152,.35)}}
+.job-top{{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}}
 .job h3{{font-size:15px}} .job h3 a{{color:var(--encre);text-decoration:none}}
 .job h3 a:hover{{text-decoration:underline}}
 .meta{{color:var(--encre2);font-size:13px;margin-top:2px}}
+.published{{color:#B8C3D5;font-size:11.5px;margin-top:4px}}
+.apply-btn{{border:1px solid rgba(62,213,152,.45);background:rgba(62,213,152,.08);color:var(--ok);border-radius:9px;padding:7px 10px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}}
+.apply-btn.undo{{border-color:rgba(255,255,255,.16);background:transparent;color:var(--encre2)}}
 .tags{{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}}
 .tag{{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}}
 .tag.new{{background:var(--saf);color:#3A2C05}}
 .tag.visa{{background:rgba(62,213,152,.15);color:var(--ok)}}
+.tag.match{{background:rgba(107,91,255,.15);color:#CFC8FF}}
 .tag.src{{background:#212D44;color:var(--encre2);font-weight:500}}
+.empty{{color:var(--encre2);text-align:center;padding:30px 10px}}
+.storage-note{{color:#66748A;font-size:11px;text-align:center;margin-top:18px}}
+@media(max-width:620px){{.hero{{display:block}}.scan-btn{{display:inline-block;margin-top:12px}}.job-top{{display:block}}.apply-btn{{margin-top:10px}}.filter-label{{width:100%}}}}
 </style></head>
 <body><div class="wrap">
-<h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · Sources : {", ".join(sources) if sources else "—"}</p>
-<div class="filters"><button class="fchip on" onclick="flt(this,'*')">Toutes</button>{filter_btns}</div>
-{"".join(cards) if cards else "<p>Aucune offre trouvée pour l'instant — les campagnes PFE ouvrent en septembre.</p>"}
+<div class="hero"><div><h1>🎯 Radar Stage France</h1>
+<p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · Sources : {", ".join(sources) if sources else "—"}</p></div>
+<a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener">↻ Relancer le scan</a></div>
+<p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
+<div class="filter-panel">
+  <div class="filter-group"><span class="filter-label">Statut</span>
+    <button class="fchip status-chip on" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" onclick="setStatus(this,'all')">Tous</button>
+  </div>
+  <div class="filter-group"><span class="filter-label">Source</span>
+    <button class="fchip source-chip on" onclick="setSource(this,'*')">Toutes</button>{filter_btns}
+  </div>
+  <div class="filter-group"><span class="filter-label">Options</span>
+    <button id="visaFilter" class="fchip" aria-pressed="false" onclick="toggleVisa(this)">✓ Visa-friendly probable</button>
+  </div>
+</div>
+<p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
+<div id="jobs">{"".join(cards)}</div>
+<p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
 </div>
 <script>
-function flt(btn,src){{
-  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.job').forEach(j=>{{
-    j.style.display = (src==='*'||j.dataset.src===src) ? '' : 'none';
-  }});
+const STORAGE_KEY='radar-stage-france-applied-v1';
+let activeSource='*', activeStatus='todo', visaOnly=false;
+function readApplied(){{
+  try{{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}}
+  catch(_error){{return new Set();}}
 }}
+let applied=readApplied();
+function saveApplied(){{localStorage.setItem(STORAGE_KEY,JSON.stringify([...applied]));}}
+function setSource(btn,src){{
+  activeSource=src;
+  document.querySelectorAll('.source-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');refresh();
+}}
+function setStatus(btn,status){{
+  activeStatus=status;
+  document.querySelectorAll('.status-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');refresh();
+}}
+function toggleVisa(btn){{
+  visaOnly=!visaOnly;btn.classList.toggle('on',visaOnly);
+  btn.setAttribute('aria-pressed',visaOnly?'true':'false');refresh();
+}}
+function toggleApplied(event,id){{
+  event.preventDefault();
+  applied.has(id)?applied.delete(id):applied.add(id);saveApplied();refresh();
+}}
+function refresh(){{
+  let visible=0,todo=0,done=0;
+  document.querySelectorAll('.job').forEach(job=>{{
+    const isApplied=applied.has(job.dataset.id);
+    isApplied?done++:todo++;
+    job.classList.toggle('applied',isApplied);
+    const action=job.querySelector('.apply-btn');
+    action.textContent=isApplied?'↩ Remettre à postuler':'✓ Marquer comme postulé';
+    action.classList.toggle('undo',isApplied);
+    const sourceOk=activeSource==='*'||job.dataset.src===activeSource;
+    const statusOk=activeStatus==='all'||(activeStatus==='applied'?isApplied:!isApplied);
+    const visaOk=!visaOnly||job.dataset.visa==='1';
+    const show=sourceOk&&statusOk&&visaOk;
+    job.style.display=show?'':'none';if(show)visible++;
+  }});
+  document.getElementById('todoCount').textContent='('+todo+')';
+  document.getElementById('appliedCount').textContent='('+done+')';
+  document.getElementById('emptyState').hidden=visible!==0;
+}}
+refresh();
 </script>
 </body></html>"""
     DOCS_INDEX.write_text(html, encoding="utf-8")
