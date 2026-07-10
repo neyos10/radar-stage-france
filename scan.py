@@ -25,7 +25,7 @@ import os
 import re
 import smtplib
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -47,6 +47,9 @@ QUERIES = [
 # Mots qui doivent apparaître dans le titre pour garder l'offre
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
 TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfe)\b", re.I)
+
+# On ne conserve que les offres publiées récemment.
+MAX_OFFER_AGE_DAYS = 7
 
 VISA_FRIENDLY_KEYWORDS = [
     "capgemini", "sopra", "alten", "cgi", "inetum", "accenture", "devoteam",
@@ -75,9 +78,30 @@ def is_visa_friendly(company: str) -> bool:
     return any(k in c for k in VISA_FRIENDLY_KEYWORDS)
 
 
+def parse_offer_date(value) -> datetime | None:
+    raw = "" if value is None else str(value).strip()
+    if not raw or raw.lower() in {"nan", "nat", "none"}:
+        return None
+    try:
+        parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            parsed = datetime.strptime(raw[:10], "%Y-%m-%d")
+        except ValueError:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
 def make_offer(title, company, location, url, source, date="") -> dict | None:
     title = (title or "").strip()
     if not title or not TITLE_MUST_MATCH.search(title):
+        return None
+    published_at = parse_offer_date(date)
+    if not published_at:
+        return None
+    if published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
         return None
     company = (company or "Entreprise non précisée").strip()
     return {
@@ -87,7 +111,7 @@ def make_offer(title, company, location, url, source, date="") -> dict | None:
         "location": (location or "France").strip(),
         "url": url or "",
         "source": source,
-        "date": str(date or ""),
+        "date": published_at.date().isoformat(),
         "visa_friendly": is_visa_friendly(company),
     }
 
@@ -114,6 +138,7 @@ def fetch_jobspy(query: str) -> list[dict]:
                 results_wanted=15,
                 country_indeed="France",
                 job_type="internship",
+                hours_old=MAX_OFFER_AGE_DAYS * 24,
             )
             if site == ["google"]:
                 # Google Jobs exige sa propre syntaxe de recherche
@@ -281,12 +306,13 @@ def render_dashboard(offers: list[dict], new_ids: set) -> None:
     sources = sorted({o["source"] for o in offers})
 
     cards = []
-    for o in sorted(offers, key=lambda x: (x["id"] not in new_ids, x.get("date", "")), reverse=False)[:150]:
+    for o in sorted(offers, key=lambda x: x.get("date", ""), reverse=True)[:150]:
         is_new = o["id"] in new_ids
+        published = datetime.fromisoformat(o["date"]).strftime("%d/%m/%Y")
         cards.append(f"""
       <div class="job {'is-new' if is_new else ''}" data-src="{o['source']}">
         <h3><a href="{o['url']}" target="_blank" rel="noopener">{o['title']}</a></h3>
-        <div class="meta">{o['company']} · {o['location']}</div>
+        <div class="meta">{o['company']} · {o['location']} · Publiée le {published}</div>
         <div class="tags">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
           {'<span class="tag visa">✓ visa-friendly</span>' if o['visa_friendly'] else ''}
           <span class="tag src">{o['source']}</span></div>
@@ -322,7 +348,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin:6px 0 16px}
 </style></head>
 <body><div class="wrap">
 <h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : {now} · {len(offers)} offres · Sources : {", ".join(sources) if sources else "—"}</p>
+<p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · Sources : {", ".join(sources) if sources else "—"}</p>
 <div class="filters"><button class="fchip on" onclick="flt(this,'*')">Toutes</button>{filter_btns}</div>
 {"".join(cards) if cards else "<p>Aucune offre trouvée pour l'instant — les campagnes PFE ouvrent en septembre.</p>"}
 </div>
