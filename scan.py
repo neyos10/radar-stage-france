@@ -6,9 +6,10 @@ Sources :
   1. LinkedIn (offres publiques, sans compte)   — via JobSpy
   2. Indeed France                               — via JobSpy
   3. Glassdoor France                            — via JobSpy
-  4. Google Jobs (agrège APEC, WTTJ, HelloWork…) — via JobSpy
-  5. Adzuna (agrégateur officiel, API gratuite)  — si secrets fournis
-  6. France Travail (API officielle)             — si secrets fournis
+  4. Google Jobs (agrège WTTJ, HelloWork…)       — via JobSpy
+  5. APEC (recherche publique de stages)          — sans compte
+  6. Adzuna (agrégateur officiel, API gratuite)  — si secrets fournis
+  7. France Travail (API officielle)             — si secrets fournis
 
 Chaque source est optionnelle et tolérante aux pannes : si un site bloque
 (429) ou si une clé manque, on continue avec les autres.
@@ -43,6 +44,29 @@ QUERIES = [
     "stage ETL",
     "stage business intelligence",
     "stage data analyst Power BI",
+]
+
+APEC_QUERIES = [
+    "data",
+    "business intelligence",
+    "ETL",
+    "big data",
+    "Power BI",
+]
+
+FRANCE_TRAVAIL_QUERIES = [
+    "data engineer",
+    "data engineering",
+    "big data",
+    "ETL",
+    "business intelligence",
+    "data analyst",
+    "Power BI",
+]
+
+SOURCE_NAMES = [
+    "LinkedIn", "Indeed", "Glassdoor", "Google Jobs", "APEC",
+    "Adzuna", "France Travail",
 ]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
@@ -118,9 +142,10 @@ def parse_offer_date(value) -> datetime | None:
     return parsed.astimezone(timezone.utc)
 
 
-def make_offer(title, company, location, url, source, date="") -> dict | None:
+def make_offer(title, company, location, url, source, date="",
+               confirmed_internship=False) -> dict | None:
     title = clean_text(title)
-    if not title or not TITLE_MUST_MATCH.search(title):
+    if not title or (not confirmed_internship and not TITLE_MUST_MATCH.search(title)):
         return None
     if PROFILE_TITLE_EXCLUDE.search(title):
         return None
@@ -201,7 +226,50 @@ def fetch_jobspy(query: str) -> list[dict]:
 
 
 # ============================================================
-# SOURCE 5 : Adzuna (API officielle gratuite)
+# SOURCE 5 : APEC (recherche publique de stages, sans compte)
+# ============================================================
+
+def fetch_apec(query: str) -> list[dict]:
+    try:
+        resp = requests.post(
+            "https://www.apec.fr/cms/webservices/rechercheOffre",
+            json={
+                "motsCles": query,
+                "lieux": [], "fonctions": [], "statutPoste": [],
+                "typesContrat": [597171],  # identifiant APEC officiel : STAGE
+                "typesConvention": [], "niveauxExperience": [],
+                "idsEtablissement": [], "secteursActivite": [],
+                "typesTeletravail": [], "idNomZonesDeplacement": [],
+                "positionNumbersExcluded": [], "typeClient": "CADRE",
+                "sorts": [{"type": "DATE", "direction": "DESCENDING"}],
+                # Une seule page large pour couvrir les 7 derniers jours sans
+                # multiplier les appels à la recherche publique.
+                "pagination": {"range": 100, "startIndex": 0},
+                "activeFiltre": True, "pointGeolocDeReference": {},
+            },
+            headers={"Accept": "application/json",
+                     "User-Agent": "radar-stage-france/1.0"},
+            timeout=20,
+        )
+        resp.raise_for_status()
+        offers = []
+        for r in resp.json().get("resultats", []):
+            number = r.get("numeroOffre", "")
+            url = f"https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/{number}"
+            o = make_offer(
+                r.get("intitule"), r.get("nomCommercial"), r.get("lieuTexte"),
+                url, "APEC", r.get("datePublication"), confirmed_internship=True,
+            )
+            if o:
+                offers.append(o)
+        return offers
+    except Exception as e:
+        print(f"[WARN] APEC '{query}' a échoué : {e}", file=sys.stderr)
+        return []
+
+
+# ============================================================
+# SOURCE 6 : Adzuna (API officielle gratuite)
 # ============================================================
 
 def fetch_adzuna(query: str) -> list[dict]:
@@ -237,7 +305,7 @@ def fetch_adzuna(query: str) -> list[dict]:
 
 
 # ============================================================
-# SOURCE 6 : France Travail (API officielle)
+# SOURCE 7 : France Travail (API officielle)
 # ============================================================
 
 def ft_token() -> str | None:
@@ -279,6 +347,7 @@ def fetch_france_travail(token: str, query: str) -> list[dict]:
                 r.get("intitule"), (r.get("entreprise") or {}).get("nom"),
                 (r.get("lieuTravail") or {}).get("libelle"),
                 url, "France Travail", (r.get("dateCreation") or "")[:10],
+                confirmed_internship=True,
             )
             if o:
                 offers.append(o)
@@ -325,7 +394,7 @@ def send_email(new_offers: list[dict], dashboard_url: str) -> None:
                 f"{o['company']} · {o['location']}{badge}</p>"
             )
     parts.append(f"<hr><p><a href='{dashboard_url}'>📊 Ouvrir le dashboard complet</a></p>")
-    parts.append("<p style='color:#888;font-size:12px'>Pipeline GitHub Actions · JobSpy + Adzuna + France Travail</p>")
+    parts.append("<p style='color:#888;font-size:12px'>Pipeline GitHub Actions · JobSpy + APEC + Adzuna + France Travail</p>")
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -494,6 +563,11 @@ def main() -> None:
         for o in fetch_jobspy(q):
             all_offers.setdefault(o["id"], o)
 
+    # --- APEC ---
+    for q in APEC_QUERIES:
+        for o in fetch_apec(q):
+            all_offers.setdefault(o["id"], o)
+
     # --- Adzuna ---
     for q in QUERIES:
         for o in fetch_adzuna(q):
@@ -502,7 +576,7 @@ def main() -> None:
     # --- France Travail ---
     token = ft_token()
     if token:
-        for q in QUERIES:
+        for q in FRANCE_TRAVAIL_QUERIES:
             for o in fetch_france_travail(token, q):
                 all_offers.setdefault(o["id"], o)
 
@@ -514,8 +588,8 @@ def main() -> None:
     by_src = {}
     for o in all_offers.values():
         by_src[o["source"]] = by_src.get(o["source"], 0) + 1
-    for s, n in sorted(by_src.items()):
-        print(f"  - {s}: {n}")
+    for source in SOURCE_NAMES:
+        print(f"  - {source}: {by_src.get(source, 0)}")
 
     dashboard_url = os.environ.get("DASHBOARD_URL", "")
     if new_offers and os.environ.get("SMTP_USER"):

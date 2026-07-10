@@ -1,7 +1,7 @@
-# 🎯 Radar Stage France V2 — LinkedIn + Indeed + Glassdoor + Google Jobs + Adzuna + France Travail
+# 🎯 Radar Stage France V2 — LinkedIn + Indeed + Glassdoor + Google Jobs + APEC + Adzuna + France Travail
 
-Pipeline 100% gratuit et autonome qui scanne **chaque matin** les offres de stage
-Data/IA en France sur 6 sources, les fusionne, détecte les nouveautés, et :
+Pipeline 100% gratuit et autonome qui scanne **toutes les 30 minutes** les offres de stage
+Data/IA en France sur 7 sources, les fusionne, détecte les nouveautés, et :
 - t'envoie un **email** uniquement s'il y a du nouveau
 - met à jour un **dashboard web** (GitHub Pages) où TOUTES les offres s'affichent,
   filtrables par source, avec badges NOUVEAU et visa-friendly
@@ -13,14 +13,15 @@ Data/IA en France sur 6 sources, les fusionne, détecte les nouveautés, et :
 | **LinkedIn** | JobSpy — offres publiques, SANS compte (ton profil ne risque rien) | Non |
 | **Indeed France** | JobSpy — le plus fiable, pas de rate-limit | Non |
 | **Glassdoor France** | JobSpy | Non |
-| **Google Jobs** | JobSpy — agrège APEC, WTTJ, HelloWork & co | Non |
+| **Google Jobs** | JobSpy — agrège WTTJ, HelloWork & co | Non |
+| **APEC** | Recherche publique de stages cadres et jeunes diplômés | Non |
 | **Adzuna** | API officielle gratuite — centaines de sites français agrégés | Oui (gratuite, 2 min) |
 | **France Travail** | API officielle | Oui (gratuite, 5 min) |
 
 ⚠️ Honnêteté sur LinkedIn/Glassdoor : le scraping des pages publiques peut être
 bloqué temporairement (erreur 429) selon l'humeur du site et l'IP GitHub. Le
 script est conçu pour **continuer avec les autres sources** quand ça arrive.
-Indeed, Adzuna et France Travail, eux, sont stables. Sur une semaine, tu ne
+Indeed, APEC, Adzuna et France Travail, eux, sont stables. Sur une semaine, tu ne
 rates quasiment rien.
 
 ## 🚀 Installation (~15-20 min, une seule fois)
@@ -50,7 +51,7 @@ Repo → Settings → Secrets and variables → Actions → New repository secre
 | `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | clés Adzuna | recommandé |
 | `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | clés France Travail | recommandé |
 
-Sans les clés Adzuna/FT, le pipeline tourne quand même avec les 4 sources JobSpy.
+Sans les clés Adzuna/FT, le pipeline tourne quand même avec les 4 sources JobSpy et APEC.
 
 ### 4. Le dashboard public
 Repo → Settings → Pages → Deploy from a branch → `main` + dossier `/docs` → Save.
@@ -69,7 +70,7 @@ vérifie les logs, le dashboard, et ta boîte mail.
   stage/stagiaire/intern/PFE)
 
 ## 🧠 À raconter en entretien (c'est un vrai projet data engineering)
-Extraction multi-sources (2 APIs REST OAuth2/key + scraping tolérant aux pannes),
+Extraction multi-sources (APIs REST publique/OAuth2/key + scraping tolérant aux pannes),
 normalisation et déduplication par hash, détection de delta contre un état
 persisté versionné dans Git, notification SMTP conditionnelle, publication
 statique automatisée — le tout orchestré en serverless par GitHub Actions cron.
