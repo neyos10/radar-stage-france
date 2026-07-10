@@ -88,6 +88,15 @@ def is_visa_friendly(company: str) -> bool:
     return any(k in c for k in VISA_FRIENDLY_KEYWORDS)
 
 
+def clean_text(value, default="") -> str:
+    if value is None:
+        return default
+    text = str(value).strip()
+    if not text or text.lower() in {"nan", "nat", "none"}:
+        return default
+    return text
+
+
 def parse_offer_date(value) -> datetime | None:
     raw = "" if value is None else str(value).strip()
     if not raw or raw.lower() in {"nan", "nat", "none"}:
@@ -105,7 +114,7 @@ def parse_offer_date(value) -> datetime | None:
 
 
 def make_offer(title, company, location, url, source, date="") -> dict | None:
-    title = (title or "").strip()
+    title = clean_text(title)
     if not title or not TITLE_MUST_MATCH.search(title):
         return None
     if not PROFILE_TITLE_MUST_MATCH.search(title):
@@ -115,13 +124,15 @@ def make_offer(title, company, location, url, source, date="") -> dict | None:
         return None
     if published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
         return None
-    company = (company or "Entreprise non précisée").strip()
+    company = clean_text(company, "Entreprise non précisée")
+    location = clean_text(location, "France")
+    url = clean_text(url)
     return {
         "id": offer_id(url, title, company),
         "title": title,
         "company": company,
-        "location": (location or "France").strip(),
-        "url": url or "",
+        "location": location,
+        "url": url,
         "source": source,
         "date": published_at.date().isoformat(),
         "visa_friendly": is_visa_friendly(company),
