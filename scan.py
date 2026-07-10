@@ -57,6 +57,11 @@ PROFILE_TITLE_MUST_MATCH = re.compile(
     r"(?:big\s+)?data|etl|talend|pyspark|spark|power\s*bi|bi)\b",
     re.I,
 )
+PROFILE_TITLE_EXCLUDE = re.compile(
+    r"\b(data\s+scien(?:ce|tist)|machine\s+learning|deep\s+learning|"
+    r"computer\s+vision|traitement\s+du\s+langage|nlp)\b",
+    re.I,
+)
 
 # On ne conserve que les offres publiées récemment.
 MAX_OFFER_AGE_DAYS = 7
@@ -116,6 +121,8 @@ def parse_offer_date(value) -> datetime | None:
 def make_offer(title, company, location, url, source, date="") -> dict | None:
     title = clean_text(title)
     if not title or not TITLE_MUST_MATCH.search(title):
+        return None
+    if PROFILE_TITLE_EXCLUDE.search(title):
         return None
     if not PROFILE_TITLE_MUST_MATCH.search(title):
         return None
