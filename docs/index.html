@@ -7,342 +7,271 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}
 .wrap{max-width:840px;margin:0 auto}
-h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin:6px 0 16px}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
+.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}
+.scan-btn{background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}
+.profile-note{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}
+.filter-panel{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}
+.filter-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}
+.filter-label{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}
 .fchip{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}
 .fchip.on{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}
 .job{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}
 .job.is-new{border-left:3px solid var(--saf)}
+.job.applied{opacity:.72;border-color:rgba(62,213,152,.35)}
+.job-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
 .job h3{font-size:15px} .job h3 a{color:var(--encre);text-decoration:none}
 .job h3 a:hover{text-decoration:underline}
 .meta{color:var(--encre2);font-size:13px;margin-top:2px}
+.published{color:#B8C3D5;font-size:11.5px;margin-top:4px}
+.apply-btn{border:1px solid rgba(62,213,152,.45);background:rgba(62,213,152,.08);color:var(--ok);border-radius:9px;padding:7px 10px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.apply-btn.undo{border-color:rgba(255,255,255,.16);background:transparent;color:var(--encre2)}
 .tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .tag{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}
 .tag.new{background:var(--saf);color:#3A2C05}
 .tag.visa{background:rgba(62,213,152,.15);color:var(--ok)}
+.tag.match{background:rgba(107,91,255,.15);color:#CFC8FF}
 .tag.src{background:#212D44;color:var(--encre2);font-weight:500}
+.empty{color:var(--encre2);text-align:center;padding:30px 10px}
+.storage-note{color:#66748A;font-size:11px;text-align:center;margin-top:18px}
+@media(max-width:620px){.hero{display:block}.scan-btn{display:inline-block;margin-top:12px}.job-top{display:block}.apply-btn{margin-top:10px}.filter-label{width:100%}}
 </style></head>
 <body><div class="wrap">
-<h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : 10/07/2026 10:43 UTC · 44 offres des 7 derniers jours · Sources : Indeed, LinkedIn</p>
-<div class="filters"><button class="fchip on" onclick="flt(this,'*')">Toutes</button><button class="fchip" onclick="flt(this,'Indeed')">Indeed</button><button class="fchip" onclick="flt(this,'LinkedIn')">LinkedIn</button></div>
-
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=adb3cd638f8bfb59" target="_blank" rel="noopener">Consultante/Consultant Data & IA - Stage</a></h3>
-        <div class="meta">Capgemini · France · Publiée le 10/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=3f237b9700155527" target="_blank" rel="noopener">Stage - Ingénieur généraliste ou gestion des risques F/H</a></h3>
-        <div class="meta">EDF · France · Publiée le 10/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=8236882ab6ed5290" target="_blank" rel="noopener">internship 6 months - data science</a></h3>
-        <div class="meta">Sanofi · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=1e59ddc26746ee89" target="_blank" rel="noopener">Stage Business Solution Engineer : Big Data, Finance & ESG (Python)</a></h3>
-        <div class="meta">Opensee · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=2f42d2d8d05e9d4c" target="_blank" rel="noopener">Consultante / Consultant Data, Risque & Conformité - Stage</a></h3>
-        <div class="meta">Capgemini · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=aa26c6426e19b2d4" target="_blank" rel="noopener">Legal Intern - Data Privacy - Stage PPI</a></h3>
-        <div class="meta">Voodoo · France · Publiée le 09/07/2026</div>
+<div class="hero"><div><h1>🎯 Radar Stage France</h1>
+<p class="sub">Dernier scan : 10/07/2026 10:54 UTC · 14 offres des 7 derniers jours · Sources : Indeed, LinkedIn</p></div>
+<a class="scan-btn" href="https://github.com/neyos10/radar-stage-france/actions/workflows/scan.yml" target="_blank" rel="noopener">↻ Relancer le scan</a></div>
+<p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
+<div class="filter-panel">
+  <div class="filter-group"><span class="filter-label">Statut</span>
+    <button class="fchip status-chip on" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" onclick="setStatus(this,'all')">Tous</button>
+  </div>
+  <div class="filter-group"><span class="filter-label">Source</span>
+    <button class="fchip source-chip on" onclick="setSource(this,'*')">Toutes</button><button class="fchip source-chip" onclick="setSource(this,'Indeed')">Indeed</button><button class="fchip source-chip" onclick="setSource(this,'LinkedIn')">LinkedIn</button>
+  </div>
+  <div class="filter-group"><span class="filter-label">Options</span>
+    <button id="visaFilter" class="fchip" aria-pressed="false" onclick="toggleVisa(this)">✓ Visa-friendly probable</button>
+  </div>
+</div>
+<p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
+<div id="jobs">
+      <article class="job " data-id="4994b719a64290f1"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437376932" target="_blank" rel="noopener">Stagiaire ou Alternant Data Analyst - Performance Commerciale – 6 mois (F/H)</a></h3>
+          <div class="meta">Horus Pharma · France</div>
+          <div class="published">Publiée hier · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'4994b719a64290f1')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=0b2abe881b873922" target="_blank" rel="noopener">Data Analyst (Stage) - H/F</a></h3>
-        <div class="meta">IceRoll (OUR FOOD) · France · Publiée le 09/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="285c8920f7c6ea8b"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=0b2abe881b873922" target="_blank" rel="noopener">Data Analyst (Stage) - H/F</a></h3>
+          <div class="meta">IceRoll (OUR FOOD) · France</div>
+          <div class="published">Publiée hier · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'285c8920f7c6ea8b')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=2481c9a11d1d807e" target="_blank" rel="noopener">Stage Data Scientist - WiFi Sensing & Human Activity Recognition</a></h3>
-        <div class="meta">zoe care · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=48489a6b49d00aaf" target="_blank" rel="noopener">Data & SIRH – Employee Central Core HR — Stage F/H/X</a></h3>
-        <div class="meta">Accor · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4438588687" target="_blank" rel="noopener">Stagiaire Supply Chain Scientist (H/F)</a></h3>
-        <div class="meta">Lokad · France · Publiée le 09/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a24a61394021d125"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=2585b8c95a4c4b29" target="_blank" rel="noopener">Alternant ou Stagiaire Data Analyst - Performance Commerciale - 6 mois (F/H)</a></h3>
+          <div class="meta">HORUS PHARMA · France</div>
+          <div class="published">Publiée hier · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'a24a61394021d125')">✓ Marquer comme postulé</button></div>
         <div class="tags"><span class="tag new">NOUVEAU</span>
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=826bc2d664dbbf4b" target="_blank" rel="noopener">Ingénieure / Ingénieur Optimisation Supply Chain - Stage</a></h3>
-        <div class="meta">Capgemini · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=6c3b5ac671c598c9" target="_blank" rel="noopener">Ingénieur / Ingénieure Exploitation Applicative - Stage</a></h3>
-        <div class="meta">Capgemini · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=35e35c4bb7f65931" target="_blank" rel="noopener">Ingénieur Électronique Test & Validation (H/F) - STAGE</a></h3>
-        <div class="meta">STEREOLABS · France · Publiée le 09/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="e449c48b5253d563"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4438231923" target="_blank" rel="noopener">Stage - Développeur / Data engineer</a></h3>
+          <div class="meta">AppASO Group · France</div>
+          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'e449c48b5253d563')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=8365e4b029411510" target="_blank" rel="noopener">Stage ingénieur informatique - Séquencement de test TK O6</a></h3>
-        <div class="meta">Siemens · France · Publiée le 09/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="92352271e94303f7"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437078338" target="_blank" rel="noopener">Stage - Data Analyst - Paris - H/F</a></h3>
+          <div class="meta">Groupe iliad · France</div>
+          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'92352271e94303f7')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=3afced1a6337dad9" target="_blank" rel="noopener">Ingénieur.e Sécurité Incendie – Stage de fin d’études</a></h3>
-        <div class="meta">RATP · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437376932" target="_blank" rel="noopener">Stagiaire ou Alternant Data Analyst - Performance Commerciale – 6 mois (F/H)</a></h3>
-        <div class="meta">Horus Pharma · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=336c4ec29b64c975" target="_blank" rel="noopener">Junior Business Analyst - Stage (H/F/N)</a></h3>
-        <div class="meta">Believe · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=9a5ccb8ba585d864" target="_blank" rel="noopener">STAGE- Chargé(e) de communication éditoriale (H/F)</a></h3>
-        <div class="meta">Hutchinson · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=8d9bb6bf9e5df3c7" target="_blank" rel="noopener">Chargée Relations Écoles & Universités Île-de-France - Stage</a></h3>
-        <div class="meta">Capgemini · France · Publiée le 09/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4438231923" target="_blank" rel="noopener">Stage - Développeur / Data engineer</a></h3>
-        <div class="meta">AppASO Group · France · Publiée le 08/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437078338" target="_blank" rel="noopener">Stage - Data Analyst - Paris - H/F</a></h3>
-        <div class="meta">Groupe iliad · France · Publiée le 08/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4436398008" target="_blank" rel="noopener">Stage Ingénieur - Data Scientist F/H - SAFRAN SPACECRAFT PROPULSION</a></h3>
-        <div class="meta">AEROCONTACT · France · Publiée le 08/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437019564" target="_blank" rel="noopener">Stage Innovation : Ingénieur Réalité Etendue</a></h3>
-        <div class="meta">ALTEN · France · Publiée le 08/07/2026</div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4395979720" target="_blank" rel="noopener">Stage – Développement d'une Plateforme d'IA Générative F/H</a></h3>
-        <div class="meta">Framatome · France · Publiée le 08/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job is-new" data-id="99a6dcd428ac2fb1"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437023685" target="_blank" rel="noopener">[STAGE] Data Analyst – Sûreté de Fonctionnement F/H</a></h3>
+          <div class="meta">LGM · France</div>
+          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'99a6dcd428ac2fb1')">✓ Marquer comme postulé</button></div>
         <div class="tags"><span class="tag new">NOUVEAU</span>
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437027177" target="_blank" rel="noopener">Stage Innovation : Ingénieur Intelligence Artificielle Générative / NLP</a></h3>
-        <div class="meta">ALTEN · France · Publiée le 08/07/2026</div>
-        <div class="tags">
-          <span class="tag visa">✓ visa-friendly</span>
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=7a0005731179921a" target="_blank" rel="noopener">Internship - Développement de Carrières & Projets Alumni (Septembre 2026)</a></h3>
-        <div class="meta">Boston Consulting Group · France · Publiée le 08/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="776ce2adadc82cab"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4438254487" target="_blank" rel="noopener">STAGE - ASSISTANT(E) DATA ANALYST - (F/H/X)</a></h3>
+          <div class="meta">CANAL+ Group · France</div>
+          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'776ce2adadc82cab')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=ff4cc94b5722d6fa" target="_blank" rel="noopener">Stage - Contrôleur de Gestion Junior - F/H</a></h3>
-        <div class="meta">Schneider Electric · France · Publiée le 08/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="4c1faf3ec825820f"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6608e3b7648d6bd4" target="_blank" rel="noopener">Stage - Data Analyst - Paris - H/F</a></h3>
+          <div class="meta">Iliad · France</div>
+          <div class="published">Publiée il y a 2 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'4c1faf3ec825820f')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=6608e3b7648d6bd4" target="_blank" rel="noopener">Stage - Data Analyst - Paris - H/F</a></h3>
-        <div class="meta">Iliad · France · Publiée le 08/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="9637ea8de0338bc0"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4408197066" target="_blank" rel="noopener">STAGE - DATA ENGINEER F/H</a></h3>
+          <div class="meta">Cdiscount · France</div>
+          <div class="published">Publiée il y a 3 jours · 07/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'9637ea8de0338bc0')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4408197066" target="_blank" rel="noopener">STAGE - DATA ENGINEER F/H</a></h3>
-        <div class="meta">Cdiscount · France · Publiée le 07/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="abdbc66426f40fb8"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4434554593" target="_blank" rel="noopener">Assistant Data Analyst H/F - STAGE</a></h3>
+          <div class="meta">GALEC - Groupement d'Achats E.LECLERC · France</div>
+          <div class="published">Publiée il y a 3 jours · 07/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'abdbc66426f40fb8')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437830868" target="_blank" rel="noopener">Stage - Innovation Data / Intelligence Artificielle (F/H)</a></h3>
-        <div class="meta">GIVENCHY · France · Publiée le 07/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="634048f213433dd6"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4436238770" target="_blank" rel="noopener">Stage - Data analyst (H/F)</a></h3>
+          <div class="meta">Petzl · France</div>
+          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'634048f213433dd6')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437839307" target="_blank" rel="noopener">Stage - Ingénieur en Data Science / Intelligence Artificielle (F/H)</a></h3>
-        <div class="meta">SII Germany · France · Publiée le 07/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job is-new" data-id="f6fcd62bed3380c0"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=15e7c1161221db6d" target="_blank" rel="noopener">Stage - Data analyst (H/F)</a></h3>
+          <div class="meta">PETZL · France</div>
+          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'f6fcd62bed3380c0')">✓ Marquer comme postulé</button></div>
         <div class="tags"><span class="tag new">NOUVEAU</span>
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437821064" target="_blank" rel="noopener">Stage Ingénieur.e IA ET COMPUTER VISION</a></h3>
-        <div class="meta">SII Group Switzerland · France · Publiée le 07/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="1ca59cc72b707649"
+               data-src="Indeed" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=27ac27b353011c30" target="_blank" rel="noopener">Portfolio Data Analyst - Stage (H/F)</a></h3>
+          <div class="meta">Corum · France</div>
+          <div class="published">Publiée il y a 4 jours · 06/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'1ca59cc72b707649')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4434552401" target="_blank" rel="noopener">Stage Ingénieur.e IA ET COMPUTER VISION</a></h3>
-        <div class="meta">SII Czech Republic · France · Publiée le 07/07/2026</div>
+          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="8f2426224294bea6"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4417506617" target="_blank" rel="noopener">Stage – Data Analyst / Business Intelligence H/F</a></h3>
+          <div class="meta">Covivio · France</div>
+          <div class="published">Publiée il y a 5 jours · 05/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'8f2426224294bea6')">✓ Marquer comme postulé</button></div>
         <div class="tags">
           
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437837412" target="_blank" rel="noopener">Stage Ingénieur.e IA ET COMPUTER VISION</a></h3>
-        <div class="meta">SII Germany · France · Publiée le 07/07/2026</div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4434554593" target="_blank" rel="noopener">Assistant Data Analyst H/F - STAGE</a></h3>
-        <div class="meta">GALEC - Groupement d'Achats E.LECLERC · France · Publiée le 07/07/2026</div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4437197607" target="_blank" rel="noopener">Automation & Data Developer [STAGE]</a></h3>
-        <div class="meta">Wellow · France · Publiée le 06/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4436238770" target="_blank" rel="noopener">Stage - Data analyst (H/F)</a></h3>
-        <div class="meta">Petzl · France · Publiée le 06/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="Indeed">
-        <h3><a href="https://fr.indeed.com/viewjob?jk=7c5b0015b1a9bde7" target="_blank" rel="noopener">Stage - 6 mois - Data Scientist Generative AI F/H</a></h3>
-        <div class="meta">Natixis · France · Publiée le 06/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">Indeed</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4433949504" target="_blank" rel="noopener">Stage - 6 mois - Data Scientist Generative AI F/H</a></h3>
-        <div class="meta">Natixis Corporate & Investment Banking · France · Publiée le 06/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4436041957" target="_blank" rel="noopener">BUSINESS DEVELOPMENT INTERN</a></h3>
-        <div class="meta">STATION F · France · Publiée le 06/07/2026</div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4417506617" target="_blank" rel="noopener">Stage – Data Analyst / Business Intelligence H/F</a></h3>
-        <div class="meta">Covivio · France · Publiée le 05/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4407643120" target="_blank" rel="noopener">Stage - Assistant.e Chef de Projet M.O.A Business Intelligence & Visualisation Data (H/F/X)</a></h3>
-        <div class="meta">CHANEL · France · Publiée le 05/07/2026</div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job is-new" data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4306648725" target="_blank" rel="noopener">Stage - Bac+5 - Apprentissage supervisé pour l'évaluation de l'aléa sismique probabiliste - H/F</a></h3>
-        <div class="meta">CEA · France · Publiée le 04/07/2026</div>
-        <div class="tags"><span class="tag new">NOUVEAU</span>
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
-      <div class="job " data-src="LinkedIn">
-        <h3><a href="https://www.linkedin.com/jobs/view/4367814585" target="_blank" rel="noopener">STAGE - Assistant Chef de Projet Data et Business Intelligence (H/F)</a></h3>
-        <div class="meta">Hermès · France · Publiée le 04/07/2026</div>
-        <div class="tags">
-          
-          <span class="tag src">LinkedIn</span></div>
-      </div>
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article></div>
+<p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
 </div>
 <script>
-function flt(btn,src){
-  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.job').forEach(j=>{
-    j.style.display = (src==='*'||j.dataset.src===src) ? '' : 'none';
-  });
+const STORAGE_KEY='radar-stage-france-applied-v1';
+let activeSource='*', activeStatus='todo', visaOnly=false;
+function readApplied(){
+  try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}
+  catch(_error){return new Set();}
 }
+let applied=readApplied();
+function saveApplied(){localStorage.setItem(STORAGE_KEY,JSON.stringify([...applied]));}
+function setSource(btn,src){
+  activeSource=src;
+  document.querySelectorAll('.source-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');refresh();
+}
+function setStatus(btn,status){
+  activeStatus=status;
+  document.querySelectorAll('.status-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');refresh();
+}
+function toggleVisa(btn){
+  visaOnly=!visaOnly;btn.classList.toggle('on',visaOnly);
+  btn.setAttribute('aria-pressed',visaOnly?'true':'false');refresh();
+}
+function toggleApplied(event,id){
+  event.preventDefault();
+  applied.has(id)?applied.delete(id):applied.add(id);saveApplied();refresh();
+}
+function refresh(){
+  let visible=0,todo=0,done=0;
+  document.querySelectorAll('.job').forEach(job=>{
+    const isApplied=applied.has(job.dataset.id);
+    isApplied?done++:todo++;
+    job.classList.toggle('applied',isApplied);
+    const action=job.querySelector('.apply-btn');
+    action.textContent=isApplied?'↩ Remettre à postuler':'✓ Marquer comme postulé';
+    action.classList.toggle('undo',isApplied);
+    const sourceOk=activeSource==='*'||job.dataset.src===activeSource;
+    const statusOk=activeStatus==='all'||(activeStatus==='applied'?isApplied:!isApplied);
+    const visaOk=!visaOnly||job.dataset.visa==='1';
+    const show=sourceOk&&statusOk&&visaOk;
+    job.style.display=show?'':'none';if(show)visible++;
+  });
+  document.getElementById('todoCount').textContent='('+todo+')';
+  document.getElementById('appliedCount').textContent='('+done+')';
+  document.getElementById('emptyState').hidden=visible!==0;
+}
+refresh();
 </script>
 </body></html>
