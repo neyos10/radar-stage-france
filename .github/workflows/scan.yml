@@ -1,0 +1,47 @@
+name: Veille Stage Data/IA France
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # toutes les 30 min — repo public = minutes GitHub Actions gratuites et illimitées
+  workflow_dispatch: {}       # bouton "Run workflow" pour lancer à la main
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dépendances
+        run: pip install requests python-jobspy
+
+      - name: Scan multi-sources
+        env:
+          # — optionnels : le scan tourne même sans (JobSpy n'a besoin de rien)
+          FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
+          FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          # — email
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+          # — lien vers ton dashboard GitHub Pages (mis dans l'email)
+          DASHBOARD_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: python scan.py
+
+      - name: Commit résultats (mémoire + dashboard)
+        run: |
+          git config user.name "radar-stage-bot"
+          git config user.email "actions@github.com"
+          git add data/seen_offers.json docs/index.html
+          git diff --quiet --cached || git commit -m "Scan $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push

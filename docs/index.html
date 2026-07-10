@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar Stage France — Dashboard</title>
+<style>
+:root{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}
+.wrap{max-width:840px;margin:0 auto}
+h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin:6px 0 16px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.fchip{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}
+.fchip.on{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}
+.job{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}
+.job.is-new{border-left:3px solid var(--saf)}
+.job h3{font-size:15px} .job h3 a{color:var(--encre);text-decoration:none}
+.job h3 a:hover{text-decoration:underline}
+.meta{color:var(--encre2);font-size:13px;margin-top:2px}
+.tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tag{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}
+.tag.new{background:var(--saf);color:#3A2C05}
+.tag.visa{background:rgba(62,213,152,.15);color:var(--ok)}
+.tag.src{background:#212D44;color:var(--encre2);font-weight:500}
+</style></head>
+<body><div class="wrap">
+<h1>🎯 Radar Stage France</h1>
+<p class="sub">Dernier scan : 10/07/2026 10:01 UTC · 0 offres · Sources : —</p>
+<div class="filters"><button class="fchip on" onclick="flt(this,'*')">Toutes</button></div>
+<p>Aucune offre trouvée pour l'instant — les campagnes PFE ouvrent en septembre.</p>
+</div>
+<script>
+function flt(btn,src){
+  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.job').forEach(j=>{
+    j.style.display = (src==='*'||j.dataset.src===src) ? '' : 'none';
+  });
+}
+</script>
+</body></html>
