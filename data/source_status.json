@@ -1,43 +1,44 @@
 {
- "generated_at": "2026-07-10T14:13:47+00:00",
- "scan_duration_s": 30.4,
+ "generated_at": "2026-07-10T14:56:32+00:00",
+ "scan_duration_s": 69.6,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 70,
-   "accepted_count": 7,
-   "rejected_count": 63,
+   "raw_count": 134,
+   "accepted_count": 10,
+   "rejected_count": 124,
    "reject_reasons": {
-    "pas un stage": 40,
-    "date absente ou invalide": 6,
-    "doublon": 4,
-    "hors ciblage CV": 11,
-    "exclusion Data Science/ML": 1,
+    "pas un stage": 83,
+    "exclusion Data Science/ML": 7,
+    "date absente ou invalide": 4,
+    "doublon": 11,
+    "hors ciblage CV": 15,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 3,
     "plus de 7 jours": 1
    },
-   "duration_s": 30.4,
+   "duration_s": 69.6,
    "http_error": "",
    "note": "",
-   "label": "7 offres"
+   "label": "10 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 52,
-   "accepted_count": 10,
-   "rejected_count": 42,
+   "raw_count": 77,
+   "accepted_count": 8,
+   "rejected_count": 69,
    "reject_reasons": {
-    "exclusion Data Science/ML": 3,
-    "pas un stage": 32,
-    "plus de 7 jours": 1,
-    "hors ciblage CV": 4,
-    "doublon": 2
+    "exclusion Data Science/ML": 4,
+    "pas un stage": 48,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 7,
+    "hors ciblage CV": 7,
+    "doublon": 3
    },
-   "duration_s": 3.4,
+   "duration_s": 5.7,
    "http_error": "",
    "note": "",
-   "label": "10 offres"
+   "label": "8 offres"
   },
   {
    "source": "Glassdoor",
@@ -46,7 +47,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.3,
+   "duration_s": 5.7,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -58,7 +59,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.3,
+   "duration_s": 3.0,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -66,18 +67,18 @@
   {
    "source": "APEC",
    "status": "success",
-   "raw_count": 90,
-   "accepted_count": 5,
-   "rejected_count": 85,
+   "raw_count": 43,
+   "accepted_count": 1,
+   "rejected_count": 42,
    "reject_reasons": {
-    "hors ciblage CV": 18,
-    "exclusion Data Science/ML": 1,
-    "plus de 7 jours": 66
+    "métier hors périmètre (audit/compta/RH/finance/…)": 16,
+    "hors ciblage CV": 5,
+    "plus de 7 jours": 21
    },
-   "duration_s": 23.8,
+   "duration_s": 3.0,
    "http_error": "",
    "note": "",
-   "label": "5 offres"
+   "label": "1 offre"
   },
   {
    "source": "Adzuna",

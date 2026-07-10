@@ -55,6 +55,7 @@ QUERIES = [
     "stage ETL",
     "stage business intelligence",
     "stage data analyst Power BI",
+    "stage analytics engineer",
 ]
 
 APEC_QUERIES = [
@@ -63,6 +64,7 @@ APEC_QUERIES = [
     "ETL",
     "big data",
     "Power BI",
+    "spark",
 ]
 
 FRANCE_TRAVAIL_QUERIES = [
@@ -85,11 +87,15 @@ SOURCE_NAMES = [
 TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfa|pfe)\b", re.I)
 
 # Ciblage issu du CV : Data Engineering / Big Data / ETL / BI.
+# Liste positive stricte : uniquement des termes SPÉCIFIQUEMENT data,
+# jamais de mots génériques (gestion, outils, processus, analyse…).
 PROFILE_TITLE_MUST_MATCH = re.compile(
-    r"\b(data\s*(?:engineer(?:ing)?|analyst|warehouse|pipeline|quality|governance|"
-    r"management|ops|intern(?:ship)?)|analytics?\s+engineer(?:ing)?|big\s+data|"
-    r"business\s+intelligence|informatique\s+d[eé]cisionnelle|ing[eé]nieur(?:e)?\s+"
-    r"(?:big\s+)?data|etl|talend|pyspark|spark|power\s*bi|bi)\b",
+    r"\b(data\s*(?:engineer(?:ing)?|analyst|warehouse|lake(?:house)?|pipeline|"
+    r"quality|governance|management|ops|intern(?:ship)?)|"
+    r"analytics?\s+engineer(?:ing)?|big\s+data|"
+    r"business\s+intelligence|informatique\s+d[eé]cisionnelle|"
+    r"ing[eé]nieur(?:e)?\s+(?:big\s+)?data|etl|talend|pyspark|spark|hadoop|"
+    r"kafka|dbt|snowflake|databricks|airflow|sql|power\s*bi|bi)\b",
     re.I,
 )
 PROFILE_TITLE_EXCLUDE = re.compile(
@@ -98,6 +104,38 @@ PROFILE_TITLE_EXCLUDE = re.compile(
     re.I,
 )
 
+# Liste négative d'exclusion forte sur le TITRE : métiers hors périmètre
+# (audit, compta, RH, juridique, commercial, qualité, finance, marketing).
+# Rejet immédiat, même si un mot positif matche ailleurs (titre ou
+# description) — sauf carve-out explicitement data (2e colonne).
+TITLE_DATA_CONTEXT = re.compile(r"\b(data|analytics?|donn[ée]es|BI|d[eé]cisionnel(?:le)?)\b", re.I)
+PROFILE_TITLE_HARD_EXCLUDE = [
+    (re.compile(r"\baudit(?:eur|rice|eurs|rices|s)?\b", re.I), None),
+    (re.compile(r"contr[ôo]le(?:ur|use)?s?\s+de\s+gestion", re.I), None),
+    (re.compile(r"\bcomptab", re.I), None),
+    (re.compile(r"\b(juridique|juriste|avocat|droit)\b", re.I), None),
+    (re.compile(r"\b(ressources\s+humaines|RH)\b", re.I), TITLE_DATA_CONTEXT),
+    (re.compile(r"\bcommercial(?:e|es|aux)?\b", re.I), TITLE_DATA_CONTEXT),
+    (re.compile(r"\bqualit[ée]\b", re.I),
+     re.compile(r"data\s+quality|qualit[ée]\s+(?:de\s+la\s+|des\s+)?donn[ée]es", re.I)),
+    (re.compile(r"\b(finances?|financi[eè]re?s?|FP&A)\b", re.I),
+     re.compile(r"data\s+finance|quant", re.I)),
+    (re.compile(r"\bmarketing\b", re.I),
+     re.compile(r"marketing\s+analytics|data\s+marketing", re.I)),
+    # Publicité / réseaux sociaux (bruit APEC constaté : « Paid Media - SEA
+    # et SMA ») — pas de carve-out, ces métiers ne sont jamais data.
+    (re.compile(r"\bpaid\s+media\b|\bSEA\b|\bSMA\b|\bsocial\s+media\b|"
+                r"\bcommunity\s+manager\b", re.I), None),
+]
+
+
+def title_hard_excluded(title: str) -> bool:
+    """Titre appartenant à un métier hors périmètre CV (rejet immédiat)."""
+    for pattern, carve_out in PROFILE_TITLE_HARD_EXCLUDE:
+        if pattern.search(title) and not (carve_out and carve_out.search(title)):
+            return True
+    return False
+
 # Repêchage par description : le titre garde le poids le plus fort, la
 # description ne sauve une offre que si elle décrit de vraies missions
 # Data/BI (cas "Stagiaire RH Analytics" dont les missions sont Data
@@ -105,8 +143,9 @@ PROFILE_TITLE_EXCLUDE = re.compile(
 PROFILE_DESCRIPTION_MUST_MATCH = re.compile(
     r"\b(data\s*analytics?|business\s+intelligence|informatique\s+d[eé]cisionnelle|"
     r"data\s+engineer(?:ing)?|ing[eé]nierie\s+(?:de\s+la\s+|des\s+)?donn[ée]es|"
-    r"data\s+warehouse|entrep[ôo]t\s+de\s+donn[ée]es|etl|talend|power\s*bi|"
-    r"pyspark|spark)\b",
+    r"data\s+warehouse|data\s+lake(?:house)?|entrep[ôo]t\s+de\s+donn[ée]es|"
+    r"etl|talend|power\s*bi|pyspark|spark|hadoop|kafka|dbt|snowflake|"
+    r"databricks|airflow)\b",
     re.I,
 )
 
@@ -118,6 +157,14 @@ REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
 MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source (run courant)
 MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
 APEC_DETAIL_MAX_CALLS = 25    # budget de lectures du texte complet APEC par run
+
+# Volume par requête et par site (mesuré le 2026-07-10) :
+#  - linkedin : 25 ≈ 13 s/requête (au-delà, la pagination ajoute ~5 s/page) ;
+#    à 15 on perdait des offres de stage réelles présentes en page 2.
+#  - indeed : l'API répond en ~1 s quel que soit le volume → 30.
+#  - glassdoor : souvent bloqué (403), on reste modeste pour ne pas insister.
+#  - google : jobspy plafonne lui-même selon ce que Google renvoie.
+JOBSPY_RESULTS_WANTED = {"linkedin": 25, "indeed": 30, "glassdoor": 15, "google": 30}
 
 VISA_FRIENDLY_KEYWORDS = [
     "capgemini", "sopra", "alten", "cgi", "inetum", "accenture", "devoteam",
@@ -137,6 +184,7 @@ DOCS_INDEX = Path("docs/index.html")
 REASON_NO_TITLE = "titre manquant"
 REASON_NOT_INTERNSHIP = "pas un stage"
 REASON_EXCLUDED = "exclusion Data Science/ML"
+REASON_EXCLUDED_DOMAIN = "métier hors périmètre (audit/compta/RH/finance/…)"
 REASON_NO_DATE = "date absente ou invalide"
 REASON_TOO_OLD = f"plus de {MAX_OFFER_AGE_DAYS} jours"
 REASON_NOT_PROFILE = "hors ciblage CV"
@@ -283,9 +331,12 @@ def make_offer(title, company, location, url, source, date="",
     if not confirmed_internship and not TITLE_MUST_MATCH.search(title):
         return None, REASON_NOT_INTERNSHIP
     # Exclusions fortes, toujours sur le titre : la description ne peut pas
-    # sauver une offre Data Science / ML / Deep Learning / NLP / Vision.
+    # sauver une offre Data Science / ML / Deep Learning / NLP / Vision,
+    # ni un métier hors périmètre (audit, compta, RH, finance, marketing…).
     if PROFILE_TITLE_EXCLUDE.search(title):
         return None, REASON_EXCLUDED
+    if title_hard_excluded(title):
+        return None, REASON_EXCLUDED_DOMAIN
     published_at = parse_offer_date(date)
     if not published_at:
         return None, REASON_NO_DATE
@@ -364,11 +415,19 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
                            f"{consecutive_blocks} blocages consécutifs")
             break
         attempted += 1
+        # job_type="internship" : mesuré le 2026-07-10 sur LinkedIn, le filtre
+        # natif donne un bien meilleur signal (6 titres stage/23 bruts contre
+        # 1/30 sans le filtre — sans lui, la page se remplit de CDI).
+        # Indeed l'ignore silencieusement quand hours_old est fourni (limite
+        # jobspy) : c'est notre filtre titre « pas un stage » qui trie.
+        # linkedin_fetch_description=True coûterait ~0,5 s par offre
+        # (~+75 s/scan) pour un gain marginal : volontairement désactivé,
+        # le repêchage par description est réservé à APEC.
         kwargs = dict(
             site_name=[site],
             search_term=query,
             location="France",
-            results_wanted=15,
+            results_wanted=JOBSPY_RESULTS_WANTED.get(site, 15),
             country_indeed="France",
             job_type="internship",
             hours_old=MAX_OFFER_AGE_DAYS * 24,
@@ -429,7 +488,17 @@ def apec_search_payload(query: str) -> dict:
         "motsCles": query,
         "lieux": [], "fonctions": [], "statutPoste": [],
         "typesContrat": [597171],  # identifiant APEC officiel : STAGE
-        "typesConvention": [], "niveauxExperience": [],
+        # typesConvention = type d'ANNONCEUR (libellés vérifiés dans le bundle
+        # Angular d'apec.fr) : 143684 entreprise, 143685 cabinet de
+        # recrutement, 143686 agence, 143687 SSII/ESN. Le code absent, 143706
+        # (« offres partenaires » : flux Proaxian, Talents Handicap…), est la
+        # source principale du bruit hors-sujet constaté — on l'exclut donc
+        # côté serveur. NB : « niveauEtude » n'est PAS appliqué : le champ est
+        # mono-valeur (20019=Bac+5, 20020=>Bac+5) et écarte les offres non
+        # taguées (80 → 39 résultats sur « data »), donc trop restrictif pour
+        # un PFE.
+        "typesConvention": [143684, 143685, 143686, 143687],
+        "niveauxExperience": [],
         "idsEtablissement": [], "secteursActivite": [],
         "typesTeletravail": [], "idNomZonesDeplacement": [],
         "positionNumbersExcluded": [], "typeClient": "CADRE",
@@ -873,8 +942,10 @@ body{{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-ser
 h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .hero{{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}}
 .hero-actions{{text-align:right}}
-.scan-btn{{display:inline-block;background:var(--maj);color:white;text-decoration:none;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap}}
-.scan-hint{{color:var(--encre2);font-size:11px;margin-top:6px;max-width:220px}}
+.scan-btn{{display:inline-block;background:var(--maj);color:white;text-decoration:none;border:0;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}}
+.scan-btn.refresh-btn{{background:transparent;border:1px solid var(--maj);color:#CFC8FF;margin-right:6px}}
+.scan-hint{{color:var(--encre2);font-size:11px;margin-top:6px;max-width:280px}}
+.reset-btn:disabled{{opacity:.4;cursor:not-allowed}}
 .profile-note{{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}}
 .sources-panel{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}}
 .src-stat{{font-size:11.5px;border-radius:8px;padding:5px 9px;border:1px solid rgba(255,255,255,.08);color:var(--encre2);background:rgba(255,255,255,.02)}}
@@ -912,8 +983,10 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 <body><div class="wrap">
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
 <p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · durée du scan : {human_duration(scan_duration_s)}</p></div>
-<div class="hero-actions"><a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
-<p class="scan-hint">Puis cliquez sur « Run workflow » pour lancer un scan manuel.</p></div></div>
+<div class="hero-actions">
+<button class="scan-btn refresh-btn" type="button" onclick="location.reload()">↻ Actualiser les offres</button>
+<a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
+<p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
 <p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
 <div class="sources-panel" translate="no">{status_rows}</div>
 <div class="filter-panel">
@@ -930,7 +1003,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
   </div>
   <div class="filter-group"><span class="filter-label">Actifs</span>
     <span id="activeFilters" class="active-filters" translate="no"></span>
-    <button id="resetBtn" class="fchip reset-btn" onclick="resetFilters()" hidden>✕ Réinitialiser les filtres</button>
+    <button id="resetBtn" class="fchip reset-btn" onclick="resetFilters()" disabled>✕ Réinitialiser les filtres</button>
   </div>
 </div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
@@ -975,7 +1048,7 @@ function updateActiveFilters(){{
   if(visaOnly)parts.push('Visa-friendly uniquement');
   document.getElementById('activeFilters').textContent=parts.join(' · ');
   const isDefault=activeStatus==='todo'&&activeSource==='*'&&!visaOnly;
-  document.getElementById('resetBtn').hidden=isDefault;
+  document.getElementById('resetBtn').disabled=isDefault;
 }}
 function toggleApplied(event,id){{
   event.preventDefault();

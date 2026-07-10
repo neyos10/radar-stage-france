@@ -86,7 +86,7 @@ class TestMakeOffer(unittest.TestCase):
         self.assertEqual(reason, scan.REASON_EXCLUDED)
 
     def test_off_profile_rejected(self):
-        o, reason = offer(title="Stage assistant marketing digital")
+        o, reason = offer(title="Stage assistant chef de projet digital")
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_NOT_PROFILE)
 
@@ -101,13 +101,14 @@ class TestMakeOffer(unittest.TestCase):
         self.assertEqual(o["title"], "Stagiaire RH Analytics F/H")
 
     def test_generic_description_does_not_rescue(self):
+        # « RH » sans contexte data dans le titre : exclusion forte immédiate.
         o, reason = offer(
             title="Stagiaire RH généraliste F/H", source="APEC",
             confirmed_internship=True,
             description="Gestion administrative du personnel, paie et recrutement.",
         )
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NOT_PROFILE)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
 
     def test_description_cannot_override_exclusion(self):
         o, reason = offer(
@@ -121,6 +122,97 @@ class TestMakeOffer(unittest.TestCase):
         o, _ = offer(company="nan", location=None)
         self.assertEqual(o["company"], "Entreprise non précisée")
         self.assertEqual(o["location"], "France")
+
+
+class TestCVTargetingStrict(unittest.TestCase):
+    """Bug 1 : les 4 offres hors-sujet constatées sur le dashboard doivent
+    être rejetées ; les vraies offres data doivent toujours passer."""
+
+    def test_gestion_projet_qualite_rejected(self):
+        o, reason = offer(
+            title="Amélioration des Outils et Processus de Gestion de Projet Qualité F/H",
+            company="Proaxian", source="APEC", confirmed_internship=True,
+            description="Suivi qualité, reporting, Power BI et tableaux de bord.",
+        )
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+
+    def test_auditeur_junior_rejected(self):
+        # Même une mention Power BI en description ne repêche pas un audit.
+        o, reason = offer(
+            title="Auditeur junior F/H", company="Proaxian",
+            source="APEC", confirmed_internship=True,
+            description="Missions d'audit avec restitution sous Power BI.",
+        )
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+
+    def test_finance_controle_gestion_rejected(self):
+        o, reason = offer(
+            title="Stagiaire Finance et Contrôle de Gestion H/F",
+            company="SONEMA", source="Indeed",
+            description="Tableaux de bord Power BI, analyses budgétaires.",
+        )
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+
+    def test_business_data_analyst_crm_accepted(self):
+        # Cas limite évalué : « Data Analyst » est explicitement dans le
+        # ciblage CV ; CRM n'est que le domaine d'application → accepté.
+        o, reason = offer(title="Stage – Business Data Analyst CRM (H/F)",
+                          company="Prosol", source="Indeed")
+        self.assertIsNone(reason)
+        self.assertEqual(o["title"], "Stage – Business Data Analyst CRM (H/F)")
+
+    def test_real_data_offers_still_accepted(self):
+        for title in [
+            "STAGE - DATA ENGINEER F/H",
+            "Stage - Data Analyst - Paris - H/F",
+            "Stage Business Intelligence / Power BI",
+            "Stage ingénieur Big Data Spark",
+            "Stage ETL Talend et Data Warehouse",
+        ]:
+            o, reason = offer(title=title)
+            self.assertIsNone(reason, f"'{title}' aurait dû passer : {reason}")
+            self.assertEqual(o["title"], title)
+
+    def test_carve_outs(self):
+        # « qualité » est exclu… sauf data quality explicite.
+        o, reason = offer(title="Stage Data Quality Analyst H/F")
+        self.assertIsNone(reason)
+        # « marketing » est exclu… sauf marketing analytics (avec missions
+        # data réelles en description).
+        o, reason = offer(
+            title="Stage Marketing Analytics H/F",
+            description="Missions : Data Analytics, dashboards Power BI.",
+        )
+        self.assertIsNone(reason)
+        # « finance » exclu même combiné à un mot positif du titre.
+        o, reason = offer(title="Stage analyste financier Power BI")
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        # « juridique / droit » exclu (bruit APEC constaté).
+        o, reason = offer(title="Stagiaire en droit du numérique",
+                          confirmed_internship=True)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+
+    def test_paid_media_and_fpa_rejected(self):
+        # Bruit constaté au premier run après fix : publicité et finance
+        # repêchées par une mention Power BI en description.
+        o, reason = offer(title="Assistant Consultant Paid Media - SEA et SMA F/H",
+                          source="APEC", confirmed_internship=True,
+                          description="Reporting des campagnes sous Power BI.")
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        o, reason = offer(title="FP&A Analyst Intern", source="Indeed",
+                          description="Dashboards Power BI, data analytics.")
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+
+    def test_generic_words_do_not_match(self):
+        # Mots génériques (gestion, outils, processus, analyse) : jamais
+        # suffisants pour matcher le ciblage.
+        o, reason = offer(title="Stage gestion et amélioration des processus",
+                          description="Analyse des outils internes.")
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_NOT_PROFILE)
 
 
 class TestDedup(unittest.TestCase):
@@ -223,6 +315,34 @@ class TestJobspyAccounting(unittest.TestCase):
         # jamais deux fois « stage » dans la requête Google
         self.assertEqual(first["google_search_term"].lower().count("stage"), 1)
 
+    def test_results_wanted_per_site(self):
+        import pandas as pd
+        seen = {}
+
+        def make_fake(site):
+            def fake_scrape(**kwargs):
+                seen[site] = kwargs
+                return pd.DataFrame()
+            return fake_scrape
+
+        scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=make_fake("linkedin"))
+        scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=make_fake("indeed"))
+        self.assertEqual(seen["linkedin"]["results_wanted"], 25)
+        self.assertEqual(seen["indeed"]["results_wanted"], 30)
+        self.assertEqual(seen["linkedin"]["job_type"], "internship")
+
+
+class TestApecNativeFilters(unittest.TestCase):
+    def test_payload_has_native_filters(self):
+        p = scan.apec_search_payload("data")
+        # 143684-143687 = annonceurs directs (entreprise, cabinet, agence,
+        # SSII) ; 143706 (offres partenaires, source du bruit) exclu.
+        self.assertEqual(p["typesConvention"], [143684, 143685, 143686, 143687])
+        self.assertNotIn(143706, p["typesConvention"])
+        self.assertEqual(p["typesContrat"], [597171])
+        # niveauEtude volontairement absent (mono-valeur, trop restrictif).
+        self.assertNotIn("niveauEtude", p)
+
 
 class TestMissingCredentials(unittest.TestCase):
     def test_adzuna_disabled_without_secrets(self):
@@ -303,7 +423,11 @@ class TestDashboard(unittest.TestCase):
         self.assertIn('translate="no"', page)
         self.assertIn("Ouvrir GitHub Actions", page)
         self.assertIn("Run workflow", page)
+        self.assertIn("Actualiser les offres", page)
+        self.assertIn('onclick="location.reload()"', page)
+        # le bouton reset est toujours visible, désactivé par défaut
         self.assertIn("Réinitialiser les filtres", page)
+        self.assertIn('onclick="resetFilters()" disabled', page)
         self.assertIn("Bloqué temporairement — HTTP 403", page)
         self.assertIn("Non configuré — identifiants manquants", page)
         # une source jamais appelée n'affiche pas un simple « 0 »
