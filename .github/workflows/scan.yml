@@ -62,13 +62,22 @@ jobs:
           fi
           git commit -m "Scan $(date -u +'%Y-%m-%d %H:%M UTC')"
           # Push avec rebase + retry borné (jamais de force push) : évite les
-          # échecs "fetch first" si main a avancé pendant le scan.
+          # échecs "fetch first" si main a avancé pendant le scan. data/ et
+          # docs/ étant régénérés intégralement à chaque scan, un conflit sur
+          # ces fichiers se résout en gardant la version du run courant.
           for attempt in 1 2 3; do
             git fetch origin main
             if ! git rebase origin/main; then
-              git rebase --abort
-              echo "Conflit de rebase inattendu — abandon sans force push."
-              exit 1
+              conflicted=$(git diff --name-only --diff-filter=U)
+              echo "Conflit de rebase sur : $conflicted"
+              if [ -z "$conflicted" ] || echo "$conflicted" | grep -qvE '^(data/|docs/)'; then
+                git rebase --abort
+                echo "Conflit hors fichiers générés — abandon sans force push."
+                exit 1
+              fi
+              git checkout --theirs -- $conflicted
+              git add -- $conflicted
+              GIT_EDITOR=true git rebase --continue || { git rebase --abort; echo "Rebase non résolu — abandon."; exit 1; }
             fi
             if git push origin main; then
               echo "Push réussi (tentative $attempt)."
