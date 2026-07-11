@@ -1,25 +1,25 @@
 {
- "generated_at": "2026-07-11T21:25:54+00:00",
- "scan_duration_s": 55.5,
+ "generated_at": "2026-07-11T22:26:20+00:00",
+ "scan_duration_s": 68.9,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 120,
-   "accepted_count": 15,
-   "rejected_count": 105,
+   "raw_count": 137,
+   "accepted_count": 14,
+   "rejected_count": 123,
    "reject_reasons": {
-    "pas un stage": 71,
-    "exclusion Data Science/ML": 4,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 4,
-    "hors ciblage CV": 16,
-    "doublon": 6,
-    "date absente ou invalide": 4
+    "pas un stage": 81,
+    "exclusion Data Science/ML": 3,
+    "hors ciblage CV": 15,
+    "doublon": 14,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 2,
+    "date absente ou invalide": 8
    },
-   "duration_s": 55.5,
+   "duration_s": 68.9,
    "http_error": "",
    "note": "",
-   "label": "15 offres"
+   "label": "14 offres"
   },
   {
    "source": "Indeed",
@@ -34,7 +34,7 @@
     "métier hors périmètre (audit/compta/RH/finance/…)": 6,
     "doublon": 3
    },
-   "duration_s": 3.1,
+   "duration_s": 4.3,
    "http_error": "",
    "note": "",
    "label": "9 offres"
@@ -46,22 +46,22 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.3,
+   "duration_s": 1.4,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
   },
   {
    "source": "Google Jobs",
-   "status": "blocked",
+   "status": "empty",
    "raw_count": 0,
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 13.4,
-   "http_error": "HTTP 429",
-   "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
-   "label": "Bloqué temporairement — HTTP 429"
+   "duration_s": 1.2,
+   "http_error": "",
+   "note": "",
+   "label": "Aucune offre reçue"
   },
   {
    "source": "APEC",
@@ -74,7 +74,7 @@
     "hors ciblage CV": 5,
     "plus de 7 jours": 18
    },
-   "duration_s": 6.8,
+   "duration_s": 10.3,
    "http_error": "",
    "note": "",
    "label": "1 offre"
