@@ -1,44 +1,43 @@
 {
- "generated_at": "2026-07-11T13:42:49+00:00",
- "scan_duration_s": 60.9,
+ "generated_at": "2026-07-11T15:02:57+00:00",
+ "scan_duration_s": 77.2,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 129,
-   "accepted_count": 12,
-   "rejected_count": 117,
+   "raw_count": 140,
+   "accepted_count": 13,
+   "rejected_count": 127,
    "reject_reasons": {
-    "pas un stage": 81,
-    "exclusion Data Science/ML": 7,
-    "hors ciblage CV": 15,
-    "date absente ou invalide": 3,
-    "doublon": 8,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 1,
-    "plus de 7 jours": 2
+    "exclusion Data Science/ML": 12,
+    "pas un stage": 77,
+    "hors ciblage CV": 17,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 4,
+    "doublon": 13,
+    "date absente ou invalide": 4
    },
-   "duration_s": 60.9,
+   "duration_s": 77.2,
    "http_error": "",
    "note": "",
-   "label": "12 offres"
+   "label": "13 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
    "raw_count": 69,
-   "accepted_count": 9,
-   "rejected_count": 60,
+   "accepted_count": 10,
+   "rejected_count": 59,
    "reject_reasons": {
     "exclusion Data Science/ML": 4,
-    "pas un stage": 40,
-    "hors ciblage CV": 7,
+    "pas un stage": 38,
+    "hors ciblage CV": 8,
     "métier hors périmètre (audit/compta/RH/finance/…)": 6,
     "doublon": 3
    },
-   "duration_s": 2.9,
+   "duration_s": 3.2,
    "http_error": "",
    "note": "",
-   "label": "9 offres"
+   "label": "10 offres"
   },
   {
    "source": "Glassdoor",
@@ -47,7 +46,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.1,
+   "duration_s": 1.9,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -59,7 +58,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.0,
+   "duration_s": 1.3,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -75,7 +74,7 @@
     "hors ciblage CV": 5,
     "plus de 7 jours": 21
    },
-   "duration_s": 7.9,
+   "duration_s": 9.5,
    "http_error": "",
    "note": "",
    "label": "1 offre"
