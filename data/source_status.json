@@ -1,26 +1,26 @@
 {
- "generated_at": "2026-07-11T10:02:39+00:00",
- "scan_duration_s": 72.3,
+ "generated_at": "2026-07-11T11:32:58+00:00",
+ "scan_duration_s": 63.3,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 129,
-   "accepted_count": 11,
-   "rejected_count": 118,
+   "raw_count": 113,
+   "accepted_count": 9,
+   "rejected_count": 104,
    "reject_reasons": {
-    "pas un stage": 70,
-    "doublon": 12,
+    "exclusion Data Science/ML": 12,
+    "pas un stage": 59,
+    "hors ciblage CV": 18,
+    "doublon": 9,
     "métier hors périmètre (audit/compta/RH/finance/…)": 3,
-    "hors ciblage CV": 21,
-    "date absente ou invalide": 3,
-    "exclusion Data Science/ML": 8,
-    "plus de 7 jours": 1
+    "plus de 7 jours": 1,
+    "date absente ou invalide": 2
    },
-   "duration_s": 72.3,
+   "duration_s": 63.3,
    "http_error": "",
    "note": "",
-   "label": "11 offres"
+   "label": "9 offres"
   },
   {
    "source": "Indeed",
@@ -35,7 +35,7 @@
     "métier hors périmètre (audit/compta/RH/finance/…)": 6,
     "doublon": 3
    },
-   "duration_s": 3.2,
+   "duration_s": 3.8,
    "http_error": "",
    "note": "",
    "label": "9 offres"
@@ -59,7 +59,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.2,
+   "duration_s": 1.4,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -75,7 +75,7 @@
     "hors ciblage CV": 5,
     "plus de 7 jours": 21
    },
-   "duration_s": 8.3,
+   "duration_s": 9.5,
    "http_error": "",
    "note": "",
    "label": "1 offre"
