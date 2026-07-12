@@ -51,13 +51,13 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 </style></head>
 <body><div class="wrap">
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : 12/07/2026 03:37 UTC · 25 offres des 7 derniers jours · durée du scan : 1 min 13 s</p></div>
+<p class="sub">Dernier scan : 12/07/2026 06:43 UTC · 23 offres des 7 derniers jours · durée du scan : 54 s</p></div>
 <div class="hero-actions">
 <button class="scan-btn refresh-btn" type="button" onclick="location.reload()">↻ Actualiser les offres</button>
 <a class="scan-btn" href="https://github.com/neyos10/radar-stage-france/actions/workflows/scan.yml" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
 <p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
 <p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
-<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 14 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 10 offres</span><span class="src-stat st-warn"><b>Glassdoor</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 1 offre</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
+<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 14 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 8 offres</span><span class="src-stat st-warn"><b>Glassdoor</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 1 offre</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
     <button class="fchip status-chip on" data-status="todo" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
@@ -65,7 +65,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
     <button class="fchip status-chip" data-status="all" onclick="setStatus(this,'all')">Tous</button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" data-src="*" onclick="setSource(this,'*')">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" onclick="setSource(this,'LinkedIn')">LinkedIn <b>(14)</b></button><button class="fchip source-chip" data-src="Indeed" onclick="setSource(this,'Indeed')">Indeed <b>(10)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Aucune offre reçue" onclick="setSource(this,'Glassdoor')">Glassdoor <b>(0)</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" onclick="setSource(this,'Google Jobs')">Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" onclick="setSource(this,'APEC')">APEC <b>(1)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" onclick="setSource(this,'Adzuna')">Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" onclick="setSource(this,'France Travail')">France Travail <b>non configuré</b></button>
+    <button class="fchip source-chip on" data-src="*" onclick="setSource(this,'*')">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" onclick="setSource(this,'LinkedIn')">LinkedIn <b>(14)</b></button><button class="fchip source-chip" data-src="Indeed" onclick="setSource(this,'Indeed')">Indeed <b>(8)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Aucune offre reçue" onclick="setSource(this,'Glassdoor')">Glassdoor <b>(0)</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" onclick="setSource(this,'Google Jobs')">Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" onclick="setSource(this,'APEC')">APEC <b>(1)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" onclick="setSource(this,'Adzuna')">Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" onclick="setSource(this,'France Travail')">France Travail <b>non configuré</b></button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="visaFilter" class="fchip" aria-pressed="false" onclick="toggleVisa(this)">✓ Visa-friendly probable</button>
@@ -121,18 +121,6 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 2 jours · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" onclick="toggleApplied(event,'2c5b4a3af46f98bc')">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
-      </article>
-      <article class="job " data-id="a24a61394021d125"
-               data-src="Indeed" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=2585b8c95a4c4b29" target="_blank" rel="noopener noreferrer">Alternant ou Stagiaire Data Analyst - Performance Commerciale - 6 mois (F/H)</a></h3>
-          <div class="meta">HORUS PHARMA · France</div>
-          <div class="published">Publiée il y a 3 jours · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'a24a61394021d125')">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
@@ -269,6 +257,18 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
+      <article class="job " data-id="99a6dcd428ac2fb1"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437023685" target="_blank" rel="noopener noreferrer">[STAGE] Data Analyst – Sûreté de Fonctionnement F/H</a></h3>
+          <div class="meta">LGM · France</div>
+          <div class="published">Publiée il y a 4 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" onclick="toggleApplied(event,'99a6dcd428ac2fb1')">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
       <article class="job " data-id="b8dfbc77f30fe3c0"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
@@ -328,30 +328,6 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
         <div class="tags" translate="no">
           
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
-      </article>
-      <article class="job " data-id="9b5a252a90113510"
-               data-src="Indeed" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://fr.indeed.com/viewjob?jk=e11c3f5d9ed30ec2" target="_blank" rel="noopener noreferrer">Stage - Chargé de Communication &amp; Animation IA F/H</a></h3>
-          <div class="meta">VINCI · France</div>
-          <div class="published">Publiée il y a 6 jours · 06/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'9b5a252a90113510')">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
-      </article>
-      <article class="job " data-id="634048f213433dd6"
-               data-src="LinkedIn" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4436238770" target="_blank" rel="noopener noreferrer">Stage - Data analyst (H/F)</a></h3>
-          <div class="meta">Petzl · France</div>
-          <div class="published">Publiée il y a 6 jours · 06/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'634048f213433dd6')">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-          
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
       <article class="job " data-id="f6fcd62bed3380c0"
                data-src="Indeed" data-visa="0">
