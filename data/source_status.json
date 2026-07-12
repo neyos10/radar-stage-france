@@ -1,41 +1,41 @@
 {
- "generated_at": "2026-07-12T14:08:00+00:00",
- "scan_duration_s": 65.5,
+ "generated_at": "2026-07-12T15:37:11+00:00",
+ "scan_duration_s": 66.7,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 111,
-   "accepted_count": 15,
-   "rejected_count": 96,
+   "raw_count": 139,
+   "accepted_count": 12,
+   "rejected_count": 127,
    "reject_reasons": {
-    "pas un stage": 59,
+    "pas un stage": 72,
+    "exclusion Data Science/ML": 8,
+    "hors ciblage CV": 24,
+    "date absente ou invalide": 4,
     "plus de 7 jours": 3,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 2,
-    "doublon": 9,
-    "hors ciblage CV": 15,
-    "exclusion Data Science/ML": 5,
-    "date absente ou invalide": 3
+    "métier hors périmètre (audit/compta/RH/finance/…)": 3,
+    "doublon": 13
    },
-   "duration_s": 65.5,
+   "duration_s": 66.7,
    "http_error": "",
    "note": "",
-   "label": "15 offres"
+   "label": "12 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 70,
+   "raw_count": 69,
    "accepted_count": 9,
-   "rejected_count": 61,
+   "rejected_count": 60,
    "reject_reasons": {
     "exclusion Data Science/ML": 4,
     "pas un stage": 41,
     "hors ciblage CV": 7,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 6,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 5,
     "doublon": 3
    },
-   "duration_s": 4.3,
+   "duration_s": 3.8,
    "http_error": "",
    "note": "",
    "label": "9 offres"
@@ -47,7 +47,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.3,
+   "duration_s": 1.9,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -59,7 +59,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.2,
+   "duration_s": 1.4,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -75,7 +75,7 @@
     "hors ciblage CV": 5,
     "plus de 7 jours": 18
    },
-   "duration_s": 9.8,
+   "duration_s": 8.1,
    "http_error": "",
    "note": "",
    "label": "1 offre"
