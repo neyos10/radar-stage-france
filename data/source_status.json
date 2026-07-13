@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-07-13T01:11:24+00:00",
- "scan_duration_s": 61.6,
+ "generated_at": "2026-07-13T05:05:01+00:00",
+ "scan_duration_s": 73.5,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 135,
+   "raw_count": 134,
    "accepted_count": 14,
-   "rejected_count": 121,
+   "rejected_count": 120,
    "reject_reasons": {
-    "pas un stage": 74,
-    "exclusion Data Science/ML": 8,
-    "hors ciblage CV": 18,
-    "plus de 7 jours": 6,
-    "date absente ou invalide": 2,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 2,
-    "doublon": 11
+    "pas un stage": 80,
+    "exclusion Data Science/ML": 7,
+    "hors ciblage CV": 13,
+    "plus de 7 jours": 5,
+    "date absente ou invalide": 3,
+    "doublon": 11,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 1
    },
-   "duration_s": 61.6,
+   "duration_s": 73.5,
    "http_error": "",
    "note": "",
    "label": "14 offres"
@@ -25,21 +25,21 @@
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 68,
-   "accepted_count": 7,
-   "rejected_count": 61,
+   "raw_count": 69,
+   "accepted_count": 6,
+   "rejected_count": 63,
    "reject_reasons": {
     "exclusion Data Science/ML": 4,
-    "pas un stage": 38,
+    "pas un stage": 42,
     "hors ciblage CV": 7,
     "métier hors périmètre (audit/compta/RH/finance/…)": 5,
-    "plus de 7 jours": 4,
-    "doublon": 3
+    "doublon": 3,
+    "plus de 7 jours": 2
    },
-   "duration_s": 3.4,
+   "duration_s": 4.1,
    "http_error": "",
    "note": "",
-   "label": "7 offres"
+   "label": "6 offres"
   },
   {
    "source": "Glassdoor",
@@ -60,7 +60,7 @@
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
-   "duration_s": 1.5,
+   "duration_s": 1.4,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -76,7 +76,7 @@
     "hors ciblage CV": 5,
     "plus de 7 jours": 16
    },
-   "duration_s": 9.8,
+   "duration_s": 10.2,
    "http_error": "",
    "note": "",
    "label": "1 offre"
