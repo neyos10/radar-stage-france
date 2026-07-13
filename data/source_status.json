@@ -1,46 +1,61 @@
 {
- "generated_at": "2026-07-13T13:27:10+00:00",
- "scan_duration_s": 80.2,
+ "generated_at": "2026-07-13T13:49:40+00:00",
+ "scan_duration_s": 136.5,
  "active_domains": [
-  "data_ia"
+  "data_ia",
+  "dev_web",
+  "devops_cloud",
+  "cybersecurite",
+  "reseaux_systemes",
+  "product_management",
+  "compta_gestion",
+  "finance",
+  "audit",
+  "supply_chain",
+  "commerce_bizdev",
+  "rh",
+  "juridique",
+  "electronique_embarque",
+  "genie_civil_btp",
+  "mecanique_industriel"
  ],
- "query_count": 6,
+ "query_count": 82,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 135,
-   "accepted_count": 26,
-   "rejected_count": 109,
+   "raw_count": 145,
+   "accepted_count": 16,
+   "rejected_count": 129,
    "reject_reasons": {
-    "pas un stage": 90,
-    "aucun domaine": 8,
-    "doublon": 10,
-    "plus de 7 jours": 1
+    "pas un stage": 117,
+    "aucun domaine": 9,
+    "plus de 7 jours": 2,
+    "doublon": 1
    },
-   "unknown_date_count": 3,
-   "duration_s": 80.2,
+   "unknown_date_count": 2,
+   "duration_s": 101.3,
    "http_error": "",
    "note": "",
-   "label": "26 offres"
+   "label": "16 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 132,
-   "accepted_count": 9,
-   "rejected_count": 123,
+   "raw_count": 1541,
+   "accepted_count": 146,
+   "rejected_count": 1395,
    "reject_reasons": {
-    "pas un stage": 68,
-    "aucun domaine": 41,
-    "plus de 7 jours": 5,
-    "doublon": 9
+    "pas un stage": 974,
+    "aucun domaine": 169,
+    "plus de 7 jours": 101,
+    "doublon": 151
    },
    "unknown_date_count": 0,
-   "duration_s": 5.3,
+   "duration_s": 136.5,
    "http_error": "",
    "note": "",
-   "label": "9 offres"
+   "label": "146 offres"
   },
   {
    "source": "Glassdoor",
@@ -50,7 +65,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 0.9,
+   "duration_s": 0.8,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
@@ -63,7 +78,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 1.2,
+   "duration_s": 20.8,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -71,18 +86,18 @@
   {
    "source": "APEC",
    "status": "success",
-   "raw_count": 26,
-   "accepted_count": 1,
-   "rejected_count": 25,
+   "raw_count": 177,
+   "accepted_count": 36,
+   "rejected_count": 141,
    "reject_reasons": {
-    "plus de 7 jours": 20,
-    "aucun domaine": 5
+    "plus de 7 jours": 107,
+    "aucun domaine": 34
    },
    "unknown_date_count": 0,
-   "duration_s": 7.0,
+   "duration_s": 65.4,
    "http_error": "",
-   "note": "",
-   "label": "1 offre"
+   "note": "budget de 25 lectures de détail épuisé",
+   "label": "36 offres"
   },
   {
    "source": "Adzuna",

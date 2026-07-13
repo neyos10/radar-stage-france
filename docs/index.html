@@ -54,13 +54,13 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 <body><div class="wrap">
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
 <p class="sub">Veille automatique d&#x27;offres de stage multi-sources</p>
-<p class="sub">Dernier scan : 13/07/2026 13:27 UTC · 36 offres des 7 derniers jours · durée du scan : 1 min 20 s</p></div>
+<p class="sub">Dernier scan : 13/07/2026 13:49 UTC · 198 offres des 7 derniers jours · durée du scan : 2 min 16 s</p></div>
 <div class="hero-actions">
 <button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
 <a id="actionsLink" class="scan-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
 <p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
-<p class="domain-note">Domaines analysés : Data / IA</p>
-<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 26 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 9 offres</span><span class="src-stat st-bad"><b>Glassdoor</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 1 offre</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
+<p class="domain-note">Domaines analysés : Data / IA · Développement Web / Logiciel · DevOps / Cloud · Cybersécurité · Réseaux / Systèmes · Product Management · Comptabilité / Contrôle de gestion · Finance / Marchés · Audit · Supply Chain / Logistique / Achats · Commerce / Business Development · Ressources Humaines · Juridique / Droit des affaires · Électronique / Systèmes embarqués · Génie civil / BTP · Mécanique / Industriel</p>
+<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 16 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 146 offres</span><span class="src-stat st-bad"><b>Glassdoor</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 36 offres</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
     <button class="fchip status-chip on" data-status="todo">À postuler <b id="todoCount"></b></button>
@@ -68,10 +68,10 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
     <button class="fchip status-chip" data-status="all">Tous</button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" data-src="*">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" >LinkedIn <b>(26)</b></button><button class="fchip source-chip" data-src="Indeed" >Indeed <b>(9)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Bloqué temporairement — HTTP 403" >Glassdoor <b>bloqué 403</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" >Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" >APEC <b>(1)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" >Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" >France Travail <b>non configuré</b></button>
+    <button class="fchip source-chip on" data-src="*">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" >LinkedIn <b>(16)</b></button><button class="fchip source-chip" data-src="Indeed" >Indeed <b>(146)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Bloqué temporairement — HTTP 403" >Glassdoor <b>bloqué 403</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" >Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" >APEC <b>(36)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" >Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" >France Travail <b>non configuré</b></button>
   </div>
-  <div class="filter-group single-domain" translate="no"><span class="filter-label">Domaine</span>
-    <button class="fchip domain-chip on" data-domain="*">Tous</button><button class="fchip domain-chip" data-domain="data_ia">Data / IA <b>(36)</b></button>
+  <div class="filter-group" translate="no"><span class="filter-label">Domaine</span>
+    <button class="fchip domain-chip on" data-domain="*">Tous</button><button class="fchip domain-chip" data-domain="data_ia">Data / IA <b>(23)</b></button><button class="fchip domain-chip" data-domain="dev_web">Développement Web / Logiciel <b>(12)</b></button><button class="fchip domain-chip" data-domain="devops_cloud">DevOps / Cloud <b>(7)</b></button><button class="fchip domain-chip" data-domain="cybersecurite">Cybersécurité <b>(3)</b></button><button class="fchip domain-chip" data-domain="reseaux_systemes">Réseaux / Systèmes <b>(0)</b></button><button class="fchip domain-chip" data-domain="product_management">Product Management <b>(3)</b></button><button class="fchip domain-chip" data-domain="compta_gestion">Comptabilité / Contrôle de gestion <b>(15)</b></button><button class="fchip domain-chip" data-domain="finance">Finance / Marchés <b>(27)</b></button><button class="fchip domain-chip" data-domain="audit">Audit <b>(7)</b></button><button class="fchip domain-chip" data-domain="supply_chain">Supply Chain / Logistique / Achats <b>(9)</b></button><button class="fchip domain-chip" data-domain="commerce_bizdev">Commerce / Business Development <b>(13)</b></button><button class="fchip domain-chip" data-domain="rh">Ressources Humaines <b>(33)</b></button><button class="fchip domain-chip" data-domain="juridique">Juridique / Droit des affaires <b>(39)</b></button><button class="fchip domain-chip" data-domain="electronique_embarque">Électronique / Systèmes embarqués <b>(4)</b></button><button class="fchip domain-chip" data-domain="genie_civil_btp">Génie civil / BTP <b>(18)</b></button><button class="fchip domain-chip" data-domain="mecanique_industriel">Mécanique / Industriel <b>(14)</b></button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="highlightFilter" class="fchip" aria-pressed="false">✓ Visa-friendly probable</button>
@@ -83,31 +83,17 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 </div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
 <div id="jobs">
-      <article class="job " data-id="c55979c2d0f8f30e"
+      <article class="job is-new" data-id="074d80b05e8f8e20"
                data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
+               data-highlight="1">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4439190869" target="_blank" rel="noopener noreferrer">Consultant·e Data &amp; IA - Stage de fin d&#x27;études</a></h3>
-          <div class="meta">Saegus · France</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4439190376" target="_blank" rel="noopener noreferrer">Stage Développement IA &amp; Power Platform F/H</a></h3>
+          <div class="meta">Devoteam · France</div>
           <div class="published">Date de publication inconnue · conservée par précaution</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="c55979c2d0f8f30e">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-          <span class="tag date-unknown">date inconnue</span>
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job is-new" data-id="cc9d5b3c2842c6e2"
-               data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4439198776" target="_blank" rel="noopener noreferrer">Consultant·e Data &amp; IA - Stage de fin d&#x27;études</a></h3>
-          <div class="meta">Saegus · France</div>
-          <div class="published">Date de publication inconnue · conservée par précaution</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="cc9d5b3c2842c6e2">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="074d80b05e8f8e20">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
-
+          <span class="tag highlight">✓ Visa-friendly probable</span>
           <span class="tag date-unknown">date inconnue</span>
           <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
       </article>
@@ -125,6 +111,48 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <span class="tag date-unknown">date inconnue</span>
           <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
       </article>
+      <article class="job is-new" data-id="6da496801591be34"
+               data-src="APEC" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178990563W" target="_blank" rel="noopener noreferrer">Stagiaire Animateur HSE F/H</a></h3>
+          <div class="meta">INTERTEK FRANCE · Martigues - 13</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="6da496801591be34">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="1ed9466fa12648cb"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179100268W" target="_blank" rel="noopener noreferrer">Chargé de Recrutement F/H</a></h3>
+          <div class="meta">Proaxian · Mougins - 06</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="1ed9466fa12648cb">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="9a77b82f5ccde4bc"
+               data-src="APEC" data-domains="mecanique_industriel"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179100244W" target="_blank" rel="noopener noreferrer">Ingénieur.e en mécatronique F/H</a></h3>
+          <div class="meta">Proaxian · Saint-Étienne - 42</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9a77b82f5ccde4bc">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Mécanique / Industriel</span><span class="tag src">APEC</span></div>
+      </article>
       <article class="job " data-id="001fd4543d035d43"
                data-src="APEC" data-domains="data_ia"
                data-highlight="0">
@@ -138,6 +166,104 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
 
           <span class="tag domain">Data / IA</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="6a0958491e4dfd8d"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=aa8eae6b0460d61e" target="_blank" rel="noopener noreferrer">Chargé de recrutement (stage) H/F</a></h3>
+          <div class="meta">Galula consulting · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="6a0958491e4dfd8d">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="8a92260488fa4a90"
+               data-src="Indeed" data-domains="audit"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=75a9f8cf1dd5ad50" target="_blank" rel="noopener noreferrer">Consultant(e) stagiaire en financement de projets - F/H FY27</a></h3>
+          <div class="meta">EY · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="8a92260488fa4a90">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Audit</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="9a1c864002419dc1"
+               data-src="Indeed" data-domains="compta_gestion,audit"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=313557359f66c060" target="_blank" rel="noopener noreferrer">Expert comptable stagiaire H/F</a></h3>
+          <div class="meta">FIDEXCO FRANCE · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9a1c864002419dc1">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag domain">Audit</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="94c210ec1c2ee369"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=1dc64bd6c8653751" target="_blank" rel="noopener noreferrer">Stage - Business Developer Audiovisuel</a></h3>
+          <div class="meta">714 PRODUCTION · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="94c210ec1c2ee369">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="46d0538f965166ed"
+               data-src="Indeed" data-domains="supply_chain"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=64250c0a23a1c068" target="_blank" rel="noopener noreferrer">Stage : Chargé(e) Supply Chain H/F</a></h3>
+          <div class="meta">Arkema · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="46d0538f965166ed">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="db86884c30425d1f"
+               data-src="Indeed" data-domains="supply_chain"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=648df414fec2402e" target="_blank" rel="noopener noreferrer">Stage Assistant Acheteur/Chef de produit – Marché de la Maison H/F</a></h3>
+          <div class="meta">Printemps · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="db86884c30425d1f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="f83928e6b8fcf938"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=1233b4f92bb840c0" target="_blank" rel="noopener noreferrer">Stage Développement Commercial</a></h3>
+          <div class="meta">Infusionad · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="f83928e6b8fcf938">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="ad632292d0a2b17b"
                data-src="Indeed" data-domains="data_ia"
@@ -153,19 +279,89 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="317d4ab3407b3078"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="882da97175e4b747"
+               data-src="Indeed" data-domains="commerce_bizdev"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4439551773" target="_blank" rel="noopener noreferrer">Stage Data Analyst Power BI H/F</a></h3>
-          <div class="meta">LCL · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=e613a26da3ac750d" target="_blank" rel="noopener noreferrer">Stage/Alternance Business development 75</a></h3>
+          <div class="meta">MakeMyMask · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="882da97175e4b747">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="235c29d85deb0fa7"
+               data-src="Indeed" data-domains="finance,rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=06dd2227f56d8ab8" target="_blank" rel="noopener noreferrer">Stagiaire analyste</a></h3>
+          <div class="meta">Cushman &amp; Wakefield · France</div>
+          <div class="published">Publiée aujourd'hui · 13/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="235c29d85deb0fa7">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="46092498fb63f617"
+               data-src="Indeed" data-domains="supply_chain"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=968d254775fb52ae" target="_blank" rel="noopener noreferrer">Stage E-commerce/logistique</a></h3>
+          <div class="meta">Bombers · France</div>
+          <div class="published">Publiée hier · 12/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="46092498fb63f617">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="bdf201ed31258f96"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=9e8884c57f2e5e40" target="_blank" rel="noopener noreferrer">Stage alterné en Bachelor CRH (Niveau 6) - PAU - 26/27</a></h3>
+          <div class="meta">PAIE &amp; RH ACADEMIE · France</div>
+          <div class="published">Publiée hier · 12/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="bdf201ed31258f96">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="3b9fc1e797862569"
+               data-src="Indeed" data-domains="dev_web,devops_cloud"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=1a39e583f7dbff87" target="_blank" rel="noopener noreferrer">Stagiaire Développeur Web &amp; Outils Numériques (H/F)</a></h3>
+          <div class="meta">Entreprise non précisée · France</div>
+          <div class="published">Publiée hier · 12/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="3b9fc1e797862569">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag domain">DevOps / Cloud</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="aebd4f7e5b038aab"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=519a59e2850ce8e2" target="_blank" rel="noopener noreferrer">Stage - Assistant.e Communication Interne EMEA (F/H) - Septembre 2026</a></h3>
+          <div class="meta">Louis Vuitton · France</div>
           <div class="published">Publiée il y a 2 jours · 11/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="317d4ab3407b3078">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="aebd4f7e5b038aab">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="3204ac4d80a4c355"
                data-src="LinkedIn" data-domains="data_ia"
@@ -180,6 +376,272 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
 
           <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job is-new" data-id="dab4e0478617d247"
+               data-src="Indeed" data-domains="dev_web"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6cad1be269a0b845" target="_blank" rel="noopener noreferrer">Stage Web Designer UI/UX &amp; Développement Front-End React Native (H/F)</a></h3>
+          <div class="meta">Artem 5 · France</div>
+          <div class="published">Publiée il y a 2 jours · 11/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="dab4e0478617d247">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="b246e9b34a6570b7"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=f466af7d8cb47ee5" target="_blank" rel="noopener noreferrer">Stagiaire Direction des Ressources Humaines H/F</a></h3>
+          <div class="meta">The Brando · France</div>
+          <div class="published">Publiée il y a 2 jours · 11/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="b246e9b34a6570b7">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="96a2cc434ef03649"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=503ba381233410f8" target="_blank" rel="noopener noreferrer">Stagiaire RH — Groupe</a></h3>
+          <div class="meta">engwe · France</div>
+          <div class="published">Publiée il y a 2 jours · 11/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="96a2cc434ef03649">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a68b5caec2ecec34"
+               data-src="APEC" data-domains="dev_web"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179094604W" target="_blank" rel="noopener noreferrer">Stage développeur / builder - outils internes &amp; migration ERP F/H</a></h3>
+          <div class="meta">ANONYME · Paris 10 - 75</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a68b5caec2ecec34">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="ba2ce7074c912461"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179092396W" target="_blank" rel="noopener noreferrer">Chargé de recrutement F/H</a></h3>
+          <div class="meta">Proaxian · Bordeaux - 33</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="ba2ce7074c912461">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="a4212e318f2e93ae"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179090128W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Hazebrouck - 59</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a4212e318f2e93ae">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="dd9994bae1af15e2"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179090023W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Arras - 62</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="dd9994bae1af15e2">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="77b07da41eadabda"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179090009W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Hénin-Beaumont - 62</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="77b07da41eadabda">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="18c161739e4377ab"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089998W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Lens - 62</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="18c161739e4377ab">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job " data-id="4396e25234815597"
+               data-src="APEC" data-domains="audit"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089985W" target="_blank" rel="noopener noreferrer">Auditeur junior F/H</a></h3>
+          <div class="meta">Proaxian · Toulouse - 31</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4396e25234815597">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag domain">Audit</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="332aa5cde94d51d8"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089980W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Lens - 62</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="332aa5cde94d51d8">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="a8d92e09a57b353d"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089967W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Douai - 59</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a8d92e09a57b353d">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="4fbe0faf4cdf9f6b"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089952W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Boves - 80</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4fbe0faf4cdf9f6b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="953d78196d09d275"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089908W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Cucq - 62</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="953d78196d09d275">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="5c099f7ac982827b"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089893W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Bruay-la-Buissière - 62</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="5c099f7ac982827b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="55498816002a750c"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089878W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Coudekerque-Branche - 59</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="55498816002a750c">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="2ea537488412f21b"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=a16c958f4687dc49" target="_blank" rel="noopener noreferrer">Chef de projet RGPD (H/F) en stage 6 mois</a></h3>
+          <div class="meta">TotalEnergies · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="2ea537488412f21b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="cf55b2e0a7a2190f"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=3c47379396f620e0" target="_blank" rel="noopener noreferrer">Community Manager CAPITAL (H/F) - Stage</a></h3>
+          <div class="meta">PRISMA MEDIA · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="cf55b2e0a7a2190f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="9b66055f19c3e6c7"
+               data-src="Indeed" data-domains="devops_cloud"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=b76a28d5afc18572" target="_blank" rel="noopener noreferrer">Consultant.e Junior en Transformation Digitale – Cloud Transformation : Architecture Cloud Native et Applications Modernes (Stage de fin d’études)</a></h3>
+          <div class="meta">Wavestone · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9b66055f19c3e6c7">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">DevOps / Cloud</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="c4a12494f5cbeaae"
                data-src="Indeed" data-domains="data_ia"
@@ -209,19 +671,47 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="a5f9856842b039a6"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="272d9b408b2f746a"
+               data-src="Indeed" data-domains="mecanique_industriel"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438309396" target="_blank" rel="noopener noreferrer">DATA SCIENTIST - STAGE 2 MOIS</a></h3>
-          <div class="meta">STATION F · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=71cca23547afae38" target="_blank" rel="noopener noreferrer">Ingénieur.e Amélioration Continue en stage</a></h3>
+          <div class="meta">Eurofins · France</div>
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="a5f9856842b039a6">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="272d9b408b2f746a">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="24169f0aa58bf886"
+               data-src="Indeed" data-domains="mecanique_industriel"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=c1a8ded11be31450" target="_blank" rel="noopener noreferrer">Ingénieur.e en mécatronique - STAGE</a></h3>
+          <div class="meta">Eurofins · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="24169f0aa58bf886">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="d28a9627d5af119b"
+               data-src="Indeed" data-domains="supply_chain,mecanique_industriel"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ca7f13d266969c27" target="_blank" rel="noopener noreferrer">Logistique &amp; Supply Chain - Stage fin d&#x27;études</a></h3>
+          <div class="meta">SENCROP SAS · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="d28a9627d5af119b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="9ca8f223b43cdfb1"
                data-src="Indeed" data-domains="data_ia"
@@ -237,33 +727,341 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="5cc2d055236db48d"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="9044b8548d6368b5"
+               data-src="Indeed" data-domains="commerce_bizdev"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4419876820" target="_blank" rel="noopener noreferrer">STAGE BUSINESS INTELLIGENCE (POWER BI) – DATA QUALITE (F/H)</a></h3>
-          <div class="meta">Parfums Christian Dior · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=832757c8d0b403d2" target="_blank" rel="noopener noreferrer">STAGE - Marketing Digital &amp; Business Development</a></h3>
+          <div class="meta">Pharmacie Cap 3000 · France</div>
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="5cc2d055236db48d">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="9044b8548d6368b5">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="9f595841f7b4adfa"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="611a63dd882ed8c1"
+               data-src="Indeed" data-domains="juridique"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4439342892" target="_blank" rel="noopener noreferrer">Stage Ingénieur Data IA H/F</a></h3>
-          <div class="meta">CBRE · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=56f66548e568cde1" target="_blank" rel="noopener noreferrer">STAGIAIRE EN DROIT DES DONNEES PERSONNELLES – H/F - PARIS - S2 2027</a></h3>
+          <div class="meta">DELSOL AVOCATS · France</div>
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="9f595841f7b4adfa">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="611a63dd882ed8c1">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="4836dca9d4dca36c"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ca26eb62fb5c84ad" target="_blank" rel="noopener noreferrer">Stage - Analyste M&amp;A (H/F)</a></h3>
+          <div class="meta">TotalEnergies · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4836dca9d4dca36c">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="25644e6b356028b0"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=bdca1f4216d244d0" target="_blank" rel="noopener noreferrer">Stage - Analyste Recherche ESG - 6 mois - Paris (f/m/d)</a></h3>
+          <div class="meta">HSBC · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="25644e6b356028b0">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="5767c8c2666aecf9"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=c35f72cd59125038" target="_blank" rel="noopener noreferrer">Stage - Business Development &amp; Customer Experience - Dès que possible</a></h3>
+          <div class="meta">D+ for Care · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="5767c8c2666aecf9">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="3aa704f9258fb11d"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ed7eeaa99787d9ed" target="_blank" rel="noopener noreferrer">Stage - Juriste Droit de la Santé (H/F)</a></h3>
+          <div class="meta">Tessan · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="3aa704f9258fb11d">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="ca5320f0808adc96"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6e73ba677604102a" target="_blank" rel="noopener noreferrer">Stage - Juriste contrats publics et privés - H/F</a></h3>
+          <div class="meta">SUEZ · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="ca5320f0808adc96">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="7c5bde3b9af29e9c"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=37a796316a31e06d" target="_blank" rel="noopener noreferrer">Stage - Talent Acquisition Retail Europe H/F</a></h3>
+          <div class="meta">AMI PARIS · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="7c5bde3b9af29e9c">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="d7ead06685e250aa"
+               data-src="Indeed" data-domains="finance,juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=c83fc25bb83aa47e" target="_blank" rel="noopener noreferrer">Stage - juriste corporate / m&amp;a janvier - h/f</a></h3>
+          <div class="meta">Compagnie des Alpes · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="d7ead06685e250aa">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="520512742ef9b482"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=4ad2ed3149a80540" target="_blank" rel="noopener noreferrer">Stage / PFE - Assistant.e Conducteur.rice de Travaux GC F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="520512742ef9b482">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a43c877109082dee"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=50860825fafff3cf" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux Bâtiment F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a43c877109082dee">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="6e10614aa531905f"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6d6d1fed11dc21a9" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux CES Centrale EDF F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="6e10614aa531905f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="4f97895c4d9281a4"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=890343f841bf4b35" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux Canalisation F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4f97895c4d9281a4">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="23ed8049a07b2ab8"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6eca3744abe1cf66" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux GC F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="23ed8049a07b2ab8">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="f5122dc18e09920e"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=aafbae0d1c93f988" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux TP / VRD F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="f5122dc18e09920e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="d1bc367d58945ead"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=4fd0cc773ae3c3ac" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de travaux Electricité F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="d1bc367d58945ead">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="cc2bdb35d76d77fe"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=543bf6e82dff47d6" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de travaux TP / VRD F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="cc2bdb35d76d77fe">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="65574d06ca1b25d5"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=4f04ddafda6db50b" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de travaux VRD / Routes F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="65574d06ca1b25d5">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="98de89910969dec7"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=9d5d8a68401ee2b9" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.trice de travaux Cité Judiciaire de Cayenne F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="98de89910969dec7">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="341d1ea7ad80b9eb"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=06dc988a4b5111fe" target="_blank" rel="noopener noreferrer">Stage / PFE - Ingénieur.e études de prix TP / VRD F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="341d1ea7ad80b9eb">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="eac063d782c0482f"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=723a87f00999e519" target="_blank" rel="noopener noreferrer">Stage / PFE- Conducteur.trice travaux Hydraulique F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="eac063d782c0482f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="b167fe36d3fe5c61"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=7311b56627f56aaa" target="_blank" rel="noopener noreferrer">Stage : Juriste Corporate / Compliance H/F</a></h3>
+          <div class="meta">CGI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="b167fe36d3fe5c61">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="866a181e1b9a334e"
+               data-src="Indeed" data-domains="finance,rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=af8c3370870a30f3" target="_blank" rel="noopener noreferrer">Stage Consultant Organisation Asset Management F/H</a></h3>
+          <div class="meta">Périclès Consulting · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="866a181e1b9a334e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="014de509f664024e"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=8b8f39dddb242ba3" target="_blank" rel="noopener noreferrer">Stage HR Generalist (F/H)</a></h3>
+          <div class="meta">Enchanted Tools · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="014de509f664024e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="4a72dde70cf7cb8d"
                data-src="Indeed" data-domains="data_ia"
@@ -279,6 +1077,104 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
+      <article class="job is-new" data-id="2b55d9e546cae5dd"
+               data-src="Indeed" data-domains="rh,juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=23862eb0baa58fcd" target="_blank" rel="noopener noreferrer">Stage Juriste - F/H/NB</a></h3>
+          <div class="meta">CEGID · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="2b55d9e546cae5dd">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="3cc7c5beb55921fd"
+               data-src="Indeed" data-domains="rh,juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=b0637052af75e0c3" target="_blank" rel="noopener noreferrer">Stage Juriste - F/H/NB</a></h3>
+          <div class="meta">CEGID · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="3cc7c5beb55921fd">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="6fb3401c3709e3c7"
+               data-src="Indeed" data-domains="finance,juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=677e7f41d2de9eb6" target="_blank" rel="noopener noreferrer">Stage M&amp;A Juridique H/F</a></h3>
+          <div class="meta">emeis · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="6fb3401c3709e3c7">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="ad9e238584a79bc9"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=f2aba5b913805135" target="_blank" rel="noopener noreferrer">Stage PFE - Ingénieur.e études de prix TCE F/H</a></h3>
+          <div class="meta">VINCI · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="ad9e238584a79bc9">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="2a1a512f56bd72fc"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=71efdd3d58014b59" target="_blank" rel="noopener noreferrer">Stage Référent(e) Handicap</a></h3>
+          <div class="meta">Capgemini · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="2a1a512f56bd72fc">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a5d2dbad3eedbae7"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=956b548362fc84a5" target="_blank" rel="noopener noreferrer">Stage département Financement - Janvier à juin 2027</a></h3>
+          <div class="meta">Watson Farley &amp; Williams LLP · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a5d2dbad3eedbae7">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="ad476265fd8637dc"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=4cb7488224b65d03" target="_blank" rel="noopener noreferrer">Stage département Financement - Juillet à décembre 2027</a></h3>
+          <div class="meta">Watson Farley &amp; Williams LLP · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="ad476265fd8637dc">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
       <article class="job " data-id="40fbb99986402b53"
                data-src="Indeed" data-domains="data_ia"
                data-highlight="0">
@@ -293,19 +1189,271 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="dd5beb844defd4fa"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="a79512179c265304"
+               data-src="Indeed" data-domains="dev_web"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4439058044" target="_blank" rel="noopener noreferrer">internship 6 months - data science</a></h3>
-          <div class="meta">Sanofi · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=19f879b46be55557" target="_blank" rel="noopener noreferrer">Stage développeur d&#x27;application mobile H/F</a></h3>
+          <div class="meta">Office national des Ressources Humaines · France</div>
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="dd5beb844defd4fa">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="a79512179c265304">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="1fc39f87e0786533"
+               data-src="LinkedIn" data-domains="dev_web"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4439068255" target="_blank" rel="noopener noreferrer">Stage développeur web F/H</a></h3>
+          <div class="meta">Resaneo · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="1fc39f87e0786533">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job is-new" data-id="b15d0b8678ebe53d"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=5581ec10a2a077da" target="_blank" rel="noopener noreferrer">Stagiaire Finance Groupe H/F</a></h3>
+          <div class="meta">Europa Organisation · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="b15d0b8678ebe53d">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="b98bbf7180e023cc"
+               data-src="Indeed" data-domains="compta_gestion,rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=5cb40761da5645e7" target="_blank" rel="noopener noreferrer">Stagiaire Finance et Contrôle de Gestion H/F</a></h3>
+          <div class="meta">SONEMA · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="b98bbf7180e023cc">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a73629cd22163a7f"
+               data-src="Indeed" data-domains="supply_chain,mecanique_industriel"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=58cd2e5ae30acf79" target="_blank" rel="noopener noreferrer">Stagiaire Ingénieur Méthodes / Logistique Industrielle (F/H) – Stage</a></h3>
+          <div class="meta">HAULOTTE · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a73629cd22163a7f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="70038aeff0fc52a5"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=5e60dc8d9eb20afe" target="_blank" rel="noopener noreferrer">Stagiaire Juriste droit de la presse / droits voisins / numérique H/F</a></h3>
+          <div class="meta">Sacem · France</div>
+          <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="70038aeff0fc52a5">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="faa7d14f2a70666b"
+               data-src="APEC" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178779072W" target="_blank" rel="noopener noreferrer">Stagiaire en droit public F/H</a></h3>
+          <div class="meta">FIDAL · Bordeaux - 33</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="faa7d14f2a70666b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="cfde31d73ba4245b"
+               data-src="APEC" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178778970W" target="_blank" rel="noopener noreferrer">Elève avocat en droit des sociétés F/H</a></h3>
+          <div class="meta">FIDAL · Lyon 09 - 69</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="cfde31d73ba4245b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="9b5a62e7896871bf"
+               data-src="APEC" data-domains="rh,juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178778870W" target="_blank" rel="noopener noreferrer">Elève avocat en Droit Social F/H</a></h3>
+          <div class="meta">FIDAL · Nantes - 44</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9b5a62e7896871bf">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="8d93af999df6e87d"
+               data-src="APEC" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178778855W" target="_blank" rel="noopener noreferrer">Stagiaire en droit public F/H</a></h3>
+          <div class="meta">FIDAL · Lyon 09 - 69</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="8d93af999df6e87d">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="f5558d97ff3f5888"
+               data-src="APEC" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178778850W" target="_blank" rel="noopener noreferrer">Stagiaire en droit de la propriété intellectuelle et droit du numérique F/H</a></h3>
+          <div class="meta">FIDAL · Lyon 09 - 69</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="f5558d97ff3f5888">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="4bc3a4e12ad0c66a"
+               data-src="APEC" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179066714W" target="_blank" rel="noopener noreferrer">Stagiaire en droit de l&#x27;environnement F/H</a></h3>
+          <div class="meta">FIDAL · Nantes - 44</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4bc3a4e12ad0c66a">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="240944f0be059a90"
+               data-src="APEC" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179061027W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
+          <div class="meta">Proaxian · Calais - 62</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="240944f0be059a90">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="2dd8d46943da7465"
+               data-src="APEC" data-domains="supply_chain"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179060997W" target="_blank" rel="noopener noreferrer">Fin d&#x27;Études - Ingénieur Chargé d&#x27;Affaires Robinetterie Nucléaire F/H</a></h3>
+          <div class="meta">Proaxian · Sèvres - 92</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="2dd8d46943da7465">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="ce1a6d61444081df"
+               data-src="Indeed" data-domains="compta_gestion"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=9b4f39ab9b94aa11" target="_blank" rel="noopener noreferrer">Analyste Comptable en stage F/H</a></h3>
+          <div class="meta">Rydge Conseil · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="ce1a6d61444081df">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="938de2ddab85a120"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=8d9bb6bf9e5df3c7" target="_blank" rel="noopener noreferrer">Chargée Relations Écoles &amp; Universités Île-de-France - Stage</a></h3>
+          <div class="meta">Capgemini · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="938de2ddab85a120">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="4f0aa4c0d4c450e0"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=a70bc5a1f86afa4c" target="_blank" rel="noopener noreferrer">Consultante/Consultant Corporate Experience - Stage</a></h3>
+          <div class="meta">Capgemini · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4f0aa4c0d4c450e0">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="fc005cad48e33acf"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=c6c218f5cbb71c69" target="_blank" rel="noopener noreferrer">Consultante/Consultant Entreprise Transformation - Stage</a></h3>
+          <div class="meta">Capgemini · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="fc005cad48e33acf">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="e92874f2ec2653e2"
+               data-src="Indeed" data-domains="rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=48489a6b49d00aaf" target="_blank" rel="noopener noreferrer">Data &amp; SIRH – Employee Central Core HR — Stage F/H/X</a></h3>
+          <div class="meta">Accor · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="e92874f2ec2653e2">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="285c8920f7c6ea8b"
                data-src="Indeed" data-domains="data_ia"
@@ -321,50 +1469,330 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="1975164d2d026e41"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="51849a5ca7ad0eec"
+               data-src="LinkedIn" data-domains="cybersecurite"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437379920" target="_blank" rel="noopener noreferrer">STAGE - Chargé(e) de Traitement Statistique, Data &amp; IA</a></h3>
-          <div class="meta">CSA (Institut d&#x27;Etudes) · France</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4424359418" target="_blank" rel="noopener noreferrer">DevSecOps (stage) F/H</a></h3>
+          <div class="meta">padoa · France</div>
           <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="1975164d2d026e41">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="51849a5ca7ad0eec">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Cybersécurité</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job " data-id="17f7a5995c6347b7"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="590a0464b59cf058"
+               data-src="Indeed" data-domains="cybersecurite,audit"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4435683130" target="_blank" rel="noopener noreferrer">Stage - Market &amp; Business Intelligence (MVNx) H/F</a></h3>
-          <div class="meta">TRANSATEL (an NTT company) · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=00164786331c7202" target="_blank" rel="noopener noreferrer">Développeur FullStack Python (H/F) – Stage 6 mois minimum / Temps plein</a></h3>
+          <div class="meta">Oaklen Consulting · France</div>
           <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="17f7a5995c6347b7">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="590a0464b59cf058">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Cybersécurité</span><span class="tag domain">Audit</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="c41c619b64fe1af2"
-               data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
+      <article class="job " data-id="66826ab2e115a386"
+               data-src="Indeed" data-domains="devops_cloud"
+               data-highlight="1">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4425552832" target="_blank" rel="noopener noreferrer">Stage / alternance - Data Engineer</a></h3>
-          <div class="meta">Numberly · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6c3b5ac671c598c9" target="_blank" rel="noopener noreferrer">Ingénieur / Ingénieure Exploitation Applicative - Stage</a></h3>
+          <div class="meta">Capgemini · France</div>
           <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="c41c619b64fe1af2">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="66826ab2e115a386">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">DevOps / Cloud</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="8a0d3013ad5120df"
+               data-src="Indeed" data-domains="supply_chain"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=826bc2d664dbbf4b" target="_blank" rel="noopener noreferrer">Ingénieure / Ingénieur Optimisation Supply Chain - Stage</a></h3>
+          <div class="meta">Capgemini · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="8a0d3013ad5120df">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="9a1ccd0252566eb3"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=05e0b5c516a71e1a" target="_blank" rel="noopener noreferrer">Juriste (F/H) - Stage - Juridique Affaires Générales (H/F)</a></h3>
+          <div class="meta">Crédit Mutuel Alliance Fédérale · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9a1ccd0252566eb3">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="9b78578f05128da4"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=e9d565da77a398dc" target="_blank" rel="noopener noreferrer">Juriste Contentieux H/F - Stage</a></h3>
+          <div class="meta">Clubfunding-Group · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9b78578f05128da4">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="520b6811ff4ee184"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=cb73252372ce817f" target="_blank" rel="noopener noreferrer">Juriste Contentieux H/F - Stage</a></h3>
+          <div class="meta">Clubfunding-Group · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="520b6811ff4ee184">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="de1f9af5fad793a8"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=cae2a9a504f085e2" target="_blank" rel="noopener noreferrer">Juriste Stagiaire - élève Avocat F/H</a></h3>
+          <div class="meta">Eiffage · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="de1f9af5fad793a8">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="85375f6cf5ba0a9b"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=d347e16a42ea8a4e" target="_blank" rel="noopener noreferrer">Revenue Operations Intern</a></h3>
+          <div class="meta">Beamy · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="85375f6cf5ba0a9b">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a3da4c5a5a84232f"
+               data-src="Indeed" data-domains="compta_gestion"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=73e9f74c26cde3f6" target="_blank" rel="noopener noreferrer">STAGE - ASSISTANT(E) DU SECRÉTARIAT GÉNÉRAL</a></h3>
+          <div class="meta">Institut national de l&#x27;information géographique et forestière (IGN) · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a3da4c5a5a84232f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="475b78c8ec92e203"
+               data-src="LinkedIn" data-domains="product_management"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4404835027" target="_blank" rel="noopener noreferrer">STAGE - Data &amp; AI Product Owner (F/H)</a></h3>
+          <div class="meta">Air Liquide · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="475b78c8ec92e203">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Product Management</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job is-new" data-id="a77beb0da57576fc"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=dd24cbdc1abd9518" target="_blank" rel="noopener noreferrer">STAGE / ALTERNANCE – Business Developer &amp; Chargé.e de Communication</a></h3>
+          <div class="meta">Neptech · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a77beb0da57576fc">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="8d100f3a10245b1e"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=e979d0dbdd9c0406" target="_blank" rel="noopener noreferrer">STAGE INSIDES SALES SME H/F</a></h3>
+          <div class="meta">Pluxee · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="8d100f3a10245b1e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="0abb1a2525f0f22e"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=bff90beec2edc5ed" target="_blank" rel="noopener noreferrer">Stage - Client Development Analyst /Global Markets - H/F</a></h3>
+          <div class="meta">BNP Paribas · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="0abb1a2525f0f22e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="2796fdc9a350afe5"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=7c4246b125f6996d" target="_blank" rel="noopener noreferrer">Stage - Commercial</a></h3>
+          <div class="meta">Clever Technologies · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="2796fdc9a350afe5">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="54c2418977d75147"
+               data-src="Indeed" data-domains="dev_web,devops_cloud"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=96cd9b24978e645e" target="_blank" rel="noopener noreferrer">Stage - Développement informatique - H/F</a></h3>
+          <div class="meta">GEOFIT · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="54c2418977d75147">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag domain">DevOps / Cloud</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="f195c53bb463ab94"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=8a3a680a6414e13f" target="_blank" rel="noopener noreferrer">Stage - Strategic Partnership Office H/F</a></h3>
+          <div class="meta">BNP Paribas · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="f195c53bb463ab94">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="a80ef161d36cc849"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=9364cebc3320f053" target="_blank" rel="noopener noreferrer">Stage Analyste Business Plan (Paris/Lyon ou Marseille)</a></h3>
+          <div class="meta">Rte International · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="a80ef161d36cc849">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="23b1a484f3c7628e"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=763b2715ed67125d" target="_blank" rel="noopener noreferrer">Stage Analyste Business Plan (Paris/Lyon ou Marseille)</a></h3>
+          <div class="meta">Rte International · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="23b1a484f3c7628e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="787781cbb451bb08"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=1e59ddc26746ee89" target="_blank" rel="noopener noreferrer">Stage Business Solution Engineer : Big Data, Finance &amp; ESG (Python)</a></h3>
+          <div class="meta">Opensee · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="787781cbb451bb08">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="cf4e6f0594350651"
+               data-src="Indeed" data-domains="commerce_bizdev"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=25ad0295a12d95d3" target="_blank" rel="noopener noreferrer">Stage Commercial B2B / Business Developer — 9Squad</a></h3>
+          <div class="meta">9Squad · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="cf4e6f0594350651">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="875c48e871b273ba"
+               data-src="Indeed" data-domains="compta_gestion"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=d4493beb22406255" target="_blank" rel="noopener noreferrer">Stage Consultant projets Consolidation F/H</a></h3>
+          <div class="meta">VISEO · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="875c48e871b273ba">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="e3dead7daf158745"
+               data-src="Indeed" data-domains="audit"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=8d17f4addaf91947" target="_blank" rel="noopener noreferrer">Stage Contrôle interne CEVA Logistics - Périmètre monde / Septembre 2026</a></h3>
+          <div class="meta">CEVA Logistics · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="e3dead7daf158745">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Audit</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="80dafb18fe32e03f"
-               data-src="Indeed" data-domains="data_ia"
+               data-src="Indeed" data-domains="data_ia,electronique_embarque"
                data-highlight="0">
         <div class="job-top"><div>
           <h3><a href="https://fr.indeed.com/viewjob?jk=2481c9a11d1d807e" target="_blank" rel="noopener noreferrer">Stage Data Scientist - WiFi Sensing &amp; Human Activity Recognition</a></h3>
@@ -375,21 +1803,147 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
+          <span class="tag domain">Data / IA</span><span class="tag domain">Électronique / Systèmes embarqués</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="4994b719a64290f1"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job " data-id="8338df0a02ac9b63"
+               data-src="Indeed" data-domains="electronique_embarque"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437376932" target="_blank" rel="noopener noreferrer">Stagiaire ou Alternant Data Analyst - Performance Commerciale – 6 mois (F/H)</a></h3>
-          <div class="meta">Horus Pharma · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=c29699cb82f59626" target="_blank" rel="noopener noreferrer">Stage Ingénieur Firmware embarqué - ESP32, Edge AI &amp; WiFi Sensing</a></h3>
+          <div class="meta">zoe care · France</div>
           <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="4994b719a64290f1">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="8338df0a02ac9b63">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Électronique / Systèmes embarqués</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="e3cd90ae8d996a35"
+               data-src="Indeed" data-domains="mecanique_industriel"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ed3d2596ee176a08" target="_blank" rel="noopener noreferrer">Stage Ingénieur Génie Industriel – Méthodes / Production / Procédés (H/F)</a></h3>
+          <div class="meta">Ateliers de Parachèvement de la Bresle · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="e3cd90ae8d996a35">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="4a3d56516169d095"
+               data-src="Indeed" data-domains="dev_web"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=cc3ec04d2c987db9" target="_blank" rel="noopener noreferrer">Stage fin d&#x27;études – Développement Fullstack &amp; Automatisation / Conception Ergonomique &amp; UX</a></h3>
+          <div class="meta">Drivecase · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="4a3d56516169d095">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Développement Web / Logiciel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="f0a3d6df2cb59ecd"
+               data-src="Indeed" data-domains="mecanique_industriel"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=44abb0785759492c" target="_blank" rel="noopener noreferrer">Stage ingénieur Usinage – Performance production F/H</a></h3>
+          <div class="meta">Framatome · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="f0a3d6df2cb59ecd">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="588937c746a679c8"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=6a33213f9f88de84" target="_blank" rel="noopener noreferrer">Stage – Analyste Développement Durable – Five Arrows – Mars 2027</a></h3>
+          <div class="meta">Rothschild &amp; Co · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="588937c746a679c8">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="9c76b7ee822bd43a"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=44907574365540cf" target="_blank" rel="noopener noreferrer">Stage – Juriste Droit des Affaires / Life Sciences</a></h3>
+          <div class="meta">Orano · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="9c76b7ee822bd43a">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="cf2228eda14f735d"
+               data-src="Indeed" data-domains="mecanique_industriel"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=8b917485118d9708" target="_blank" rel="noopener noreferrer">Stagiaire Production F-H</a></h3>
+          <div class="meta">Safran · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="cf2228eda14f735d">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="5b1cb2590c61db41"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ebc52c95df8de16f" target="_blank" rel="noopener noreferrer">Stagiaire assistant juridique droit des sociétés / droit des entreprises en difficulté H/F</a></h3>
+          <div class="meta">Cabinet d&#x27;avocats Adenot et Andrieux · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="5b1cb2590c61db41">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="596c40a35886c777"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=e58eeec1c697dfc6" target="_blank" rel="noopener noreferrer">Stagiaire juridique - H/F - Ritz Group Services</a></h3>
+          <div class="meta">Ritz Paris le Comptoir · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="596c40a35886c777">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="d3a074f6433b7921"
+               data-src="Indeed" data-domains="supply_chain"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=12daa23c9b4f02c3" target="_blank" rel="noopener noreferrer">[STAGE] Ingénieur(e) Soutien Aéronautique - F/H</a></h3>
+          <div class="meta">LGM · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="d3a074f6433b7921">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="f0f4c177de06e79f"
                data-src="Indeed" data-domains="data_ia"
@@ -405,187 +1959,229 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag domain">Data / IA</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="9e5a3bff1e6e1662"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="37d12bac99d527e0"
+               data-src="APEC" data-domains="compta_gestion"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4429591831" target="_blank" rel="noopener noreferrer">Data Analyst - 6 Month Internship</a></h3>
-          <div class="meta">Prose · France</div>
+          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179050231W" target="_blank" rel="noopener noreferrer">Expert comptable stagiaire ou mémorialiste F/H</a></h3>
+          <div class="meta">Proaxian · Nîmes - 30</div>
           <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="9e5a3bff1e6e1662">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="37d12bac99d527e0">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job is-new" data-id="80d183e81a71007f"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=010551571aea5c2d" target="_blank" rel="noopener noreferrer">Analyste financière/financier (F/H) - Stage - Gestion / Analyse Crédit High Yield &amp; Obligations convertibles (H/F)</a></h3>
+          <div class="meta">Crédit Mutuel Alliance Fédérale · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="80d183e81a71007f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="e1c54708898c7437"
+               data-src="Indeed" data-domains="compta_gestion"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=bd8f6ad573ed7608" target="_blank" rel="noopener noreferrer">Contrôleur de gestion stagiaire H/F</a></h3>
+          <div class="meta">Sesame Boulangerie-Pâtisserie · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="e1c54708898c7437">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="35f440c28e07682b"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="dc847a25dd635a5e"
+               data-src="LinkedIn" data-domains="data_ia,dev_web,rh"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4410063414" target="_blank" rel="noopener noreferrer">Gap Year Internship - Data Scientist F/M</a></h3>
-          <div class="meta">Betclic Group · France</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4437055865" target="_blank" rel="noopener noreferrer">Développeur full stack &amp; IA logiciel de paie SaaS - Stage de fin d&#x27;études</a></h3>
+          <div class="meta">Galadrim · France</div>
           <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="35f440c28e07682b">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="dc847a25dd635a5e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Data / IA</span><span class="tag domain">Développement Web / Logiciel</span><span class="tag domain">Ressources Humaines</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job " data-id="3487b90483644c80"
-               data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438506045" target="_blank" rel="noopener noreferrer">Portfolio Data Analyst - Stage (H/F)</a></h3>
-          <div class="meta">CORUM L&#x27;Epargne · France</div>
-          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="3487b90483644c80">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="776ce2adadc82cab"
-               data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438254487" target="_blank" rel="noopener noreferrer">STAGE - ASSISTANT(E) DATA ANALYST - (F/H/X)</a></h3>
-          <div class="meta">CANAL+ Group · France</div>
-          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="776ce2adadc82cab">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="2f572b58dedc44fe"
-               data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4408987957" target="_blank" rel="noopener noreferrer">STAGE - Data Analyst (H/F)</a></h3>
-          <div class="meta">Hermès · France</div>
-          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="2f572b58dedc44fe">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="e449c48b5253d563"
-               data-src="LinkedIn" data-domains="data_ia"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438231923" target="_blank" rel="noopener noreferrer">Stage - Développeur / Data engineer</a></h3>
-          <div class="meta">AppASO Group · France</div>
-          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="e449c48b5253d563">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="efe7bb82f2ca52d8"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="81e9f493e7a70c4f"
+               data-src="LinkedIn" data-domains="product_management"
                data-highlight="1">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437027177" target="_blank" rel="noopener noreferrer">Stage Innovation : Ingénieur Intelligence Artificielle Générative / NLP</a></h3>
-          <div class="meta">ALTEN · France</div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4431214359" target="_blank" rel="noopener noreferrer">Intern - Product Manager H/F</a></h3>
+          <div class="meta">BNP Paribas Asset Management · France</div>
           <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="efe7bb82f2ca52d8">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="81e9f493e7a70c4f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
           <span class="tag highlight">✓ Visa-friendly probable</span>
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Product Management</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job " data-id="d03940baab6cc245"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job " data-id="81f746ed65c184c6"
+               data-src="Indeed" data-domains="rh"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4434895313" target="_blank" rel="noopener noreferrer">Stagiaire Data Scientist</a></h3>
-          <div class="meta">FretBay · France</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=7a0005731179921a" target="_blank" rel="noopener noreferrer">Internship - Développement de Carrières &amp; Projets Alumni (Septembre 2026)</a></h3>
+          <div class="meta">Boston Consulting Group · France</div>
           <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="d03940baab6cc245">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="81f746ed65c184c6">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="b8dfbc77f30fe3c0"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="9726327db3f4b0f8"
+               data-src="Indeed" data-domains="data_ia,mecanique_industriel"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4428028690" target="_blank" rel="noopener noreferrer">Analytics Engineer Intern (September 2026)</a></h3>
-          <div class="meta">Malt · France</div>
-          <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=a622da48c8cf42d7" target="_blank" rel="noopener noreferrer">STAGE - E&amp;C - Assistant(e) de Projet - Optimisation et Modernisation du Standards Management System (SMS) H/F</a></h3>
+          <div class="meta">Air Liquide · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="b8dfbc77f30fe3c0">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="9726327db3f4b0f8">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Data / IA</span><span class="tag domain">Mécanique / Industriel</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="abdbc66426f40fb8"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="8109b331e653c24c"
+               data-src="Indeed" data-domains="commerce_bizdev"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4434554593" target="_blank" rel="noopener noreferrer">Assistant Data Analyst H/F - STAGE</a></h3>
-          <div class="meta">GALEC - Groupement d&#x27;Achats E.LECLERC · France</div>
-          <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=acbe888e95cb7741" target="_blank" rel="noopener noreferrer">STAGE - Sales Development Representative (SDR) - Middle Market (H/F)</a></h3>
+          <div class="meta">Pluxee · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="abdbc66426f40fb8">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="8109b331e653c24c">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Commerce / Business Development</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="298dd70943c240a3"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="9075dad2a6642562"
+               data-src="Indeed" data-domains="genie_civil_btp"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437818211" target="_blank" rel="noopener noreferrer">Stage - Ingénieur en Data Science / Intelligence Artificielle (F/H)</a></h3>
-          <div class="meta">SII Group Switzerland · France</div>
-          <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=2506a089500a9cff" target="_blank" rel="noopener noreferrer">STAGE CONDUITE DE TRAVAUX TCE H/F</a></h3>
+          <div class="meta">Equans · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="298dd70943c240a3">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="9075dad2a6642562">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="bad0fc18a0823fd4"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="4b24287579befa4f"
+               data-src="Indeed" data-domains="data_ia,dev_web,devops_cloud"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4434548850" target="_blank" rel="noopener noreferrer">Stage - Ingénieur en Data Science / Intelligence Artificielle (F/H)</a></h3>
-          <div class="meta">SII Czech Republic · France</div>
-          <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=73ea34bd39ed2ae6" target="_blank" rel="noopener noreferrer">STAGIAIRE DÉVELOPPEUR(SE) IA &amp; ASSISTANT(E) CHEF DE PROJETS IT/IA (H/F) - JUILLET 2026</a></h3>
+          <div class="meta">Paris Saint-Germain Football · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="bad0fc18a0823fd4">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
+        <button class="apply-btn" type="button" data-offer-id="4b24287579befa4f">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Data / IA</span><span class="tag domain">Développement Web / Logiciel</span><span class="tag domain">DevOps / Cloud</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="8e4c5291407d8083"
-               data-src="LinkedIn" data-domains="data_ia"
+      <article class="job is-new" data-id="733c923da2c02e77"
+               data-src="Indeed" data-domains="juridique"
                data-highlight="0">
         <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4437830868" target="_blank" rel="noopener noreferrer">Stage - Innovation Data / Intelligence Artificielle (F/H)</a></h3>
-          <div class="meta">GIVENCHY · France</div>
-          <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ac24743fb27f4611" target="_blank" rel="noopener noreferrer">STAGIAIRE EN DONNEES PERSONNELLES</a></h3>
+          <div class="meta">DELSOL AVOCATS · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
-        <button class="apply-btn" type="button" data-offer-id="8e4c5291407d8083">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="733c923da2c02e77">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="3b64811c203a6cfa"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=526542df1e8d99e5" target="_blank" rel="noopener noreferrer">STAGIAIRE JURISTE PROPRIETE INTELLECTUELLE, NUMERIQUE &amp; PROTECTION DES DONNEES – (F/H)</a></h3>
+          <div class="meta">Unibail-Rodamco-Westfield · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="3b64811c203a6cfa">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="23eebb395e25e146"
+               data-src="Indeed" data-domains="genie_civil_btp"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=a5012c242421c992" target="_blank" rel="noopener noreferrer">Stage - Conducteur de Travaux H/F</a></h3>
+          <div class="meta">LEON GROSSE · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="23eebb395e25e146">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Génie civil / BTP</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="d525a6e757715e7e"
+               data-src="Indeed" data-domains="finance"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=50b757e5cfec2990" target="_blank" rel="noopener noreferrer">Stage - Conduite de projet H/F</a></h3>
+          <div class="meta">Groupe BPCE · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="d525a6e757715e7e">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag domain">Finance / Marchés</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job " data-id="33f6669474f66382"
+               data-src="Indeed" data-domains="compta_gestion,rh"
+               data-highlight="0">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=ff4cc94b5722d6fa" target="_blank" rel="noopener noreferrer">Stage - Contrôleur de Gestion Junior - F/H</a></h3>
+          <div class="meta">Schneider Electric · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="33f6669474f66382">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
-          <span class="tag domain">Data / IA</span><span class="tag src">LinkedIn</span></div>
+          <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag domain">Ressources Humaines</span><span class="tag src">Indeed</span></div>
+      </article>
+      <article class="job is-new" data-id="57a4db9c4a31bb67"
+               data-src="Indeed" data-domains="juridique"
+               data-highlight="1">
+        <div class="job-top"><div>
+          <h3><a href="https://fr.indeed.com/viewjob?jk=5c8e97bdf38de25f" target="_blank" rel="noopener noreferrer">Stage - Missions RGPD - F/H</a></h3>
+          <div class="meta">Crédit Agricole · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="57a4db9c4a31bb67">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+          <span class="tag highlight">✓ Visa-friendly probable</span>
+
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag src">Indeed</span></div>
       </article></div>
 <p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
 </div>
@@ -593,7 +2189,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 const STORAGE_KEY='radar-stage-france-applied-v1';
 const STATUS_LABELS={todo:'À postuler',applied:'Déjà postulé',all:'Tous'};
 const HIGHLIGHT_LABEL="Visa-friendly probable";
-const DOMAIN_LABELS={"data_ia": "Data / IA"};
+const DOMAIN_LABELS={"data_ia": "Data / IA", "dev_web": "Développement Web / Logiciel", "devops_cloud": "DevOps / Cloud", "cybersecurite": "Cybersécurité", "reseaux_systemes": "Réseaux / Systèmes", "product_management": "Product Management", "compta_gestion": "Comptabilité / Contrôle de gestion", "finance": "Finance / Marchés", "audit": "Audit", "supply_chain": "Supply Chain / Logistique / Achats", "commerce_bizdev": "Commerce / Business Development", "rh": "Ressources Humaines", "juridique": "Juridique / Droit des affaires", "electronique_embarque": "Électronique / Systèmes embarqués", "genie_civil_btp": "Génie civil / BTP", "mecanique_industriel": "Mécanique / Industriel"};
 let activeSource='*', activeDomain='*', activeStatus='todo', highlightOnly=false;
 function readApplied(){
   try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}
