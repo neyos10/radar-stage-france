@@ -66,8 +66,32 @@ vérifie les logs, le dashboard, et ta boîte mail.
 - Requêtes : liste `QUERIES` en haut de `scan.py`
 - Heure du scan : ligne `cron:` dans `.github/workflows/scan.yml` (UTC)
 - Entreprises visa-friendly : liste `VISA_FRIENDLY_KEYWORDS` dans `scan.py`
-- Filtre anti-bruit : regex `TITLE_MUST_MATCH` (garde les titres contenant
-  stage/stagiaire/intern/PFE)
+- Filtre anti-bruit : `TITLE_MUST_MATCH` impose un stage, puis la liste
+  positive Data/IA et les exclusions fortes de `PROFILE_TITLE_HARD_EXCLUDE`
+  écartent audit, comptabilité, RH, commercial, CRM, finance, etc.
+
+## 🔎 Fraîcheur, filtres natifs et dashboard
+
+- LinkedIn et Indeed utilisent `hours_old=168`, traduit par JobSpy en filtre
+  natif des 7 derniers jours. Le filtre natif `job_type=internship` n'est pas
+  cumulé : certaines entreprises classent leurs stages en temps plein, donc le
+  type est validé localement avec `stage/stagiaire/intern/PFE` dans le titre.
+  LinkedIn est borné à cinq requêtes complémentaires (pagination plus lente) ;
+  Indeed conserve toutes les variantes, dont `"stage 6 mois" data engineer`.
+- Une date relative (`« à l'instant »`, `« aujourd'hui »`, `« 2 hours ago »`)
+  est normalisée. Une date absente ou inconnue est conservée par précaution et
+  signalée par un badge ; seules les dates effectivement parsées au-delà de
+  7 jours sont rejetées.
+- APEC reçoit les filtres serveur `typesContrat=597171` (stage),
+  `niveauEtude=20019` (Bac+5) et tous les types d'annonceur pertinents. Le code
+  `20020` signifie strictement supérieur à Bac+5, il n'est donc pas utilisé
+  pour un PFE d'école d'ingénieur.
+- `Actualiser les offres` recharge le dernier dashboard publié. Un nouveau
+  scan doit être lancé via `Ouvrir GitHub Actions` puis `Run workflow`, car une
+  page GitHub Pages statique ne possède pas de jeton autorisant
+  `workflow_dispatch`.
+- Les statuts « À postuler / Déjà postulé » restent uniquement dans le
+  `localStorage` du navigateur et ne sont jamais envoyés au repo.
 
 ## 🧠 À raconter en entretien (c'est un vrai projet data engineering)
 Extraction multi-sources (APIs REST publique/OAuth2/key + scraping tolérant aux pannes),
