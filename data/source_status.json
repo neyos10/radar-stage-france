@@ -1,44 +1,44 @@
 {
- "generated_at": "2026-07-13T08:35:33+00:00",
- "scan_duration_s": 68.7,
+ "generated_at": "2026-07-13T12:14:28+00:00",
+ "scan_duration_s": 74.0,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 110,
-   "accepted_count": 19,
-   "rejected_count": 91,
+   "raw_count": 125,
+   "accepted_count": 22,
+   "rejected_count": 103,
    "reject_reasons": {
-    "pas un stage": 61,
     "hors ciblage CV": 16,
-    "doublon": 9,
-    "plus de 7 jours": 2,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 3
+    "pas un stage": 68,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 4,
+    "plus de 7 jours": 4,
+    "doublon": 11
    },
-   "unknown_date_count": 1,
-   "duration_s": 68.7,
+   "unknown_date_count": 3,
+   "duration_s": 74.0,
    "http_error": "",
    "note": "",
-   "label": "19 offres"
+   "label": "22 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 133,
-   "accepted_count": 8,
-   "rejected_count": 125,
+   "raw_count": 131,
+   "accepted_count": 10,
+   "rejected_count": 121,
    "reject_reasons": {
-    "hors ciblage CV": 19,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 14,
-    "plus de 7 jours": 29,
-    "pas un stage": 55,
+    "pas un stage": 63,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 13,
+    "hors ciblage CV": 22,
+    "plus de 7 jours": 15,
     "doublon": 8
    },
    "unknown_date_count": 0,
-   "duration_s": 7.8,
+   "duration_s": 6.1,
    "http_error": "",
    "note": "",
-   "label": "8 offres"
+   "label": "10 offres"
   },
   {
    "source": "Glassdoor",
@@ -48,7 +48,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 1.0,
+   "duration_s": 0.7,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
@@ -61,7 +61,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 2.5,
+   "duration_s": 2.1,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -78,7 +78,7 @@
     "plus de 7 jours": 23
    },
    "unknown_date_count": 0,
-   "duration_s": 11.1,
+   "duration_s": 9.3,
    "http_error": "",
    "note": "",
    "label": "2 offres"
