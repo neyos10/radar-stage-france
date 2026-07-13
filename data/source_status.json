@@ -1,41 +1,41 @@
 {
- "generated_at": "2026-07-13T08:09:29+00:00",
- "scan_duration_s": 79.5,
+ "generated_at": "2026-07-13T08:35:33+00:00",
+ "scan_duration_s": 68.7,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 112,
-   "accepted_count": 16,
-   "rejected_count": 96,
+   "raw_count": 110,
+   "accepted_count": 19,
+   "rejected_count": 91,
    "reject_reasons": {
-    "pas un stage": 74,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 6,
-    "hors ciblage CV": 7,
-    "doublon": 8,
-    "plus de 7 jours": 1
+    "pas un stage": 61,
+    "hors ciblage CV": 16,
+    "doublon": 9,
+    "plus de 7 jours": 2,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 3
    },
    "unknown_date_count": 1,
-   "duration_s": 79.5,
+   "duration_s": 68.7,
    "http_error": "",
    "note": "",
-   "label": "16 offres"
+   "label": "19 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 136,
+   "raw_count": 133,
    "accepted_count": 8,
-   "rejected_count": 128,
+   "rejected_count": 125,
    "reject_reasons": {
-    "hors ciblage CV": 21,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 13,
-    "plus de 7 jours": 28,
-    "pas un stage": 58,
+    "hors ciblage CV": 19,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 14,
+    "plus de 7 jours": 29,
+    "pas un stage": 55,
     "doublon": 8
    },
    "unknown_date_count": 0,
-   "duration_s": 6.0,
+   "duration_s": 7.8,
    "http_error": "",
    "note": "",
    "label": "8 offres"
@@ -48,7 +48,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 0.7,
+   "duration_s": 1.0,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
@@ -61,7 +61,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 1.9,
+   "duration_s": 2.5,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -70,18 +70,18 @@
    "source": "APEC",
    "status": "success",
    "raw_count": 47,
-   "accepted_count": 4,
-   "rejected_count": 43,
+   "accepted_count": 2,
+   "rejected_count": 45,
    "reject_reasons": {
-    "hors ciblage CV": 6,
+    "hors ciblage CV": 5,
     "métier hors périmètre (audit/compta/RH/finance/…)": 17,
-    "plus de 7 jours": 20
+    "plus de 7 jours": 23
    },
    "unknown_date_count": 0,
-   "duration_s": 9.7,
+   "duration_s": 11.1,
    "http_error": "",
    "note": "",
-   "label": "4 offres"
+   "label": "2 offres"
   },
   {
    "source": "Adzuna",

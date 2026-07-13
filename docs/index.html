@@ -52,13 +52,13 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 </style></head>
 <body><div class="wrap">
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : 13/07/2026 08:09 UTC · 28 offres des 7 derniers jours · durée du scan : 1 min 19 s</p></div>
+<p class="sub">Dernier scan : 13/07/2026 08:35 UTC · 29 offres des 7 derniers jours · durée du scan : 1 min 09 s</p></div>
 <div class="hero-actions">
 <button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
 <a class="scan-btn" href="https://github.com/neyos10/radar-stage-france/actions/workflows/scan.yml" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
 <p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
 <p class="profile-note">Ciblage CV : Data Engineering/Analytics, Data Science/IA, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, SQL, BI et Power BI.</p>
-<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 16 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 8 offres</span><span class="src-stat st-bad"><b>Glassdoor</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 4 offres</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
+<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn</b> · 19 offres</span><span class="src-stat st-ok"><b>Indeed</b> · 8 offres</span><span class="src-stat st-bad"><b>Glassdoor</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-warn"><b>Google Jobs</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC</b> · 2 offres</span><span class="src-stat st-muted"><b>Adzuna</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail</b> · Non configuré — identifiants manquants</span></div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
     <button class="fchip status-chip on" data-status="todo">À postuler <b id="todoCount"></b></button>
@@ -66,7 +66,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
     <button class="fchip status-chip" data-status="all">Tous</button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" data-src="*">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" >LinkedIn <b>(16)</b></button><button class="fchip source-chip" data-src="Indeed" >Indeed <b>(8)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Bloqué temporairement — HTTP 403" >Glassdoor <b>bloqué 403</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" >Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" >APEC <b>(4)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" >Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" >France Travail <b>non configuré</b></button>
+    <button class="fchip source-chip on" data-src="*">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" >LinkedIn <b>(19)</b></button><button class="fchip source-chip" data-src="Indeed" >Indeed <b>(8)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Bloqué temporairement — HTTP 403" >Glassdoor <b>bloqué 403</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" >Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" >APEC <b>(2)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" >Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" >France Travail <b>non configuré</b></button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="visaFilter" class="fchip" aria-pressed="false">✓ Visa-friendly probable</button>
@@ -78,7 +78,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 </div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
 <div id="jobs">
-      <article class="job is-new" data-id="dbcff1a3b5713023"
+      <article class="job " data-id="dbcff1a3b5713023"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://www.linkedin.com/jobs/view/4437211707" target="_blank" rel="noopener noreferrer">STAGE Data Analyst ESG  H/F</a></h3>
@@ -86,12 +86,12 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Date de publication inconnue · conservée par précaution</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="dbcff1a3b5713023">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
           <span class="tag date-unknown">date inconnue</span>
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job is-new" data-id="001fd4543d035d43"
+      <article class="job " data-id="001fd4543d035d43"
                data-src="APEC" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179100208W" target="_blank" rel="noopener noreferrer">Data Analyst MMM F/H</a></h3>
@@ -99,7 +99,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée aujourd'hui · 13/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="001fd4543d035d43">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
@@ -130,6 +130,19 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
+      <article class="job is-new" data-id="3204ac4d80a4c355"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4439551280" target="_blank" rel="noopener noreferrer">Stage Data Scientist (6 mois) – Conseil et Industrie (f/m/d)</a></h3>
+          <div class="meta">Avencore · France</div>
+          <div class="published">Publiée il y a 2 jours · 11/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="3204ac4d80a4c355">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
       <article class="job " data-id="e4486ebf9d1d2556"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
@@ -143,7 +156,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job is-new" data-id="1819138ad645178a"
+      <article class="job " data-id="1819138ad645178a"
                data-src="Indeed" data-visa="1">
         <div class="job-top"><div>
           <h3><a href="https://fr.indeed.com/viewjob?jk=2b005b120faa1927" target="_blank" rel="noopener noreferrer">Consultant·e Junior en Transformation Digitale – IA Générative – CTO Advisory (Stage de fin d’études)</a></h3>
@@ -151,7 +164,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="1819138ad645178a">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
           <span class="tag visa">✓ visa-friendly</span>
 
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
@@ -169,7 +182,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job is-new" data-id="4a72dde70cf7cb8d"
+      <article class="job " data-id="4a72dde70cf7cb8d"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://fr.indeed.com/viewjob?jk=b7827bc1c431b805" target="_blank" rel="noopener noreferrer">Stage Ingénieur Data IA H/F</a></h3>
@@ -177,12 +190,12 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="4a72dde70cf7cb8d">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="03df9a5aabc28c5f"
+      <article class="job " data-id="03df9a5aabc28c5f"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://fr.indeed.com/viewjob?jk=dbb30468ba1f1879" target="_blank" rel="noopener noreferrer">Stage développeur / consultant DATA BI</a></h3>
@@ -190,12 +203,12 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="03df9a5aabc28c5f">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="40fbb99986402b53"
+      <article class="job " data-id="40fbb99986402b53"
                data-src="Indeed" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://fr.indeed.com/viewjob?jk=517732f6dd71ba8e" target="_blank" rel="noopener noreferrer">Stage développeur / consultant DATA BI IA</a></h3>
@@ -203,12 +216,12 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="40fbb99986402b53">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="dd5beb844defd4fa"
+      <article class="job " data-id="dd5beb844defd4fa"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://www.linkedin.com/jobs/view/4439058044" target="_blank" rel="noopener noreferrer">internship 6 months - data science</a></h3>
@@ -216,7 +229,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 3 jours · 10/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="dd5beb844defd4fa">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
@@ -234,32 +247,6 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="475b78c8ec92e203"
-               data-src="LinkedIn" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4404835027" target="_blank" rel="noopener noreferrer">STAGE - Data &amp; AI Product Owner (F/H)</a></h3>
-          <div class="meta">Air Liquide · France</div>
-          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="475b78c8ec92e203">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
-
-
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job " data-id="17f7a5995c6347b7"
-               data-src="LinkedIn" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4435683130" target="_blank" rel="noopener noreferrer">Stage - Market &amp; Business Intelligence (MVNx) H/F</a></h3>
-          <div class="meta">TRANSATEL (an NTT company) · France</div>
-          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="17f7a5995c6347b7">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
-      </article>
       <article class="job " data-id="c41c619b64fe1af2"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
@@ -268,6 +255,19 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="c41c619b64fe1af2">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="fcb09aed57ef7074"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4438618995" target="_blank" rel="noopener noreferrer">Stage fin d&#x27;études - Data Analyst - H/F</a></h3>
+          <div class="meta">Groupe BBL · France</div>
+          <div class="published">Publiée il y a 4 jours · 09/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="fcb09aed57ef7074">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">
 
 
@@ -299,7 +299,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job is-new" data-id="3487b90483644c80"
+      <article class="job " data-id="3487b90483644c80"
                data-src="LinkedIn" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://www.linkedin.com/jobs/view/4438506045" target="_blank" rel="noopener noreferrer">Portfolio Data Analyst - Stage (H/F)</a></h3>
@@ -307,7 +307,7 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="3487b90483644c80">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
@@ -351,7 +351,33 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
           <span class="tag match">Profil CV</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="ee68015db879ec6d"
+      <article class="job " data-id="e449c48b5253d563"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4438231923" target="_blank" rel="noopener noreferrer">Stage - Développeur / Data engineer</a></h3>
+          <div class="meta">AppASO Group · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="e449c48b5253d563">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="d03940baab6cc245"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4434895313" target="_blank" rel="noopener noreferrer">Stagiaire Data Scientist</a></h3>
+          <div class="meta">FretBay · France</div>
+          <div class="published">Publiée il y a 5 jours · 08/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="d03940baab6cc245">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
+      </article>
+      <article class="job " data-id="ee68015db879ec6d"
                data-src="APEC" data-visa="0">
         <div class="job-top"><div>
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179032722W" target="_blank" rel="noopener noreferrer">Stage – Automatisation &amp; Intelligence Artificielle F/H</a></h3>
@@ -359,10 +385,23 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
           <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="ee68015db879ec6d">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
+      </article>
+      <article class="job " data-id="b8dfbc77f30fe3c0"
+               data-src="LinkedIn" data-visa="0">
+        <div class="job-top"><div>
+          <h3><a href="https://www.linkedin.com/jobs/view/4428028690" target="_blank" rel="noopener noreferrer">Analytics Engineer Intern (September 2026)</a></h3>
+          <div class="meta">Malt · France</div>
+          <div class="published">Publiée il y a 6 jours · 07/07/2026</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="b8dfbc77f30fe3c0">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no">
+
+
+          <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
       </article>
       <article class="job " data-id="abdbc66426f40fb8"
                data-src="LinkedIn" data-visa="0">
@@ -415,32 +454,6 @@ h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
 
 
           <span class="tag match">Profil CV</span><span class="tag src">LinkedIn</span></div>
-      </article>
-      <article class="job is-new" data-id="dce9e469e733802c"
-               data-src="APEC" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179002396W" target="_blank" rel="noopener noreferrer">Ingénieur - Data Scientist F/H</a></h3>
-          <div class="meta">Proaxian · Vernon - 27</div>
-          <div class="published">Publiée il y a 7 jours · 06/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="dce9e469e733802c">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
-
-
-          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
-      </article>
-      <article class="job is-new" data-id="affff7c8397f63c1"
-               data-src="APEC" data-visa="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178876573W" target="_blank" rel="noopener noreferrer">Gouvernance et Conformité IA F/H</a></h3>
-          <div class="meta">Proaxian · Puteaux - 92</div>
-          <div class="published">Publiée il y a 7 jours · 06/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="affff7c8397f63c1">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
-
-
-          <span class="tag match">Profil CV</span><span class="tag src">APEC</span></div>
       </article></div>
 <p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
 </div>
