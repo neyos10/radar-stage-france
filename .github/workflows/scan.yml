@@ -1,4 +1,4 @@
-name: Veille Stage Data/IA France
+name: Radar Stage France
 
 on:
   schedule:
@@ -47,12 +47,16 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
-          # — lien vers ton dashboard GitHub Pages (mis dans l'email)
+          # — lien public du dashboard GitHub Pages (mis dans l'email)
           DASHBOARD_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: python scan.py
 
       - name: Commit résultats (mémoire + dashboard + statut)
         run: |
+          if [ "$GITHUB_REF_NAME" != "main" ]; then
+            echo "Branche $GITHUB_REF_NAME : scan validé, résultats non persistés avant fusion."
+            exit 0
+          fi
           git config user.name "radar-stage-bot"
           git config user.email "actions@github.com"
           git add data/seen_offers.json data/source_status.json docs/index.html
