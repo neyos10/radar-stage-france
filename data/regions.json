@@ -15,7 +15,7 @@
     "country_indeed": "Belgium",
     "apec_available": false,
     "france_travail_available": false,
-    "enabled": false
+    "enabled": true
   },
   "luxembourg": {
     "label": "Luxembourg",
@@ -24,7 +24,7 @@
     "country_indeed": "Luxembourg",
     "apec_available": false,
     "france_travail_available": false,
-    "enabled": false
+    "enabled": true
   },
   "maroc": {
     "label": "Maroc",
@@ -33,6 +33,6 @@
     "country_indeed": "Morocco",
     "apec_available": false,
     "france_travail_available": false,
-    "enabled": false
+    "enabled": true
   }
 }
