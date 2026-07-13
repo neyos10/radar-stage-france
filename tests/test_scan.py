@@ -118,6 +118,128 @@ class TestDomainCatalogAndScoring(unittest.TestCase):
                          ["stage commun", "stage a", "stage b"])
 
 
+class TestRegions(unittest.TestCase):
+    def test_catalog_country_names_and_default_region(self):
+        self.assertEqual(list(scan.REGIONS),
+                         ["france", "belgique", "luxembourg", "maroc"])
+        self.assertEqual(
+            {region_id: region["country_indeed"]
+             for region_id, region in scan.REGIONS.items()},
+            {"france": "France", "belgique": "Belgium",
+             "luxembourg": "Luxembourg", "maroc": "Morocco"},
+        )
+        with mock.patch.dict(os.environ, {"RADAR_REGIONS": ""}):
+            self.assertEqual(scan.enabled_region_ids(), ["france"])
+
+    def test_belgium_jobspy_offer_is_tagged_belgium(self):
+        import pandas as pd
+
+        calls = []
+        frame = pd.DataFrame([{
+            "title": "Stage Data Engineer", "company": "ACME",
+            "city": "Bruxelles", "state": "", "job_url": "https://e.com/be",
+            "date_posted": TODAY, "description": "ETL et data warehouse",
+        }])
+
+        def fake_scrape(**kwargs):
+            calls.append(kwargs)
+            return frame if len(calls) == 1 else frame.iloc[0:0]
+
+        offers, status = scan.fetch_jobspy_site(
+            "indeed", "Indeed", scrape_fn=fake_scrape,
+            region_id="belgique", region_config=scan.REGIONS["belgique"],
+            domains={"data_ia": scan.DOMAINS["data_ia"]},
+            active_ids=["data_ia"],
+        )
+        self.assertEqual(calls[0]["location"], "Belgium")
+        self.assertEqual(calls[0]["country_indeed"], "Belgium")
+        self.assertEqual(offers[0]["regions"], ["belgique"])
+        self.assertEqual(status.region_id, "belgique")
+
+    def test_linkedin_and_google_use_region_native_locations(self):
+        import pandas as pd
+
+        calls = []
+
+        def fake_scrape(**kwargs):
+            calls.append(kwargs)
+            return pd.DataFrame()
+
+        data_domain = {"data_ia": scan.DOMAINS["data_ia"]}
+        scan.fetch_jobspy_site(
+            "linkedin", "LinkedIn", scrape_fn=fake_scrape,
+            region_id="belgique", region_config=scan.REGIONS["belgique"],
+            domains=data_domain, active_ids=["data_ia"],
+        )
+        self.assertEqual(calls[0]["location"], "Belgium")
+        self.assertEqual(calls[0]["country_indeed"], "Belgium")
+
+        calls.clear()
+        scan.fetch_jobspy_site(
+            "google", "Google Jobs", scrape_fn=fake_scrape,
+            region_id="maroc", region_config=scan.REGIONS["maroc"],
+            domains=data_domain, active_ids=["data_ia"],
+        )
+        self.assertEqual(calls[0]["location"], "Morocco")
+        self.assertEqual(calls[0]["country_indeed"], "Morocco")
+        self.assertTrue(calls[0]["google_search_term"].endswith(" Morocco"))
+
+    def test_french_only_sources_are_not_called_abroad(self):
+        with mock.patch.object(scan.requests, "post") as post:
+            offers, apec = scan.fetch_apec_all("belgique")
+        self.assertEqual(offers, [])
+        self.assertEqual(apec.status, "not_applicable_region")
+        post.assert_not_called()
+
+        with mock.patch.object(scan, "ft_token") as token, \
+             mock.patch.object(scan.requests, "get") as get:
+            offers, ft = scan.fetch_france_travail_all("luxembourg")
+        self.assertEqual(offers, [])
+        self.assertEqual(ft.status, "not_applicable_region")
+        token.assert_not_called()
+        get.assert_not_called()
+
+    def test_glassdoor_is_not_called_where_jobspy_does_not_support_it(self):
+        scrape = mock.Mock()
+        offers, status = scan.fetch_jobspy_site(
+            "glassdoor", "Glassdoor", scrape_fn=scrape,
+            region_id="maroc", region_config=scan.REGIONS["maroc"],
+        )
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "not_applicable_region")
+        scrape.assert_not_called()
+
+    def test_duplicate_remote_offer_merges_regions(self):
+        selected = {key: scan.REGIONS[key] for key in ("france", "belgique")}
+
+        def fake_fetch(region_id, _region_config):
+            candidate, reason = offer(
+                url="https://e.com/remote", region_id=region_id,
+                regions=selected,
+            )
+            self.assertIsNone(reason)
+            status = scan.source_status("Remote", region_id, selected,
+                                        status="success", accepted_count=1)
+            return [candidate], status
+
+        offers, statuses = scan.run_source_across_regions(
+            "Remote", fake_fetch, selected)
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(set(offers[0]["regions"]), {"france", "belgique"})
+        self.assertEqual(len(statuses), 2)
+
+    def test_high_combination_budget_scales_results(self):
+        budget = scan.calculate_scan_budget(4, 2)
+        self.assertTrue(budget.is_high)
+        self.assertEqual(budget.combination_count, 8)
+        self.assertAlmostEqual(budget.scale, 6 / 8)
+        for site, base in scan.JOBSPY_RESULTS_WANTED.items():
+            self.assertGreaterEqual(budget.results_wanted[site],
+                                    scan.MIN_JOBSPY_RESULTS_WANTED)
+            self.assertLess(budget.results_wanted[site], base)
+        self.assertLessEqual(budget.estimated_duration_s, 255)
+
+
 class TestParseOfferDate(unittest.TestCase):
     def test_iso_with_z(self):
         parsed = scan.parse_offer_date("2026-07-10T11:03:56.000Z")
@@ -148,6 +270,7 @@ class TestMakeOffer(unittest.TestCase):
         self.assertIsNone(reason)
         self.assertEqual(o["date"], TODAY)
         self.assertEqual(o["source"], "LinkedIn")
+        self.assertEqual(o["regions"], ["france"])
 
     def test_too_old_rejected(self):
         with mock.patch("sys.stderr", new_callable=io.StringIO) as stderr:
@@ -617,6 +740,12 @@ class TestStatusLabel(unittest.TestCase):
         disabled = scan.SourceStatus(source="Adzuna", status="disabled_missing_credentials")
         self.assertEqual(scan.status_label(disabled), "Non configuré — identifiants manquants")
 
+        unavailable = scan.SourceStatus(
+            source="APEC", region_id="belgique", region_label="Belgique",
+            status="not_applicable_region",
+        )
+        self.assertEqual(scan.status_label(unavailable), "Non applicable à Belgique")
+
         blocked = scan.SourceStatus(source="Glassdoor", status="blocked", http_error="HTTP 403")
         self.assertEqual(scan.status_label(blocked), "Bloqué temporairement — HTTP 403")
 
@@ -687,6 +816,9 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("highlightFilter').addEventListener('click'", page)
         self.assertIn("domain-chip').forEach", page)
         self.assertIn('data-domain="data_ia"', page)
+        self.assertIn("region-chip').forEach", page)
+        self.assertIn('data-region="france"', page)
+        self.assertIn('data-regions="france"', page)
         self.assertIn("apply-btn').forEach", page)
         # le bouton reset est toujours visible, désactivé par défaut
         self.assertIn("Réinitialiser les filtres", page)
@@ -709,6 +841,30 @@ class TestDashboard(unittest.TestCase):
         page = self.render([o])
         self.assertIn("Date de publication inconnue", page)
         self.assertIn("date inconnue", page)
+
+    def test_region_filter_defaults_to_france_and_combines_client_side(self):
+        france, _ = offer(url="https://e.com/france")
+        belgique, _ = offer(
+            url="https://e.com/belgique", location="Bruxelles",
+            region_id="belgique",
+        )
+        page = self.render(
+            [france, belgique], regions=scan.REGIONS,
+            active_region_ids=["france", "belgique"],
+        )
+        self.assertIn('class="fchip region-chip on" data-region="france"', page)
+        self.assertIn('data-region="belgique"', page)
+        self.assertIn('const DEFAULT_REGION="france";', page)
+        self.assertIn("const regionOk=activeRegion==='*'||regions.includes(activeRegion)",
+                      page)
+        self.assertIn("sourceOk&&domainOk&&regionOk&&statusOk&&highlightOk", page)
+
+    def test_single_region_filter_is_hidden_but_france_stays_active(self):
+        candidate, _ = offer()
+        page = self.render([candidate])
+        self.assertIn('class="filter-group single-region"', page)
+        self.assertIn('const DEFAULT_REGION="france";', page)
+        self.assertNotIn('data-region="belgique"', page)
 
 
 if __name__ == "__main__":
