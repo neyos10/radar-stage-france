@@ -1,8 +1,7 @@
 """Tests du pipeline scan.py — aucun accès réseau, aucune dépendance jobspy.
 
-Couvre : dates absolues/relatives/inconnues, ciblage Data/IA strict,
-filtres natifs, déduplication, tri, champs None/NaN, échappement HTML,
-sources sans secrets, circuit breaker 403/429 et interactions du dashboard.
+Couvre : dates, scoring multi-domaines, filtres natifs, déduplication, tri,
+champs incomplets, sécurité HTML, sources optionnelles, circuit breaker et UI.
 """
 
 import io
@@ -39,6 +38,84 @@ class TestCleanText(unittest.TestCase):
 
     def test_strip(self):
         self.assertEqual(scan.clean_text("  x "), "x")
+
+
+class TestDomainCatalogAndScoring(unittest.TestCase):
+    def test_catalog_has_sixteen_domains_and_one_enabled(self):
+        self.assertEqual(len(scan.DOMAINS), 16)
+        self.assertEqual(scan.enabled_domain_ids(), ["data_ia"])
+        for domain in scan.DOMAINS.values():
+            self.assertGreaterEqual(len(domain["queries"]), 4)
+            self.assertLessEqual(len(domain["queries"]), 6)
+            self.assertGreaterEqual(len(domain["positive"]), 12)
+            self.assertLessEqual(len(domain["positive"]), 20)
+
+    def test_title_positive_and_description_negative_score(self):
+        domain = {"positive": ["signal fort"], "negative": ["risque voisin"]}
+        score = scan.score_domain(
+            "Stage signal fort", "Risque voisin répété : risque voisin", domain
+        )
+        self.assertEqual(score, scan.TITLE_POSITIVE_WEIGHT
+                         + scan.DESCRIPTION_NEGATIVE_WEIGHT)
+        self.assertEqual(score, 2)
+
+    def test_offer_can_match_two_active_domains(self):
+        catalog = {key: scan.DOMAINS[key] for key in ("data_ia", "finance")}
+        candidate, reason = scan.make_offer(
+            "Stage Data Analyst Finance", "ACME", "Paris",
+            "https://example.com/multi", "Test", TODAY,
+            domains=catalog, active_ids=["data_ia", "finance"],
+        )
+        self.assertIsNone(reason)
+        self.assertEqual(set(candidate["domains"]), {"data_ia", "finance"})
+        self.assertGreaterEqual(candidate["domain_scores"]["data_ia"],
+                                scan.DOMAIN_SCORE_THRESHOLD)
+        self.assertGreaterEqual(candidate["domain_scores"]["finance"],
+                                scan.DOMAIN_SCORE_THRESHOLD)
+
+    def test_no_active_domain_returns_explicit_reason(self):
+        catalog = {"dev_web": scan.DOMAINS["dev_web"]}
+        candidate, reason = scan.make_offer(
+            "Stage assistant administratif", "ACME", "Paris",
+            "https://example.com/no-domain", "Test", TODAY,
+            domains=catalog, active_ids=["dev_web"],
+        )
+        self.assertIsNone(candidate)
+        self.assertEqual(reason, "aucun domaine")
+
+    def test_disabled_domain_query_is_never_executed(self):
+        import pandas as pd
+
+        catalog = {
+            "active": {
+                "label": "Actif", "group": "Test", "queries": ["stage actif"],
+                "positive": ["actif"], "negative": ["inactif"], "enabled": True,
+            },
+            "disabled": {
+                "label": "Inactif", "group": "Test", "queries": ["stage interdit"],
+                "positive": ["interdit"], "negative": ["actif"], "enabled": False,
+            },
+        }
+        calls = []
+
+        def fake_scrape(**kwargs):
+            calls.append(kwargs["search_term"])
+            return pd.DataFrame()
+
+        with mock.patch.object(scan, "DOMAINS", catalog), \
+             mock.patch.dict(os.environ, {"RADAR_DOMAINS": ""}):
+            scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
+        self.assertEqual(calls, ["stage actif"])
+
+    def test_exact_queries_are_deduplicated(self):
+        base = {
+            "label": "A", "group": "Test", "queries": ["stage commun", "stage a"],
+            "positive": ["a"], "negative": ["x"], "enabled": True,
+        }
+        other = dict(base, label="B", queries=["stage commun", "stage b"])
+        catalog = {"a": base, "b": other}
+        self.assertEqual(scan.active_queries(catalog, ["a", "b"]),
+                         ["stage commun", "stage a", "stage b"])
 
 
 class TestParseOfferDate(unittest.TestCase):
@@ -111,7 +188,7 @@ class TestMakeOffer(unittest.TestCase):
     def test_off_profile_rejected(self):
         o, reason = offer(title="Stage assistant chef de projet digital")
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NOT_PROFILE)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_description_cannot_rescue_rh_title(self):
         # Une exclusion forte du titre reste prioritaire sur la description.
@@ -121,7 +198,7 @@ class TestMakeOffer(unittest.TestCase):
             description="Missions : Data Analytics, Business Intelligence, Power BI.",
         )
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_generic_description_does_not_rescue(self):
         # « RH » sans contexte data dans le titre : exclusion forte immédiate.
@@ -131,12 +208,12 @@ class TestMakeOffer(unittest.TestCase):
             description="Gestion administrative du personnel, paie et recrutement.",
         )
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_description_can_confirm_data_profile(self):
         o, reason = offer(
             title="Stage ingénieur logiciel",
-            description="Construction de pipelines ETL en Python et SQL.",
+            description="Construction ETL et data warehouse pour les équipes.",
         )
         self.assertIsNone(reason)
         self.assertIsNotNone(o)
@@ -147,7 +224,7 @@ class TestMakeOffer(unittest.TestCase):
         self.assertEqual(o["location"], "France")
 
 
-class TestCVTargetingStrict(unittest.TestCase):
+class TestDomainTargetingStrict(unittest.TestCase):
     """Bug 1 : les 4 offres hors-sujet constatées sur le dashboard doivent
     être rejetées ; les vraies offres data doivent toujours passer."""
 
@@ -158,7 +235,7 @@ class TestCVTargetingStrict(unittest.TestCase):
             description="Suivi qualité, reporting, Power BI et tableaux de bord.",
         )
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_auditeur_junior_rejected(self):
         # Même une mention Power BI en description ne repêche pas un audit.
@@ -168,7 +245,7 @@ class TestCVTargetingStrict(unittest.TestCase):
             description="Missions d'audit avec restitution sous Power BI.",
         )
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_finance_controle_gestion_rejected(self):
         o, reason = offer(
@@ -177,7 +254,7 @@ class TestCVTargetingStrict(unittest.TestCase):
             description="Tableaux de bord Power BI, analyses budgétaires.",
         )
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_business_data_analyst_crm_rejected(self):
         # Cas limite tranché selon la consigne : CRM est un domaine
@@ -185,7 +262,7 @@ class TestCVTargetingStrict(unittest.TestCase):
         o, reason = offer(title="Stage – Business Data Analyst CRM (H/F)",
                           company="Prosol", source="Indeed")
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_real_data_offers_still_accepted(self):
         for title in [
@@ -214,11 +291,11 @@ class TestCVTargetingStrict(unittest.TestCase):
         self.assertIsNone(reason)
         # « finance » exclu même combiné à un mot positif du titre.
         o, reason = offer(title="Stage analyste financier Power BI")
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
         # « juridique / droit » exclu (bruit APEC constaté).
         o, reason = offer(title="Stagiaire en droit du numérique",
                           confirmed_internship=True)
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_paid_media_and_fpa_rejected(self):
         # Bruit constaté au premier run après fix : publicité et finance
@@ -226,10 +303,10 @@ class TestCVTargetingStrict(unittest.TestCase):
         o, reason = offer(title="Assistant Consultant Paid Media - SEA et SMA F/H",
                           source="APEC", confirmed_internship=True,
                           description="Reporting des campagnes sous Power BI.")
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
         o, reason = offer(title="FP&A Analyst Intern", source="Indeed",
                           description="Dashboards Power BI, data analytics.")
-        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_generic_words_do_not_match(self):
         # Mots génériques (gestion, outils, processus, analyse) : jamais
@@ -237,7 +314,7 @@ class TestCVTargetingStrict(unittest.TestCase):
         o, reason = offer(title="Stage gestion et amélioration des processus",
                           description="Analyse des outils internes.")
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NOT_PROFILE)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_description_does_not_rescue_non_technical_titles(self):
         # Faux positifs observés au benchmark : une mention SQL/Power BI dans
@@ -255,12 +332,21 @@ class TestCVTargetingStrict(unittest.TestCase):
                 description="Reporting Power BI et extraction SQL de données.",
             )
             self.assertIsNone(o, title)
-            self.assertEqual(reason, scan.REASON_NOT_PROFILE, title)
+            self.assertEqual(reason, scan.REASON_NO_DOMAIN, title)
+
+    def test_business_analyst_neighbor_remains_rejected(self):
+        candidate, reason = offer(
+            title="Junior Business Analyst - Stage (H/F/N)",
+            description=("Reporting Power BI, ETL, data warehouse et "
+                         "business intelligence."),
+        )
+        self.assertIsNone(candidate)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_description_rescues_only_technical_generic_title(self):
         o, reason = offer(
             title="Stage ingénieur logiciel",
-            description="Pipelines de données, ETL, Python et SQL.",
+            description="Missions ETL et data warehouse.",
         )
         self.assertIsNone(reason)
         self.assertIsNotNone(o)
@@ -268,7 +354,7 @@ class TestCVTargetingStrict(unittest.TestCase):
     def test_ai_requires_technical_context(self):
         o, reason = offer(title="Stage communication IA")
         self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NOT_PROFILE)
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
         o, reason = offer(title="Stage IA", description="Modèles Python et algorithmes.")
         self.assertIsNone(reason)
         self.assertIsNotNone(o)
@@ -295,6 +381,23 @@ class TestDedup(unittest.TestCase):
         candidate, reason = offer(date=None)
         scan.register_offer(st, offers, candidate, reason)
         self.assertEqual(st.unknown_date_count, 1)
+
+    def test_duplicate_merges_domain_labels(self):
+        catalog = {key: scan.DOMAINS[key] for key in ("data_ia", "finance")}
+        first, _ = scan.make_offer(
+            "Stage Data Analyst Finance", "ACME", "Paris", "https://e.com/multi",
+            "Test", TODAY, domains=catalog, active_ids=["data_ia"],
+        )
+        second, _ = scan.make_offer(
+            "Stage Data Analyst Finance", "ACME", "Paris", "https://e.com/multi",
+            "Test", TODAY, domains=catalog, active_ids=["finance"],
+        )
+        st = scan.SourceStatus(source="Test")
+        offers = {}
+        scan.register_offer(st, offers, first, None)
+        scan.register_offer(st, offers, second, None)
+        self.assertEqual(set(next(iter(offers.values()))["domains"]),
+                         {"data_ia", "finance"})
 
 
 class TestSort(unittest.TestCase):
@@ -400,7 +503,7 @@ class TestJobspyAccounting(unittest.TestCase):
         self.assertEqual(st.accepted_count, 1)
         self.assertEqual(st.rejected_count, 2)
         self.assertEqual(st.reject_reasons.get(scan.REASON_TOO_OLD), 1)
-        self.assertEqual(st.reject_reasons.get(scan.REASON_NOT_PROFILE), 1)
+        self.assertEqual(st.reject_reasons.get(scan.REASON_NO_DOMAIN), 1)
         self.assertEqual(st.status, "success")
         self.assertEqual(len(offers), 1)
 
@@ -414,7 +517,8 @@ class TestJobspyAccounting(unittest.TestCase):
 
         scan.fetch_jobspy_site("google", "Google Jobs", scrape_fn=fake_scrape)
         first = seen_kwargs[0]
-        self.assertEqual(first["google_search_term"], "stage data France")
+        self.assertEqual(first["google_search_term"],
+                         f"{scan.active_queries()[0]} France")
         self.assertNotIn("job_type", first)
         # jamais deux fois « stage » dans la requête Google
         self.assertEqual(first["google_search_term"].lower().count("stage"), 1)
@@ -448,10 +552,10 @@ class TestJobspyAccounting(unittest.TestCase):
             return pd.DataFrame()
 
         scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=fake_scrape)
-        self.assertEqual([call["search_term"] for call in seen], scan.LINKEDIN_QUERIES)
+        self.assertEqual([call["search_term"] for call in seen], scan.linkedin_queries())
         self.assertEqual(
             [call["search_term"] for call in seen if call["linkedin_fetch_description"]],
-            [scan.LINKEDIN_DESCRIPTION_QUERY],
+            [scan.linkedin_queries()[0]],
         )
         self.assertTrue(any(not call["linkedin_fetch_description"] for call in seen))
         self.assertTrue(all("f_SAL" not in str(call) for call in seen))
@@ -460,8 +564,7 @@ class TestJobspyAccounting(unittest.TestCase):
 
         seen.clear()
         scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
-        self.assertIn('"stage 6 mois" data engineer',
-                      [call["search_term"] for call in seen])
+        self.assertEqual([call["search_term"] for call in seen], scan.active_queries())
 
 
 class TestApecNativeFilters(unittest.TestCase):
@@ -529,9 +632,25 @@ class TestDashboard(unittest.TestCase):
         scan.DOCS_INDEX = self._orig
         self._tmp.cleanup()
 
-    def render(self, offers, statuses=None):
-        scan.render_dashboard(offers, set(), statuses, scan_duration_s=42)
+    def render(self, offers, statuses=None, **kwargs):
+        scan.render_dashboard(offers, set(), statuses, scan_duration_s=42, **kwargs)
         return scan.DOCS_INDEX.read_text(encoding="utf-8")
+
+    def test_product_config_controls_dashboard(self):
+        candidate, _ = offer()
+        candidate["highlighted"] = True
+        config = {
+            "app_name": "Stage Atlas",
+            "tagline": "Stages multi-sources configurables",
+            "highlight_companies": ["acme"],
+            "highlight_label": "Grand compte",
+            "days_window": 5,
+        }
+        page = self.render([candidate], config=config)
+        self.assertIn("Stage Atlas — Dashboard", page)
+        self.assertIn("Stages multi-sources configurables", page)
+        self.assertIn("Grand compte", page)
+        self.assertIn("offres des 5 derniers jours", page)
 
     def test_html_escaping_and_url_safety(self):
         evil, _ = offer(title='Stage ETL <script>alert(1)</script>',
@@ -560,7 +679,9 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("refreshBtn').addEventListener('click'", page)
         self.assertIn("source-chip').forEach", page)
         self.assertIn("status-chip').forEach", page)
-        self.assertIn("visaFilter').addEventListener('click'", page)
+        self.assertIn("highlightFilter').addEventListener('click'", page)
+        self.assertIn("domain-chip').forEach", page)
+        self.assertIn('data-domain="data_ia"', page)
         self.assertIn("apply-btn').forEach", page)
         # le bouton reset est toujours visible, désactivé par défaut
         self.assertIn("Réinitialiser les filtres", page)

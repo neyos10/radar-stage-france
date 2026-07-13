@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Veille Stage France V2 — agrégateur multi-sources d'offres de stage Data/IA.
+Radar Stage France — agrégateur multi-sources et multi-domaines de stages.
 
 Sources :
   1. LinkedIn (offres publiques, sans compte)   — via JobSpy
@@ -36,11 +36,13 @@ import re
 import smtplib
 import sys
 import time
+import unicodedata
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from functools import lru_cache
 from pathlib import Path
 
 import requests
@@ -49,59 +51,53 @@ import requests
 # CONFIG
 # ============================================================
 
-QUERIES = [
-    "stage data",
-    "stage data engineer",
-    "stage data engineering PFE",
-    "stage big data",
-    "stage ETL",
-    "stage business intelligence",
-    "stage data analyst Power BI",
-    "stage analytics engineer",
-    "stage data engineer python SQL",
-    "stage data spark airflow",
-    "stage ingénieur données",
-    "stage fin d'études data engineering",
-]
+CONFIG_FILE = Path("data/config.json")
+DOMAINS_FILE = Path("data/domains.json")
+SEEN_FILE = Path("data/seen_offers.json")
+STATUS_FILE = Path("data/source_status.json")
+DOCS_INDEX = Path("docs/index.html")
 
-# Indeed accepte les phrases exactes. Cette variante reste spécifique à
-# Indeed pour ne pas multiplier inutilement les pages LinkedIn.
-INDEED_ONLY_QUERIES = ['"stage 6 mois" data engineer']
 
-# LinkedIn pagine réellement et coûte nettement plus cher qu'Indeed (environ
-# 10–25 s par requête). Ce sous-ensemble couvre les familles principales sans
-# dépasser le budget global ; toutes les variantes restent actives sur les
-# sources rapides, notamment Indeed.
-LINKEDIN_QUERIES = [
-    "stage data",
-    "stage data engineer",
-    "stage big data",
-    "stage ETL",
-    "stage business intelligence",
-]
+def load_json(path: Path) -> dict:
+    """Charge un fichier de configuration JSON et valide son type racine."""
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} doit contenir un objet JSON")
+    return data
 
-APEC_QUERIES = [
-    "data",
-    "data engineer",
-    "data analyst",
-    "business intelligence",
-    "ETL",
-    "big data",
-    "Power BI",
-    "spark",
-    "machine learning",
-    "intelligence artificielle",
-]
 
-FRANCE_TRAVAIL_QUERIES = [
-    "data engineer",
-    "data engineering",
-    "big data",
-    "ETL",
-    "business intelligence",
-    "data analyst",
-    "Power BI",
-]
+def load_domains(path: Path = DOMAINS_FILE) -> dict:
+    """Catalogue métier externalisé, sans valeur métier de secours en code."""
+    domains = load_json(path)
+    required = {"label", "group", "queries", "positive", "negative", "enabled"}
+    for domain_id, domain in domains.items():
+        missing = required - set(domain)
+        if missing:
+            raise ValueError(f"Domaine {domain_id}: champs manquants {sorted(missing)}")
+        for field_name in ("queries", "positive", "negative"):
+            values = domain[field_name]
+            if not isinstance(values, list) or not values or not all(
+                    isinstance(value, str) and value.strip() for value in values):
+                raise ValueError(f"Domaine {domain_id}: {field_name} invalide")
+            if len({value.casefold() for value in values}) != len(values):
+                raise ValueError(f"Domaine {domain_id}: doublon dans {field_name}")
+    return domains
+
+
+def load_config(path: Path = CONFIG_FILE) -> dict:
+    config = load_json(path)
+    required = {"app_name", "tagline", "highlight_companies",
+                "highlight_label", "days_window"}
+    missing = required - set(config)
+    if missing:
+        raise ValueError(f"Configuration: champs manquants {sorted(missing)}")
+    if int(config["days_window"]) <= 0:
+        raise ValueError("days_window doit être strictement positif")
+    return config
+
+
+APP_CONFIG = load_config()
+DOMAINS = load_domains()
 
 SOURCE_NAMES = [
     "LinkedIn", "Indeed", "Glassdoor", "Google Jobs", "APEC",
@@ -112,92 +108,24 @@ SOURCE_NAMES = [
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
 TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfa|pfe)\b", re.I)
 
-# Liste positive stricte : uniquement des termes SPÉCIFIQUEMENT Data/IA,
-# jamais de mots génériques (gestion, outils, processus, analyse…). Elle est
-# appliquée au titre + à la description, après les exclusions fortes du titre.
-PROFILE_TITLE_MUST_MATCH = re.compile(
-    r"\b(data\s*(?:engineer(?:ing)?|analyst|scien(?:ce|tist)|warehouse|"
-    r"lake(?:house)?|pipeline|"
-    r"quality|governance|management|ops|intern(?:ship)?)|"
-    r"analytics?\s+engineer(?:ing)?|big\s+data|"
-    r"business\s+intelligence|informatique\s+d[eé]cisionnelle|"
-    r"ing[eé]nieur(?:e)?\s+(?:big\s+)?data|etl|talend|pyspark|spark|hadoop|"
-    r"kafka|dbt|snowflake|databricks|airflow|sql|power\s*bi|"
-    r"machine\s+learning|deep\s+learning|nlp|marketing\s+analytics)\b",
-    re.I,
-)
-PROFILE_BI_ACRONYM = re.compile(r"\bBI\b")
-PROFILE_AI_TERM = re.compile(r"\b(?:IA|AI)\b|intelligence\s+artificielle", re.I)
-PROFILE_AI_TECH_CONTEXT = re.compile(
-    r"\b(data|donn[ée]es|python|sql|mod[eè]le|algorithme|automatisation|"
-    r"machine\s+learning|deep\s+learning|nlp|api|cloud|engineering|"
-    r"d[eé]veloppement)\b",
-    re.I,
-)
-PROFILE_DESCRIPTION_RESCUE_TITLE = re.compile(
-    r"\b(ing[eé]nieur(?:e)?|d[eé]veloppeu(?:r|se)|logiciel|software|"
-    r"automatisation|base\s+de\s+(?:r[eé]f[eé]rencement\s+des\s+)?donn[ée]es)\b",
-    re.I,
-)
-
-# Liste négative d'exclusion forte sur le TITRE : métiers hors périmètre
-# (audit, compta, RH, juridique, commercial, qualité, finance, marketing).
-# Rejet immédiat, même si un mot positif matche ailleurs (titre ou
-# description) — sauf carve-out explicitement data (2e colonne).
-PROFILE_TITLE_HARD_EXCLUDE = [
-    (re.compile(r"\baudit(?:eur|rice|eurs|rices|s)?\b", re.I), None),
-    (re.compile(r"contr[ôo]le(?:ur|use)?s?\s+de\s+gestion", re.I), None),
-    (re.compile(r"\bcomptab", re.I), None),
-    (re.compile(r"\b(juridique|juriste|avocat|droit)\b", re.I), None),
-    (re.compile(r"\b(ressources\s+humaines|RH)\b", re.I), None),
-    (re.compile(r"\bcommercial(?:e|es|aux)?\b|\bsales?\b|"
-                r"business\s+develop(?:er|ment)|d[eé]veloppement\s+commercial",
-                re.I), None),
-    # Le CRM relève ici du marketing/commercial et non du cœur de cible
-    # Data Engineering/BI demandé ; le cas réel Prosol doit être rejeté.
-    (re.compile(r"\bCRM\b", re.I), None),
-    (re.compile(r"\bqualit[ée]\b", re.I),
-     re.compile(r"data\s+quality|qualit[ée]\s+(?:de\s+la\s+|des\s+)?donn[ée]es", re.I)),
-    (re.compile(r"\b(finances?|financi[eè]re?s?|FP&A)\b", re.I),
-     re.compile(r"data\s+finance|quant", re.I)),
-    (re.compile(r"\bmarketing\b", re.I),
-     re.compile(r"marketing\s+analytics|data\s+marketing", re.I)),
-    # Publicité / réseaux sociaux (bruit APEC constaté : « Paid Media - SEA
-    # et SMA ») — pas de carve-out, ces métiers ne sont jamais data.
-    (re.compile(r"\bpaid\s+media\b|\bSEA\b|\bSMA\b|\bsocial\s+media\b|"
-                r"\bcommunity\s+manager\b", re.I), None),
-]
-
-
-def title_hard_excluded(title: str) -> bool:
-    """Titre appartenant à un métier hors périmètre CV (rejet immédiat)."""
-    for pattern, carve_out in PROFILE_TITLE_HARD_EXCLUDE:
-        if pattern.search(title) and not (carve_out and carve_out.search(title)):
-            return True
-    return False
-
-# Repêchage par description : le titre garde le poids le plus fort, mais une
-# description peut apporter le signal positif obligatoire. Une exclusion
-# forte dans le titre reste toujours prioritaire.
-PROFILE_DESCRIPTION_MUST_MATCH = re.compile(
-    r"\b(data\s*analytics?|business\s+intelligence|informatique\s+d[eé]cisionnelle|"
-    r"data\s+engineer(?:ing)?|data\s+scien(?:ce|tist)|machine\s+learning|"
-    r"deep\s+learning|nlp|ing[eé]nierie\s+(?:de\s+la\s+|des\s+)?donn[ée]es|"
-    r"data\s+warehouse|data\s+lake(?:house)?|entrep[ôo]t\s+de\s+donn[ée]es|"
-    r"etl|talend|power\s*bi|pyspark|spark|hadoop|kafka|dbt|snowflake|"
-    r"databricks|airflow|sql)\b",
-    re.I,
-)
-
 # On ne conserve que les offres publiées récemment.
-MAX_OFFER_AGE_DAYS = 7
+MAX_OFFER_AGE_DAYS = int(APP_CONFIG["days_window"])
+
+# Calibration multi-label. Le seuil 2 conserve la dominance du titre (+3)
+# face à un seul signal négatif de description (-1) et permet aux intitulés
+# composés explicitement catalogués de survivre à un voisin métier (-4).
+TITLE_POSITIVE_WEIGHT = 3
+DESCRIPTION_POSITIVE_WEIGHT = 1
+TITLE_NEGATIVE_WEIGHT = -4
+DESCRIPTION_NEGATIVE_WEIGHT = -1
+DOMAIN_SCORE_THRESHOLD = 2
 
 # Réseau / robustesse
 REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
 MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source (run courant)
 MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
 APEC_DETAIL_MAX_CALLS = 25    # budget de lectures du texte complet APEC par run
-LINKEDIN_DESCRIPTION_QUERY = "stage data engineer"  # enrichissement borné (coût réseau)
+MAX_LINKEDIN_QUERIES = 6      # allocation équitable entre domaines actifs
 
 # Volume par requête et par site (mesuré le 2026-07-10) :
 #  - linkedin : 25 ≈ 13 s/requête (au-delà, la pagination ajoute ~5 s/page) ;
@@ -207,26 +135,11 @@ LINKEDIN_DESCRIPTION_QUERY = "stage data engineer"  # enrichissement borné (co�
 #  - google : jobspy plafonne lui-même selon ce que Google renvoie.
 JOBSPY_RESULTS_WANTED = {"linkedin": 25, "indeed": 30, "glassdoor": 15, "google": 30}
 
-VISA_FRIENDLY_KEYWORDS = [
-    "capgemini", "sopra", "alten", "cgi", "inetum", "accenture", "devoteam",
-    "atos", "eviden", "thales", "safran", "airbus", "orange", "bnp",
-    "société générale", "societe generale", "axa", "edf", "sncf", "keyrus",
-    "talan", "octo", "artefact", "ekimetrics", "dataiku", "deloitte", "kpmg",
-    "pwc", "ibm", "microsoft", "amazon", "renault", "stellantis",
-    "totalenergies", "crédit agricole", "credit agricole", "micropole",
-    "onepoint", "wavestone", "expleo", "akkodis", "davidson", "leyton",
-]
-
-SEEN_FILE = Path("data/seen_offers.json")
-STATUS_FILE = Path("data/source_status.json")
-DOCS_INDEX = Path("docs/index.html")
-
 # Raisons de rejet (diagnostic)
 REASON_NO_TITLE = "titre manquant"
 REASON_NOT_INTERNSHIP = "pas un stage"
-REASON_EXCLUDED_DOMAIN = "métier hors périmètre (audit/compta/RH/finance/…)"
 REASON_TOO_OLD = f"plus de {MAX_OFFER_AGE_DAYS} jours"
-REASON_NOT_PROFILE = "hors ciblage CV"
+REASON_NO_DOMAIN = "aucun domaine"
 REASON_DUPLICATE = "doublon"
 
 # ============================================================
@@ -309,6 +222,7 @@ def register_offer(status: SourceStatus, offers: dict,
     if offer is None:
         status.add_reject(reason)
     elif offer["id"] in offers:
+        merge_offer_domains(offers[offer["id"]], offer)
         status.add_reject(REASON_DUPLICATE)
     else:
         offers[offer["id"]] = offer
@@ -321,14 +235,143 @@ def register_offer(status: SourceStatus, offers: dict,
 # HELPERS
 # ============================================================
 
+def enabled_domain_ids(domains: dict | None = None) -> list[str]:
+    """Domaines actifs, avec surcharge explicite pour les benchmarks.
+
+    ``RADAR_DOMAINS=a,b`` n'altère jamais le catalogue versionné et permet de
+    comparer plusieurs configurations sur un run isolé.
+    """
+    domains = domains or DOMAINS
+    override = os.environ.get("RADAR_DOMAINS", "").strip()
+    if override:
+        requested = [value.strip() for value in override.split(",") if value.strip()]
+        unknown = [domain_id for domain_id in requested if domain_id not in domains]
+        if unknown:
+            raise ValueError(f"Domaines inconnus dans RADAR_DOMAINS: {unknown}")
+        active = list(dict.fromkeys(requested))
+    else:
+        active = [domain_id for domain_id, domain in domains.items() if domain["enabled"]]
+    if not active:
+        raise ValueError("Au moins un domaine doit être actif")
+    return active
+
+
+def active_domains(domains: dict | None = None,
+                   active_ids: list[str] | None = None) -> dict:
+    domains = domains or DOMAINS
+    active_ids = active_ids or enabled_domain_ids(domains)
+    return {domain_id: domains[domain_id] for domain_id in active_ids}
+
+
+def active_queries(domains: dict | None = None,
+                   active_ids: list[str] | None = None) -> list[str]:
+    """Requêtes actives dédupliquées exactement, ordre du catalogue conservé."""
+    selected = active_domains(domains, active_ids)
+    return list(dict.fromkeys(
+        query.strip()
+        for domain in selected.values()
+        for query in domain["queries"]
+        if query.strip()
+    ))
+
+
+def linkedin_queries(domains: dict | None = None,
+                     active_ids: list[str] | None = None) -> list[str]:
+    """Allocation round-robin bornée entre domaines pour tenir sous 3 min."""
+    selected = active_domains(domains, active_ids)
+    buckets = [list(dict.fromkeys(domain["queries"])) for domain in selected.values()]
+    plan: list[str] = []
+    seen: set[str] = set()
+    depth = 0
+    while len(plan) < MAX_LINKEDIN_QUERIES and any(depth < len(bucket) for bucket in buckets):
+        for bucket in buckets:
+            if depth < len(bucket):
+                query = bucket[depth].strip()
+                if query and query not in seen:
+                    plan.append(query)
+                    seen.add(query)
+                    if len(plan) == MAX_LINKEDIN_QUERIES:
+                        break
+        depth += 1
+    return plan
+
+
+def source_queries(site: str, domains: dict | None = None,
+                   active_ids: list[str] | None = None) -> list[str]:
+    return (linkedin_queries(domains, active_ids) if site == "linkedin"
+            else active_queries(domains, active_ids))
+
+
+def source_keywords(query: str) -> str:
+    """Retire seulement le vocabulaire de contrat pour les API déjà en stage."""
+    value = re.sub(r"\b(stage|stagiaire|internship|intern|pfa|pfe)\b", " ", query,
+                   flags=re.I)
+    return re.sub(r"\s+", " ", value).strip(" -\"'") or query
+
+
+def normalize_for_match(value: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", clean_text(value).casefold())
+    return "".join(char for char in decomposed if not unicodedata.combining(char))
+
+
+@lru_cache(maxsize=1024)
+def keyword_pattern(keyword: str) -> re.Pattern:
+    normalized = normalize_for_match(keyword)
+    escaped = re.escape(normalized).replace(r"\ ", r"\s+")
+    return re.compile(rf"(?<!\w){escaped}(?!\w)")
+
+
+def keyword_matches(text: str, keyword: str) -> bool:
+    return bool(keyword_pattern(keyword).search(normalize_for_match(text)))
+
+
+def score_domain(title: str, description: str, domain: dict) -> int:
+    """Score déterministe ; chaque mot-clé compte au plus une fois par zone."""
+    positive = domain["positive"]
+    negative = domain["negative"]
+    return (
+        TITLE_POSITIVE_WEIGHT * sum(keyword_matches(title, word) for word in positive)
+        + DESCRIPTION_POSITIVE_WEIGHT
+        * sum(keyword_matches(description, word) for word in positive)
+        + TITLE_NEGATIVE_WEIGHT * sum(keyword_matches(title, word) for word in negative)
+        + DESCRIPTION_NEGATIVE_WEIGHT
+        * sum(keyword_matches(description, word) for word in negative)
+    )
+
+
+def score_offer_domains(title: str, description: str,
+                        domains: dict | None = None,
+                        active_ids: list[str] | None = None) -> tuple[list[str], dict[str, int]]:
+    selected = active_domains(domains, active_ids)
+    scores = {
+        domain_id: score_domain(title, description, domain)
+        for domain_id, domain in selected.items()
+    }
+    matched = [domain_id for domain_id, score in scores.items()
+               if score >= DOMAIN_SCORE_THRESHOLD]
+    return matched, scores
+
+
+def merge_offer_domains(existing: dict, incoming: dict) -> None:
+    """Fusion multi-label lors d'un doublon intra/inter-source."""
+    existing["domains"] = list(dict.fromkeys(
+        existing.get("domains", []) + incoming.get("domains", [])
+    ))
+    merged_scores = dict(existing.get("domain_scores", {}))
+    for domain_id, score in incoming.get("domain_scores", {}).items():
+        merged_scores[domain_id] = max(score, merged_scores.get(domain_id, score))
+    existing["domain_scores"] = merged_scores
+    existing["highlighted"] = bool(existing.get("highlighted") or incoming.get("highlighted"))
+
 def offer_id(url: str, title: str, company: str) -> str:
     base = (url or "") + "|" + (title or "").lower() + "|" + (company or "").lower()
     return hashlib.sha1(base.encode()).hexdigest()[:16]
 
 
-def is_visa_friendly(company: str) -> bool:
+def is_highlighted_company(company: str, config: dict | None = None) -> bool:
+    config = config or APP_CONFIG
     c = (company or "").lower()
-    return any(k in c for k in VISA_FRIENDLY_KEYWORDS)
+    return any(keyword.lower() in c for keyword in config["highlight_companies"])
 
 
 def clean_text(value, default="") -> str:
@@ -398,33 +441,6 @@ def parse_offer_date(value, now: datetime | None = None) -> datetime | None:
     return parsed.astimezone(timezone.utc)
 
 
-def _profile_signal(text: str) -> bool:
-    """Signal Data/IA spécifique dans un bloc de texte."""
-    if PROFILE_TITLE_MUST_MATCH.search(text) or PROFILE_DESCRIPTION_MUST_MATCH.search(text):
-        return True
-    if PROFILE_BI_ACRONYM.search(text):
-        return True
-    return bool(PROFILE_AI_TERM.search(text) and PROFILE_AI_TECH_CONTEXT.search(text))
-
-
-def profile_positive_match(title: str, description: str = "") -> bool:
-    """Signal obligatoire, avec poids fort au titre.
-
-    ``BI`` est volontairement sensible à la casse pour éviter le mot français
-    « bi ». IA/AI n'est accepté qu'avec un deuxième contexte technique.
-    Une description peut sauver un titre technique générique (ingénieur,
-    développeur, automatisation, base de données), mais jamais un intitulé
-    métier sans rapport qui mentionne seulement SQL/Power BI dans ses missions.
-    """
-    if _profile_signal(title):
-        return True
-    if (description and PROFILE_AI_TERM.search(title)
-            and PROFILE_AI_TECH_CONTEXT.search(description)):
-        return True
-    return bool(description and PROFILE_DESCRIPTION_RESCUE_TITLE.search(title)
-                and _profile_signal(description))
-
-
 def _log_old_date_rejection(source: str, title: str, raw_date, parsed: datetime) -> None:
     """Trace vérifiable demandée pour chaque rejet de date ancienne."""
     raw = re.sub(r"[\r\n\t]+", " ", str(raw_date))[:100]
@@ -437,7 +453,8 @@ def _log_old_date_rejection(source: str, title: str, raw_date, parsed: datetime)
 
 
 def make_offer(title, company, location, url, source, date="",
-               confirmed_internship=False, description="") -> tuple[dict | None, str | None]:
+               confirmed_internship=False, description="", domains: dict | None = None,
+               active_ids: list[str] | None = None) -> tuple[dict | None, str | None]:
     """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
     title = clean_text(title)
     if not title:
@@ -445,16 +462,15 @@ def make_offer(title, company, location, url, source, date="",
     if not confirmed_internship and not TITLE_MUST_MATCH.search(title):
         return None, REASON_NOT_INTERNSHIP
     description = clean_text(description)
-    # Exclusions fortes toujours sur le titre : la description ne peut pas
-    # sauver un métier hors périmètre (audit, compta, RH, finance, CRM…).
-    if title_hard_excluded(title):
-        return None, REASON_EXCLUDED_DOMAIN
     published_at = parse_offer_date(date)
     if published_at and published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
         _log_old_date_rejection(source, title, date, published_at)
         return None, REASON_TOO_OLD
-    if not profile_positive_match(title, description):
-        return None, REASON_NOT_PROFILE
+    matched_domains, domain_scores = score_offer_domains(
+        title, description, domains=domains, active_ids=active_ids
+    )
+    if not matched_domains:
+        return None, REASON_NO_DOMAIN
     company = clean_text(company, "Entreprise non précisée")
     location = clean_text(location, "France")
     url = clean_text(url)
@@ -471,7 +487,9 @@ def make_offer(title, company, location, url, source, date="",
         # Une date inconnue est classée prudemment au moment du scan : les
         # sources sont déjà bornées nativement à 7 jours via hours_old ou API.
         "sort_date": (published_at or datetime.now(timezone.utc)).isoformat(),
-        "visa_friendly": is_visa_friendly(company),
+        "domains": matched_domains,
+        "domain_scores": domain_scores,
+        "highlighted": is_highlighted_company(company),
     }, None
 
 
@@ -524,9 +542,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    site_queries = (LINKEDIN_QUERIES if site == "linkedin" else QUERIES)
-    if site == "indeed":
-        site_queries = site_queries + INDEED_ONLY_QUERIES
+    site_queries = source_queries(site)
     logger_name = {"linkedin": "LinkedIn", "indeed": "Indeed",
                    "glassdoor": "Glassdoor", "google": "Google"}[site]
 
@@ -544,11 +560,9 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
                            f"{consecutive_blocks} blocages consécutifs")
             break
         attempted += 1
-        # Choix mesuré le 2026-07-13 : hours_old seul remonte 2 titres stage /
-        # 25 bruts contre 1/25 avec f_JT=I sur la même recherche LinkedIn.
-        # Indeed ne peut de toute façon appliquer que l'un des deux groupes de
-        # filtres ; hours_old prend la priorité. Le filtre titre local garde le
-        # rôle de contrôle du contrat et récupère les stages mal étiquetés.
+        # hours_old borne la fraîcheur au plus près de la source. Le filtre
+        # titre local reste l'autorité sur le type de contrat, car les sites
+        # étiquettent parfois mal leurs offres.
         kwargs = dict(
             site_name=[site],
             search_term=query,
@@ -559,10 +573,9 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
             verbose=int(os.environ.get("JOBSPY_VERBOSE", "1")),
         )
         if site == "linkedin":
-            # La version 1.1.82 supporte le détail complet. On l'active sur la
-            # requête large seulement pour enrichir le classifieur sans faire
-            # exploser le run au-delà du budget de 60–90 secondes.
-            kwargs["linkedin_fetch_description"] = query == LINKEDIN_DESCRIPTION_QUERY
+            # Une seule requête enrichie par run suffit au scoring de la
+            # description et garde la collecte LinkedIn dans un budget borné.
+            kwargs["linkedin_fetch_description"] = query == site_queries[0]
         if site == "google":
             # google_search_term remplace toute la requête côté JobSpy : on
             # évite la redondance « stage … stage » et on garde une syntaxe
@@ -698,14 +711,14 @@ def fetch_apec_detail_description(number: str) -> str:
 
 
 def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
-    """APEC : correspondance CV sur titre + texteOffre (poids au titre),
-    lecture bornée du texte complet quand le snippet ne suffit pas."""
+    """APEC : scoring titre + texte, avec détails complets bornés."""
     status = SourceStatus(source="APEC")
     started = time.monotonic()
 
+    queries = list(dict.fromkeys(source_keywords(query) for query in active_queries()))
     raw_by_number: dict[str, dict] = {}
     failed = 0
-    for query in APEC_QUERIES:
+    for query in queries:
         try:
             resp = requests.post(
                 "https://www.apec.fr/cms/webservices/rechercheOffre",
@@ -735,10 +748,10 @@ def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
                 url, "APEC", r.get("datePublication"))
         offer, reason = make_offer(*args, confirmed_internship=True,
                                    description=clean_text(r.get("texteOffre")))
-        if offer is None and reason == REASON_NOT_PROFILE and detail_budget > 0:
+        if offer is None and reason == REASON_NO_DOMAIN and detail_budget > 0:
             # Titre insuffisant et snippet tronqué : lire le texte complet
-            # avant de rejeter : un titre générique peut cacher de vraies
-            # missions Data/BI. Les exclusions fortes ne passent jamais ici.
+            # avant de rejeter : un titre générique peut cacher des missions
+            # spécifiques à l'un des domaines actifs.
             detail_budget -= 1
             full_text = fetch_apec_detail_description(number)
             if full_text:
@@ -749,7 +762,7 @@ def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
         status.note = f"budget de {APEC_DETAIL_MAX_CALLS} lectures de détail épuisé"
 
     status.duration_s = round(time.monotonic() - started, 1)
-    if failed == len(APEC_QUERIES):
+    if failed == len(queries):
         status.status = "blocked" if status.http_error.startswith("HTTP") else "error"
     else:
         status.finalize()
@@ -772,7 +785,7 @@ def fetch_adzuna_all() -> tuple[list[dict], SourceStatus]:
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    for query in QUERIES:
+    for query in active_queries():
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = "circuit breaker : requêtes restantes ignorées"
             break
@@ -865,7 +878,8 @@ def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    for query in FRANCE_TRAVAIL_QUERIES:
+    queries = list(dict.fromkeys(source_keywords(query) for query in active_queries()))
+    for query in queries:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = "circuit breaker : requêtes restantes ignorées"
             break
@@ -877,7 +891,8 @@ def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
                 # Les stages n'ont pas de code typeContrat dans l'API v2 :
                 # c'est natureContrat=FS (convention de stage).
                 params={"motsCles": query, "natureContrat": "FS",
-                        "publieeDepuis": 7, "sort": "1", "range": "0-49"},
+                        "publieeDepuis": MAX_OFFER_AGE_DAYS,
+                        "sort": "1", "range": "0-49"},
                 timeout=REQUEST_TIMEOUT,
             )
             if resp.status_code == 204:  # aucune offre pour cette requête
@@ -956,16 +971,23 @@ def run_all_sources() -> tuple[dict[str, dict], list[SourceStatus]]:
     for name in SOURCE_NAMES:
         offers, st = results[name]
         for o in offers:
-            all_offers.setdefault(o["id"], o)  # dédoublonnage inter-sources
+            if o["id"] in all_offers:
+                merge_offer_domains(all_offers[o["id"]], o)
+            else:
+                all_offers[o["id"]] = o
         statuses.append(st)
     return all_offers, statuses
 
 
-def save_status_json(statuses: list[SourceStatus], scan_duration_s: float) -> None:
+def save_status_json(statuses: list[SourceStatus], scan_duration_s: float,
+                     active_ids: list[str] | None = None) -> None:
+    active_ids = active_ids or enabled_domain_ids()
     STATUS_FILE.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "scan_duration_s": round(scan_duration_s, 1),
+        "active_domains": active_ids,
+        "query_count": len(active_queries(active_ids=active_ids)),
         "sources": [dict(asdict(st), label=status_label(st)) for st in statuses],
     }
     STATUS_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=1),
@@ -987,13 +1009,17 @@ def save_seen(ids: set) -> None:
     SEEN_FILE.write_text(json.dumps(sorted(ids)[-5000:], ensure_ascii=False, indent=1))
 
 
-def send_email(new_offers: list[dict], dashboard_url: str) -> None:
+def send_email(new_offers: list[dict], dashboard_url: str,
+               domains: dict | None = None, config: dict | None = None) -> None:
+    domains = domains or DOMAINS
+    config = config or APP_CONFIG
     smtp_user = os.environ["SMTP_USER"]
     smtp_pass = os.environ["SMTP_PASS"]
     to_addr = os.environ.get("ALERT_TO", smtp_user)
 
     n = len(new_offers)
-    subject = f"🎯 {n} nouvelle{'s' if n>1 else ''} offre{'s' if n>1 else ''} de stage Data/IA (France)"
+    subject = (f"🎯 {config['app_name']} · {n} nouvelle{'s' if n > 1 else ''} "
+               f"offre{'s' if n > 1 else ''}")
 
     by_source = {}
     for o in new_offers:
@@ -1003,16 +1029,22 @@ def send_email(new_offers: list[dict], dashboard_url: str) -> None:
     for src, lst in sorted(by_source.items()):
         parts.append(f"<h3>{html.escape(src)} ({len(lst)})</h3>")
         for o in lst:
-            badge = " ✅ <b>visa-friendly probable</b>" if o["visa_friendly"] else ""
+            badge = (f" ✅ <b>{html.escape(config['highlight_label'])}</b>"
+                     if o.get("highlighted") else "")
+            labels = [domains[domain_id]["label"] for domain_id in o.get("domains", [])
+                      if domain_id in domains]
+            domain_line = (f"<br><small>{html.escape(' · '.join(labels))}</small>"
+                           if labels else "")
             url = safe_url(o["url"])
             title = html.escape(o["title"])
             link = f"<a href='{url}'><b>{title}</b></a>" if url else f"<b>{title}</b>"
             parts.append(
                 f"<p>{link}<br>"
-                f"{html.escape(o['company'])} · {html.escape(o['location'])}{badge}</p>"
+                f"{html.escape(o['company'])} · {html.escape(o['location'])}{badge}"
+                f"{domain_line}</p>"
             )
     parts.append(f"<hr><p><a href='{html.escape(dashboard_url, quote=True)}'>📊 Ouvrir le dashboard complet</a></p>")
-    parts.append("<p style='color:#888;font-size:12px'>Pipeline GitHub Actions · JobSpy + APEC + Adzuna + France Travail</p>")
+    parts.append(f"<p style='color:#888;font-size:12px'>{html.escape(config['tagline'])}</p>")
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -1038,16 +1070,26 @@ STATUS_CSS = {
 
 def render_dashboard(offers: list[dict], new_ids: set,
                      statuses: list[SourceStatus] | None = None,
-                     scan_duration_s: float = 0.0) -> None:
+                     scan_duration_s: float = 0.0,
+                     domains: dict | None = None,
+                     config: dict | None = None,
+                     active_ids: list[str] | None = None) -> None:
+    domains = domains or DOMAINS
+    config = config or APP_CONFIG
+    active_ids = active_ids or enabled_domain_ids(domains)
+    days_window = int(config["days_window"])
     DOCS_INDEX.parent.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
     statuses = statuses or [SourceStatus(source=name) for name in SOURCE_NAMES]
-    repository = os.environ.get("GITHUB_REPOSITORY", "neyos10/radar-stage-france")
-    actions_url = f"https://github.com/{repository}/actions/workflows/scan.yml"
+    active_labels = [domains[domain_id]["label"] for domain_id in active_ids]
 
     final_counts = {name: 0 for name in SOURCE_NAMES}
+    domain_counts = {domain_id: 0 for domain_id in active_ids}
     for o in offers:
         final_counts[o["source"]] = final_counts.get(o["source"], 0) + 1
+        for domain_id in o.get("domains", []):
+            if domain_id in domain_counts:
+                domain_counts[domain_id] += 1
 
     cards = []
     for o in sort_offers(offers)[:150]:
@@ -1063,12 +1105,21 @@ def render_dashboard(offers: list[dict], new_ids: set,
         company = html.escape(o["company"])
         location = html.escape(o["location"])
         source = html.escape(o["source"], quote=True)
+        offer_domains = [domain_id for domain_id in o.get("domains", [])
+                         if domain_id in active_ids]
+        domain_attr = html.escape(",".join(offer_domains), quote=True)
+        domain_tags = "".join(
+            f'<span class="tag domain">{html.escape(domains[domain_id]["label"])}</span>'
+            for domain_id in offer_domains
+        )
+        highlighted = bool(o.get("highlighted"))
         url = safe_url(o["url"])
         link = (f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
                 if url else title)
         cards.append(f"""
       <article class="job {'is-new' if is_new else ''}" data-id="{oid}"
-               data-src="{source}" data-visa="{'1' if o['visa_friendly'] else '0'}">
+               data-src="{source}" data-domains="{domain_attr}"
+               data-highlight="{'1' if highlighted else '0'}">
         <div class="job-top"><div>
           <h3>{link}</h3>
           <div class="meta">{company} · {location}</div>
@@ -1076,9 +1127,9 @@ def render_dashboard(offers: list[dict], new_ids: set,
         </div>
         <button class="apply-btn" type="button" data-offer-id="{oid}">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
-          {'<span class="tag visa">✓ visa-friendly</span>' if o['visa_friendly'] else ''}
+          {f'<span class="tag highlight">✓ {html.escape(config["highlight_label"])}</span>' if highlighted else ''}
           {'<span class="tag date-unknown">date inconnue</span>' if not date_known else ''}
-          <span class="tag match">Profil CV</span><span class="tag src">{source}</span></div>
+          {domain_tags}<span class="tag src">{source}</span></div>
       </article>""")
 
     status_rows = "".join(
@@ -1101,11 +1152,26 @@ def render_dashboard(offers: list[dict], new_ids: set,
         )
     filter_btns = "".join(source_chips)
 
+    domain_chips = "".join(
+        f'<button class="fchip domain-chip" data-domain="{html.escape(domain_id, quote=True)}">'
+        f'{html.escape(domains[domain_id]["label"])} <b>({domain_counts[domain_id]})</b></button>'
+        for domain_id in active_ids
+    )
+    single_domain_class = " single-domain" if len(active_ids) == 1 else ""
+    app_name = html.escape(str(config["app_name"]))
+    tagline = html.escape(str(config["tagline"]))
+    highlight_label = html.escape(str(config["highlight_label"]))
+    highlight_label_js = json.dumps(str(config["highlight_label"]), ensure_ascii=False)
+    domain_labels_js = json.dumps(
+        {domain_id: domains[domain_id]["label"] for domain_id in active_ids},
+        ensure_ascii=False,
+    )
+
     html_page = f"""<!DOCTYPE html>
 <html lang="fr" translate="no"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
-<title>Radar Stage France — Dashboard</title>
+<title>{app_name} — Dashboard</title>
 <style>
 :root{{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598;--err:#FF7B7B}}
 *{{box-sizing:border-box;margin:0;padding:0}}
@@ -1118,7 +1184,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .scan-btn.refresh-btn{{background:transparent;border:1px solid var(--maj);color:#CFC8FF;margin-right:6px}}
 .scan-hint{{color:var(--encre2);font-size:11px;margin-top:6px;max-width:280px}}
 .reset-btn:disabled{{opacity:.4;cursor:not-allowed}}
-.profile-note{{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}}
+.domain-note{{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}}
 .sources-panel{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}}
 .src-stat{{font-size:11.5px;border-radius:8px;padding:5px 9px;border:1px solid rgba(255,255,255,.08);color:var(--encre2);background:rgba(255,255,255,.02)}}
 .src-stat.st-ok{{border-color:rgba(62,213,152,.35);color:var(--ok)}}
@@ -1130,6 +1196,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .filter-label{{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}}
 .fchip{{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}}
 .fchip.on{{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}}
+.filter-group.single-domain{{opacity:.78}}
 .reset-btn{{border-color:rgba(255,123,123,.35);color:#FFA8A8}}
 .active-filters{{color:var(--encre2);font-size:12px}}
 .job{{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}}
@@ -1145,22 +1212,23 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .tags{{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}}
 .tag{{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}}
 .tag.new{{background:var(--saf);color:#3A2C05}}
-.tag.visa{{background:rgba(62,213,152,.15);color:var(--ok)}}
+.tag.highlight{{background:rgba(62,213,152,.15);color:var(--ok)}}
 .tag.date-unknown{{background:rgba(245,184,65,.14);color:var(--saf)}}
-.tag.match{{background:rgba(107,91,255,.15);color:#CFC8FF}}
+.tag.domain{{background:rgba(107,91,255,.15);color:#CFC8FF}}
 .tag.src{{background:#212D44;color:var(--encre2);font-weight:500}}
 .empty{{color:var(--encre2);text-align:center;padding:30px 10px}}
 .storage-note{{color:#66748A;font-size:11px;text-align:center;margin-top:18px}}
 @media(max-width:620px){{.hero{{display:block}}.hero-actions{{text-align:left;margin-top:12px}}.scan-hint{{max-width:none}}.job-top{{display:block}}.apply-btn{{margin-top:10px}}.filter-label{{width:100%}}}}
 </style></head>
 <body><div class="wrap">
-<div class="hero"><div><h1>🎯 Radar Stage France</h1>
-<p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · durée du scan : {human_duration(scan_duration_s)}</p></div>
+<div class="hero"><div><h1>🎯 {app_name}</h1>
+<p class="sub">{tagline}</p>
+<p class="sub">Dernier scan : {now} · {len(offers)} offres des {days_window} derniers jours · durée du scan : {human_duration(scan_duration_s)}</p></div>
 <div class="hero-actions">
 <button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
-<a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
+<a id="actionsLink" class="scan-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
 <p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
-<p class="profile-note">Ciblage CV : Data Engineering/Analytics, Data Science/IA, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, SQL, BI et Power BI.</p>
+<p class="domain-note">Domaines analysés : {html.escape(' · '.join(active_labels))}</p>
 <div class="sources-panel" translate="no">{status_rows}</div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
@@ -1171,8 +1239,11 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
     <button class="fchip source-chip on" data-src="*">Toutes</button>{filter_btns}
   </div>
+  <div class="filter-group{single_domain_class}" translate="no"><span class="filter-label">Domaine</span>
+    <button class="fchip domain-chip on" data-domain="*">Tous</button>{domain_chips}
+  </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
-    <button id="visaFilter" class="fchip" aria-pressed="false">✓ Visa-friendly probable</button>
+    <button id="highlightFilter" class="fchip" aria-pressed="false">✓ {highlight_label}</button>
   </div>
   <div class="filter-group"><span class="filter-label">Actifs</span>
     <span id="activeFilters" class="active-filters" translate="no"></span>
@@ -1186,12 +1257,24 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 <script>
 const STORAGE_KEY='radar-stage-france-applied-v1';
 const STATUS_LABELS={{todo:'À postuler',applied:'Déjà postulé',all:'Tous'}};
-let activeSource='*', activeStatus='todo', visaOnly=false;
+const HIGHLIGHT_LABEL={highlight_label_js};
+const DOMAIN_LABELS={domain_labels_js};
+let activeSource='*', activeDomain='*', activeStatus='todo', highlightOnly=false;
 function readApplied(){{
   try{{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}}
   catch(_error){{return new Set();}}
 }}
 let applied=readApplied();
+function configureActionsLink(){{
+  const host=window.location.hostname;
+  const path=window.location.pathname.split('/').filter(Boolean);
+  if(host.endsWith('.github.io')&&path.length){{
+    const owner=host.slice(0,-'.github.io'.length);
+    document.getElementById('actionsLink').href=
+      'https://github.com/'+encodeURIComponent(owner)+'/'+encodeURIComponent(path[0])+
+      '/actions/workflows/scan.yml';
+  }}
+}}
 function saveApplied(){{localStorage.setItem(STORAGE_KEY,JSON.stringify([...applied]));}}
 function setSource(btn,src){{
   activeSource=src;
@@ -1203,24 +1286,31 @@ function setStatus(btn,status){{
   document.querySelectorAll('.status-chip').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');refresh();
 }}
-function toggleVisa(btn){{
-  visaOnly=!visaOnly;btn.classList.toggle('on',visaOnly);
-  btn.setAttribute('aria-pressed',visaOnly?'true':'false');refresh();
+function setDomain(btn,domain){{
+  activeDomain=domain;
+  document.querySelectorAll('.domain-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');refresh();
+}}
+function toggleHighlight(btn){{
+  highlightOnly=!highlightOnly;btn.classList.toggle('on',highlightOnly);
+  btn.setAttribute('aria-pressed',highlightOnly?'true':'false');refresh();
 }}
 function resetFilters(){{
-  activeSource='*';activeStatus='todo';visaOnly=false;
+  activeSource='*';activeDomain='*';activeStatus='todo';highlightOnly=false;
   document.querySelectorAll('.source-chip').forEach(b=>b.classList.toggle('on',b.dataset.src==='*'));
+  document.querySelectorAll('.domain-chip').forEach(b=>b.classList.toggle('on',b.dataset.domain==='*'));
   document.querySelectorAll('.status-chip').forEach(b=>b.classList.toggle('on',b.dataset.status==='todo'));
-  const visa=document.getElementById('visaFilter');
-  visa.classList.remove('on');visa.setAttribute('aria-pressed','false');
+  const highlight=document.getElementById('highlightFilter');
+  highlight.classList.remove('on');highlight.setAttribute('aria-pressed','false');
   refresh();
 }}
 function updateActiveFilters(){{
   const parts=['Statut : '+STATUS_LABELS[activeStatus],
-               'Source : '+(activeSource==='*'?'Toutes':activeSource)];
-  if(visaOnly)parts.push('Visa-friendly uniquement');
+               'Source : '+(activeSource==='*'?'Toutes':activeSource),
+               'Domaine : '+(activeDomain==='*'?'Tous':(DOMAIN_LABELS[activeDomain]||activeDomain))];
+  if(highlightOnly)parts.push(HIGHLIGHT_LABEL+' uniquement');
   document.getElementById('activeFilters').textContent=parts.join(' · ');
-  const isDefault=activeStatus==='todo'&&activeSource==='*'&&!visaOnly;
+  const isDefault=activeStatus==='todo'&&activeSource==='*'&&activeDomain==='*'&&!highlightOnly;
   document.getElementById('resetBtn').disabled=isDefault;
 }}
 function toggleApplied(id){{
@@ -1236,9 +1326,11 @@ function refresh(){{
     action.textContent=isApplied?'↩ Remettre à postuler':'✓ Marquer comme postulé';
     action.classList.toggle('undo',isApplied);
     const sourceOk=activeSource==='*'||job.dataset.src===activeSource;
+    const domains=(job.dataset.domains||'').split(',').filter(Boolean);
+    const domainOk=activeDomain==='*'||domains.includes(activeDomain);
     const statusOk=activeStatus==='all'||(activeStatus==='applied'?isApplied:!isApplied);
-    const visaOk=!visaOnly||job.dataset.visa==='1';
-    const show=sourceOk&&statusOk&&visaOk;
+    const highlightOk=!highlightOnly||job.dataset.highlight==='1';
+    const show=sourceOk&&domainOk&&statusOk&&highlightOk;
     job.style.display=show?'':'none';if(show)visible++;
   }});
   document.getElementById('todoCount').textContent='('+todo+')';
@@ -1260,10 +1352,13 @@ document.querySelectorAll('.source-chip').forEach(btn=>
   btn.addEventListener('click',()=>setSource(btn,btn.dataset.src)));
 document.querySelectorAll('.status-chip').forEach(btn=>
   btn.addEventListener('click',()=>setStatus(btn,btn.dataset.status)));
-document.getElementById('visaFilter').addEventListener('click',event=>toggleVisa(event.currentTarget));
+document.querySelectorAll('.domain-chip').forEach(btn=>
+  btn.addEventListener('click',()=>setDomain(btn,btn.dataset.domain)));
+document.getElementById('highlightFilter').addEventListener('click',event=>toggleHighlight(event.currentTarget));
 document.getElementById('resetBtn').addEventListener('click',resetFilters);
 document.querySelectorAll('.apply-btn').forEach(btn=>
   btn.addEventListener('click',()=>toggleApplied(btn.dataset.offerId)));
+configureActionsLink();
 refresh();
 </script>
 </body></html>"""
@@ -1278,6 +1373,11 @@ refresh();
 # ============================================================
 
 def main() -> None:
+    active_ids = enabled_domain_ids()
+    print("Domaines actifs : " + ", ".join(
+        f"{domain_id} ({DOMAINS[domain_id]['label']})" for domain_id in active_ids
+    ))
+    print(f"Requêtes actives dédupliquées : {len(active_queries(active_ids=active_ids))}")
     started = time.monotonic()
     all_offers, statuses = run_all_sources()
     scan_duration = time.monotonic() - started
@@ -1289,6 +1389,11 @@ def main() -> None:
     final_counts = {name: 0 for name in SOURCE_NAMES}
     for o in all_offers.values():
         final_counts[o["source"]] = final_counts.get(o["source"], 0) + 1
+
+    domain_counts = {
+        domain_id: sum(domain_id in o.get("domains", []) for o in all_offers.values())
+        for domain_id in active_ids
+    }
 
     print(f"\nTotal : {len(all_offers)} offres · Nouvelles : {len(new_offers)} · "
           f"Durée : {human_duration(scan_duration)}")
@@ -1302,21 +1407,24 @@ def main() -> None:
               f"[{st.status}] bruts={st.raw_count} acceptés={st.accepted_count} "
               f"rejetés={st.rejected_count} dates_inconnues={st.unknown_date_count} "
               f"durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
+    for domain_id, count in domain_counts.items():
+        print(f"  - domaine {domain_id}: {count} offres")
 
-    save_status_json(statuses, scan_duration)
+    save_status_json(statuses, scan_duration, active_ids)
 
     dashboard_url = os.environ.get("DASHBOARD_URL", "")
     if new_offers:
         if os.environ.get("SMTP_USER") and os.environ.get("SMTP_PASS"):
             try:
-                send_email(new_offers, dashboard_url)
+                send_email(new_offers, dashboard_url, DOMAINS, APP_CONFIG)
                 print("Email envoyé.")
             except Exception as e:
                 print(f"[ERREUR] email : {e}", file=sys.stderr)
         else:
             print("[INFO] SMTP non configuré (SMTP_USER/SMTP_PASS absents) — pas d'email envoyé.")
 
-    render_dashboard(list(all_offers.values()), new_ids, statuses, scan_duration)
+    render_dashboard(list(all_offers.values()), new_ids, statuses, scan_duration,
+                     DOMAINS, APP_CONFIG, active_ids)
     save_seen(seen | set(all_offers.keys()))
 
 

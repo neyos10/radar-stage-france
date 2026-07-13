@@ -1,57 +1,59 @@
 {
- "generated_at": "2026-07-13T12:14:28+00:00",
- "scan_duration_s": 74.0,
+ "generated_at": "2026-07-13T10:54:11+00:00",
+ "scan_duration_s": 85.9,
+ "active_domains": [
+  "data_ia"
+ ],
+ "query_count": 6,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
    "raw_count": 125,
-   "accepted_count": 22,
-   "rejected_count": 103,
+   "accepted_count": 21,
+   "rejected_count": 104,
    "reject_reasons": {
-    "hors ciblage CV": 16,
-    "pas un stage": 68,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 4,
-    "plus de 7 jours": 4,
-    "doublon": 11
+    "pas un stage": 88,
+    "aucun domaine": 9,
+    "doublon": 5,
+    "plus de 7 jours": 2
    },
-   "unknown_date_count": 3,
-   "duration_s": 74.0,
+   "unknown_date_count": 1,
+   "duration_s": 85.9,
    "http_error": "",
    "note": "",
-   "label": "22 offres"
+   "label": "21 offres"
   },
   {
    "source": "Indeed",
    "status": "success",
-   "raw_count": 131,
-   "accepted_count": 10,
-   "rejected_count": 121,
+   "raw_count": 133,
+   "accepted_count": 9,
+   "rejected_count": 124,
    "reject_reasons": {
-    "pas un stage": 63,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 13,
-    "hors ciblage CV": 22,
-    "plus de 7 jours": 15,
-    "doublon": 8
+    "pas un stage": 69,
+    "plus de 7 jours": 5,
+    "aucun domaine": 41,
+    "doublon": 9
    },
    "unknown_date_count": 0,
-   "duration_s": 6.1,
+   "duration_s": 9.8,
    "http_error": "",
    "note": "",
-   "label": "10 offres"
+   "label": "9 offres"
   },
   {
    "source": "Glassdoor",
-   "status": "blocked",
+   "status": "error",
    "raw_count": 0,
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 0.7,
-   "http_error": "HTTP 403",
-   "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
-   "label": "Bloqué temporairement — HTTP 403"
+   "duration_s": 7.2,
+   "http_error": "Glassdoor: Error encountered in API response",
+   "note": "",
+   "label": "Erreur — Glassdoor: Error encountered in API response"
   },
   {
    "source": "Google Jobs",
@@ -61,7 +63,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 2.1,
+   "duration_s": 4.6,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -69,19 +71,18 @@
   {
    "source": "APEC",
    "status": "success",
-   "raw_count": 47,
-   "accepted_count": 2,
-   "rejected_count": 45,
+   "raw_count": 26,
+   "accepted_count": 1,
+   "rejected_count": 25,
    "reject_reasons": {
-    "hors ciblage CV": 5,
-    "métier hors périmètre (audit/compta/RH/finance/…)": 17,
-    "plus de 7 jours": 23
+    "plus de 7 jours": 20,
+    "aucun domaine": 5
    },
    "unknown_date_count": 0,
-   "duration_s": 9.3,
+   "duration_s": 3.9,
    "http_error": "",
    "note": "",
-   "label": "2 offres"
+   "label": "1 offre"
   },
   {
    "source": "Adzuna",
