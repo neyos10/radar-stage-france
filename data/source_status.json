@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-13T13:49:40+00:00",
- "scan_duration_s": 136.5,
+ "generated_at": "2026-07-13T14:34:53+00:00",
+ "scan_duration_s": 92.6,
  "active_domains": [
   "data_ia",
   "dev_web",
@@ -19,72 +19,91 @@
   "genie_civil_btp",
   "mecanique_industriel"
  ],
+ "active_regions": [
+  "france"
+ ],
  "query_count": 82,
+ "combination_count": 16,
+ "results_wanted": {
+  "linkedin": 9,
+  "indeed": 11,
+  "glassdoor": 6,
+  "google": 11
+ },
  "sources": [
   {
    "source": "LinkedIn",
+   "region_id": "france",
+   "region_label": "France",
    "status": "success",
-   "raw_count": 145,
-   "accepted_count": 16,
-   "rejected_count": 129,
+   "raw_count": 54,
+   "accepted_count": 8,
+   "rejected_count": 46,
    "reject_reasons": {
-    "pas un stage": 117,
-    "aucun domaine": 9,
-    "plus de 7 jours": 2,
-    "doublon": 1
+    "pas un stage": 37,
+    "aucun domaine": 8,
+    "plus de 7 jours": 1
    },
    "unknown_date_count": 2,
-   "duration_s": 101.3,
+   "duration_s": 13.0,
    "http_error": "",
    "note": "",
-   "label": "16 offres"
+   "label": "8 offres"
   },
   {
    "source": "Indeed",
+   "region_id": "france",
+   "region_label": "France",
    "status": "success",
-   "raw_count": 1541,
-   "accepted_count": 146,
-   "rejected_count": 1395,
+   "raw_count": 732,
+   "accepted_count": 82,
+   "rejected_count": 650,
    "reject_reasons": {
-    "pas un stage": 974,
-    "aucun domaine": 169,
-    "plus de 7 jours": 101,
-    "doublon": 151
+    "pas un stage": 505,
+    "aucun domaine": 76,
+    "plus de 7 jours": 22,
+    "doublon": 47
    },
    "unknown_date_count": 0,
-   "duration_s": 136.5,
+   "duration_s": 92.6,
    "http_error": "",
    "note": "",
-   "label": "146 offres"
+   "label": "82 offres"
   },
   {
    "source": "Glassdoor",
+   "region_id": "france",
+   "region_label": "France",
    "status": "blocked",
    "raw_count": 0,
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 0.8,
+   "duration_s": 0.7,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
   },
   {
    "source": "Google Jobs",
+   "region_id": "france",
+   "region_label": "France",
    "status": "empty",
    "raw_count": 0,
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 20.8,
+   "duration_s": 16.9,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
   },
   {
    "source": "APEC",
+   "region_id": "france",
+   "region_label": "France",
    "status": "success",
    "raw_count": 177,
    "accepted_count": 36,
@@ -94,13 +113,15 @@
     "aucun domaine": 34
    },
    "unknown_date_count": 0,
-   "duration_s": 65.4,
+   "duration_s": 84.2,
    "http_error": "",
    "note": "budget de 25 lectures de détail épuisé",
    "label": "36 offres"
   },
   {
    "source": "Adzuna",
+   "region_id": "france",
+   "region_label": "France",
    "status": "disabled_missing_credentials",
    "raw_count": 0,
    "accepted_count": 0,
@@ -114,6 +135,8 @@
   },
   {
    "source": "France Travail",
+   "region_id": "france",
+   "region_label": "France",
    "status": "disabled_missing_credentials",
    "raw_count": 0,
    "accepted_count": 0,
