@@ -30,6 +30,7 @@ Sorties :
 import hashlib
 import html
 import json
+import logging
 import os
 import re
 import smtplib
@@ -49,6 +50,7 @@ import requests
 # ============================================================
 
 QUERIES = [
+    "stage data",
     "stage data engineer",
     "stage data engineering PFE",
     "stage big data",
@@ -56,15 +58,39 @@ QUERIES = [
     "stage business intelligence",
     "stage data analyst Power BI",
     "stage analytics engineer",
+    "stage data engineer python SQL",
+    "stage data spark airflow",
+    "stage ingénieur données",
+    "stage fin d'études data engineering",
+]
+
+# Indeed accepte les phrases exactes. Cette variante reste spécifique à
+# Indeed pour ne pas multiplier inutilement les pages LinkedIn.
+INDEED_ONLY_QUERIES = ['"stage 6 mois" data engineer']
+
+# LinkedIn pagine réellement et coûte nettement plus cher qu'Indeed (environ
+# 10–25 s par requête). Ce sous-ensemble couvre les familles principales sans
+# dépasser le budget global ; toutes les variantes restent actives sur les
+# sources rapides, notamment Indeed.
+LINKEDIN_QUERIES = [
+    "stage data",
+    "stage data engineer",
+    "stage big data",
+    "stage ETL",
+    "stage business intelligence",
 ]
 
 APEC_QUERIES = [
     "data",
+    "data engineer",
+    "data analyst",
     "business intelligence",
     "ETL",
     "big data",
     "Power BI",
     "spark",
+    "machine learning",
+    "intelligence artificielle",
 ]
 
 FRANCE_TRAVAIL_QUERIES = [
@@ -86,21 +112,31 @@ SOURCE_NAMES = [
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
 TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfa|pfe)\b", re.I)
 
-# Ciblage issu du CV : Data Engineering / Big Data / ETL / BI.
-# Liste positive stricte : uniquement des termes SPÉCIFIQUEMENT data,
-# jamais de mots génériques (gestion, outils, processus, analyse…).
+# Liste positive stricte : uniquement des termes SPÉCIFIQUEMENT Data/IA,
+# jamais de mots génériques (gestion, outils, processus, analyse…). Elle est
+# appliquée au titre + à la description, après les exclusions fortes du titre.
 PROFILE_TITLE_MUST_MATCH = re.compile(
-    r"\b(data\s*(?:engineer(?:ing)?|analyst|warehouse|lake(?:house)?|pipeline|"
+    r"\b(data\s*(?:engineer(?:ing)?|analyst|scien(?:ce|tist)|warehouse|"
+    r"lake(?:house)?|pipeline|"
     r"quality|governance|management|ops|intern(?:ship)?)|"
     r"analytics?\s+engineer(?:ing)?|big\s+data|"
     r"business\s+intelligence|informatique\s+d[eé]cisionnelle|"
     r"ing[eé]nieur(?:e)?\s+(?:big\s+)?data|etl|talend|pyspark|spark|hadoop|"
-    r"kafka|dbt|snowflake|databricks|airflow|sql|power\s*bi|bi)\b",
+    r"kafka|dbt|snowflake|databricks|airflow|sql|power\s*bi|"
+    r"machine\s+learning|deep\s+learning|nlp|marketing\s+analytics)\b",
     re.I,
 )
-PROFILE_TITLE_EXCLUDE = re.compile(
-    r"\b(data\s+scien(?:ce|tist)|machine\s+learning|deep\s+learning|"
-    r"computer\s+vision|traitement\s+du\s+langage|nlp)\b",
+PROFILE_BI_ACRONYM = re.compile(r"\bBI\b")
+PROFILE_AI_TERM = re.compile(r"\b(?:IA|AI)\b|intelligence\s+artificielle", re.I)
+PROFILE_AI_TECH_CONTEXT = re.compile(
+    r"\b(data|donn[ée]es|python|sql|mod[eè]le|algorithme|automatisation|"
+    r"machine\s+learning|deep\s+learning|nlp|api|cloud|engineering|"
+    r"d[eé]veloppement)\b",
+    re.I,
+)
+PROFILE_DESCRIPTION_RESCUE_TITLE = re.compile(
+    r"\b(ing[eé]nieur(?:e)?|d[eé]veloppeu(?:r|se)|logiciel|software|"
+    r"automatisation|base\s+de\s+(?:r[eé]f[eé]rencement\s+des\s+)?donn[ée]es)\b",
     re.I,
 )
 
@@ -108,14 +144,18 @@ PROFILE_TITLE_EXCLUDE = re.compile(
 # (audit, compta, RH, juridique, commercial, qualité, finance, marketing).
 # Rejet immédiat, même si un mot positif matche ailleurs (titre ou
 # description) — sauf carve-out explicitement data (2e colonne).
-TITLE_DATA_CONTEXT = re.compile(r"\b(data|analytics?|donn[ée]es|BI|d[eé]cisionnel(?:le)?)\b", re.I)
 PROFILE_TITLE_HARD_EXCLUDE = [
     (re.compile(r"\baudit(?:eur|rice|eurs|rices|s)?\b", re.I), None),
     (re.compile(r"contr[ôo]le(?:ur|use)?s?\s+de\s+gestion", re.I), None),
     (re.compile(r"\bcomptab", re.I), None),
     (re.compile(r"\b(juridique|juriste|avocat|droit)\b", re.I), None),
-    (re.compile(r"\b(ressources\s+humaines|RH)\b", re.I), TITLE_DATA_CONTEXT),
-    (re.compile(r"\bcommercial(?:e|es|aux)?\b", re.I), TITLE_DATA_CONTEXT),
+    (re.compile(r"\b(ressources\s+humaines|RH)\b", re.I), None),
+    (re.compile(r"\bcommercial(?:e|es|aux)?\b|\bsales?\b|"
+                r"business\s+develop(?:er|ment)|d[eé]veloppement\s+commercial",
+                re.I), None),
+    # Le CRM relève ici du marketing/commercial et non du cœur de cible
+    # Data Engineering/BI demandé ; le cas réel Prosol doit être rejeté.
+    (re.compile(r"\bCRM\b", re.I), None),
     (re.compile(r"\bqualit[ée]\b", re.I),
      re.compile(r"data\s+quality|qualit[ée]\s+(?:de\s+la\s+|des\s+)?donn[ée]es", re.I)),
     (re.compile(r"\b(finances?|financi[eè]re?s?|FP&A)\b", re.I),
@@ -136,16 +176,16 @@ def title_hard_excluded(title: str) -> bool:
             return True
     return False
 
-# Repêchage par description : le titre garde le poids le plus fort, la
-# description ne sauve une offre que si elle décrit de vraies missions
-# Data/BI (cas "Stagiaire RH Analytics" dont les missions sont Data
-# Analytics / Business Intelligence). Pas de mots vagues type "données".
+# Repêchage par description : le titre garde le poids le plus fort, mais une
+# description peut apporter le signal positif obligatoire. Une exclusion
+# forte dans le titre reste toujours prioritaire.
 PROFILE_DESCRIPTION_MUST_MATCH = re.compile(
     r"\b(data\s*analytics?|business\s+intelligence|informatique\s+d[eé]cisionnelle|"
-    r"data\s+engineer(?:ing)?|ing[eé]nierie\s+(?:de\s+la\s+|des\s+)?donn[ée]es|"
+    r"data\s+engineer(?:ing)?|data\s+scien(?:ce|tist)|machine\s+learning|"
+    r"deep\s+learning|nlp|ing[eé]nierie\s+(?:de\s+la\s+|des\s+)?donn[ée]es|"
     r"data\s+warehouse|data\s+lake(?:house)?|entrep[ôo]t\s+de\s+donn[ée]es|"
     r"etl|talend|power\s*bi|pyspark|spark|hadoop|kafka|dbt|snowflake|"
-    r"databricks|airflow)\b",
+    r"databricks|airflow|sql)\b",
     re.I,
 )
 
@@ -157,6 +197,7 @@ REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
 MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source (run courant)
 MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
 APEC_DETAIL_MAX_CALLS = 25    # budget de lectures du texte complet APEC par run
+LINKEDIN_DESCRIPTION_QUERY = "stage data engineer"  # enrichissement borné (coût réseau)
 
 # Volume par requête et par site (mesuré le 2026-07-10) :
 #  - linkedin : 25 ≈ 13 s/requête (au-delà, la pagination ajoute ~5 s/page) ;
@@ -183,9 +224,7 @@ DOCS_INDEX = Path("docs/index.html")
 # Raisons de rejet (diagnostic)
 REASON_NO_TITLE = "titre manquant"
 REASON_NOT_INTERNSHIP = "pas un stage"
-REASON_EXCLUDED = "exclusion Data Science/ML"
 REASON_EXCLUDED_DOMAIN = "métier hors périmètre (audit/compta/RH/finance/…)"
-REASON_NO_DATE = "date absente ou invalide"
 REASON_TOO_OLD = f"plus de {MAX_OFFER_AGE_DAYS} jours"
 REASON_NOT_PROFILE = "hors ciblage CV"
 REASON_DUPLICATE = "doublon"
@@ -206,6 +245,7 @@ class SourceStatus:
     accepted_count: int = 0
     rejected_count: int = 0
     reject_reasons: dict = field(default_factory=dict)
+    unknown_date_count: int = 0
     duration_s: float = 0.0
     http_error: str = ""
     note: str = ""
@@ -273,6 +313,8 @@ def register_offer(status: SourceStatus, offers: dict,
     else:
         offers[offer["id"]] = offer
         status.accepted_count += 1
+        if not offer.get("date_known", bool(offer.get("date"))):
+            status.unknown_date_count += 1
 
 
 # ============================================================
@@ -306,10 +348,44 @@ def safe_url(url) -> str:
     return ""
 
 
-def parse_offer_date(value) -> datetime | None:
+def parse_offer_date(value, now: datetime | None = None) -> datetime | None:
+    """Parse une date absolue ou un libellé relatif courant.
+
+    Les libellés très frais sont volontairement reconnus avant le parseur ISO
+    (LinkedIn/Indeed peuvent exposer « à l'instant », « aujourd'hui » ou
+    « 2 hours ago »). Une valeur réellement inconnue retourne ``None`` ; elle
+    sera conservée par :func:`make_offer`, jamais assimilée à une vieille date.
+    """
     raw = "" if value is None else str(value).strip()
     if not raw or raw.lower() in {"nan", "nat", "none"}:
         return None
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    now = now.astimezone(timezone.utc)
+
+    relative = raw.lower().replace("’", "'")
+    relative = re.sub(r"\s+", " ", relative)
+    if relative in {"à l'instant", "a l'instant", "aujourd'hui", "today",
+                    "just posted", "just now", "nouveau"}:
+        return now
+    if relative in {"hier", "yesterday"}:
+        return now - timedelta(days=1)
+    if "quelques heures" in relative or "a few hours" in relative:
+        return now - timedelta(hours=2)
+
+    relative_patterns = [
+        (r"(?:il y a\s*)?(\d+)\s*min(?:ute)?s?", "minutes"),
+        (r"(?:il y a\s*)?(\d+)\s*h(?:eure)?s?", "hours"),
+        (r"(?:il y a\s*)?(\d+)\s*jours?", "days"),
+        (r"(\d+)\s*minutes?\s+ago", "minutes"),
+        (r"(\d+)\s*hours?\s+ago", "hours"),
+        (r"(\d+)\s*days?\s+ago", "days"),
+    ]
+    for pattern, unit in relative_patterns:
+        match = re.search(pattern, relative)
+        if match:
+            return now - timedelta(**{unit: int(match.group(1))})
     try:
         parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
     except ValueError:
@@ -322,6 +398,44 @@ def parse_offer_date(value) -> datetime | None:
     return parsed.astimezone(timezone.utc)
 
 
+def _profile_signal(text: str) -> bool:
+    """Signal Data/IA spécifique dans un bloc de texte."""
+    if PROFILE_TITLE_MUST_MATCH.search(text) or PROFILE_DESCRIPTION_MUST_MATCH.search(text):
+        return True
+    if PROFILE_BI_ACRONYM.search(text):
+        return True
+    return bool(PROFILE_AI_TERM.search(text) and PROFILE_AI_TECH_CONTEXT.search(text))
+
+
+def profile_positive_match(title: str, description: str = "") -> bool:
+    """Signal obligatoire, avec poids fort au titre.
+
+    ``BI`` est volontairement sensible à la casse pour éviter le mot français
+    « bi ». IA/AI n'est accepté qu'avec un deuxième contexte technique.
+    Une description peut sauver un titre technique générique (ingénieur,
+    développeur, automatisation, base de données), mais jamais un intitulé
+    métier sans rapport qui mentionne seulement SQL/Power BI dans ses missions.
+    """
+    if _profile_signal(title):
+        return True
+    if (description and PROFILE_AI_TERM.search(title)
+            and PROFILE_AI_TECH_CONTEXT.search(description)):
+        return True
+    return bool(description and PROFILE_DESCRIPTION_RESCUE_TITLE.search(title)
+                and _profile_signal(description))
+
+
+def _log_old_date_rejection(source: str, title: str, raw_date, parsed: datetime) -> None:
+    """Trace vérifiable demandée pour chaque rejet de date ancienne."""
+    raw = re.sub(r"[\r\n\t]+", " ", str(raw_date))[:100]
+    safe_title = re.sub(r"[\r\n\t]+", " ", title)[:100]
+    print(
+        f"[REJET_DATE] source={source} titre={safe_title!r} "
+        f"date_brute={raw!r} date_parsee={parsed.isoformat()} raison={REASON_TOO_OLD}",
+        file=sys.stderr,
+    )
+
+
 def make_offer(title, company, location, url, source, date="",
                confirmed_internship=False, description="") -> tuple[dict | None, str | None]:
     """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
@@ -330,23 +444,17 @@ def make_offer(title, company, location, url, source, date="",
         return None, REASON_NO_TITLE
     if not confirmed_internship and not TITLE_MUST_MATCH.search(title):
         return None, REASON_NOT_INTERNSHIP
-    # Exclusions fortes, toujours sur le titre : la description ne peut pas
-    # sauver une offre Data Science / ML / Deep Learning / NLP / Vision,
-    # ni un métier hors périmètre (audit, compta, RH, finance, marketing…).
-    if PROFILE_TITLE_EXCLUDE.search(title):
-        return None, REASON_EXCLUDED
+    description = clean_text(description)
+    # Exclusions fortes toujours sur le titre : la description ne peut pas
+    # sauver un métier hors périmètre (audit, compta, RH, finance, CRM…).
     if title_hard_excluded(title):
         return None, REASON_EXCLUDED_DOMAIN
     published_at = parse_offer_date(date)
-    if not published_at:
-        return None, REASON_NO_DATE
-    if published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
+    if published_at and published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
+        _log_old_date_rejection(source, title, date, published_at)
         return None, REASON_TOO_OLD
-    # Le titre a le poids le plus fort ; à défaut, une description contenant
-    # de vraies missions Data/BI repêche l'offre.
-    if not PROFILE_TITLE_MUST_MATCH.search(title):
-        if not (description and PROFILE_DESCRIPTION_MUST_MATCH.search(description)):
-            return None, REASON_NOT_PROFILE
+    if not profile_positive_match(title, description):
+        return None, REASON_NOT_PROFILE
     company = clean_text(company, "Entreprise non précisée")
     location = clean_text(location, "France")
     url = clean_text(url)
@@ -357,7 +465,12 @@ def make_offer(title, company, location, url, source, date="",
         "location": location,
         "url": url,
         "source": source,
-        "date": published_at.date().isoformat(),
+        "date": published_at.date().isoformat() if published_at else "",
+        "date_known": published_at is not None,
+        "date_raw": clean_text(date),
+        # Une date inconnue est classée prudemment au moment du scan : les
+        # sources sont déjà bornées nativement à 7 jours via hours_old ou API.
+        "sort_date": (published_at or datetime.now(timezone.utc)).isoformat(),
         "visa_friendly": is_visa_friendly(company),
     }, None
 
@@ -365,10 +478,12 @@ def make_offer(title, company, location, url, source, date="",
 def sort_offers(offers: list[dict]) -> list[dict]:
     """Plus récentes d'abord ; tri secondaire stable sur le titre."""
     return sorted(sorted(offers, key=lambda o: o.get("title", "")),
-                  key=lambda o: o.get("date", ""), reverse=True)
+                  key=lambda o: o.get("sort_date") or o.get("date", ""), reverse=True)
 
 
 def publication_age(date_value: str) -> str:
+    if not date_value:
+        return "date inconnue"
     published = datetime.fromisoformat(date_value).date()
     days = max(0, (datetime.now(timezone.utc).date() - published).days)
     if days == 0:
@@ -409,39 +524,57 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    for query in QUERIES:
+    site_queries = (LINKEDIN_QUERIES if site == "linkedin" else QUERIES)
+    if site == "indeed":
+        site_queries = site_queries + INDEED_ONLY_QUERIES
+    logger_name = {"linkedin": "LinkedIn", "indeed": "Indeed",
+                   "glassdoor": "Glassdoor", "google": "Google"}[site]
+
+    class CaptureHandler(logging.Handler):
+        def __init__(self):
+            super().__init__()
+            self.records: list[tuple[int, str]] = []
+
+        def emit(self, record):
+            self.records.append((record.levelno, record.getMessage()))
+
+    for query in site_queries:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = (f"circuit breaker : requêtes restantes ignorées après "
                            f"{consecutive_blocks} blocages consécutifs")
             break
         attempted += 1
-        # job_type="internship" : mesuré le 2026-07-10 sur LinkedIn, le filtre
-        # natif donne un bien meilleur signal (6 titres stage/23 bruts contre
-        # 1/30 sans le filtre — sans lui, la page se remplit de CDI).
-        # Indeed l'ignore silencieusement quand hours_old est fourni (limite
-        # jobspy) : c'est notre filtre titre « pas un stage » qui trie.
-        # linkedin_fetch_description=True coûterait ~0,5 s par offre
-        # (~+75 s/scan) pour un gain marginal : volontairement désactivé,
-        # le repêchage par description est réservé à APEC.
+        # Choix mesuré le 2026-07-13 : hours_old seul remonte 2 titres stage /
+        # 25 bruts contre 1/25 avec f_JT=I sur la même recherche LinkedIn.
+        # Indeed ne peut de toute façon appliquer que l'un des deux groupes de
+        # filtres ; hours_old prend la priorité. Le filtre titre local garde le
+        # rôle de contrôle du contrat et récupère les stages mal étiquetés.
         kwargs = dict(
             site_name=[site],
             search_term=query,
             location="France",
             results_wanted=JOBSPY_RESULTS_WANTED.get(site, 15),
             country_indeed="France",
-            job_type="internship",
             hours_old=MAX_OFFER_AGE_DAYS * 24,
-            verbose=1,
+            verbose=int(os.environ.get("JOBSPY_VERBOSE", "1")),
         )
+        if site == "linkedin":
+            # La version 1.1.82 supporte le détail complet. On l'active sur la
+            # requête large seulement pour enrichir le classifieur sans faire
+            # exploser le run au-delà du budget de 60–90 secondes.
+            kwargs["linkedin_fetch_description"] = query == LINKEDIN_DESCRIPTION_QUERY
         if site == "google":
             # google_search_term remplace toute la requête côté JobSpy : on
             # évite la redondance « stage … stage » et on garde une syntaxe
             # Google propre (la requête contient déjà « stage »).
             kwargs["google_search_term"] = f"{query} France"
-            kwargs.pop("job_type")
+        capture = CaptureHandler()
+        jobspy_logger = logging.getLogger(f"JobSpy:{logger_name}")
+        jobspy_logger.addHandler(capture)
         try:
             df = scrape_fn(**kwargs)
         except Exception as exc:
+            jobspy_logger.removeHandler(capture)
             failed += 1
             code = block_code(exc)
             if code:
@@ -452,7 +585,39 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
                 status.http_error = status.http_error or str(exc)[:200]
                 print(f"[WARN] {label} '{query}' a échoué : {exc}", file=sys.stderr)
             continue
-        consecutive_blocks = 0
+        finally:
+            if capture in jobspy_logger.handlers:
+                jobspy_logger.removeHandler(capture)
+
+        # JobSpy journalise parfois un 403/429 puis retourne un DataFrame vide
+        # sans lever d'exception (cas Glassdoor). On transforme ce signal en
+        # vrai statut blocked pour le dashboard et le circuit breaker.
+        captured_code = next(
+            (block_code(Exception(message)) for _, message in capture.records
+             if block_code(Exception(message))),
+            None,
+        )
+        if captured_code:
+            failed += 1
+            consecutive_blocks += 1
+            status.http_error = f"HTTP {captured_code}"
+            print(f"[WARN] {label} '{query}' bloqué ({status.http_error})", file=sys.stderr)
+            if len(df) == 0:
+                continue
+        else:
+            consecutive_blocks = 0
+        captured_error = next(
+            (message for level, message in capture.records if level >= logging.ERROR),
+            "",
+        )
+        if captured_error and len(df) == 0:
+            # Certains connecteurs (notamment Glassdoor) avalent l'exception,
+            # loggent une erreur puis renvoient un DataFrame vide. Sans ce
+            # contrôle le dashboard affichait à tort « 0 offre ».
+            failed += 1
+            status.http_error = status.http_error or captured_error[:200]
+            print(f"[WARN] {label} '{query}' a échoué : {captured_error}", file=sys.stderr)
+            continue
         raw = len(df)
         status.raw_count += raw
         print(f"[INFO] {label} '{query}' : {raw} résultats bruts")
@@ -481,6 +646,8 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
 # ============================================================
 
 APEC_HEADERS = {"Accept": "application/json", "User-Agent": "radar-stage-france/1.0"}
+APEC_ADVERTISER_TYPES = [143684, 143685, 143686, 143687, 143706]
+APEC_BAC5_LEVEL = 20019
 
 
 def apec_search_payload(query: str) -> dict:
@@ -488,16 +655,16 @@ def apec_search_payload(query: str) -> dict:
         "motsCles": query,
         "lieux": [], "fonctions": [], "statutPoste": [],
         "typesContrat": [597171],  # identifiant APEC officiel : STAGE
-        # typesConvention = type d'ANNONCEUR (libellés vérifiés dans le bundle
-        # Angular d'apec.fr) : 143684 entreprise, 143685 cabinet de
-        # recrutement, 143686 agence, 143687 SSII/ESN. Le code absent, 143706
-        # (« offres partenaires » : flux Proaxian, Talents Handicap…), est la
-        # source principale du bruit hors-sujet constaté — on l'exclut donc
-        # côté serveur. NB : « niveauEtude » n'est PAS appliqué : le champ est
-        # mono-valeur (20019=Bac+5, 20020=>Bac+5) et écarte les offres non
-        # taguées (80 → 39 résultats sur « data »), donc trop restrictif pour
-        # un PFE.
-        "typesConvention": [143684, 143685, 143686, 143687],
+        # Malgré son nom, typesConvention décrit le type d'ANNONCEUR :
+        # 143684 entreprise, 143685 cabinet, 143686 agence, 143687 SSII/ESN,
+        # 143706 partenaire (constantes vérifiées dans le bundle APEC).
+        # Le partenaire reste inclus : le retirer excluait notamment une offre
+        # Data Analyst publiée le jour même. Le filtre métier local élimine le
+        # bruit de ces flux sans sacrifier la fraîcheur.
+        "typesConvention": APEC_ADVERTISER_TYPES,
+        # Référentiel public OFFRE_NIVEAU_ETUDE : 20019=Bac+5,
+        # 20020=>Bac+5. Pour un PFE/école d'ingénieur, Bac+5 est le bon niveau.
+        "niveauEtude": APEC_BAC5_LEVEL,
         "niveauxExperience": [],
         "idsEtablissement": [], "secteursActivite": [],
         "typesTeletravail": [], "idNomZonesDeplacement": [],
@@ -570,8 +737,8 @@ def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
                                    description=clean_text(r.get("texteOffre")))
         if offer is None and reason == REASON_NOT_PROFILE and detail_budget > 0:
             # Titre insuffisant et snippet tronqué : lire le texte complet
-            # avant de rejeter (ex. « Stagiaire RH Analytics » dont les
-            # missions réelles sont Data Analytics / BI).
+            # avant de rejeter : un titre générique peut cacher de vraies
+            # missions Data/BI. Les exclusions fortes ne passent jamais ici.
             detail_budget -= 1
             full_text = fetch_apec_detail_description(number)
             if full_text:
@@ -885,8 +1052,12 @@ def render_dashboard(offers: list[dict], new_ids: set,
     cards = []
     for o in sort_offers(offers)[:150]:
         is_new = o["id"] in new_ids
-        published = datetime.fromisoformat(o["date"]).strftime("%d/%m/%Y")
-        age = publication_age(o["date"])
+        date_known = o.get("date_known", bool(o.get("date")))
+        if date_known and o.get("date"):
+            published = datetime.fromisoformat(o["date"]).strftime("%d/%m/%Y")
+            published_line = f"Publiée {publication_age(o['date'])} · {published}"
+        else:
+            published_line = "Date de publication inconnue · conservée par précaution"
         oid = html.escape(str(o["id"]), quote=True)
         title = html.escape(o["title"])
         company = html.escape(o["company"])
@@ -901,11 +1072,12 @@ def render_dashboard(offers: list[dict], new_ids: set,
         <div class="job-top"><div>
           <h3>{link}</h3>
           <div class="meta">{company} · {location}</div>
-          <div class="published">Publiée {age} · {published}</div>
+          <div class="published">{published_line}</div>
         </div>
-        <button class="apply-btn" type="button" onclick="toggleApplied(event,'{oid}')">✓ Marquer comme postulé</button></div>
+        <button class="apply-btn" type="button" data-offer-id="{oid}">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
           {'<span class="tag visa">✓ visa-friendly</span>' if o['visa_friendly'] else ''}
+          {'<span class="tag date-unknown">date inconnue</span>' if not date_known else ''}
           <span class="tag match">Profil CV</span><span class="tag src">{source}</span></div>
       </article>""")
 
@@ -925,12 +1097,12 @@ def render_dashboard(offers: list[dict], new_ids: set,
                      f' data-note="{html.escape(status_label(st, count), quote=True)}"')
         source_chips.append(
             f'<button class="fchip source-chip" data-src="{name}"{note_attr} '
-            f"onclick=\"setSource(this,'{name}')\">{name} <b>{hint}</b></button>"
+            f'>{name} <b>{hint}</b></button>'
         )
     filter_btns = "".join(source_chips)
 
     html_page = f"""<!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8">
+<html lang="fr" translate="no"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
 <title>Radar Stage France — Dashboard</title>
@@ -974,6 +1146,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .tag{{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}}
 .tag.new{{background:var(--saf);color:#3A2C05}}
 .tag.visa{{background:rgba(62,213,152,.15);color:var(--ok)}}
+.tag.date-unknown{{background:rgba(245,184,65,.14);color:var(--saf)}}
 .tag.match{{background:rgba(107,91,255,.15);color:#CFC8FF}}
 .tag.src{{background:#212D44;color:var(--encre2);font-weight:500}}
 .empty{{color:var(--encre2);text-align:center;padding:30px 10px}}
@@ -984,26 +1157,26 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 <div class="hero"><div><h1>🎯 Radar Stage France</h1>
 <p class="sub">Dernier scan : {now} · {len(offers)} offres des {MAX_OFFER_AGE_DAYS} derniers jours · durée du scan : {human_duration(scan_duration_s)}</p></div>
 <div class="hero-actions">
-<button class="scan-btn refresh-btn" type="button" onclick="location.reload()">↻ Actualiser les offres</button>
+<button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
 <a class="scan-btn" href="{actions_url}" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
 <p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
-<p class="profile-note">Ciblage CV : Data Engineering, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, BI et Power BI.</p>
+<p class="profile-note">Ciblage CV : Data Engineering/Analytics, Data Science/IA, Big Data, Spark/PySpark, ETL/Talend, Data Warehouse, SQL, BI et Power BI.</p>
 <div class="sources-panel" translate="no">{status_rows}</div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
-    <button class="fchip status-chip on" data-status="todo" onclick="setStatus(this,'todo')">À postuler <b id="todoCount"></b></button>
-    <button class="fchip status-chip" data-status="applied" onclick="setStatus(this,'applied')">Déjà postulé <b id="appliedCount"></b></button>
-    <button class="fchip status-chip" data-status="all" onclick="setStatus(this,'all')">Tous</button>
+    <button class="fchip status-chip on" data-status="todo">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" data-status="applied">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" data-status="all">Tous</button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" data-src="*" onclick="setSource(this,'*')">Toutes</button>{filter_btns}
+    <button class="fchip source-chip on" data-src="*">Toutes</button>{filter_btns}
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
-    <button id="visaFilter" class="fchip" aria-pressed="false" onclick="toggleVisa(this)">✓ Visa-friendly probable</button>
+    <button id="visaFilter" class="fchip" aria-pressed="false">✓ Visa-friendly probable</button>
   </div>
   <div class="filter-group"><span class="filter-label">Actifs</span>
     <span id="activeFilters" class="active-filters" translate="no"></span>
-    <button id="resetBtn" class="fchip reset-btn" onclick="resetFilters()" disabled>✕ Réinitialiser les filtres</button>
+    <button id="resetBtn" class="fchip reset-btn" disabled>✕ Réinitialiser les filtres</button>
   </div>
 </div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
@@ -1050,8 +1223,7 @@ function updateActiveFilters(){{
   const isDefault=activeStatus==='todo'&&activeSource==='*'&&!visaOnly;
   document.getElementById('resetBtn').disabled=isDefault;
 }}
-function toggleApplied(event,id){{
-  event.preventDefault();
+function toggleApplied(id){{
   applied.has(id)?applied.delete(id):applied.add(id);saveApplied();refresh();
 }}
 function refresh(){{
@@ -1083,9 +1255,21 @@ function refresh(){{
   empty.hidden=visible!==0;
   updateActiveFilters();
 }}
+document.getElementById('refreshBtn').addEventListener('click',()=>window.location.reload());
+document.querySelectorAll('.source-chip').forEach(btn=>
+  btn.addEventListener('click',()=>setSource(btn,btn.dataset.src)));
+document.querySelectorAll('.status-chip').forEach(btn=>
+  btn.addEventListener('click',()=>setStatus(btn,btn.dataset.status)));
+document.getElementById('visaFilter').addEventListener('click',event=>toggleVisa(event.currentTarget));
+document.getElementById('resetBtn').addEventListener('click',resetFilters);
+document.querySelectorAll('.apply-btn').forEach(btn=>
+  btn.addEventListener('click',()=>toggleApplied(btn.dataset.offerId)));
 refresh();
 </script>
 </body></html>"""
+    # Les badges conditionnels peuvent laisser des espaces en fin de ligne ;
+    # normaliser la sortie garde le fichier généré propre et diffable.
+    html_page = "\n".join(line.rstrip() for line in html_page.splitlines()) + "\n"
     DOCS_INDEX.write_text(html_page, encoding="utf-8")
 
 
@@ -1116,7 +1300,8 @@ def main() -> None:
         http = f" · {st.http_error}" if st.http_error else ""
         print(f"  - {st.source}: {status_label(st, final_counts[st.source])} "
               f"[{st.status}] bruts={st.raw_count} acceptés={st.accepted_count} "
-              f"rejetés={st.rejected_count} durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
+              f"rejetés={st.rejected_count} dates_inconnues={st.unknown_date_count} "
+              f"durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
 
     save_status_json(statuses, scan_duration)
 

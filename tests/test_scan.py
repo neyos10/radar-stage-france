@@ -1,10 +1,12 @@
 """Tests du pipeline scan.py — aucun accès réseau, aucune dépendance jobspy.
 
-Couvre : dates récentes/anciennes, titres de stage, exclusions DS/ML,
-repêchage par description (APEC), déduplication, tri, champs None/NaN,
-échappement HTML, sources sans secrets, circuit breaker 403/429.
+Couvre : dates absolues/relatives/inconnues, ciblage Data/IA strict,
+filtres natifs, déduplication, tri, champs None/NaN, échappement HTML,
+sources sans secrets, circuit breaker 403/429 et interactions du dashboard.
 """
 
+import io
+import logging
 import os
 import sys
 import tempfile
@@ -52,6 +54,16 @@ class TestParseOfferDate(unittest.TestCase):
         self.assertIsNone(scan.parse_offer_date(None))
         self.assertIsNone(scan.parse_offer_date("NaT"))
 
+    def test_fresh_relative_french_and_english(self):
+        now = datetime(2026, 7, 13, 12, 0, tzinfo=timezone.utc)
+        self.assertEqual(scan.parse_offer_date("à l'instant", now), now)
+        self.assertEqual(scan.parse_offer_date("aujourd'hui", now), now)
+        self.assertEqual(scan.parse_offer_date("Il y a 1 heure", now),
+                         now - timedelta(hours=1))
+        self.assertEqual(scan.parse_offer_date("Just posted", now), now)
+        self.assertEqual(scan.parse_offer_date("2 hours ago", now),
+                         now - timedelta(hours=2))
+
 
 class TestMakeOffer(unittest.TestCase):
     def test_recent_internship_accepted(self):
@@ -61,44 +73,55 @@ class TestMakeOffer(unittest.TestCase):
         self.assertEqual(o["source"], "LinkedIn")
 
     def test_too_old_rejected(self):
-        o, reason = offer(date=TOO_OLD)
+        with mock.patch("sys.stderr", new_callable=io.StringIO) as stderr:
+            o, reason = offer(date=TOO_OLD)
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_TOO_OLD)
+        self.assertIn(f"date_brute='{TOO_OLD}'", stderr.getvalue())
+        self.assertIn("date_parsee=", stderr.getvalue())
 
-    def test_missing_date_rejected(self):
-        o, reason = offer(date="")
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NO_DATE)
+    def test_missing_and_unreadable_dates_are_kept(self):
+        for date in (None, "", "à confirmer"):
+            o, reason = offer(date=date, url=f"https://example.com/{date!r}")
+            self.assertIsNone(reason)
+            self.assertFalse(o["date_known"])
+            self.assertEqual(o["date"], "")
+
+    def test_fresh_relative_date_is_accepted(self):
+        o, reason = offer(date="à l'instant")
+        self.assertIsNone(reason)
+        self.assertTrue(o["date_known"])
+        self.assertEqual(o["date"], TODAY)
 
     def test_not_internship_rejected(self):
         o, reason = offer(title="Data Engineer CDI")
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_NOT_INTERNSHIP)
 
-    def test_ml_excluded(self):
+    def test_ml_accepted(self):
         o, reason = offer(title="Stage Machine Learning Engineer")
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED)
+        self.assertIsNone(reason)
+        self.assertIsNotNone(o)
 
-    def test_data_science_excluded(self):
+    def test_data_science_accepted(self):
         o, reason = offer(title="Stagiaire Data Scientist NLP")
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED)
+        self.assertIsNone(reason)
+        self.assertIsNotNone(o)
 
     def test_off_profile_rejected(self):
         o, reason = offer(title="Stage assistant chef de projet digital")
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_NOT_PROFILE)
 
-    def test_description_rescues_rh_analytics(self):
-        # Cas réel APEC : titre RH mais missions Data Analytics / BI.
+    def test_description_cannot_rescue_rh_title(self):
+        # Une exclusion forte du titre reste prioritaire sur la description.
         o, reason = offer(
             title="Stagiaire RH Analytics F/H", source="APEC",
             confirmed_internship=True,
             description="Missions : Data Analytics, Business Intelligence, Power BI.",
         )
-        self.assertIsNone(reason)
-        self.assertEqual(o["title"], "Stagiaire RH Analytics F/H")
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
 
     def test_generic_description_does_not_rescue(self):
         # « RH » sans contexte data dans le titre : exclusion forte immédiate.
@@ -110,13 +133,13 @@ class TestMakeOffer(unittest.TestCase):
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
 
-    def test_description_cannot_override_exclusion(self):
+    def test_description_can_confirm_data_profile(self):
         o, reason = offer(
-            title="Stage Deep Learning",
-            description="Beaucoup de Power BI et d'ETL dans la description.",
+            title="Stage ingénieur logiciel",
+            description="Construction de pipelines ETL en Python et SQL.",
         )
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_EXCLUDED)
+        self.assertIsNone(reason)
+        self.assertIsNotNone(o)
 
     def test_nan_company_defaults(self):
         o, _ = offer(company="nan", location=None)
@@ -156,13 +179,13 @@ class TestCVTargetingStrict(unittest.TestCase):
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
 
-    def test_business_data_analyst_crm_accepted(self):
-        # Cas limite évalué : « Data Analyst » est explicitement dans le
-        # ciblage CV ; CRM n'est que le domaine d'application → accepté.
+    def test_business_data_analyst_crm_rejected(self):
+        # Cas limite tranché selon la consigne : CRM est un domaine
+        # commercial/marketing hors du profil Data Engineering ciblé.
         o, reason = offer(title="Stage – Business Data Analyst CRM (H/F)",
                           company="Prosol", source="Indeed")
-        self.assertIsNone(reason)
-        self.assertEqual(o["title"], "Stage – Business Data Analyst CRM (H/F)")
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_EXCLUDED_DOMAIN)
 
     def test_real_data_offers_still_accepted(self):
         for title in [
@@ -171,6 +194,8 @@ class TestCVTargetingStrict(unittest.TestCase):
             "Stage Business Intelligence / Power BI",
             "Stage ingénieur Big Data Spark",
             "Stage ETL Talend et Data Warehouse",
+            "Stage Machine Learning / NLP",
+            "Stage IA Python et SQL",
         ]:
             o, reason = offer(title=title)
             self.assertIsNone(reason, f"'{title}' aurait dû passer : {reason}")
@@ -214,6 +239,40 @@ class TestCVTargetingStrict(unittest.TestCase):
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_NOT_PROFILE)
 
+    def test_description_does_not_rescue_non_technical_titles(self):
+        # Faux positifs observés au benchmark : une mention SQL/Power BI dans
+        # la description ne suffit plus si le titre n'est pas technique.
+        for title in [
+            "Stage - Analyste Excellence Opérationnelle (F/M/X)",
+            "Chargée Relations Écoles & Universités - Stage",
+            "Junior Business Analyst - Stage (H/F/N)",
+            "Internship - Développement de Carrières & Projets Alumni",
+            "Stagiaire Cybersécurité DevSecops",
+            "Consultant Digital Engineering - Stage",
+        ]:
+            o, reason = offer(
+                title=title,
+                description="Reporting Power BI et extraction SQL de données.",
+            )
+            self.assertIsNone(o, title)
+            self.assertEqual(reason, scan.REASON_NOT_PROFILE, title)
+
+    def test_description_rescues_only_technical_generic_title(self):
+        o, reason = offer(
+            title="Stage ingénieur logiciel",
+            description="Pipelines de données, ETL, Python et SQL.",
+        )
+        self.assertIsNone(reason)
+        self.assertIsNotNone(o)
+
+    def test_ai_requires_technical_context(self):
+        o, reason = offer(title="Stage communication IA")
+        self.assertIsNone(o)
+        self.assertEqual(reason, scan.REASON_NOT_PROFILE)
+        o, reason = offer(title="Stage IA", description="Modèles Python et algorithmes.")
+        self.assertIsNone(reason)
+        self.assertIsNotNone(o)
+
 
 class TestDedup(unittest.TestCase):
     def test_same_offer_same_id(self):
@@ -230,13 +289,28 @@ class TestDedup(unittest.TestCase):
         self.assertEqual(st.accepted_count, 1)
         self.assertEqual(st.reject_reasons.get(scan.REASON_DUPLICATE), 1)
 
+    def test_unknown_date_counted_when_accepted(self):
+        st = scan.SourceStatus(source="Test")
+        offers = {}
+        candidate, reason = offer(date=None)
+        scan.register_offer(st, offers, candidate, reason)
+        self.assertEqual(st.unknown_date_count, 1)
+
 
 class TestSort(unittest.TestCase):
-    def test_newest_first(self):
-        old, _ = offer(title="Stage ETL ancien", date=YESTERDAY, url="https://e.com/1")
-        new, _ = offer(title="Stage ETL récent", date=TODAY, url="https://e.com/2")
-        ordered = scan.sort_offers([old, new])
-        self.assertEqual([o["date"] for o in ordered], [TODAY, YESTERDAY])
+    def test_three_known_dates_newest_first(self):
+        oldest_date = (datetime.now(timezone.utc) - timedelta(days=2)).date().isoformat()
+        old, _ = offer(title="Stage ETL ancien", date=oldest_date, url="https://e.com/1")
+        middle, _ = offer(title="Stage ETL milieu", date=YESTERDAY, url="https://e.com/2")
+        new, _ = offer(title="Stage ETL récent", date=TODAY, url="https://e.com/3")
+        ordered = scan.sort_offers([old, new, middle])
+        self.assertEqual([o["date"] for o in ordered], [TODAY, YESTERDAY, oldest_date])
+
+    def test_unknown_date_is_kept_and_visible_first(self):
+        known, _ = offer(date=YESTERDAY, url="https://e.com/known")
+        unknown, _ = offer(date=None, url="https://e.com/unknown")
+        ordered = scan.sort_offers([known, unknown])
+        self.assertEqual(ordered[0]["id"], unknown["id"])
 
 
 class TestCircuitBreaker(unittest.TestCase):
@@ -269,6 +343,36 @@ class TestCircuitBreaker(unittest.TestCase):
         _, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(st.status, "error")
 
+    def test_swallowed_jobspy_403_is_detected(self):
+        import pandas as pd
+        calls = 0
+
+        def fake_scrape(**_kwargs):
+            nonlocal calls
+            calls += 1
+            logging.getLogger("JobSpy:Glassdoor").error(
+                "Glassdoor: response status code 403")
+            return pd.DataFrame()
+
+        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        self.assertEqual(calls, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertEqual(st.status, "blocked")
+        self.assertEqual(st.http_error, "HTTP 403")
+        self.assertEqual(offers, [])
+
+    def test_swallowed_generic_jobspy_error_is_not_reported_as_empty(self):
+        import pandas as pd
+
+        def fake_scrape(**_kwargs):
+            logging.getLogger("JobSpy:Glassdoor").error(
+                "Glassdoor: Error encountered in API response")
+            return pd.DataFrame()
+
+        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        self.assertEqual(st.status, "error")
+        self.assertIn("API response", st.http_error)
+        self.assertEqual(offers, [])
+
 
 class TestJobspyAccounting(unittest.TestCase):
     def test_raw_accepted_rejected_counts(self):
@@ -281,7 +385,7 @@ class TestJobspyAccounting(unittest.TestCase):
             {"title": "Stage Data Engineer (vieux)", "company": "ACME", "city": "Lyon",
              "state": "", "job_url": "https://e.com/2", "date_posted": TOO_OLD,
              "description": ""},
-            {"title": "Stage Machine Learning", "company": "ACME", "city": "Nice",
+            {"title": "Stage communication digitale", "company": "ACME", "city": "Nice",
              "state": "", "job_url": "https://e.com/3", "date_posted": TODAY,
              "description": ""},
         ])
@@ -296,7 +400,7 @@ class TestJobspyAccounting(unittest.TestCase):
         self.assertEqual(st.accepted_count, 1)
         self.assertEqual(st.rejected_count, 2)
         self.assertEqual(st.reject_reasons.get(scan.REASON_TOO_OLD), 1)
-        self.assertEqual(st.reject_reasons.get(scan.REASON_EXCLUDED), 1)
+        self.assertEqual(st.reject_reasons.get(scan.REASON_NOT_PROFILE), 1)
         self.assertEqual(st.status, "success")
         self.assertEqual(len(offers), 1)
 
@@ -310,7 +414,7 @@ class TestJobspyAccounting(unittest.TestCase):
 
         scan.fetch_jobspy_site("google", "Google Jobs", scrape_fn=fake_scrape)
         first = seen_kwargs[0]
-        self.assertEqual(first["google_search_term"], "stage data engineer France")
+        self.assertEqual(first["google_search_term"], "stage data France")
         self.assertNotIn("job_type", first)
         # jamais deux fois « stage » dans la requête Google
         self.assertEqual(first["google_search_term"].lower().count("stage"), 1)
@@ -329,19 +433,47 @@ class TestJobspyAccounting(unittest.TestCase):
         scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=make_fake("indeed"))
         self.assertEqual(seen["linkedin"]["results_wanted"], 25)
         self.assertEqual(seen["indeed"]["results_wanted"], 30)
-        self.assertEqual(seen["linkedin"]["job_type"], "internship")
+        self.assertEqual(seen["linkedin"]["hours_old"], 168)
+        self.assertEqual(seen["indeed"]["hours_old"], 168)
+        self.assertEqual(seen["indeed"]["country_indeed"], "France")
+        self.assertNotIn("job_type", seen["linkedin"])
+        self.assertNotIn("job_type", seen["indeed"])
+
+    def test_native_queries_and_linkedin_description_budget(self):
+        import pandas as pd
+        seen = []
+
+        def fake_scrape(**kwargs):
+            seen.append(kwargs)
+            return pd.DataFrame()
+
+        scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=fake_scrape)
+        self.assertEqual([call["search_term"] for call in seen], scan.LINKEDIN_QUERIES)
+        self.assertEqual(
+            [call["search_term"] for call in seen if call["linkedin_fetch_description"]],
+            [scan.LINKEDIN_DESCRIPTION_QUERY],
+        )
+        self.assertTrue(any(not call["linkedin_fetch_description"] for call in seen))
+        self.assertTrue(all("f_SAL" not in str(call) for call in seen))
+        self.assertTrue(all("publié au cours" not in call["search_term"].lower()
+                            for call in seen))
+
+        seen.clear()
+        scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
+        self.assertIn('"stage 6 mois" data engineer',
+                      [call["search_term"] for call in seen])
 
 
 class TestApecNativeFilters(unittest.TestCase):
     def test_payload_has_native_filters(self):
         p = scan.apec_search_payload("data")
-        # 143684-143687 = annonceurs directs (entreprise, cabinet, agence,
-        # SSII) ; 143706 (offres partenaires, source du bruit) exclu.
-        self.assertEqual(p["typesConvention"], [143684, 143685, 143686, 143687])
-        self.assertNotIn(143706, p["typesConvention"])
+        # Ces codes décrivent les annonceurs, pas des conventions : entreprise,
+        # cabinet, agence, SSII/ESN et partenaire. Le partenaire est conservé
+        # car il porte aussi des offres Data fraîches.
+        self.assertEqual(p["typesConvention"], [143684, 143685, 143686, 143687, 143706])
         self.assertEqual(p["typesContrat"], [597171])
-        # niveauEtude volontairement absent (mono-valeur, trop restrictif).
-        self.assertNotIn("niveauEtude", p)
+        self.assertEqual(p["niveauEtude"], 20019)  # Bac+5 ; 20020 signifie > Bac+5.
+        self.assertEqual(p["sorts"], [{"type": "DATE", "direction": "DESCENDING"}])
 
 
 class TestMissingCredentials(unittest.TestCase):
@@ -424,10 +556,16 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("Ouvrir GitHub Actions", page)
         self.assertIn("Run workflow", page)
         self.assertIn("Actualiser les offres", page)
-        self.assertIn('onclick="location.reload()"', page)
+        self.assertNotIn("onclick=", page)
+        self.assertIn("refreshBtn').addEventListener('click'", page)
+        self.assertIn("source-chip').forEach", page)
+        self.assertIn("status-chip').forEach", page)
+        self.assertIn("visaFilter').addEventListener('click'", page)
+        self.assertIn("apply-btn').forEach", page)
         # le bouton reset est toujours visible, désactivé par défaut
         self.assertIn("Réinitialiser les filtres", page)
-        self.assertIn('onclick="resetFilters()" disabled', page)
+        self.assertIn('id="resetBtn" class="fchip reset-btn" disabled', page)
+        self.assertIn("resetBtn').addEventListener('click',resetFilters)", page)
         self.assertIn("Bloqué temporairement — HTTP 403", page)
         self.assertIn("Non configuré — identifiants manquants", page)
         # une source jamais appelée n'affiche pas un simple « 0 »
@@ -438,6 +576,13 @@ class TestDashboard(unittest.TestCase):
         newer, _ = offer(title="Stage ETL A", date=TODAY, url="https://e.com/a")
         page = self.render([older, newer])
         self.assertLess(page.index("https://e.com/a"), page.index("https://e.com/b"))
+
+    def test_unknown_date_badge(self):
+        o, reason = offer(date=None)
+        self.assertIsNone(reason)
+        page = self.render([o])
+        self.assertIn("Date de publication inconnue", page)
+        self.assertIn("date inconnue", page)
 
 
 if __name__ == "__main__":
