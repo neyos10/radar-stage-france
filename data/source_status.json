@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-13T14:34:53+00:00",
- "scan_duration_s": 92.6,
+ "generated_at": "2026-07-13T14:48:22+00:00",
+ "scan_duration_s": 168.6,
  "active_domains": [
   "data_ia",
   "dev_web",
@@ -20,15 +20,18 @@
   "mecanique_industriel"
  ],
  "active_regions": [
-  "france"
+  "france",
+  "belgique",
+  "luxembourg",
+  "maroc"
  ],
  "query_count": 82,
- "combination_count": 16,
+ "combination_count": 64,
  "results_wanted": {
-  "linkedin": 9,
-  "indeed": 11,
-  "glassdoor": 6,
-  "google": 11
+  "linkedin": 5,
+  "indeed": 5,
+  "glassdoor": 5,
+  "google": 5
  },
  "sources": [
   {
@@ -36,39 +39,150 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 54,
-   "accepted_count": 8,
-   "rejected_count": 46,
+   "raw_count": 30,
+   "accepted_count": 4,
+   "rejected_count": 26,
    "reject_reasons": {
-    "pas un stage": 37,
-    "aucun domaine": 8,
+    "pas un stage": 25,
     "plus de 7 jours": 1
    },
-   "unknown_date_count": 2,
-   "duration_s": 13.0,
+   "unknown_date_count": 1,
+   "duration_s": 8.7,
    "http_error": "",
    "note": "",
-   "label": "8 offres"
+   "label": "4 offres"
+  },
+  {
+   "source": "LinkedIn",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "empty",
+   "raw_count": 22,
+   "accepted_count": 0,
+   "rejected_count": 22,
+   "reject_reasons": {
+    "pas un stage": 22
+   },
+   "unknown_date_count": 0,
+   "duration_s": 13.9,
+   "http_error": "",
+   "note": "",
+   "label": "0 accepté / 22 reçus"
+  },
+  {
+   "source": "LinkedIn",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "success",
+   "raw_count": 30,
+   "accepted_count": 2,
+   "rejected_count": 28,
+   "reject_reasons": {
+    "pas un stage": 27,
+    "aucun domaine": 1
+   },
+   "unknown_date_count": 0,
+   "duration_s": 10.8,
+   "http_error": "",
+   "note": "",
+   "label": "2 offres"
+  },
+  {
+   "source": "LinkedIn",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "empty",
+   "raw_count": 30,
+   "accepted_count": 0,
+   "rejected_count": 30,
+   "reject_reasons": {
+    "pas un stage": 29,
+    "plus de 7 jours": 1
+   },
+   "unknown_date_count": 0,
+   "duration_s": 11.2,
+   "http_error": "",
+   "note": "",
+   "label": "0 accepté / 30 reçus"
   },
   {
    "source": "Indeed",
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 732,
-   "accepted_count": 82,
-   "rejected_count": 650,
+   "raw_count": 362,
+   "accepted_count": 36,
+   "rejected_count": 326,
    "reject_reasons": {
-    "pas un stage": 505,
-    "aucun domaine": 76,
-    "plus de 7 jours": 22,
-    "doublon": 47
+    "pas un stage": 260,
+    "plus de 7 jours": 16,
+    "doublon": 13,
+    "aucun domaine": 37
    },
    "unknown_date_count": 0,
-   "duration_s": 92.6,
+   "duration_s": 71.3,
    "http_error": "",
    "note": "",
-   "label": "82 offres"
+   "label": "36 offres"
+  },
+  {
+   "source": "Indeed",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "success",
+   "raw_count": 140,
+   "accepted_count": 7,
+   "rejected_count": 133,
+   "reject_reasons": {
+    "pas un stage": 115,
+    "aucun domaine": 15,
+    "doublon": 3
+   },
+   "unknown_date_count": 0,
+   "duration_s": 34.7,
+   "http_error": "",
+   "note": "",
+   "label": "7 offres"
+  },
+  {
+   "source": "Indeed",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "success",
+   "raw_count": 79,
+   "accepted_count": 6,
+   "rejected_count": 73,
+   "reject_reasons": {
+    "pas un stage": 48,
+    "aucun domaine": 13,
+    "plus de 7 jours": 4,
+    "doublon": 8
+   },
+   "unknown_date_count": 0,
+   "duration_s": 26.9,
+   "http_error": "",
+   "note": "",
+   "label": "6 offres"
+  },
+  {
+   "source": "Indeed",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "success",
+   "raw_count": 141,
+   "accepted_count": 21,
+   "rejected_count": 120,
+   "reject_reasons": {
+    "pas un stage": 78,
+    "doublon": 22,
+    "aucun domaine": 19,
+    "plus de 7 jours": 1
+   },
+   "unknown_date_count": 0,
+   "duration_s": 35.6,
+   "http_error": "",
+   "note": "",
+   "label": "21 offres"
   },
   {
    "source": "Glassdoor",
@@ -80,10 +194,55 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 0.7,
+   "duration_s": 1.0,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
+  },
+  {
+   "source": "Glassdoor",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "blocked",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.4,
+   "http_error": "HTTP 403",
+   "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
+   "label": "Bloqué temporairement — HTTP 403"
+  },
+  {
+   "source": "Glassdoor",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "Glassdoor non supporté par JobSpy 1.1.82 pour ce pays",
+   "label": "Non applicable à Luxembourg"
+  },
+  {
+   "source": "Glassdoor",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "Glassdoor non supporté par JobSpy 1.1.82 pour ce pays",
+   "label": "Non applicable à Maroc"
   },
   {
    "source": "Google Jobs",
@@ -95,7 +254,52 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 16.9,
+   "duration_s": 16.2,
+   "http_error": "",
+   "note": "",
+   "label": "Aucune offre reçue"
+  },
+  {
+   "source": "Google Jobs",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "empty",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 15.2,
+   "http_error": "",
+   "note": "",
+   "label": "Aucune offre reçue"
+  },
+  {
+   "source": "Google Jobs",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "empty",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 15.8,
+   "http_error": "",
+   "note": "",
+   "label": "Aucune offre reçue"
+  },
+  {
+   "source": "Google Jobs",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "empty",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 15.3,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -113,10 +317,55 @@
     "aucun domaine": 34
    },
    "unknown_date_count": 0,
-   "duration_s": 84.2,
+   "duration_s": 80.9,
    "http_error": "",
    "note": "budget de 25 lectures de détail épuisé",
    "label": "36 offres"
+  },
+  {
+   "source": "APEC",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "APEC est une source nationale française",
+   "label": "Non applicable à Belgique"
+  },
+  {
+   "source": "APEC",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "APEC est une source nationale française",
+   "label": "Non applicable à Luxembourg"
+  },
+  {
+   "source": "APEC",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "APEC est une source nationale française",
+   "label": "Non applicable à Maroc"
   },
   {
    "source": "Adzuna",
@@ -134,6 +383,51 @@
    "label": "Non configuré — identifiants manquants"
   },
   {
+   "source": "Adzuna",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "connecteur Adzuna actuel limité à l'index France",
+   "label": "Non applicable à Belgique"
+  },
+  {
+   "source": "Adzuna",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "connecteur Adzuna actuel limité à l'index France",
+   "label": "Non applicable à Luxembourg"
+  },
+  {
+   "source": "Adzuna",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "connecteur Adzuna actuel limité à l'index France",
+   "label": "Non applicable à Maroc"
+  },
+  {
    "source": "France Travail",
    "region_id": "france",
    "region_label": "France",
@@ -147,6 +441,51 @@
    "http_error": "",
    "note": "secrets FT_CLIENT_ID / FT_CLIENT_SECRET absents",
    "label": "Non configuré — identifiants manquants"
+  },
+  {
+   "source": "France Travail",
+   "region_id": "belgique",
+   "region_label": "Belgique",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "France Travail est une API nationale française",
+   "label": "Non applicable à Belgique"
+  },
+  {
+   "source": "France Travail",
+   "region_id": "luxembourg",
+   "region_label": "Luxembourg",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "France Travail est une API nationale française",
+   "label": "Non applicable à Luxembourg"
+  },
+  {
+   "source": "France Travail",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "France Travail est une API nationale française",
+   "label": "Non applicable à Maroc"
   }
  ]
 }
