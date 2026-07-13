@@ -1,8 +1,10 @@
 # 🎯 Radar Stage France
 
-Pipeline autonome qui collecte toutes les 30 minutes des offres de stage en
-France, les classe dans un ou plusieurs domaines, détecte les nouveautés,
-envoie une alerte email optionnelle et publie un dashboard sur GitHub Pages.
+Pipeline autonome qui collecte toutes les 30 minutes des offres de stage dans
+les régions activées, les classe dans un ou plusieurs domaines, détecte les
+nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
+GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés ; seule
+la France est active par défaut.
 
 Les sept sources sont LinkedIn, Indeed, Glassdoor et Google Jobs via JobSpy,
 APEC, Adzuna et France Travail. Chaque source est isolée : un blocage 403/429,
@@ -12,9 +14,13 @@ un timeout ou l'absence d'une clé API n'arrête pas les autres connecteurs.
 
 Le code métier n'est pas personnalisé dans `scan.py` :
 
-- `data/domains.json` contient les 16 domaines, leurs requêtes et leurs
-  vocabulaires positifs/négatifs. Seul `data_ia` est actif par défaut ; passer
-  `enabled` à `true` active un autre domaine au prochain scan.
+- `data/domains.json` contient les 16 domaines actifs, leurs requêtes et leurs
+  vocabulaires positifs/négatifs.
+- `data/regions.json` contient les paramètres natifs de localisation. Passer
+  `enabled` à `true` active Belgique, Luxembourg ou Maroc sans modifier le code.
+  Les valeurs `country_indeed` confirmées pour `python-jobspy==1.1.82` sont
+  exactement `France`, `Belgium`, `Luxembourg` et `Morocco` dans la
+  [documentation officielle JobSpy](https://pypi.org/project/python-jobspy/).
 - `data/config.json` contrôle le nom, la tagline, la fenêtre de fraîcheur et le
   badge d'entreprises mises en avant.
 - les requêtes strictement identiques entre domaines actifs sont mutualisées ;
@@ -28,8 +34,10 @@ Le filtre de contrat reste indépendant et exige `stage`, `stagiaire`, `intern`,
 stage.
 
 Le dashboard propose des filtres combinables par statut de candidature,
-source, domaine et entreprise mise en avant. Le statut « postulé » reste dans
-le `localStorage` du navigateur et n'est jamais envoyé à GitHub.
+source, domaine, région et entreprise mise en avant. La région par défaut est
+France. Le groupe Région est masqué lorsqu'une seule région est active et
+réapparaît automatiquement dès la seconde. Le statut « postulé » reste dans le
+`localStorage` du navigateur et n'est jamais envoyé à GitHub.
 
 ## Installation
 
@@ -62,15 +70,33 @@ de déclencher elle-même `workflow_dispatch`.
 - APEC utilise les filtres serveur stage (`typesContrat=597171`) et Bac+5
   (`niveauEtude=20019`), puis un budget borné de lectures de détail.
 - France Travail utilise `natureContrat=FS` et la fenêtre configurée.
+- APEC et France Travail ne sont jamais appelés hors France ; le diagnostic
+  devient alors `not_applicable_region`. JobSpy 1.1.82 ne proposant Glassdoor
+  que pour France et Belgique parmi le catalogue, Luxembourg et Maroc sont
+  également ignorés proprement pour cette source.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
 - LinkedIn est limité à six requêtes distribuées équitablement entre domaines
   actifs afin de garder un temps de scan maîtrisé.
+- le budget est calculé par `domaines actifs × régions actives`. Au-delà de six
+  combinaisons, `results_wanted` est multiplié par `6 / combinaisons`, avec un
+  plancher de cinq résultats. L'estimation affichée utilise `45 s + 35 s ×`
+  le nombre de combinaisons effectives, plafonné à six (maximum indicatif :
+  4 min 15 s).
 - le commit automatisé utilise un rebase et trois tentatives sans force-push.
 
-Pour un benchmark ponctuel sans modifier le catalogue, l'environnement
-`RADAR_DOMAINS=data_ia,dev_web,compta_gestion` surcharge les domaines actifs
+Pour un benchmark ponctuel sans modifier le catalogue, les environnements
+`RADAR_DOMAINS=data_ia,dev_web` et
+`RADAR_REGIONS=france,belgique,luxembourg,maroc` surchargent les sélections
 uniquement pour le processus courant.
+
+Mesures réelles du 13 juillet 2026, sans écriture dans les données :
+
+- référence 16 domaines × France : 121,5 s, 129 offres uniques ; budget
+  appliqué `linkedin=9`, `indeed=11`, `glassdoor=6`, `google=11` ;
+- Data/IA × France/Belgique/Luxembourg/Maroc : 303,7 s, 38 offres uniques
+  (31/2/2/3 par région), sans réduction car quatre combinaisons restent sous
+  le seuil de six.
 
 ## Vérification locale
 
@@ -78,6 +104,8 @@ uniquement pour le processus courant.
 python -m py_compile scan.py
 python -m unittest discover -s tests -v
 ```
+
+La suite contient 70 tests sans accès réseau.
 
 Le pipeline ne se connecte à aucun compte des plateformes d'emploi. Il utilise
 les pages publiques et les API officielles ; il est recommandé de conserver la

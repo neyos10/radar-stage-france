@@ -1,0 +1,38 @@
+{
+  "france": {
+    "label": "France",
+    "linkedin_location": "France",
+    "google_location": "France",
+    "country_indeed": "France",
+    "apec_available": true,
+    "france_travail_available": true,
+    "enabled": true
+  },
+  "belgique": {
+    "label": "Belgique",
+    "linkedin_location": "Belgium",
+    "google_location": "Belgium",
+    "country_indeed": "Belgium",
+    "apec_available": false,
+    "france_travail_available": false,
+    "enabled": false
+  },
+  "luxembourg": {
+    "label": "Luxembourg",
+    "linkedin_location": "Luxembourg",
+    "google_location": "Luxembourg",
+    "country_indeed": "Luxembourg",
+    "apec_available": false,
+    "france_travail_available": false,
+    "enabled": false
+  },
+  "maroc": {
+    "label": "Maroc",
+    "linkedin_location": "Morocco",
+    "google_location": "Morocco",
+    "country_indeed": "Morocco",
+    "apec_available": false,
+    "france_travail_available": false,
+    "enabled": false
+  }
+}

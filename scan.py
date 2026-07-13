@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-Radar Stage France — agrégateur multi-sources et multi-domaines de stages.
+Radar Stage France — agrégateur multi-sources, multi-domaines et multi-régions.
 
 Sources :
   1. LinkedIn (offres publiques, sans compte)   — via JobSpy
-  2. Indeed France                               — via JobSpy
-  3. Glassdoor France                            — via JobSpy
+  2. Indeed (régions configurées)                — via JobSpy
+  3. Glassdoor (pays supportés par JobSpy)       — via JobSpy
   4. Google Jobs (agrège WTTJ, HelloWork…)       — via JobSpy
-  5. APEC (recherche publique de stages)          — sans compte
-  6. Adzuna (agrégateur officiel, API gratuite)  — si secrets fournis
-  7. France Travail (API officielle)             — si secrets fournis
+  5. APEC France (recherche publique de stages)  — sans compte
+  6. Adzuna France (agrégateur officiel)         — si secrets fournis
+  7. France Travail (API officielle française)   — si secrets fournis
 
 Chaque source est optionnelle et tolérante aux pannes : si un site bloque
 (403/429) ou si une clé manque, on continue avec les autres. Un circuit
@@ -53,6 +53,7 @@ import requests
 
 CONFIG_FILE = Path("data/config.json")
 DOMAINS_FILE = Path("data/domains.json")
+REGIONS_FILE = Path("data/regions.json")
 SEEN_FILE = Path("data/seen_offers.json")
 STATUS_FILE = Path("data/source_status.json")
 DOCS_INDEX = Path("docs/index.html")
@@ -96,8 +97,33 @@ def load_config(path: Path = CONFIG_FILE) -> dict:
     return config
 
 
+def load_regions(path: Path = REGIONS_FILE) -> dict:
+    """Catalogue géographique et paramètres natifs de chaque connecteur."""
+    regions = load_json(path)
+    required = {
+        "label", "linkedin_location", "google_location", "country_indeed",
+        "apec_available", "france_travail_available", "enabled",
+    }
+    for region_id, region in regions.items():
+        missing = required - set(region)
+        if missing:
+            raise ValueError(f"Région {region_id}: champs manquants {sorted(missing)}")
+        for field_name in ("label", "linkedin_location", "google_location",
+                           "country_indeed"):
+            if not isinstance(region[field_name], str) or not region[field_name].strip():
+                raise ValueError(f"Région {region_id}: {field_name} invalide")
+        for field_name in ("apec_available", "france_travail_available", "enabled"):
+            if not isinstance(region[field_name], bool):
+                raise ValueError(f"Région {region_id}: {field_name} doit être booléen")
+    if "france" not in regions:
+        raise ValueError("Le catalogue des régions doit contenir 'france'")
+    return regions
+
+
 APP_CONFIG = load_config()
 DOMAINS = load_domains()
+REGIONS = load_regions()
+DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
     "LinkedIn", "Indeed", "Glassdoor", "Google Jobs", "APEC",
@@ -134,6 +160,52 @@ MAX_LINKEDIN_QUERIES = 6      # allocation équitable entre domaines actifs
 #  - glassdoor : souvent bloqué (403), on reste modeste pour ne pas insister.
 #  - google : jobspy plafonne lui-même selon ce que Google renvoie.
 JOBSPY_RESULTS_WANTED = {"linkedin": 25, "indeed": 30, "glassdoor": 15, "google": 30}
+# Dans la table officielle JobSpy 1.1.82, seules France et Belgium portent le
+# marqueur Glassdoor parmi les quatre pays du catalogue. Indeed accepte les
+# quatre valeurs, mais Glassdoor ne doit pas être appelé pour LU/MA.
+GLASSDOOR_SUPPORTED_REGION_COUNTRIES = {"France", "Belgium"}
+
+# Garde-fou combinatoire. Au-delà de six couples domaine × région, le volume
+# demandé à JobSpy est multiplié par 6/Z (Z = nombre de combinaisons), avec
+# un plancher de cinq résultats pour garder chaque recherche utile. L'estimation
+# affichée est volontairement prudente : 45 s fixes + 35 s par combinaison
+# effective, plafonnée à six, soit environ 4 min 15 s pour un gros catalogue.
+SCAN_COMBINATION_BUDGET = 6
+MIN_JOBSPY_RESULTS_WANTED = 5
+SCAN_FIXED_ESTIMATE_S = 45
+SCAN_SECONDS_PER_EFFECTIVE_COMBINATION = 35
+
+
+@dataclass(frozen=True)
+class ScanBudget:
+    domain_count: int
+    region_count: int
+    combination_count: int
+    scale: float
+    results_wanted: dict[str, int]
+    estimated_duration_s: int
+
+    @property
+    def is_high(self) -> bool:
+        return self.combination_count > SCAN_COMBINATION_BUDGET
+
+
+def calculate_scan_budget(domain_count: int, region_count: int) -> ScanBudget:
+    """Calcule un budget déterministe, testable sans aucun appel réseau."""
+    if domain_count <= 0 or region_count <= 0:
+        raise ValueError("Le budget exige au moins un domaine et une région")
+    combinations = domain_count * region_count
+    scale = min(1.0, SCAN_COMBINATION_BUDGET / combinations)
+    wanted = {
+        site: max(MIN_JOBSPY_RESULTS_WANTED, int(round(base * scale)))
+        for site, base in JOBSPY_RESULTS_WANTED.items()
+    }
+    effective_combinations = combinations * scale
+    estimated = int(round(
+        SCAN_FIXED_ESTIMATE_S
+        + SCAN_SECONDS_PER_EFFECTIVE_COMBINATION * effective_combinations
+    ))
+    return ScanBudget(domain_count, region_count, combinations, scale, wanted, estimated)
 
 # Raisons de rejet (diagnostic)
 REASON_NO_TITLE = "titre manquant"
@@ -150,9 +222,12 @@ REASON_DUPLICATE = "doublon"
 class SourceStatus:
     """Diagnostic d'une source pour un run.
 
-    status : success | empty | blocked | error | disabled_missing_credentials
+    status : success | empty | blocked | error | disabled_missing_credentials |
+             not_applicable_region
     """
     source: str
+    region_id: str = DEFAULT_REGION_ID
+    region_label: str = "France"
     status: str = "empty"
     raw_count: int = 0
     accepted_count: int = 0
@@ -169,7 +244,8 @@ class SourceStatus:
         self.reject_reasons[reason] = self.reject_reasons.get(reason, 0) + 1
 
     def finalize(self) -> None:
-        if self.status in ("blocked", "error", "disabled_missing_credentials"):
+        if self.status in ("blocked", "error", "disabled_missing_credentials",
+                           "not_applicable_region"):
             return
         self.status = "success" if self.accepted_count else "empty"
 
@@ -189,6 +265,8 @@ def status_label(st: SourceStatus, final_count: int | None = None) -> str:
     count = st.accepted_count if final_count is None else final_count
     if st.status == "disabled_missing_credentials":
         return "Non configuré — identifiants manquants"
+    if st.status == "not_applicable_region":
+        return f"Non applicable à {st.region_label}"
     if st.status == "blocked":
         return f"Bloqué temporairement — {st.http_error or 'HTTP 403/429'}"
     if st.status == "error":
@@ -206,6 +284,8 @@ def chip_hint(st: SourceStatus, final_count: int) -> str:
         return f"({final_count})"
     if st.status == "disabled_missing_credentials":
         return "non configuré"
+    if st.status == "not_applicable_region":
+        return "non applicable"
     if st.status == "blocked":
         code = st.http_error.replace("HTTP ", "") if st.http_error else "403/429"
         return f"bloqué {code}"
@@ -222,7 +302,7 @@ def register_offer(status: SourceStatus, offers: dict,
     if offer is None:
         status.add_reject(reason)
     elif offer["id"] in offers:
-        merge_offer_domains(offers[offer["id"]], offer)
+        merge_offer_metadata(offers[offer["id"]], offer)
         status.add_reject(REASON_DUPLICATE)
     else:
         offers[offer["id"]] = offer
@@ -254,6 +334,38 @@ def enabled_domain_ids(domains: dict | None = None) -> list[str]:
     if not active:
         raise ValueError("Au moins un domaine doit être actif")
     return active
+
+
+def enabled_region_ids(regions: dict | None = None) -> list[str]:
+    """Régions actives, surchargeables par ``RADAR_REGIONS`` en benchmark."""
+    regions = regions or REGIONS
+    override = os.environ.get("RADAR_REGIONS", "").strip()
+    if override:
+        requested = [value.strip() for value in override.split(",") if value.strip()]
+        unknown = [region_id for region_id in requested if region_id not in regions]
+        if unknown:
+            raise ValueError(f"Régions inconnues dans RADAR_REGIONS: {unknown}")
+        active = list(dict.fromkeys(requested))
+    else:
+        active = [region_id for region_id, region in regions.items() if region["enabled"]]
+    if not active:
+        raise ValueError("Au moins une région doit être active")
+    return active
+
+
+def active_regions(regions: dict | None = None,
+                   active_ids: list[str] | None = None) -> dict:
+    regions = regions or REGIONS
+    active_ids = active_ids or enabled_region_ids(regions)
+    return {region_id: regions[region_id] for region_id in active_ids}
+
+
+def source_status(source: str, region_id: str = DEFAULT_REGION_ID,
+                  regions: dict | None = None, **kwargs) -> SourceStatus:
+    regions = regions or REGIONS
+    region = regions[region_id]
+    return SourceStatus(source=source, region_id=region_id,
+                        region_label=region["label"], **kwargs)
 
 
 def active_domains(domains: dict | None = None,
@@ -352,16 +464,24 @@ def score_offer_domains(title: str, description: str,
     return matched, scores
 
 
-def merge_offer_domains(existing: dict, incoming: dict) -> None:
-    """Fusion multi-label lors d'un doublon intra/inter-source."""
+def merge_offer_metadata(existing: dict, incoming: dict) -> None:
+    """Fusion multi-label et multi-région d'un doublon intra/inter-source."""
     existing["domains"] = list(dict.fromkeys(
         existing.get("domains", []) + incoming.get("domains", [])
+    ))
+    existing["regions"] = list(dict.fromkeys(
+        existing.get("regions", []) + incoming.get("regions", [])
     ))
     merged_scores = dict(existing.get("domain_scores", {}))
     for domain_id, score in incoming.get("domain_scores", {}).items():
         merged_scores[domain_id] = max(score, merged_scores.get(domain_id, score))
     existing["domain_scores"] = merged_scores
     existing["highlighted"] = bool(existing.get("highlighted") or incoming.get("highlighted"))
+
+
+def merge_offer_domains(existing: dict, incoming: dict) -> None:
+    """Alias rétrocompatible pour les intégrations qui appellent ce helper."""
+    merge_offer_metadata(existing, incoming)
 
 def offer_id(url: str, title: str, company: str) -> str:
     base = (url or "") + "|" + (title or "").lower() + "|" + (company or "").lower()
@@ -454,8 +574,13 @@ def _log_old_date_rejection(source: str, title: str, raw_date, parsed: datetime)
 
 def make_offer(title, company, location, url, source, date="",
                confirmed_internship=False, description="", domains: dict | None = None,
-               active_ids: list[str] | None = None) -> tuple[dict | None, str | None]:
+               active_ids: list[str] | None = None,
+               region_id: str = DEFAULT_REGION_ID,
+               regions: dict | None = None) -> tuple[dict | None, str | None]:
     """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
+    regions = regions or REGIONS
+    if region_id not in regions:
+        raise ValueError(f"Région inconnue pour l'offre: {region_id}")
     title = clean_text(title)
     if not title:
         return None, REASON_NO_TITLE
@@ -472,7 +597,7 @@ def make_offer(title, company, location, url, source, date="",
     if not matched_domains:
         return None, REASON_NO_DOMAIN
     company = clean_text(company, "Entreprise non précisée")
-    location = clean_text(location, "France")
+    location = clean_text(location, regions[region_id]["label"])
     url = clean_text(url)
     return {
         "id": offer_id(url, title, company),
@@ -488,6 +613,7 @@ def make_offer(title, company, location, url, source, date="",
         # sources sont déjà bornées nativement à 7 jours via hours_old ou API.
         "sort_date": (published_at or datetime.now(timezone.utc)).isoformat(),
         "domains": matched_domains,
+        "regions": [region_id],
         "domain_scores": domain_scores,
         "highlighted": is_highlighted_company(company),
     }, None
@@ -522,15 +648,31 @@ def human_duration(seconds: float) -> str:
 # SOURCES 1-4 : JobSpy (LinkedIn / Indeed / Glassdoor / Google)
 # ============================================================
 
-def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict], SourceStatus]:
+def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
+                      region_id: str = DEFAULT_REGION_ID,
+                      region_config: dict | None = None,
+                      regions: dict | None = None,
+                      domains: dict | None = None,
+                      active_ids: list[str] | None = None,
+                      results_wanted: int | None = None) -> tuple[list[dict], SourceStatus]:
     """Interroge un seul site JobSpy pour toutes les requêtes.
 
     Chaque site est isolé : une panne Glassdoor n'influence jamais Indeed.
     Un circuit breaker arrête la source après MAX_CONSECUTIVE_BLOCKS
     blocages 403/429 consécutifs (elle sera retentée au prochain cron).
     """
-    status = SourceStatus(source=label)
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status(label, region_id, regions)
     started = time.monotonic()
+    if (site == "glassdoor"
+            and region_config["country_indeed"] not in GLASSDOOR_SUPPORTED_REGION_COUNTRIES):
+        status.status = "not_applicable_region"
+        status.note = "Glassdoor non supporté par JobSpy 1.1.82 pour ce pays"
+        status.duration_s = round(time.monotonic() - started, 1)
+        print(f"[INFO] Glassdoor · {status.region_label} : non applicable à cette région")
+        return [], status
     if scrape_fn is None:
         try:
             from jobspy import scrape_jobs as scrape_fn
@@ -542,7 +684,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    site_queries = source_queries(site)
+    site_queries = source_queries(site, domains, active_ids)
     logger_name = {"linkedin": "LinkedIn", "indeed": "Indeed",
                    "glassdoor": "Glassdoor", "google": "Google"}[site]
 
@@ -563,12 +705,19 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
         # hours_old borne la fraîcheur au plus près de la source. Le filtre
         # titre local reste l'autorité sur le type de contrat, car les sites
         # étiquettent parfois mal leurs offres.
+        if site == "linkedin":
+            native_location = region_config["linkedin_location"]
+        elif site == "google":
+            native_location = region_config["google_location"]
+        else:
+            native_location = region_config["country_indeed"]
         kwargs = dict(
             site_name=[site],
             search_term=query,
-            location="France",
-            results_wanted=JOBSPY_RESULTS_WANTED.get(site, 15),
-            country_indeed="France",
+            location=native_location,
+            results_wanted=(results_wanted if results_wanted is not None
+                            else JOBSPY_RESULTS_WANTED.get(site, 15)),
+            country_indeed=region_config["country_indeed"],
             hours_old=MAX_OFFER_AGE_DAYS * 24,
             verbose=int(os.environ.get("JOBSPY_VERBOSE", "1")),
         )
@@ -580,7 +729,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
             # google_search_term remplace toute la requête côté JobSpy : on
             # évite la redondance « stage … stage » et on garde une syntaxe
             # Google propre (la requête contient déjà « stage »).
-            kwargs["google_search_term"] = f"{query} France"
+            kwargs["google_search_term"] = f"{query} {region_config['google_location']}"
         capture = CaptureHandler()
         jobspy_logger = logging.getLogger(f"JobSpy:{logger_name}")
         jobspy_logger.addHandler(capture)
@@ -640,6 +789,8 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None) -> tuple[list[dict]
                 ", ".join(filter(None, [str(row.get("city") or ""), str(row.get("state") or "")])) or "France",
                 row.get("job_url"), label, row.get("date_posted"),
                 description=clean_text(row.get("description")),
+                domains=domains, active_ids=active_ids,
+                region_id=region_id, regions=regions,
             )
             register_offer(status, offers, offer, reason)
 
@@ -710,12 +861,27 @@ def fetch_apec_detail_description(number: str) -> str:
         return ""
 
 
-def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
+def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
+                   region_config: dict | None = None,
+                   regions: dict | None = None,
+                   domains: dict | None = None,
+                   active_ids: list[str] | None = None) -> tuple[list[dict], SourceStatus]:
     """APEC : scoring titre + texte, avec détails complets bornés."""
-    status = SourceStatus(source="APEC")
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status("APEC", region_id, regions)
     started = time.monotonic()
+    if not region_config["apec_available"]:
+        status.status = "not_applicable_region"
+        status.note = "APEC est une source nationale française"
+        status.duration_s = round(time.monotonic() - started, 1)
+        print(f"[INFO] APEC · {status.region_label} : non applicable à cette région")
+        return [], status
 
-    queries = list(dict.fromkeys(source_keywords(query) for query in active_queries()))
+    queries = list(dict.fromkeys(
+        source_keywords(query) for query in active_queries(domains, active_ids)
+    ))
     raw_by_number: dict[str, dict] = {}
     failed = 0
     for query in queries:
@@ -747,7 +913,9 @@ def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
         args = (r.get("intitule"), r.get("nomCommercial"), r.get("lieuTexte"),
                 url, "APEC", r.get("datePublication"))
         offer, reason = make_offer(*args, confirmed_internship=True,
-                                   description=clean_text(r.get("texteOffre")))
+                                   description=clean_text(r.get("texteOffre")),
+                                   domains=domains, active_ids=active_ids,
+                                   region_id=region_id, regions=regions)
         if offer is None and reason == REASON_NO_DOMAIN and detail_budget > 0:
             # Titre insuffisant et snippet tronqué : lire le texte complet
             # avant de rejeter : un titre générique peut cacher des missions
@@ -756,7 +924,9 @@ def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
             full_text = fetch_apec_detail_description(number)
             if full_text:
                 offer, reason = make_offer(*args, confirmed_internship=True,
-                                           description=full_text)
+                                           description=full_text,
+                                           domains=domains, active_ids=active_ids,
+                                           region_id=region_id, regions=regions)
         register_offer(status, offers, offer, reason)
     if detail_budget == 0:
         status.note = f"budget de {APEC_DETAIL_MAX_CALLS} lectures de détail épuisé"
@@ -773,9 +943,23 @@ def fetch_apec_all() -> tuple[list[dict], SourceStatus]:
 # SOURCE 6 : Adzuna (API officielle gratuite)
 # ============================================================
 
-def fetch_adzuna_all() -> tuple[list[dict], SourceStatus]:
-    status = SourceStatus(source="Adzuna")
+def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
+                     region_config: dict | None = None,
+                     regions: dict | None = None,
+                     domains: dict | None = None,
+                     active_ids: list[str] | None = None) -> tuple[list[dict], SourceStatus]:
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status("Adzuna", region_id, regions)
     started = time.monotonic()
+    # L'adaptateur existant utilise l'index Adzuna /fr. Le catalogue demandé
+    # ne fournit pas d'identifiant Adzuna pour les autres pays : ne jamais
+    # attribuer par erreur une offre française à une autre région.
+    if region_id != DEFAULT_REGION_ID:
+        status.status = "not_applicable_region"
+        status.note = "connecteur Adzuna actuel limité à l'index France"
+        return [], status
     app_id = os.environ.get("ADZUNA_APP_ID")
     app_key = os.environ.get("ADZUNA_APP_KEY")
     if not app_id or not app_key:
@@ -785,7 +969,7 @@ def fetch_adzuna_all() -> tuple[list[dict], SourceStatus]:
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    for query in active_queries():
+    for query in active_queries(domains, active_ids):
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = "circuit breaker : requêtes restantes ignorées"
             break
@@ -795,7 +979,7 @@ def fetch_adzuna_all() -> tuple[list[dict], SourceStatus]:
                 "https://api.adzuna.com/v1/api/jobs/fr/search/1",
                 params={
                     "app_id": app_id, "app_key": app_key,
-                    "what": query, "where": "France",
+                    "what": query, "where": region_config["label"],
                     "results_per_page": 20, "sort_by": "date",
                     "content-type": "application/json",
                 },
@@ -822,6 +1006,8 @@ def fetch_adzuna_all() -> tuple[list[dict], SourceStatus]:
                 (r.get("location") or {}).get("display_name"),
                 r.get("redirect_url"), "Adzuna", (r.get("created") or "")[:10],
                 description=clean_text(r.get("description")),
+                domains=domains, active_ids=active_ids,
+                region_id=region_id, regions=regions,
             )
             register_offer(status, offers, offer, reason)
 
@@ -859,9 +1045,22 @@ def ft_token(client_id: str, client_secret: str) -> str | None:
         return None
 
 
-def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
-    status = SourceStatus(source="France Travail")
+def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
+                             region_config: dict | None = None,
+                             regions: dict | None = None,
+                             domains: dict | None = None,
+                             active_ids: list[str] | None = None) -> tuple[list[dict], SourceStatus]:
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status("France Travail", region_id, regions)
     started = time.monotonic()
+    if not region_config["france_travail_available"]:
+        status.status = "not_applicable_region"
+        status.note = "France Travail est une API nationale française"
+        status.duration_s = round(time.monotonic() - started, 1)
+        print(f"[INFO] France Travail · {status.region_label} : non applicable à cette région")
+        return [], status
     client_id = os.environ.get("FT_CLIENT_ID")
     client_secret = os.environ.get("FT_CLIENT_SECRET")
     if not client_id or not client_secret:
@@ -878,7 +1077,9 @@ def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
 
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
-    queries = list(dict.fromkeys(source_keywords(query) for query in active_queries()))
+    queries = list(dict.fromkeys(
+        source_keywords(query) for query in active_queries(domains, active_ids)
+    ))
     for query in queries:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = "circuit breaker : requêtes restantes ignorées"
@@ -922,6 +1123,8 @@ def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
                 url, "France Travail", (r.get("dateCreation") or "")[:10],
                 confirmed_internship=True,
                 description=clean_text(r.get("description")),
+                domains=domains, active_ids=active_ids,
+                region_id=region_id, regions=regions,
             )
             register_offer(status, offers, offer, reason)
 
@@ -940,54 +1143,108 @@ def fetch_france_travail_all() -> tuple[list[dict], SourceStatus]:
 # ORCHESTRATION
 # ============================================================
 
-def run_all_sources() -> tuple[dict[str, dict], list[SourceStatus]]:
-    """Lance toutes les sources avec un parallélisme borné.
+def run_source_across_regions(source_name: str, fetcher,
+                              selected_regions: dict[str, dict]) -> tuple[list[dict], list[SourceStatus]]:
+    """Exécute une source séquentiellement par région et fusionne ses doublons."""
+    offers: dict[str, dict] = {}
+    statuses: list[SourceStatus] = []
+    for region_id, region_config in selected_regions.items():
+        try:
+            regional_offers, status = fetcher(region_id, region_config)
+        except Exception as exc:  # ceinture : une région n'arrête pas les autres
+            print(f"[ERREUR] {source_name} · {region_config['label']} : {exc}",
+                  file=sys.stderr)
+            status = source_status(
+                source_name, region_id, selected_regions, status="error",
+                http_error=str(exc)[:200],
+            )
+            regional_offers = []
+        for offer in regional_offers:
+            if offer["id"] in offers:
+                merge_offer_metadata(offers[offer["id"]], offer)
+            else:
+                offers[offer["id"]] = offer
+        statuses.append(status)
+    return list(offers.values()), statuses
 
-    Chaque source reste séquentielle en interne (pas de martèlement d'un
-    même site) ; une source en panne n'arrête jamais les autres.
+
+def run_all_sources(domains: dict | None = None,
+                    active_domain_ids: list[str] | None = None,
+                    regions: dict | None = None,
+                    active_region_ids: list[str] | None = None,
+                    budget: ScanBudget | None = None) -> tuple[dict[str, dict], list[SourceStatus]]:
+    """Croise les régions actives avec les requêtes des domaines actifs.
+
+    Les régions restent séquentielles au sein d'une même source pour ne pas
+    marteler le site ; les sources indépendantes s'exécutent en parallèle.
     """
-    tasks = {
-        "LinkedIn": lambda: fetch_jobspy_site("linkedin", "LinkedIn"),
-        "Indeed": lambda: fetch_jobspy_site("indeed", "Indeed"),
-        "Glassdoor": lambda: fetch_jobspy_site("glassdoor", "Glassdoor"),
-        "Google Jobs": lambda: fetch_jobspy_site("google", "Google Jobs"),
-        "APEC": fetch_apec_all,
-        "Adzuna": fetch_adzuna_all,
-        "France Travail": fetch_france_travail_all,
+    domains = domains or DOMAINS
+    regions = regions or REGIONS
+    active_domain_ids = active_domain_ids or enabled_domain_ids(domains)
+    active_region_ids = active_region_ids or enabled_region_ids(regions)
+    selected_regions = active_regions(regions, active_region_ids)
+    budget = budget or calculate_scan_budget(
+        len(active_domain_ids), len(active_region_ids)
+    )
+
+    def jobspy_fetcher(site: str, label: str):
+        return lambda region_id, region_config: fetch_jobspy_site(
+            site, label, region_id=region_id, region_config=region_config,
+            regions=regions, domains=domains, active_ids=active_domain_ids,
+            results_wanted=budget.results_wanted[site],
+        )
+
+    fetchers = {
+        "LinkedIn": jobspy_fetcher("linkedin", "LinkedIn"),
+        "Indeed": jobspy_fetcher("indeed", "Indeed"),
+        "Glassdoor": jobspy_fetcher("glassdoor", "Glassdoor"),
+        "Google Jobs": jobspy_fetcher("google", "Google Jobs"),
+        "APEC": lambda region_id, region_config: fetch_apec_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "Adzuna": lambda region_id, region_config: fetch_adzuna_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "France Travail": lambda region_id, region_config: fetch_france_travail_all(
+            region_id, region_config, regions, domains, active_domain_ids),
     }
-    results: dict[str, tuple[list[dict], SourceStatus]] = {}
+    results: dict[str, tuple[list[dict], list[SourceStatus]]] = {}
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_SOURCES) as pool:
-        futures = {name: pool.submit(fn) for name, fn in tasks.items()}
+        futures = {
+            name: pool.submit(run_source_across_regions, name, fetcher,
+                              selected_regions)
+            for name, fetcher in fetchers.items()
+        }
         for name, future in futures.items():
-            try:
-                results[name] = future.result()
-            except Exception as exc:  # ceinture : jamais d'arrêt global
-                print(f"[ERREUR] {name} : {exc}", file=sys.stderr)
-                results[name] = ([], SourceStatus(source=name, status="error",
-                                                  http_error=str(exc)[:200]))
+            results[name] = future.result()
 
     all_offers: dict[str, dict] = {}
     statuses: list[SourceStatus] = []
     for name in SOURCE_NAMES:
-        offers, st = results[name]
-        for o in offers:
-            if o["id"] in all_offers:
-                merge_offer_domains(all_offers[o["id"]], o)
+        offers, source_statuses = results[name]
+        for offer in offers:
+            if offer["id"] in all_offers:
+                merge_offer_metadata(all_offers[offer["id"]], offer)
             else:
-                all_offers[o["id"]] = o
-        statuses.append(st)
+                all_offers[offer["id"]] = offer
+        statuses.extend(source_statuses)
     return all_offers, statuses
 
 
 def save_status_json(statuses: list[SourceStatus], scan_duration_s: float,
-                     active_ids: list[str] | None = None) -> None:
+                     active_ids: list[str] | None = None,
+                     active_region_ids: list[str] | None = None,
+                     budget: ScanBudget | None = None) -> None:
     active_ids = active_ids or enabled_domain_ids()
+    active_region_ids = active_region_ids or enabled_region_ids()
+    budget = budget or calculate_scan_budget(len(active_ids), len(active_region_ids))
     STATUS_FILE.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "scan_duration_s": round(scan_duration_s, 1),
         "active_domains": active_ids,
+        "active_regions": active_region_ids,
         "query_count": len(active_queries(active_ids=active_ids)),
+        "combination_count": budget.combination_count,
+        "results_wanted": budget.results_wanted,
         "sources": [dict(asdict(st), label=status_label(st)) for st in statuses],
     }
     STATUS_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=1),
@@ -1010,9 +1267,11 @@ def save_seen(ids: set) -> None:
 
 
 def send_email(new_offers: list[dict], dashboard_url: str,
-               domains: dict | None = None, config: dict | None = None) -> None:
+               domains: dict | None = None, config: dict | None = None,
+               regions: dict | None = None) -> None:
     domains = domains or DOMAINS
     config = config or APP_CONFIG
+    regions = regions or REGIONS
     smtp_user = os.environ["SMTP_USER"]
     smtp_pass = os.environ["SMTP_PASS"]
     to_addr = os.environ.get("ALERT_TO", smtp_user)
@@ -1033,8 +1292,11 @@ def send_email(new_offers: list[dict], dashboard_url: str,
                      if o.get("highlighted") else "")
             labels = [domains[domain_id]["label"] for domain_id in o.get("domains", [])
                       if domain_id in domains]
-            domain_line = (f"<br><small>{html.escape(' · '.join(labels))}</small>"
-                           if labels else "")
+            region_labels = [regions[region_id]["label"] for region_id in o.get("regions", [])
+                             if region_id in regions]
+            metadata_labels = labels + region_labels
+            domain_line = (f"<br><small>{html.escape(' · '.join(metadata_labels))}</small>"
+                           if metadata_labels else "")
             url = safe_url(o["url"])
             title = html.escape(o["title"])
             link = f"<a href='{url}'><b>{title}</b></a>" if url else f"<b>{title}</b>"
@@ -1065,6 +1327,7 @@ STATUS_CSS = {
     "blocked": "bad",
     "error": "bad",
     "disabled_missing_credentials": "muted",
+    "not_applicable_region": "muted",
 }
 
 
@@ -1073,23 +1336,34 @@ def render_dashboard(offers: list[dict], new_ids: set,
                      scan_duration_s: float = 0.0,
                      domains: dict | None = None,
                      config: dict | None = None,
-                     active_ids: list[str] | None = None) -> None:
+                     active_ids: list[str] | None = None,
+                     regions: dict | None = None,
+                     active_region_ids: list[str] | None = None) -> None:
     domains = domains or DOMAINS
     config = config or APP_CONFIG
+    regions = regions or REGIONS
     active_ids = active_ids or enabled_domain_ids(domains)
+    active_region_ids = active_region_ids or enabled_region_ids(regions)
     days_window = int(config["days_window"])
     DOCS_INDEX.parent.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
-    statuses = statuses or [SourceStatus(source=name) for name in SOURCE_NAMES]
+    statuses = statuses or [source_status(name, active_region_ids[0], regions)
+                            for name in SOURCE_NAMES]
     active_labels = [domains[domain_id]["label"] for domain_id in active_ids]
+    active_region_labels = [regions[region_id]["label"]
+                            for region_id in active_region_ids]
 
     final_counts = {name: 0 for name in SOURCE_NAMES}
     domain_counts = {domain_id: 0 for domain_id in active_ids}
+    region_counts = {region_id: 0 for region_id in active_region_ids}
     for o in offers:
         final_counts[o["source"]] = final_counts.get(o["source"], 0) + 1
         for domain_id in o.get("domains", []):
             if domain_id in domain_counts:
                 domain_counts[domain_id] += 1
+        for region_id in o.get("regions", []):
+            if region_id in region_counts:
+                region_counts[region_id] += 1
 
     cards = []
     for o in sort_offers(offers)[:150]:
@@ -1112,13 +1386,20 @@ def render_dashboard(offers: list[dict], new_ids: set,
             f'<span class="tag domain">{html.escape(domains[domain_id]["label"])}</span>'
             for domain_id in offer_domains
         )
+        offer_regions = [region_id for region_id in o.get("regions", [])
+                         if region_id in active_region_ids]
+        region_attr = html.escape(",".join(offer_regions), quote=True)
+        region_tags = "".join(
+            f'<span class="tag region">{html.escape(regions[region_id]["label"])}</span>'
+            for region_id in offer_regions
+        )
         highlighted = bool(o.get("highlighted"))
         url = safe_url(o["url"])
         link = (f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
                 if url else title)
         cards.append(f"""
       <article class="job {'is-new' if is_new else ''}" data-id="{oid}"
-               data-src="{source}" data-domains="{domain_attr}"
+               data-src="{source}" data-domains="{domain_attr}" data-regions="{region_attr}"
                data-highlight="{'1' if highlighted else '0'}">
         <div class="job-top"><div>
           <h3>{link}</h3>
@@ -1129,23 +1410,31 @@ def render_dashboard(offers: list[dict], new_ids: set,
         <div class="tags" translate="no">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
           {f'<span class="tag highlight">✓ {html.escape(config["highlight_label"])}</span>' if highlighted else ''}
           {'<span class="tag date-unknown">date inconnue</span>' if not date_known else ''}
-          {domain_tags}<span class="tag src">{source}</span></div>
+          {domain_tags}{region_tags}<span class="tag src">{source}</span></div>
       </article>""")
 
+    multiple_regions = len(active_region_ids) > 1
     status_rows = "".join(
         f'<span class="src-stat st-{STATUS_CSS.get(st.status, "warn")}">'
-        f'<b>{html.escape(st.source)}</b> · '
-        f'{html.escape(status_label(st, final_counts.get(st.source, 0)))}</span>'
+        f'<b>{html.escape(st.source)}'
+        f'{" · " + html.escape(st.region_label) if multiple_regions else ""}</b> · '
+        f'{html.escape(status_label(st, st.accepted_count))}</span>'
         for st in statuses
     )
 
     source_chips = []
-    for st in statuses:
-        name = html.escape(st.source, quote=True)
-        count = final_counts.get(st.source, 0)
-        hint = html.escape(chip_hint(st, count))
+    status_priority = {"blocked": 0, "error": 1, "disabled_missing_credentials": 2,
+                       "empty": 3, "not_applicable_region": 4, "success": 5}
+    for source_name in SOURCE_NAMES:
+        related = [st for st in statuses if st.source == source_name]
+        if not related:
+            related = [source_status(source_name, active_region_ids[0], regions)]
+        representative = min(related, key=lambda st: status_priority.get(st.status, 9))
+        name = html.escape(source_name, quote=True)
+        count = final_counts.get(source_name, 0)
+        hint = html.escape(chip_hint(representative, count))
         note_attr = ("" if count else
-                     f' data-note="{html.escape(status_label(st, count), quote=True)}"')
+                     f' data-note="{html.escape(status_label(representative, count), quote=True)}"')
         source_chips.append(
             f'<button class="fchip source-chip" data-src="{name}"{note_attr} '
             f'>{name} <b>{hint}</b></button>'
@@ -1158,6 +1447,15 @@ def render_dashboard(offers: list[dict], new_ids: set,
         for domain_id in active_ids
     )
     single_domain_class = " single-domain" if len(active_ids) == 1 else ""
+    default_region_id = (DEFAULT_REGION_ID if DEFAULT_REGION_ID in active_region_ids
+                         else active_region_ids[0])
+    region_chips = "".join(
+        f'<button class="fchip region-chip{(" on" if region_id == default_region_id else "")}" '
+        f'data-region="{html.escape(region_id, quote=True)}">'
+        f'{html.escape(regions[region_id]["label"])} <b>({region_counts[region_id]})</b></button>'
+        for region_id in active_region_ids
+    )
+    single_region_class = " single-region" if len(active_region_ids) == 1 else ""
     app_name = html.escape(str(config["app_name"]))
     tagline = html.escape(str(config["tagline"]))
     highlight_label = html.escape(str(config["highlight_label"]))
@@ -1166,6 +1464,12 @@ def render_dashboard(offers: list[dict], new_ids: set,
         {domain_id: domains[domain_id]["label"] for domain_id in active_ids},
         ensure_ascii=False,
     )
+    region_labels_js = json.dumps(
+        {region_id: regions[region_id]["label"] for region_id in active_region_ids},
+        ensure_ascii=False,
+    )
+    active_region_ids_js = json.dumps(active_region_ids, ensure_ascii=False)
+    default_region_id_js = json.dumps(default_region_id, ensure_ascii=False)
 
     html_page = f"""<!DOCTYPE html>
 <html lang="fr" translate="no"><head><meta charset="UTF-8">
@@ -1193,6 +1497,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .src-stat.st-muted{{opacity:.6}}
 .filter-panel{{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}}
 .filter-group{{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}}
+.filter-group.single-region{{display:none}}
 .filter-label{{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}}
 .fchip{{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}}
 .fchip.on{{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}}
@@ -1215,6 +1520,7 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 .tag.highlight{{background:rgba(62,213,152,.15);color:var(--ok)}}
 .tag.date-unknown{{background:rgba(245,184,65,.14);color:var(--saf)}}
 .tag.domain{{background:rgba(107,91,255,.15);color:#CFC8FF}}
+.tag.region{{background:rgba(245,184,65,.13);color:var(--saf)}}
 .tag.src{{background:#212D44;color:var(--encre2);font-weight:500}}
 .empty{{color:var(--encre2);text-align:center;padding:30px 10px}}
 .storage-note{{color:#66748A;font-size:11px;text-align:center;margin-top:18px}}
@@ -1228,7 +1534,8 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
 <button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
 <a id="actionsLink" class="scan-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
 <p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
-<p class="domain-note">Domaines analysés : {html.escape(' · '.join(active_labels))}</p>
+<p class="domain-note">Domaines analysés : {html.escape(' · '.join(active_labels))}<br>
+Régions analysées : {html.escape(' · '.join(active_region_labels))}</p>
 <div class="sources-panel" translate="no">{status_rows}</div>
 <div class="filter-panel">
   <div class="filter-group"><span class="filter-label">Statut</span>
@@ -1241,6 +1548,9 @@ h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
   </div>
   <div class="filter-group{single_domain_class}" translate="no"><span class="filter-label">Domaine</span>
     <button class="fchip domain-chip on" data-domain="*">Tous</button>{domain_chips}
+  </div>
+  <div class="filter-group{single_region_class}" translate="no"><span class="filter-label">Région</span>
+    <button class="fchip region-chip" data-region="*">Toutes</button>{region_chips}
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="highlightFilter" class="fchip" aria-pressed="false">✓ {highlight_label}</button>
@@ -1259,7 +1569,11 @@ const STORAGE_KEY='radar-stage-france-applied-v1';
 const STATUS_LABELS={{todo:'À postuler',applied:'Déjà postulé',all:'Tous'}};
 const HIGHLIGHT_LABEL={highlight_label_js};
 const DOMAIN_LABELS={domain_labels_js};
-let activeSource='*', activeDomain='*', activeStatus='todo', highlightOnly=false;
+const REGION_LABELS={region_labels_js};
+const ACTIVE_REGION_IDS={active_region_ids_js};
+const DEFAULT_REGION={default_region_id_js};
+let activeSource='*', activeDomain='*', activeRegion=DEFAULT_REGION,
+    activeStatus='todo', highlightOnly=false;
 function readApplied(){{
   try{{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}}
   catch(_error){{return new Set();}}
@@ -1291,14 +1605,22 @@ function setDomain(btn,domain){{
   document.querySelectorAll('.domain-chip').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');refresh();
 }}
+function setRegion(btn,region){{
+  activeRegion=region;
+  document.querySelectorAll('.region-chip').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');refresh();
+}}
 function toggleHighlight(btn){{
   highlightOnly=!highlightOnly;btn.classList.toggle('on',highlightOnly);
   btn.setAttribute('aria-pressed',highlightOnly?'true':'false');refresh();
 }}
 function resetFilters(){{
-  activeSource='*';activeDomain='*';activeStatus='todo';highlightOnly=false;
+  activeSource='*';activeDomain='*';activeRegion=DEFAULT_REGION;
+  activeStatus='todo';highlightOnly=false;
   document.querySelectorAll('.source-chip').forEach(b=>b.classList.toggle('on',b.dataset.src==='*'));
   document.querySelectorAll('.domain-chip').forEach(b=>b.classList.toggle('on',b.dataset.domain==='*'));
+  document.querySelectorAll('.region-chip').forEach(b=>
+    b.classList.toggle('on',b.dataset.region===DEFAULT_REGION));
   document.querySelectorAll('.status-chip').forEach(b=>b.classList.toggle('on',b.dataset.status==='todo'));
   const highlight=document.getElementById('highlightFilter');
   highlight.classList.remove('on');highlight.setAttribute('aria-pressed','false');
@@ -1307,10 +1629,12 @@ function resetFilters(){{
 function updateActiveFilters(){{
   const parts=['Statut : '+STATUS_LABELS[activeStatus],
                'Source : '+(activeSource==='*'?'Toutes':activeSource),
-               'Domaine : '+(activeDomain==='*'?'Tous':(DOMAIN_LABELS[activeDomain]||activeDomain))];
+               'Domaine : '+(activeDomain==='*'?'Tous':(DOMAIN_LABELS[activeDomain]||activeDomain)),
+               'Région : '+(activeRegion==='*'?'Toutes':(REGION_LABELS[activeRegion]||activeRegion))];
   if(highlightOnly)parts.push(HIGHLIGHT_LABEL+' uniquement');
   document.getElementById('activeFilters').textContent=parts.join(' · ');
-  const isDefault=activeStatus==='todo'&&activeSource==='*'&&activeDomain==='*'&&!highlightOnly;
+  const isDefault=activeStatus==='todo'&&activeSource==='*'&&activeDomain==='*'&&
+                  activeRegion===DEFAULT_REGION&&!highlightOnly;
   document.getElementById('resetBtn').disabled=isDefault;
 }}
 function toggleApplied(id){{
@@ -1328,9 +1652,11 @@ function refresh(){{
     const sourceOk=activeSource==='*'||job.dataset.src===activeSource;
     const domains=(job.dataset.domains||'').split(',').filter(Boolean);
     const domainOk=activeDomain==='*'||domains.includes(activeDomain);
+    const regions=(job.dataset.regions||'').split(',').filter(Boolean);
+    const regionOk=activeRegion==='*'||regions.includes(activeRegion);
     const statusOk=activeStatus==='all'||(activeStatus==='applied'?isApplied:!isApplied);
     const highlightOk=!highlightOnly||job.dataset.highlight==='1';
-    const show=sourceOk&&domainOk&&statusOk&&highlightOk;
+    const show=sourceOk&&domainOk&&regionOk&&statusOk&&highlightOk;
     job.style.display=show?'':'none';if(show)visible++;
   }});
   document.getElementById('todoCount').textContent='('+todo+')';
@@ -1354,6 +1680,8 @@ document.querySelectorAll('.status-chip').forEach(btn=>
   btn.addEventListener('click',()=>setStatus(btn,btn.dataset.status)));
 document.querySelectorAll('.domain-chip').forEach(btn=>
   btn.addEventListener('click',()=>setDomain(btn,btn.dataset.domain)));
+document.querySelectorAll('.region-chip').forEach(btn=>
+  btn.addEventListener('click',()=>setRegion(btn,btn.dataset.region)));
 document.getElementById('highlightFilter').addEventListener('click',event=>toggleHighlight(event.currentTarget));
 document.getElementById('resetBtn').addEventListener('click',resetFilters);
 document.querySelectorAll('.apply-btn').forEach(btn=>
@@ -1374,12 +1702,29 @@ refresh();
 
 def main() -> None:
     active_ids = enabled_domain_ids()
+    active_region_ids = enabled_region_ids()
+    budget = calculate_scan_budget(len(active_ids), len(active_region_ids))
     print("Domaines actifs : " + ", ".join(
         f"{domain_id} ({DOMAINS[domain_id]['label']})" for domain_id in active_ids
     ))
+    print("Régions actives : " + ", ".join(
+        f"{region_id} ({REGIONS[region_id]['label']})" for region_id in active_region_ids
+    ))
     print(f"Requêtes actives dédupliquées : {len(active_queries(active_ids=active_ids))}")
+    if budget.is_high:
+        print(
+            f"[WARN] budget de scan élevé : {budget.domain_count} domaines × "
+            f"{budget.region_count} régions = {budget.combination_count} combinaisons — "
+            f"durée estimée {human_duration(budget.estimated_duration_s)} ; "
+            f"results_wanted ajusté à {budget.results_wanted}",
+            file=sys.stderr,
+        )
     started = time.monotonic()
-    all_offers, statuses = run_all_sources()
+    all_offers, statuses = run_all_sources(
+        active_domain_ids=active_ids,
+        active_region_ids=active_region_ids,
+        budget=budget,
+    )
     scan_duration = time.monotonic() - started
 
     seen = load_seen()
@@ -1394,6 +1739,10 @@ def main() -> None:
         domain_id: sum(domain_id in o.get("domains", []) for o in all_offers.values())
         for domain_id in active_ids
     }
+    region_counts = {
+        region_id: sum(region_id in o.get("regions", []) for o in all_offers.values())
+        for region_id in active_region_ids
+    }
 
     print(f"\nTotal : {len(all_offers)} offres · Nouvelles : {len(new_offers)} · "
           f"Durée : {human_duration(scan_duration)}")
@@ -1403,20 +1752,22 @@ def main() -> None:
         ) or "—"
         extra = f" · {st.note}" if st.note else ""
         http = f" · {st.http_error}" if st.http_error else ""
-        print(f"  - {st.source}: {status_label(st, final_counts[st.source])} "
+        print(f"  - {st.source} · {st.region_label}: {status_label(st, st.accepted_count)} "
               f"[{st.status}] bruts={st.raw_count} acceptés={st.accepted_count} "
               f"rejetés={st.rejected_count} dates_inconnues={st.unknown_date_count} "
               f"durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
     for domain_id, count in domain_counts.items():
         print(f"  - domaine {domain_id}: {count} offres")
+    for region_id, count in region_counts.items():
+        print(f"  - région {region_id}: {count} offres")
 
-    save_status_json(statuses, scan_duration, active_ids)
+    save_status_json(statuses, scan_duration, active_ids, active_region_ids, budget)
 
     dashboard_url = os.environ.get("DASHBOARD_URL", "")
     if new_offers:
         if os.environ.get("SMTP_USER") and os.environ.get("SMTP_PASS"):
             try:
-                send_email(new_offers, dashboard_url, DOMAINS, APP_CONFIG)
+                send_email(new_offers, dashboard_url, DOMAINS, APP_CONFIG, REGIONS)
                 print("Email envoyé.")
             except Exception as e:
                 print(f"[ERREUR] email : {e}", file=sys.stderr)
@@ -1424,7 +1775,7 @@ def main() -> None:
             print("[INFO] SMTP non configuré (SMTP_USER/SMTP_PASS absents) — pas d'email envoyé.")
 
     render_dashboard(list(all_offers.values()), new_ids, statuses, scan_duration,
-                     DOMAINS, APP_CONFIG, active_ids)
+                     DOMAINS, APP_CONFIG, active_ids, REGIONS, active_region_ids)
     save_seen(seen | set(all_offers.keys()))
 
 
