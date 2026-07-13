@@ -3,8 +3,8 @@
 Pipeline autonome qui collecte toutes les 30 minutes des offres de stage dans
 les régions activées, les classe dans un ou plusieurs domaines, détecte les
 nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
-GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés ; seule
-la France est active par défaut.
+GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
+actifs par défaut.
 
 Les sept sources sont LinkedIn, Indeed, Glassdoor et Google Jobs via JobSpy,
 APEC, Adzuna et France Travail. Chaque source est isolée : un blocage 403/429,
@@ -16,8 +16,9 @@ Le code métier n'est pas personnalisé dans `scan.py` :
 
 - `data/domains.json` contient les 16 domaines actifs, leurs requêtes et leurs
   vocabulaires positifs/négatifs.
-- `data/regions.json` contient les paramètres natifs de localisation. Passer
-  `enabled` à `true` active Belgique, Luxembourg ou Maroc sans modifier le code.
+- `data/regions.json` contient les paramètres natifs de localisation. Les quatre
+  régions sont actives ; passer `enabled` à `false` permet d'en retirer une sans
+  modifier le code.
   Les valeurs `country_indeed` confirmées pour `python-jobspy==1.1.82` sont
   exactement `France`, `Belgium`, `Luxembourg` et `Morocco` dans la
   [documentation officielle JobSpy](https://pypi.org/project/python-jobspy/).

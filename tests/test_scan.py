@@ -129,7 +129,10 @@ class TestRegions(unittest.TestCase):
              "luxembourg": "Luxembourg", "maroc": "Morocco"},
         )
         with mock.patch.dict(os.environ, {"RADAR_REGIONS": ""}):
-            self.assertEqual(scan.enabled_region_ids(), ["france"])
+            self.assertEqual(
+                scan.enabled_region_ids(),
+                ["france", "belgique", "luxembourg", "maroc"],
+            )
 
     def test_belgium_jobspy_offer_is_tagged_belgium(self):
         import pandas as pd
@@ -861,7 +864,7 @@ class TestDashboard(unittest.TestCase):
 
     def test_single_region_filter_is_hidden_but_france_stays_active(self):
         candidate, _ = offer()
-        page = self.render([candidate])
+        page = self.render([candidate], active_region_ids=["france"])
         self.assertIn('class="filter-group single-region"', page)
         self.assertIn('const DEFAULT_REGION="france";', page)
         self.assertNotIn('data-region="belgique"', page)
