@@ -106,7 +106,7 @@
       "business development",
       "comptabilité"
     ],
-    "enabled": false
+    "enabled": true
   },
   "devops_cloud": {
     "label": "DevOps / Cloud",
@@ -150,7 +150,7 @@
       "génie civil",
       "commercial cloud"
     ],
-    "enabled": false
+    "enabled": true
   },
   "cybersecurite": {
     "label": "Cybersécurité",
@@ -194,7 +194,7 @@
       "sécurité incendie",
       "gardiennage"
     ],
-    "enabled": false
+    "enabled": true
   },
   "reseaux_systemes": {
     "label": "Réseaux / Systèmes",
@@ -236,7 +236,7 @@
       "commerce télécom",
       "audit financier"
     ],
-    "enabled": false
+    "enabled": true
   },
   "product_management": {
     "label": "Product Management",
@@ -277,7 +277,7 @@
       "production industrielle",
       "achats"
     ],
-    "enabled": false
+    "enabled": true
   },
   "compta_gestion": {
     "label": "Comptabilité / Contrôle de gestion",
@@ -318,7 +318,7 @@
       "commercial",
       "développeur web"
     ],
-    "enabled": false
+    "enabled": true
   },
   "finance": {
     "label": "Finance / Marchés",
@@ -361,7 +361,7 @@
       "recouvrement",
       "facturation"
     ],
-    "enabled": false
+    "enabled": true
   },
   "audit": {
     "label": "Audit",
@@ -401,7 +401,7 @@
       "marketing",
       "développeur web"
     ],
-    "enabled": false
+    "enabled": true
   },
   "supply_chain": {
     "label": "Supply Chain / Logistique / Achats",
@@ -441,7 +441,7 @@
       "marketing",
       "juridique"
     ],
-    "enabled": false
+    "enabled": true
   },
   "commerce_bizdev": {
     "label": "Commerce / Business Development",
@@ -482,7 +482,7 @@
       "comptabilité",
       "juridique"
     ],
-    "enabled": false
+    "enabled": true
   },
   "rh": {
     "label": "Ressources Humaines",
@@ -523,7 +523,7 @@
       "customer success",
       "marketing produit"
     ],
-    "enabled": false
+    "enabled": true
   },
   "juridique": {
     "label": "Juridique / Droit des affaires",
@@ -563,7 +563,7 @@
       "développeur web",
       "marketing"
     ],
-    "enabled": false
+    "enabled": true
   },
   "electronique_embarque": {
     "label": "Électronique / Systèmes embarqués",
@@ -606,7 +606,7 @@
       "marketing digital",
       "réseaux sociaux"
     ],
-    "enabled": false
+    "enabled": true
   },
   "genie_civil_btp": {
     "label": "Génie civil / BTP",
@@ -647,7 +647,7 @@
       "finance",
       "comptabilité"
     ],
-    "enabled": false
+    "enabled": true
   },
   "mecanique_industriel": {
     "label": "Mécanique / Industriel",
@@ -691,6 +691,6 @@
       "juridique",
       "ressources humaines"
     ],
-    "enabled": false
+    "enabled": true
   }
 }

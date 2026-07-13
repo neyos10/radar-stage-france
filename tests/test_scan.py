@@ -41,9 +41,9 @@ class TestCleanText(unittest.TestCase):
 
 
 class TestDomainCatalogAndScoring(unittest.TestCase):
-    def test_catalog_has_sixteen_domains_and_one_enabled(self):
+    def test_catalog_has_sixteen_enabled_domains(self):
         self.assertEqual(len(scan.DOMAINS), 16)
-        self.assertEqual(scan.enabled_domain_ids(), ["data_ia"])
+        self.assertEqual(scan.enabled_domain_ids(), list(scan.DOMAINS))
         for domain in scan.DOMAINS.values():
             self.assertGreaterEqual(len(domain["queries"]), 4)
             self.assertLessEqual(len(domain["queries"]), 6)
@@ -200,15 +200,14 @@ class TestMakeOffer(unittest.TestCase):
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
-    def test_generic_description_does_not_rescue(self):
-        # « RH » sans contexte data dans le titre : exclusion forte immédiate.
+    def test_generic_rh_offer_matches_rh_domain(self):
         o, reason = offer(
             title="Stagiaire RH généraliste F/H", source="APEC",
             confirmed_internship=True,
             description="Gestion administrative du personnel, paie et recrutement.",
         )
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
+        self.assertIsNone(reason)
+        self.assertIn("rh", o["domains"])
 
     def test_description_can_confirm_data_profile(self):
         o, reason = offer(
@@ -225,8 +224,8 @@ class TestMakeOffer(unittest.TestCase):
 
 
 class TestDomainTargetingStrict(unittest.TestCase):
-    """Bug 1 : les 4 offres hors-sujet constatées sur le dashboard doivent
-    être rejetées ; les vraies offres data doivent toujours passer."""
+    """Les offres doivent être rattachées à un domaine actif explicite et les
+    titres génériques sans signal métier doivent rester rejetés."""
 
     def test_gestion_projet_qualite_rejected(self):
         o, reason = offer(
@@ -237,24 +236,23 @@ class TestDomainTargetingStrict(unittest.TestCase):
         self.assertIsNone(o)
         self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
-    def test_auditeur_junior_rejected(self):
-        # Même une mention Power BI en description ne repêche pas un audit.
+    def test_auditeur_junior_matches_audit_domain(self):
         o, reason = offer(
             title="Auditeur junior F/H", company="Proaxian",
             source="APEC", confirmed_internship=True,
             description="Missions d'audit avec restitution sous Power BI.",
         )
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
+        self.assertIsNone(reason)
+        self.assertIn("audit", o["domains"])
 
-    def test_finance_controle_gestion_rejected(self):
+    def test_finance_controle_gestion_matches_business_domain(self):
         o, reason = offer(
             title="Stagiaire Finance et Contrôle de Gestion H/F",
             company="SONEMA", source="Indeed",
             description="Tableaux de bord Power BI, analyses budgétaires.",
         )
-        self.assertIsNone(o)
-        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
+        self.assertIsNone(reason)
+        self.assertIn("compta_gestion", o["domains"])
 
     def test_business_data_analyst_crm_rejected(self):
         # Cas limite tranché selon la consigne : CRM est un domaine
@@ -289,9 +287,10 @@ class TestDomainTargetingStrict(unittest.TestCase):
             description="Missions : Data Analytics, dashboards Power BI.",
         )
         self.assertIsNone(reason)
-        # « finance » exclu même combiné à un mot positif du titre.
+        # La finance est désormais un domaine actif à part entière.
         o, reason = offer(title="Stage analyste financier Power BI")
-        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
+        self.assertIsNone(reason)
+        self.assertIn("finance", o["domains"])
         # « juridique / droit » exclu (bruit APEC constaté).
         o, reason = offer(title="Stagiaire en droit du numérique",
                           confirmed_internship=True)
@@ -324,7 +323,6 @@ class TestDomainTargetingStrict(unittest.TestCase):
             "Chargée Relations Écoles & Universités - Stage",
             "Junior Business Analyst - Stage (H/F/N)",
             "Internship - Développement de Carrières & Projets Alumni",
-            "Stagiaire Cybersécurité DevSecops",
             "Consultant Digital Engineering - Stage",
         ]:
             o, reason = offer(
@@ -333,6 +331,13 @@ class TestDomainTargetingStrict(unittest.TestCase):
             )
             self.assertIsNone(o, title)
             self.assertEqual(reason, scan.REASON_NO_DOMAIN, title)
+
+        o, reason = offer(
+            title="Stagiaire Cybersécurité DevSecops",
+            description="Analyse des risques et sécurité des pipelines CI/CD.",
+        )
+        self.assertIsNone(reason)
+        self.assertIn("cybersecurite", o["domains"])
 
     def test_business_analyst_neighbor_remains_rejected(self):
         candidate, reason = offer(
