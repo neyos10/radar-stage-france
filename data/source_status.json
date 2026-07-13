@@ -1,25 +1,25 @@
 {
- "generated_at": "2026-07-13T08:03:23+00:00",
- "scan_duration_s": 82.3,
+ "generated_at": "2026-07-13T08:09:29+00:00",
+ "scan_duration_s": 79.5,
  "sources": [
   {
    "source": "LinkedIn",
    "status": "success",
-   "raw_count": 110,
-   "accepted_count": 17,
-   "rejected_count": 93,
+   "raw_count": 112,
+   "accepted_count": 16,
+   "rejected_count": 96,
    "reject_reasons": {
-    "métier hors périmètre (audit/compta/RH/finance/…)": 7,
-    "pas un stage": 66,
-    "hors ciblage CV": 9,
-    "plus de 7 jours": 2,
-    "doublon": 9
+    "pas un stage": 74,
+    "métier hors périmètre (audit/compta/RH/finance/…)": 6,
+    "hors ciblage CV": 7,
+    "doublon": 8,
+    "plus de 7 jours": 1
    },
    "unknown_date_count": 1,
-   "duration_s": 82.2,
+   "duration_s": 79.5,
    "http_error": "",
    "note": "",
-   "label": "17 offres"
+   "label": "16 offres"
   },
   {
    "source": "Indeed",
@@ -35,23 +35,23 @@
     "doublon": 8
    },
    "unknown_date_count": 0,
-   "duration_s": 11.5,
+   "duration_s": 6.0,
    "http_error": "",
    "note": "",
    "label": "8 offres"
   },
   {
    "source": "Glassdoor",
-   "status": "error",
+   "status": "blocked",
    "raw_count": 0,
    "accepted_count": 0,
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 11.2,
-   "http_error": "Glassdoor: Error encountered in API response",
-   "note": "",
-   "label": "Erreur — Glassdoor: Error encountered in API response"
+   "duration_s": 0.7,
+   "http_error": "HTTP 403",
+   "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
+   "label": "Bloqué temporairement — HTTP 403"
   },
   {
    "source": "Google Jobs",
@@ -61,7 +61,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 6.4,
+   "duration_s": 1.9,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -78,7 +78,7 @@
     "plus de 7 jours": 20
    },
    "unknown_date_count": 0,
-   "duration_s": 4.6,
+   "duration_s": 9.7,
    "http_error": "",
    "note": "",
    "label": "4 offres"
