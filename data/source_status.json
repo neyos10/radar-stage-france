@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-14T16:26:46+00:00",
- "scan_duration_s": 149.1,
+ "generated_at": "2026-07-14T17:45:17+00:00",
+ "scan_duration_s": 164.0,
  "active_domains": [
   "data_ia",
   "dev_web",
@@ -40,31 +40,31 @@
    "region_label": "France",
    "status": "success",
    "raw_count": 30,
-   "accepted_count": 3,
-   "rejected_count": 27,
+   "accepted_count": 2,
+   "rejected_count": 28,
    "reject_reasons": {
-    "pas un stage": 27
+    "pas un stage": 28
    },
    "unknown_date_count": 1,
-   "duration_s": 9.1,
+   "duration_s": 8.7,
    "http_error": "",
    "note": "",
-   "label": "3 offres"
+   "label": "2 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "belgique",
    "region_label": "Belgique",
    "status": "success",
-   "raw_count": 21,
+   "raw_count": 25,
    "accepted_count": 1,
-   "rejected_count": 20,
+   "rejected_count": 24,
    "reject_reasons": {
-    "pas un stage": 17,
-    "aucun domaine": 3
+    "pas un stage": 22,
+    "aucun domaine": 2
    },
    "unknown_date_count": 0,
-   "duration_s": 11.7,
+   "duration_s": 21.0,
    "http_error": "",
    "note": "",
    "label": "1 offre"
@@ -73,35 +73,35 @@
    "source": "LinkedIn",
    "region_id": "luxembourg",
    "region_label": "Luxembourg",
-   "status": "empty",
-   "raw_count": 20,
-   "accepted_count": 0,
-   "rejected_count": 20,
+   "status": "success",
+   "raw_count": 27,
+   "accepted_count": 1,
+   "rejected_count": 26,
    "reject_reasons": {
-    "pas un stage": 20
+    "pas un stage": 26
    },
    "unknown_date_count": 0,
-   "duration_s": 7.3,
+   "duration_s": 17.9,
    "http_error": "",
    "note": "",
-   "label": "0 accepté / 20 reçus"
+   "label": "1 offre"
   },
   {
    "source": "LinkedIn",
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "empty",
-   "raw_count": 16,
+   "raw_count": 22,
    "accepted_count": 0,
-   "rejected_count": 16,
+   "rejected_count": 22,
    "reject_reasons": {
-    "pas un stage": 16
+    "pas un stage": 22
    },
    "unknown_date_count": 0,
-   "duration_s": 18.0,
+   "duration_s": 13.2,
    "http_error": "",
    "note": "",
-   "label": "0 accepté / 16 reçus"
+   "label": "0 accepté / 22 reçus"
   },
   {
    "source": "Indeed",
@@ -109,19 +109,19 @@
    "region_label": "France",
    "status": "success",
    "raw_count": 361,
-   "accepted_count": 46,
-   "rejected_count": 315,
+   "accepted_count": 44,
+   "rejected_count": 317,
    "reject_reasons": {
-    "pas un stage": 220,
-    "aucun domaine": 50,
+    "pas un stage": 222,
+    "aucun domaine": 52,
     "plus de 7 jours": 17,
-    "doublon": 28
+    "doublon": 26
    },
    "unknown_date_count": 0,
-   "duration_s": 75.2,
+   "duration_s": 75.0,
    "http_error": "",
    "note": "",
-   "label": "46 offres"
+   "label": "44 offres"
   },
   {
    "source": "Indeed",
@@ -133,12 +133,12 @@
    "rejected_count": 130,
    "reject_reasons": {
     "pas un stage": 113,
-    "aucun domaine": 12,
+    "aucun domaine": 13,
     "doublon": 3,
-    "plus de 7 jours": 2
+    "plus de 7 jours": 1
    },
    "unknown_date_count": 0,
-   "duration_s": 25.1,
+   "duration_s": 29.0,
    "http_error": "",
    "note": "",
    "label": "5 offres"
@@ -148,17 +148,17 @@
    "region_id": "luxembourg",
    "region_label": "Luxembourg",
    "status": "success",
-   "raw_count": 75,
+   "raw_count": 73,
    "accepted_count": 5,
-   "rejected_count": 70,
+   "rejected_count": 68,
    "reject_reasons": {
-    "pas un stage": 49,
+    "pas un stage": 47,
     "aucun domaine": 13,
     "plus de 7 jours": 2,
     "doublon": 6
    },
    "unknown_date_count": 0,
-   "duration_s": 23.2,
+   "duration_s": 26.3,
    "http_error": "",
    "note": "",
    "label": "5 offres"
@@ -168,19 +168,19 @@
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "success",
-   "raw_count": 143,
-   "accepted_count": 21,
-   "rejected_count": 122,
+   "raw_count": 139,
+   "accepted_count": 20,
+   "rejected_count": 119,
    "reject_reasons": {
     "pas un stage": 79,
-    "doublon": 23,
+    "doublon": 20,
     "aucun domaine": 20
    },
    "unknown_date_count": 0,
-   "duration_s": 25.6,
+   "duration_s": 33.7,
    "http_error": "",
    "note": "",
-   "label": "21 offres"
+   "label": "20 offres"
   },
   {
    "source": "Glassdoor",
@@ -192,7 +192,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 1.0,
+   "duration_s": 0.8,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
@@ -252,7 +252,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 18.3,
+   "duration_s": 12.8,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -267,7 +267,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 20.8,
+   "duration_s": 11.9,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -282,7 +282,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 18.0,
+   "duration_s": 14.6,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -297,7 +297,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 20.7,
+   "duration_s": 13.0,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -315,7 +315,7 @@
     "aucun domaine": 30
    },
    "unknown_date_count": 0,
-   "duration_s": 76.4,
+   "duration_s": 77.4,
    "http_error": "",
    "note": "budget de 25 lectures de détail épuisé",
    "label": "27 offres"
