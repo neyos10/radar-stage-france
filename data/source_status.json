@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-14T21:08:35+00:00",
- "scan_duration_s": 149.0,
+ "generated_at": "2026-07-14T22:34:23+00:00",
+ "scan_duration_s": 134.7,
  "active_domains": [
   "data_ia",
   "dev_web",
@@ -40,32 +40,32 @@
    "region_label": "France",
    "status": "success",
    "raw_count": 30,
-   "accepted_count": 2,
-   "rejected_count": 28,
+   "accepted_count": 5,
+   "rejected_count": 25,
    "reject_reasons": {
-    "pas un stage": 27,
-    "aucun domaine": 1
+    "pas un stage": 22,
+    "aucun domaine": 3
    },
    "unknown_date_count": 1,
    "duration_s": 8.1,
    "http_error": "",
    "note": "",
-   "label": "2 offres"
+   "label": "5 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "belgique",
    "region_label": "Belgique",
    "status": "success",
-   "raw_count": 26,
+   "raw_count": 25,
    "accepted_count": 1,
-   "rejected_count": 25,
+   "rejected_count": 24,
    "reject_reasons": {
-    "pas un stage": 22,
+    "pas un stage": 21,
     "aucun domaine": 3
    },
    "unknown_date_count": 0,
-   "duration_s": 11.8,
+   "duration_s": 18.3,
    "http_error": "",
    "note": "",
    "label": "1 offre"
@@ -82,7 +82,7 @@
     "pas un stage": 25
    },
    "unknown_date_count": 0,
-   "duration_s": 7.0,
+   "duration_s": 10.8,
    "http_error": "",
    "note": "",
    "label": "0 accepté / 25 reçus"
@@ -92,34 +92,34 @@
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "empty",
-   "raw_count": 20,
+   "raw_count": 17,
    "accepted_count": 0,
-   "rejected_count": 20,
+   "rejected_count": 17,
    "reject_reasons": {
-    "pas un stage": 20
+    "pas un stage": 17
    },
    "unknown_date_count": 0,
-   "duration_s": 10.3,
+   "duration_s": 13.1,
    "http_error": "",
    "note": "",
-   "label": "0 accepté / 20 reçus"
+   "label": "0 accepté / 17 reçus"
   },
   {
    "source": "Indeed",
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 359,
+   "raw_count": 358,
    "accepted_count": 49,
-   "rejected_count": 310,
+   "rejected_count": 309,
    "reject_reasons": {
-    "pas un stage": 204,
+    "pas un stage": 203,
     "aucun domaine": 53,
     "plus de 7 jours": 15,
     "doublon": 38
    },
    "unknown_date_count": 0,
-   "duration_s": 63.9,
+   "duration_s": 75.3,
    "http_error": "",
    "note": "",
    "label": "49 offres"
@@ -139,7 +139,7 @@
     "plus de 7 jours": 1
    },
    "unknown_date_count": 0,
-   "duration_s": 30.0,
+   "duration_s": 20.3,
    "http_error": "",
    "note": "",
    "label": "5 offres"
@@ -159,7 +159,7 @@
     "doublon": 9
    },
    "unknown_date_count": 0,
-   "duration_s": 26.5,
+   "duration_s": 17.4,
    "http_error": "",
    "note": "",
    "label": "7 offres"
@@ -169,16 +169,16 @@
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "success",
-   "raw_count": 153,
+   "raw_count": 155,
    "accepted_count": 21,
-   "rejected_count": 132,
+   "rejected_count": 134,
    "reject_reasons": {
-    "pas un stage": 91,
+    "pas un stage": 93,
     "doublon": 21,
     "aucun domaine": 20
    },
    "unknown_date_count": 0,
-   "duration_s": 28.6,
+   "duration_s": 21.7,
    "http_error": "",
    "note": "",
    "label": "21 offres"
@@ -208,7 +208,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 0.4,
+   "duration_s": 0.2,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées après 2 blocages consécutifs",
    "label": "Bloqué temporairement — HTTP 403"
@@ -253,7 +253,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 10.9,
+   "duration_s": 12.7,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -268,7 +268,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 11.3,
+   "duration_s": 12.5,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -283,7 +283,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 12.4,
+   "duration_s": 14.1,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -298,7 +298,7 @@
    "rejected_count": 0,
    "reject_reasons": {},
    "unknown_date_count": 0,
-   "duration_s": 11.2,
+   "duration_s": 17.3,
    "http_error": "",
    "note": "",
    "label": "Aucune offre reçue"
@@ -316,7 +316,7 @@
     "aucun domaine": 30
    },
    "unknown_date_count": 0,
-   "duration_s": 77.6,
+   "duration_s": 66.6,
    "http_error": "",
    "note": "budget de 25 lectures de détail épuisé",
    "label": "27 offres"
