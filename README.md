@@ -34,11 +34,13 @@ Le filtre de contrat reste indépendant et exige `stage`, `stagiaire`, `intern`,
 `internship`, `PFA` ou `PFE` dans le titre, sauf quand l'API certifie déjà le
 stage.
 
-Le dashboard propose des filtres combinables par statut de candidature,
-source, domaine, région et entreprise mise en avant. La région par défaut est
-France. Le groupe Région est masqué lorsqu'une seule région est active et
-réapparaît automatiquement dès la seconde. Le statut « postulé » reste dans le
-`localStorage` du navigateur et n'est jamais envoyé à GitHub.
+Le dashboard responsive propose une vue synthétique du dernier scan, la santé
+des connecteurs, une recherche par poste/entreprise/ville et des filtres
+combinables par statut de candidature, source, domaine, région et entreprise
+mise en avant. La région par défaut est France. Le groupe Région est masqué
+lorsqu'une seule région est active et réapparaît automatiquement dès la
+seconde. Le statut « postulé » reste dans le `localStorage` du navigateur et
+n'est jamais envoyé à GitHub.
 
 ## Installation
 
@@ -58,10 +60,27 @@ réapparaît automatiquement dès la seconde. Le statut « postulé » reste dan
 Sans identifiants optionnels, leur source apparaît « non configurée » et le
 reste du scan continue normalement.
 
-Pour le premier lancement : Actions → **Radar Stage France** → **Run workflow**.
-Le bouton « Actualiser » du dashboard recharge le dernier résultat publié ;
-une page GitHub Pages statique ne possède volontairement aucun jeton permettant
-de déclencher elle-même `workflow_dispatch`.
+### Lancement direct depuis le dashboard
+
+Le bouton **Lancer un scan** déclenche `scan.yml`, suit son exécution puis
+recharge automatiquement les nouvelles offres, sans ouvrir l'interface GitHub
+Actions. Lors de la première utilisation seulement :
+
+1. cliquer sur le lien de création proposé dans la fenêtre du dashboard ;
+2. limiter le fine-grained personal access token au dépôt
+   `neyos10/radar-stage-france` ;
+3. vérifier la permission **Actions: Read and write**, puis coller le token.
+
+GitHub Pages étant un site statique public, ce consentement côté navigateur est
+nécessaire pour authentifier l'appel à l'API. Le token reste exclusivement dans
+le `sessionStorage` de l'onglet, peut être oublié à tout moment et n'est jamais
+écrit dans le dépôt, le HTML ou les logs. GitHub recommande de limiter les
+fine-grained tokens au dépôt et aux permissions strictement nécessaires :
+[gestion des tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) et
+[API workflow dispatch](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event).
+
+Le bouton **Actualiser les offres** recharge uniquement le dernier dashboard
+déjà publié.
 
 ## Fraîcheur et robustesse
 
@@ -106,7 +125,7 @@ python -m py_compile scan.py
 python -m unittest discover -s tests -v
 ```
 
-La suite contient 70 tests sans accès réseau.
+La suite contient plus de 70 tests sans accès réseau.
 
 Le pipeline ne se connecte à aucun compte des plateformes d'emploi. Il utilise
 les pages publiques et les API officielles ; il est recommandé de conserver la
