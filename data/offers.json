@@ -37,7 +37,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "0b057fda26378088": {
@@ -78,7 +78,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false,
   "freshness_verified_at": "2026-07-15T17:21:06.780673+00:00"
  },
@@ -121,7 +121,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "0dccaacab386f45c": {
@@ -162,7 +162,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "0f1b500e6dc1f0d8": {
@@ -175,8 +175,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T17:38:00.739222+00:00",
-  "freshness_verified_at": "2026-07-15T17:38:00.739222+00:00",
+  "sort_date": "2026-07-15T21:19:21.854618+00:00",
+  "freshness_verified_at": "2026-07-15T21:19:21.854618+00:00",
   "domains": [
    "data_ia"
   ],
@@ -203,9 +203,9 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "127b2a0bb19205e8": {
   "id": "127b2a0bb19205e8",
@@ -218,7 +218,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:48.741205+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:36.372609+00:00",
   "domains": [
    "rh"
   ],
@@ -245,8 +245,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "12e6011034a1e1ef": {
@@ -286,10 +286,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:35.023485+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:20.688139+00:00"
  },
  "133ff5345eb0d4c8": {
   "id": "133ff5345eb0d4c8",
@@ -328,8 +328,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
   "freshness_verified_at": ""
  },
@@ -344,7 +344,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:33.593467+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:20.958644+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -371,8 +371,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "1479fb897406b3ed": {
@@ -385,8 +385,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:52.867335+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:52.867335+00:00",
+  "sort_date": "2026-07-15T21:06:18.232337+00:00",
+  "freshness_verified_at": "2026-07-15T21:06:18.232337+00:00",
   "domains": [
    "product_management"
   ],
@@ -413,8 +413,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "14be6bf357913559": {
@@ -427,8 +427,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T17:29:30.074990+00:00",
-  "freshness_verified_at": "2026-07-15T17:29:30.074990+00:00",
+  "sort_date": "2026-07-15T21:12:10.385536+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:10.385536+00:00",
   "domains": [
    "finance"
   ],
@@ -455,9 +455,9 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "14cb7f8bae25bf65": {
   "id": "14cb7f8bae25bf65",
@@ -470,7 +470,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:33.622043+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:19.244165+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -497,8 +497,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "14ef112393123745": {
@@ -539,7 +539,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "14f4517f540fcbda": {
@@ -579,10 +579,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:57.883244+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:44.862888+00:00"
  },
  "150bcd59f14aac90": {
   "id": "150bcd59f14aac90",
@@ -622,7 +622,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "188d8825f3f29730": {
@@ -636,7 +636,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:45.895556+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:30.831224+00:00",
   "domains": [
    "rh"
   ],
@@ -663,8 +663,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "18c161739e4377ab": {
@@ -705,7 +705,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "18ed6ca360e3e8db": {
@@ -719,7 +719,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:57.517946+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:41.906558+00:00",
   "domains": [
    "rh",
    "juridique"
@@ -747,8 +747,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "19b26eb92323ab7f": {
@@ -788,10 +788,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:05.664012+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:52.714821+00:00"
  },
  "19d5dc4f2ce03f66": {
   "id": "19d5dc4f2ce03f66",
@@ -831,7 +831,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "1a08e445cabe8127": {
@@ -873,7 +873,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "1cd8f4fdb4075cc6": {
@@ -886,8 +886,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:24:27.909718+00:00",
-  "freshness_verified_at": "2026-07-15T19:24:27.909718+00:00",
+  "sort_date": "2026-07-15T21:10:09.190009+00:00",
+  "freshness_verified_at": "2026-07-15T21:10:09.190009+00:00",
   "domains": [
    "dev_web"
   ],
@@ -914,8 +914,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "1cdddef584e121e3": {
@@ -957,8 +957,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "1d948397363ba6e1": {
   "id": "1d948397363ba6e1",
@@ -970,8 +970,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:26:00.235230+00:00",
-  "freshness_verified_at": "2026-07-15T19:26:00.235230+00:00",
+  "sort_date": "2026-07-15T21:07:03.859396+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:03.859396+00:00",
   "domains": [
    "compta_gestion"
   ],
@@ -998,8 +998,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "1e7b2c4f13a14266": {
@@ -1012,8 +1012,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:32:35.317924+00:00",
-  "freshness_verified_at": "2026-07-15T19:32:35.317924+00:00",
+  "sort_date": "2026-07-15T21:08:30.714900+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.714900+00:00",
   "domains": [
    "juridique"
   ],
@@ -1040,8 +1040,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "1ed9466fa12648cb": {
@@ -1082,7 +1082,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "1f75b3d6e425ae47": {
@@ -1123,7 +1123,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "1fc39f87e0786533": {
@@ -1164,7 +1164,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "22bd28eaf885116e": {
@@ -1204,10 +1204,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:51.181972+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:36.504400+00:00"
  },
  "240944f0be059a90": {
   "id": "240944f0be059a90",
@@ -1247,7 +1247,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "2412a96171f5ba04": {
@@ -1288,10 +1288,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:17.521714+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:04.371477+00:00"
  },
  "25644e6b356028b0": {
   "id": "25644e6b356028b0",
@@ -1331,7 +1331,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "26845a2b498606f6": {
@@ -1345,7 +1345,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:32.242995+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:19.785041+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1372,8 +1372,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "269e9a9cf5af4daf": {
@@ -1386,8 +1386,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.195691+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.195691+00:00",
+  "sort_date": "2026-07-15T21:08:30.707846+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.707846+00:00",
   "domains": [
    "juridique"
   ],
@@ -1414,8 +1414,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "271aaa1c174c0647": {
@@ -1428,8 +1428,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:00.531351+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:00.531351+00:00",
+  "sort_date": "2026-07-15T21:24:29.542082+00:00",
+  "freshness_verified_at": "2026-07-15T21:24:29.542082+00:00",
   "domains": [
    "mecanique_industriel"
   ],
@@ -1444,7 +1444,7 @@
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
-   "finance": 1,
+   "finance": 0,
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
@@ -1452,12 +1452,12 @@
    "juridique": 0,
    "electronique_embarque": 0,
    "genie_civil_btp": 0,
-   "mecanique_industriel": 4
+   "mecanique_industriel": 3
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "274c6bcd65c9417c": {
@@ -1470,8 +1470,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:56.358341+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:56.358341+00:00",
+  "sort_date": "2026-07-15T21:07:20.988808+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:20.988808+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -1498,8 +1498,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "28cd5e9090e53ffc": {
@@ -1541,8 +1541,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "2a6e78d2c343feac": {
   "id": "2a6e78d2c343feac",
@@ -1554,8 +1554,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T20:00:07.119521+00:00",
-  "freshness_verified_at": "2026-07-15T20:00:07.119521+00:00",
+  "sort_date": "2026-07-15T21:48:32.675898+00:00",
+  "freshness_verified_at": "2026-07-15T21:48:32.675898+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -1582,8 +1582,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "2a95b7d5d7ca4360": {
@@ -1623,10 +1623,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:08.097960+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:54.889799+00:00"
  },
  "2aa5595cd7bad41d": {
   "id": "2aa5595cd7bad41d",
@@ -1665,10 +1665,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:32.403424+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:19.951548+00:00"
  },
  "2b6f43259d2a4138": {
   "id": "2b6f43259d2a4138",
@@ -1707,10 +1707,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:46.915453+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:34.529799+00:00"
  },
  "2ea537488412f21b": {
   "id": "2ea537488412f21b",
@@ -1750,7 +1750,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "2f4b7c21042d02b2": {
@@ -1792,8 +1792,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "3049055fc591e68c": {
   "id": "3049055fc591e68c",
@@ -1833,7 +1833,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "309f3367f6c2c551": {
@@ -1847,7 +1847,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:39.761622+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:27.472694+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -1874,8 +1874,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "30c4943d021cf477": {
@@ -1888,8 +1888,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:21:56.589742+00:00",
-  "freshness_verified_at": "2026-07-15T19:21:56.589742+00:00",
+  "sort_date": "2026-07-15T21:17:44.170369+00:00",
+  "freshness_verified_at": "2026-07-15T21:17:44.170369+00:00",
   "domains": [
    "rh",
    "juridique"
@@ -1917,8 +1917,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "316302026a0763ac": {
@@ -1959,7 +1959,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "332aa5cde94d51d8": {
@@ -2000,7 +2000,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "347e361f9b1df7ec": {
@@ -2013,8 +2013,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:56.342149+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:56.342149+00:00",
+  "sort_date": "2026-07-15T21:07:20.975184+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:20.975184+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -2041,8 +2041,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "367568d0febc0faa": {
@@ -2083,7 +2083,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "39d3b76687b1ffa2": {
@@ -2096,8 +2096,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:50:31.322950+00:00",
-  "freshness_verified_at": "2026-07-15T19:50:31.322950+00:00",
+  "sort_date": "2026-07-15T21:38:38.082115+00:00",
+  "freshness_verified_at": "2026-07-15T21:38:38.082115+00:00",
   "domains": [
    "devops_cloud"
   ],
@@ -2124,8 +2124,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "3a516578a1f55234": {
@@ -2166,7 +2166,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "3b9fc1e797862569": {
@@ -2208,8 +2208,50 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "3cdeb3af09045fd6": {
+  "id": "3cdeb3af09045fd6",
+  "title": "Stagiaire - Juriste Généraliste - Manufactures de Mode (H/F/X)",
+  "company": "CHANEL",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=3619434d2f5a0266",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:42.980382+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -7,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -1,
+   "compta_gestion": -1,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -2,
+   "commerce_bizdev": -1,
+   "rh": -1,
+   "juridique": 7,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -2
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "3ce6e22870348602": {
   "id": "3ce6e22870348602",
@@ -2221,8 +2263,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:34:16.924807+00:00",
-  "freshness_verified_at": "2026-07-15T19:34:16.924807+00:00",
+  "sort_date": "2026-07-15T21:22:21.038784+00:00",
+  "freshness_verified_at": "2026-07-15T21:22:21.038784+00:00",
   "domains": [
    "product_management"
   ],
@@ -2249,8 +2291,50 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "3d94b818511c467d": {
+  "id": "3d94b818511c467d",
+  "title": "Chargé de projet informatique - Stage H/F",
+  "company": "Dynergie",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438086309",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:05:31.008324+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:31.008324+00:00",
+  "domains": [
+   "devops_cloud"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -2,
+   "dev_web": 0,
+   "devops_cloud": 2,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": -1,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 1,
+   "juridique": -1,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 1,
+   "mecanique_industriel": 1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "3ffa7d13e1e6a7d0": {
@@ -2263,8 +2347,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:21:56.561693+00:00",
-  "freshness_verified_at": "2026-07-15T19:21:56.561693+00:00",
+  "sort_date": "2026-07-15T21:08:09.830854+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:09.830854+00:00",
   "domains": [
    "rh"
   ],
@@ -2291,8 +2375,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "4248d92c6d98d6ff": {
@@ -2305,8 +2389,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:26:00.253359+00:00",
-  "freshness_verified_at": "2026-07-15T19:26:00.253359+00:00",
+  "sort_date": "2026-07-15T21:07:03.866565+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:03.866565+00:00",
   "domains": [
    "finance"
   ],
@@ -2333,8 +2417,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "4396e25234815597": {
@@ -2375,7 +2459,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "44a17a6a7e7089e9": {
@@ -2388,8 +2472,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:18:33.217919+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:33.217919+00:00",
+  "sort_date": "2026-07-15T21:05:00.198525+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:00.198525+00:00",
   "domains": [
    "dev_web",
    "devops_cloud"
@@ -2417,8 +2501,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "45788059079d722b": {
@@ -2460,7 +2544,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "47e9cd5dbe5866f6": {
@@ -2473,8 +2557,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:33:44.527368+00:00",
-  "freshness_verified_at": "2026-07-15T19:33:44.527368+00:00",
+  "sort_date": "2026-07-15T21:21:45.272473+00:00",
+  "freshness_verified_at": "2026-07-15T21:21:45.272473+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -2501,8 +2585,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "4879002bb5ec57fd": {
@@ -2515,8 +2599,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:26:32.464341+00:00",
-  "freshness_verified_at": "2026-07-15T19:26:32.464341+00:00",
+  "sort_date": "2026-07-15T21:14:36.108345+00:00",
+  "freshness_verified_at": "2026-07-15T21:14:36.108345+00:00",
   "domains": [
    "mecanique_industriel"
   ],
@@ -2543,8 +2627,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "497873b4cfaa2f30": {
@@ -2585,7 +2669,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false,
   "freshness_verified_at": "2026-07-15T17:21:43.072631+00:00"
  },
@@ -2627,7 +2711,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "4a6349491c1e8764": {
@@ -2668,8 +2752,50 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "4aa282317881a3d6": {
+  "id": "4aa282317881a3d6",
+  "title": "STAGE Ressources Humaines et juridique Chez Pappers - Paris",
+  "company": "Pappers",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440273251",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:20:31.497191+00:00",
+  "freshness_verified_at": "2026-07-15T21:20:31.497191+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -4,
+   "commerce_bizdev": -4,
+   "rh": 3,
+   "juridique": -1,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -8
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "4b4144bcf5c793c6": {
   "id": "4b4144bcf5c793c6",
@@ -2681,10 +2807,11 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:24:27.886206+00:00",
-  "freshness_verified_at": "2026-07-15T19:24:27.886206+00:00",
+  "sort_date": "2026-07-15T21:05:30.289798+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:30.289798+00:00",
   "domains": [
-   "data_ia"
+   "data_ia",
+   "devops_cloud"
   ],
   "regions": [
    "france"
@@ -2692,7 +2819,7 @@
   "domain_scores": {
    "data_ia": 3,
    "dev_web": 0,
-   "devops_cloud": 0,
+   "devops_cloud": 2,
    "cybersecurite": 0,
    "reseaux_systemes": 0,
    "product_management": 0,
@@ -2701,16 +2828,16 @@
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
-   "rh": 0,
+   "rh": 1,
    "juridique": 0,
    "electronique_embarque": 0,
-   "genie_civil_btp": 0,
-   "mecanique_industriel": 0
+   "genie_civil_btp": 1,
+   "mecanique_industriel": 1
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "4d3daa8d647537e0": {
@@ -2752,7 +2879,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "4f97895c4d9281a4": {
@@ -2793,7 +2920,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "4fbe0faf4cdf9f6b": {
@@ -2834,7 +2961,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "511423e4bdeaee2a": {
@@ -2876,7 +3003,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "51849a5ca7ad0eec": {
@@ -2917,7 +3044,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "51d64003640048d5": {
@@ -2930,8 +3057,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:32:35.321426+00:00",
-  "freshness_verified_at": "2026-07-15T19:32:35.321426+00:00",
+  "sort_date": "2026-07-15T21:08:30.718359+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.718359+00:00",
   "domains": [
    "juridique"
   ],
@@ -2958,8 +3085,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "51da2f281c3dbf75": {
@@ -2973,7 +3100,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:36.146625+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:21.738120+00:00",
   "domains": [
    "genie_civil_btp"
   ],
@@ -3000,8 +3127,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "5204536782ec28b1": {
@@ -3014,8 +3141,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:26:00.231618+00:00",
-  "freshness_verified_at": "2026-07-15T19:26:00.231618+00:00",
+  "sort_date": "2026-07-15T21:07:03.863278+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:03.863278+00:00",
   "domains": [
    "compta_gestion"
   ],
@@ -3042,8 +3169,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "5226b2dd5f8d23cc": {
@@ -3056,8 +3183,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T14:57:14.056826+00:00",
-  "freshness_verified_at": "2026-07-15T14:57:14.056826+00:00",
+  "sort_date": "2026-07-15T21:07:44.879584+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:44.879584+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -3084,9 +3211,9 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "52a639289ac69d25": {
   "id": "52a639289ac69d25",
@@ -3127,7 +3254,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "55498816002a750c": {
@@ -3168,7 +3295,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "55f13be1f1f1efcf": {
@@ -3209,8 +3336,92 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "5657f50863391872": {
+  "id": "5657f50863391872",
+  "title": "Stage Business Development / Prospection B2B - Startup SaaS",
+  "company": "Modai-Lab",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4441258038",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:07:44.869046+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:44.869046+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": -4,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -4,
+   "compta_gestion": -4,
+   "finance": 0,
+   "audit": -4,
+   "supply_chain": -4,
+   "commerce_bizdev": 3,
+   "rh": -4,
+   "juridique": 0,
+   "electronique_embarque": -4,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "56fb6ef871ee4ee9": {
+  "id": "56fb6ef871ee4ee9",
+  "title": "Paris Off-Cycle Internship - Telecoms Team (January - June 2027)",
+  "company": "EVERCORE",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=b3792d24952ecf73",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:01.888610+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": -1,
+   "finance": 7,
+   "audit": -1,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "5814545b29e91567": {
   "id": "5814545b29e91567",
@@ -3251,8 +3462,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "581e34de99e91b46": {
   "id": "581e34de99e91b46",
@@ -3264,8 +3475,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:38:10.069032+00:00",
-  "freshness_verified_at": "2026-07-15T19:38:10.069032+00:00",
+  "sort_date": "2026-07-15T21:27:00.532827+00:00",
+  "freshness_verified_at": "2026-07-15T21:27:00.532827+00:00",
   "domains": [
    "compta_gestion"
   ],
@@ -3279,7 +3490,7 @@
    "cybersecurite": 0,
    "reseaux_systemes": 0,
    "product_management": 0,
-   "compta_gestion": 5,
+   "compta_gestion": 3,
    "finance": 0,
    "audit": 0,
    "supply_chain": 0,
@@ -3292,8 +3503,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "590a0464b59cf058": {
@@ -3335,7 +3546,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "59277e6a0b5e1f47": {
@@ -3348,8 +3559,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:26:14.301438+00:00",
-  "freshness_verified_at": "2026-07-15T19:26:14.301438+00:00",
+  "sort_date": "2026-07-15T21:07:03.856604+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:03.856604+00:00",
   "domains": [
    "audit"
   ],
@@ -3376,8 +3587,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "59a3b3d9988ac26c": {
@@ -3417,10 +3628,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:19:00.413883+00:00"
+  "freshness_verified_at": "2026-07-15T21:05:37.476377+00:00"
  },
  "5a938ce7a2e30f33": {
   "id": "5a938ce7a2e30f33",
@@ -3459,10 +3670,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:40.361850+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:25.130759+00:00"
  },
  "5b47180463fddd34": {
   "id": "5b47180463fddd34",
@@ -3502,7 +3713,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false,
   "freshness_verified_at": "2026-07-15T17:22:33.262969+00:00"
  },
@@ -3544,7 +3755,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "5c343bd8a67de15c": {
@@ -3557,8 +3768,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:23:41.450820+00:00",
-  "freshness_verified_at": "2026-07-15T19:23:41.450820+00:00",
+  "sort_date": "2026-07-15T21:09:45.412850+00:00",
+  "freshness_verified_at": "2026-07-15T21:09:45.412850+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3585,8 +3796,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "5c65aec87fd918d1": {
@@ -3626,10 +3837,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:40.517372+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:28.223923+00:00"
  },
  "5caa80996e82e16d": {
   "id": "5caa80996e82e16d",
@@ -3671,8 +3882,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "5d29e996145e511a": {
   "id": "5d29e996145e511a",
@@ -3684,8 +3895,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:18:17.957359+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:17.957359+00:00",
+  "sort_date": "2026-07-15T21:13:52.573840+00:00",
+  "freshness_verified_at": "2026-07-15T21:13:52.573840+00:00",
   "domains": [
    "rh"
   ],
@@ -3704,16 +3915,16 @@
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
-   "rh": 4,
+   "rh": 3,
    "juridique": -4,
    "electronique_embarque": 0,
    "genie_civil_btp": 0,
-   "mecanique_industriel": 1
+   "mecanique_industriel": 0
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "5e0d85948f82b883": {
@@ -3755,7 +3966,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "5e0ed55d19a884b6": {
@@ -3768,8 +3979,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:40:45.842787+00:00",
-  "freshness_verified_at": "2026-07-15T19:40:45.842787+00:00",
+  "sort_date": "2026-07-15T21:28:28.913500+00:00",
+  "freshness_verified_at": "2026-07-15T21:28:28.913500+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3796,8 +4007,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "5f32d95eff0ba581": {
@@ -3810,10 +4021,9 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:18:18.269868+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:18.269868+00:00",
+  "sort_date": "2026-07-15T21:05:41.072720+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:41.072720+00:00",
   "domains": [
-   "devops_cloud",
    "cybersecurite"
   ],
   "regions": [
@@ -3822,13 +4032,13 @@
   "domain_scores": {
    "data_ia": -4,
    "dev_web": -4,
-   "devops_cloud": 3,
-   "cybersecurite": 4,
+   "devops_cloud": 0,
+   "cybersecurite": 3,
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
    "finance": 0,
-   "audit": 1,
+   "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
    "rh": 0,
@@ -3839,8 +4049,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "5f7bcf2bb5f3b3e4": {
@@ -3881,10 +4091,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:46.752856+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:34.324705+00:00"
  },
  "60842e15008c83b2": {
   "id": "60842e15008c83b2",
@@ -3897,7 +4107,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:34.309372+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:21.760720+00:00",
   "domains": [
    "supply_chain",
    "mecanique_industriel"
@@ -3925,8 +4135,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "60ceea3538f5ccc3": {
@@ -3967,7 +4177,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "60ee8e3ac5efdaeb": {
@@ -4009,7 +4219,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "611a63dd882ed8c1": {
@@ -4050,7 +4260,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "631c6051434ec24a": {
@@ -4063,8 +4273,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.200199+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.200199+00:00",
+  "sort_date": "2026-07-15T21:08:30.712396+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.712396+00:00",
   "domains": [
    "juridique"
   ],
@@ -4091,8 +4301,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "636e505c5a4063b7": {
@@ -4133,7 +4343,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false,
   "freshness_verified_at": "2026-07-15T17:21:43.179479+00:00"
  },
@@ -4176,7 +4386,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "65574d06ca1b25d5": {
@@ -4217,7 +4427,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "66826ab2e115a386": {
@@ -4258,7 +4468,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "67563946ca3a20f8": {
@@ -4300,7 +4510,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "69c499c7972f1c83": {
@@ -4342,7 +4552,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "6b0d58d250d7cb42": {
@@ -4382,10 +4592,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:58.333638+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:45.311155+00:00"
  },
  "6b31e78f9856f9f3": {
   "id": "6b31e78f9856f9f3",
@@ -4425,7 +4635,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "6b43ceaa9325bf95": {
@@ -4466,7 +4676,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "6b757f2078c59b94": {
@@ -4480,7 +4690,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:29.399928+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:15.481189+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -4507,8 +4717,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "6c5c55434c16d8a8": {
@@ -4521,8 +4731,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T20:00:48.138832+00:00",
-  "freshness_verified_at": "2026-07-15T20:00:48.138832+00:00",
+  "sort_date": "2026-07-15T21:48:58.740290+00:00",
+  "freshness_verified_at": "2026-07-15T21:48:58.740290+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -4549,8 +4759,50 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "6d4043b7c48821cb": {
+  "id": "6d4043b7c48821cb",
+  "title": "Stagiaire - Juriste Généraliste - Manufactures de Mode (H/F/X)",
+  "company": "CHANEL",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440269595",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:08:30.681024+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.681024+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "6e30839d1f07b19f": {
@@ -4591,7 +4843,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "6e7944d6d6cebea1": {
@@ -4604,8 +4856,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:56.353484+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:56.353484+00:00",
+  "sort_date": "2026-07-15T21:07:20.986219+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:20.986219+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -4632,8 +4884,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "6e84547e84510bab": {
@@ -4675,7 +4927,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "6f9f952dd19b2f89": {
@@ -4688,8 +4940,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:00.654139+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:00.654139+00:00",
+  "sort_date": "2026-07-15T21:23:48.398144+00:00",
+  "freshness_verified_at": "2026-07-15T21:23:48.398144+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4697,7 +4949,7 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 4,
+   "data_ia": 3,
    "dev_web": 0,
    "devops_cloud": 0,
    "cybersecurite": 0,
@@ -4708,16 +4960,16 @@
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
-   "rh": 1,
+   "rh": 0,
    "juridique": 0,
    "electronique_embarque": 0,
-   "genie_civil_btp": 1,
+   "genie_civil_btp": 0,
    "mecanique_industriel": 0
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "7052e46cc1d30053": {
@@ -4757,10 +5009,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:32.663824+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:20.102121+00:00"
  },
  "709a8ebf107c0c9b": {
   "id": "709a8ebf107c0c9b",
@@ -4801,7 +5053,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "70bcae16d41f902f": {
@@ -4842,7 +5094,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "70f517b5cbb37bd3": {
@@ -4884,8 +5136,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "7303e0e58134a3ef": {
   "id": "7303e0e58134a3ef",
@@ -4897,8 +5149,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:23.594773+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:23.594773+00:00",
+  "sort_date": "2026-07-15T21:06:52.095097+00:00",
+  "freshness_verified_at": "2026-07-15T21:06:52.095097+00:00",
   "domains": [
    "finance"
   ],
@@ -4925,8 +5177,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "74c7eeac1e8e5b2c": {
@@ -4939,8 +5191,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T15:42:30.710919+00:00",
-  "freshness_verified_at": "2026-07-15T15:42:30.710919+00:00",
+  "sort_date": "2026-07-15T21:06:35.290028+00:00",
+  "freshness_verified_at": "2026-07-15T21:06:35.290028+00:00",
   "domains": [
    "compta_gestion"
   ],
@@ -4967,9 +5219,9 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "76f984698816a499": {
   "id": "76f984698816a499",
@@ -4981,8 +5233,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.192696+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.192696+00:00",
+  "sort_date": "2026-07-15T21:08:30.704812+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.704812+00:00",
   "domains": [
    "finance",
    "juridique"
@@ -5010,8 +5262,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "77934d7531a09a3b": {
@@ -5051,10 +5303,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:38.477728+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:23.608033+00:00"
  },
  "77b07da41eadabda": {
   "id": "77b07da41eadabda",
@@ -5094,7 +5346,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "78777aabec40adba": {
@@ -5107,8 +5359,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T20:00:06.972896+00:00",
-  "freshness_verified_at": "2026-07-15T20:00:06.972896+00:00",
+  "sort_date": "2026-07-15T21:48:00.268674+00:00",
+  "freshness_verified_at": "2026-07-15T21:48:00.268674+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -5135,8 +5387,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "78de94f36bb1ddb0": {
@@ -5177,8 +5429,50 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "7df7061b018d9d4c": {
+  "id": "7df7061b018d9d4c",
+  "title": "Juriste (H/F) - Stage",
+  "company": "Alltricks",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440261696",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:08:30.688831+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.688831+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "7f0103c4b1af3d1f": {
   "id": "7f0103c4b1af3d1f",
@@ -5218,7 +5512,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "7f1623292d59d945": {
@@ -5231,8 +5525,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T17:33:22.664110+00:00",
-  "freshness_verified_at": "2026-07-15T17:33:22.664110+00:00",
+  "sort_date": "2026-07-15T21:17:11.955547+00:00",
+  "freshness_verified_at": "2026-07-15T21:17:11.955547+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -5259,9 +5553,51 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "82605e7dd64eb5f3": {
+  "id": "82605e7dd64eb5f3",
+  "title": "Stage Développeur web full stack H/F",
+  "company": "Entreprise non précisée",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=62cb44f0733b3266",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:26.979816+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 8,
+   "devops_cloud": 0,
+   "cybersecurite": -4,
+   "reseaux_systemes": -4,
+   "product_management": 0,
+   "compta_gestion": -4,
+   "finance": 0,
+   "audit": -4,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": -4,
+   "electronique_embarque": -4,
+   "genie_civil_btp": -4,
+   "mecanique_industriel": -3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "8338df0a02ac9b63": {
   "id": "8338df0a02ac9b63",
@@ -5301,7 +5637,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "83eb62ccc8611f7a": {
@@ -5343,7 +5679,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "850ad81254b3b98e": {
@@ -5356,36 +5692,37 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:35:48.398642+00:00",
-  "freshness_verified_at": "2026-07-15T19:35:48.398642+00:00",
+  "sort_date": "2026-07-15T21:05:31.673894+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:31.673894+00:00",
   "domains": [
-   "dev_web"
+   "dev_web",
+   "devops_cloud"
   ],
   "regions": [
    "france"
   ],
   "domain_scores": {
    "data_ia": 0,
-   "dev_web": 3,
-   "devops_cloud": 0,
+   "dev_web": 10,
+   "devops_cloud": 2,
    "cybersecurite": 0,
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
    "finance": 0,
    "audit": 0,
-   "supply_chain": 0,
+   "supply_chain": 1,
    "commerce_bizdev": 0,
-   "rh": 0,
+   "rh": 1,
    "juridique": 0,
    "electronique_embarque": 0,
    "genie_civil_btp": 0,
-   "mecanique_industriel": 0
+   "mecanique_industriel": 1
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "85cd3cea1dfe02ec": {
@@ -5398,8 +5735,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:27:17.495592+00:00",
-  "freshness_verified_at": "2026-07-15T19:27:17.495592+00:00",
+  "sort_date": "2026-07-15T21:13:52.555072+00:00",
+  "freshness_verified_at": "2026-07-15T21:13:52.555072+00:00",
   "domains": [
    "rh"
   ],
@@ -5426,8 +5763,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "86039abf71a6002f": {
@@ -5440,8 +5777,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.209593+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.209593+00:00",
+  "sort_date": "2026-07-15T21:13:57.167877+00:00",
+  "freshness_verified_at": "2026-07-15T21:13:57.167877+00:00",
   "domains": [
    "juridique"
   ],
@@ -5468,8 +5805,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "8707d8f9eade1517": {
@@ -5511,7 +5848,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "875c48e871b273ba": {
@@ -5552,7 +5889,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "88a7bc4ecbda70a6": {
@@ -5593,7 +5930,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "8a38937e967729dc": {
@@ -5607,7 +5944,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:04.270414+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:51.232227+00:00",
   "domains": [
    "rh"
   ],
@@ -5634,8 +5971,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "8ab2dfc30fc32f4b": {
@@ -5676,7 +6013,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "8cc57b49992809d8": {
@@ -5689,8 +6026,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:29:51.565010+00:00",
-  "freshness_verified_at": "2026-07-15T19:29:51.565010+00:00",
+  "sort_date": "2026-07-15T21:12:21.558331+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:21.558331+00:00",
   "domains": [
    "finance"
   ],
@@ -5717,8 +6054,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "904c4e26d6d48e3f": {
@@ -5760,7 +6097,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "90555f6c4cc2c4ea": {
@@ -5773,8 +6110,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:23:41.469053+00:00",
-  "freshness_verified_at": "2026-07-15T19:23:41.469053+00:00",
+  "sort_date": "2026-07-15T21:15:02.753806+00:00",
+  "freshness_verified_at": "2026-07-15T21:15:02.753806+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5801,8 +6138,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "90db4068eacbe182": {
@@ -5844,8 +6181,8 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "90df3e834e5b7162": {
   "id": "90df3e834e5b7162",
@@ -5886,7 +6223,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T18:10:41+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "911bfd0ac7b9a101": {
@@ -5900,7 +6237,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:23.465417+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:07.049114+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -5927,8 +6264,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "931c8ff511620286": {
@@ -5968,8 +6305,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
   "freshness_verified_at": ""
  },
@@ -6011,7 +6348,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "94287f0a98338a72": {
@@ -6052,7 +6389,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "944eb3a85c1448bf": {
@@ -6065,8 +6402,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.211826+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.211826+00:00",
+  "sort_date": "2026-07-15T21:08:30.721800+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.721800+00:00",
   "domains": [
    "juridique"
   ],
@@ -6093,8 +6430,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "947edf3b7d6207f0": {
@@ -6134,10 +6471,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:41.799926+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:26.167165+00:00"
  },
  "94927918d7647848": {
   "id": "94927918d7647848",
@@ -6178,7 +6515,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "953d78196d09d275": {
@@ -6219,7 +6556,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "976717c50143e043": {
@@ -6232,8 +6569,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.214357+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.214357+00:00",
+  "sort_date": "2026-07-15T21:17:44.172735+00:00",
+  "freshness_verified_at": "2026-07-15T21:17:44.172735+00:00",
   "domains": [
    "rh",
    "juridique"
@@ -6261,8 +6598,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "97eb29fbf56ebba3": {
@@ -6276,7 +6613,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:09.494760+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:53.696097+00:00",
   "domains": [
    "genie_civil_btp"
   ],
@@ -6303,8 +6640,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "98a1369636117738": {
@@ -6318,7 +6655,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:09.854827+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:56.811543+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -6345,8 +6682,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "999647f97e643e82": {
@@ -6386,10 +6723,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:58.093340+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:45.082683+00:00"
  },
  "9a77b82f5ccde4bc": {
   "id": "9a77b82f5ccde4bc",
@@ -6429,8 +6766,51 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "9adcb43e35916342": {
+  "id": "9adcb43e35916342",
+  "title": "STAGE 2026_DEVLOG_02 Développement d’une Solution SaaS pour Outils Qualifiés",
+  "company": "BLAST SOLUTIONS ET ASSOCIES",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=f4dadb6832dcdae1",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:24.460149+00:00",
+  "domains": [
+   "dev_web",
+   "devops_cloud"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 2,
+   "devops_cloud": 2,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 1,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "9b5a62e7896871bf": {
   "id": "9b5a62e7896871bf",
@@ -6471,7 +6851,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "9c73219dc2f95704": {
@@ -6484,8 +6864,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.178531+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.178531+00:00",
+  "sort_date": "2026-07-15T21:08:30.690848+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.690848+00:00",
   "domains": [
    "juridique"
   ],
@@ -6512,8 +6892,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "9d3318632887efe6": {
@@ -6526,8 +6906,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:32:29.870375+00:00",
-  "freshness_verified_at": "2026-07-15T19:32:29.870375+00:00",
+  "sort_date": "2026-07-15T21:08:09.845299+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:09.845299+00:00",
   "domains": [
    "rh"
   ],
@@ -6554,8 +6934,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "9d49d1ddf075ad3b": {
@@ -6595,10 +6975,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:32.833039+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:20.289379+00:00"
  },
  "9d5b7afefccf9751": {
   "id": "9d5b7afefccf9751",
@@ -6611,7 +6991,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:11.126054+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:43.680875+00:00",
   "domains": [
    "devops_cloud",
    "reseaux_systemes"
@@ -6639,8 +7019,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "9e139d36c22ce1f5": {
@@ -6682,7 +7062,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "9e189f3d6ae84d4c": {
@@ -6722,10 +7102,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:38.106835+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:25.717051+00:00"
  },
  "9e227477b837cd6a": {
   "id": "9e227477b837cd6a",
@@ -6737,8 +7117,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:21:19.212592+00:00",
-  "freshness_verified_at": "2026-07-15T19:21:19.212592+00:00",
+  "sort_date": "2026-07-15T21:13:09.280978+00:00",
+  "freshness_verified_at": "2026-07-15T21:13:09.280978+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -6765,8 +7145,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "9e264286b57b2116": {
@@ -6808,8 +7188,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": false
  },
  "a034999c17fabb77": {
   "id": "a034999c17fabb77",
@@ -6850,7 +7230,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "a15dea62d9d4602f": {
@@ -6890,10 +7270,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:18:02.918775+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:47.989894+00:00"
  },
  "a29d16a44c5ef5f2": {
   "id": "a29d16a44c5ef5f2",
@@ -6933,7 +7313,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "a4212e318f2e93ae": {
@@ -6974,7 +7354,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "a43c877109082dee": {
@@ -7015,8 +7395,50 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "a5a0737faaca4723": {
+  "id": "a5a0737faaca4723",
+  "title": "STAGE DEVELOPPEUR FULL STACK APPLICATION WEB & MOBILE HYBRIDE H/F",
+  "company": "Euris",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440276155",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:05:00.779900+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:00.779900+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 5,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "a79019d8d59190db": {
   "id": "a79019d8d59190db",
@@ -7055,10 +7477,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:06.205811+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:53.160530+00:00"
  },
  "a848674ea10832a0": {
   "id": "a848674ea10832a0",
@@ -7098,7 +7520,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "a860633960a8e62e": {
@@ -7112,7 +7534,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:27.103705+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:55.299689+00:00",
   "domains": [
    "mecanique_industriel"
   ],
@@ -7139,8 +7561,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "a8bcdc2c70f714c1": {
@@ -7153,8 +7575,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:50:31.567409+00:00",
-  "freshness_verified_at": "2026-07-15T19:50:31.567409+00:00",
+  "sort_date": "2026-07-15T21:39:41.015519+00:00",
+  "freshness_verified_at": "2026-07-15T21:39:41.015519+00:00",
   "domains": [
    "finance"
   ],
@@ -7169,7 +7591,7 @@
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
-   "finance": 5,
+   "finance": 3,
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
@@ -7181,8 +7603,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "a8d92e09a57b353d": {
@@ -7223,7 +7645,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "a9d8701118c5dbd6": {
@@ -7236,8 +7658,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:28:11.518976+00:00",
-  "freshness_verified_at": "2026-07-15T19:28:11.518976+00:00",
+  "sort_date": "2026-07-15T21:04:44.256243+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:44.256243+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -7255,7 +7677,7 @@
    "finance": 0,
    "audit": -4,
    "supply_chain": -8,
-   "commerce_bizdev": 3,
+   "commerce_bizdev": 4,
    "rh": -4,
    "juridique": -8,
    "electronique_embarque": 0,
@@ -7264,8 +7686,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "aa0ea22996d5e5ef": {
@@ -7306,7 +7728,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "aa3c0e1f4f050de2": {
@@ -7319,8 +7741,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:40:04.560916+00:00",
-  "freshness_verified_at": "2026-07-15T19:40:04.560916+00:00",
+  "sort_date": "2026-07-15T21:30:38.461329+00:00",
+  "freshness_verified_at": "2026-07-15T21:30:38.461329+00:00",
   "domains": [
    "rh"
   ],
@@ -7347,8 +7769,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "ab797327a1b1e184": {
@@ -7361,8 +7783,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:50:31.886913+00:00",
-  "freshness_verified_at": "2026-07-15T19:50:31.886913+00:00",
+  "sort_date": "2026-07-15T21:42:58.398665+00:00",
+  "freshness_verified_at": "2026-07-15T21:42:58.398665+00:00",
   "domains": [
    "finance"
   ],
@@ -7377,7 +7799,7 @@
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
-   "finance": 6,
+   "finance": 3,
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
@@ -7389,8 +7811,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "adbb254b8b77115e": {
@@ -7432,7 +7854,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "adf4bafbf36cdb7a": {
@@ -7473,10 +7895,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:37.746498+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:25.366538+00:00"
  },
  "ae48e2bce9747ec4": {
   "id": "ae48e2bce9747ec4",
@@ -7516,7 +7938,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "afce0a41067c0e5c": {
@@ -7557,7 +7979,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "b056db0b71dd91cf": {
@@ -7570,8 +7992,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:53:55.746682+00:00",
-  "freshness_verified_at": "2026-07-15T19:53:55.746682+00:00",
+  "sort_date": "2026-07-15T21:38:38.169967+00:00",
+  "freshness_verified_at": "2026-07-15T21:38:38.169967+00:00",
   "domains": [
    "cybersecurite",
    "audit"
@@ -7583,12 +8005,12 @@
    "data_ia": -1,
    "dev_web": 0,
    "devops_cloud": 0,
-   "cybersecurite": 3,
+   "cybersecurite": 5,
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
-   "finance": 0,
-   "audit": 6,
+   "finance": 1,
+   "audit": 9,
    "supply_chain": 0,
    "commerce_bizdev": 0,
    "rh": 0,
@@ -7599,8 +8021,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "b0bcd01757c2d59c": {
@@ -7641,7 +8063,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false,
   "freshness_verified_at": "2026-07-15T17:22:32.299312+00:00"
  },
@@ -7683,7 +8105,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "b198fd4f6c6dd2e9": {
@@ -7724,7 +8146,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "b2b18198897b0058": {
@@ -7737,8 +8159,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:23.602220+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:23.602220+00:00",
+  "sort_date": "2026-07-15T21:22:42.902786+00:00",
+  "freshness_verified_at": "2026-07-15T21:22:42.902786+00:00",
   "domains": [
    "finance"
   ],
@@ -7765,8 +8187,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "b32ea8198f5697e0": {
@@ -7807,7 +8229,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "b4a9dc77825b9d79": {
@@ -7820,8 +8242,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:23:41.473330+00:00",
-  "freshness_verified_at": "2026-07-15T19:23:41.473330+00:00",
+  "sort_date": "2026-07-15T21:15:02.716047+00:00",
+  "freshness_verified_at": "2026-07-15T21:15:02.716047+00:00",
   "domains": [
    "data_ia"
   ],
@@ -7848,8 +8270,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "b4c7e20e254ac2ba": {
@@ -7863,7 +8285,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:28.816608+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:14.855778+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -7890,8 +8312,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "b589b66634291836": {
@@ -7904,8 +8326,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:41:22.985860+00:00",
-  "freshness_verified_at": "2026-07-15T19:41:22.985860+00:00",
+  "sort_date": "2026-07-15T21:25:46.674749+00:00",
+  "freshness_verified_at": "2026-07-15T21:25:46.674749+00:00",
   "domains": [
    "data_ia"
   ],
@@ -7924,7 +8346,7 @@
    "audit": -4,
    "supply_chain": 0,
    "commerce_bizdev": -4,
-   "rh": 0,
+   "rh": 1,
    "juridique": -4,
    "electronique_embarque": -4,
    "genie_civil_btp": 0,
@@ -7932,8 +8354,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "b67abd088effc921": {
@@ -7975,7 +8397,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "b7c197ad9d39e379": {
@@ -7989,7 +8411,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:30.988628+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:18.721583+00:00",
   "domains": [
    "data_ia",
    "dev_web",
@@ -8018,8 +8440,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "b95430e7ec441b74": {
@@ -8060,7 +8482,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "b98bbf7180e023cc": {
@@ -8102,7 +8524,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "ba2ce7074c912461": {
@@ -8143,7 +8565,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "ba2e5d42dc23d645": {
@@ -8156,8 +8578,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.185007+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.185007+00:00",
+  "sort_date": "2026-07-15T21:08:30.697262+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.697262+00:00",
   "domains": [
    "juridique"
   ],
@@ -8184,8 +8606,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "bb59c9b3bebe1d49": {
@@ -8198,8 +8620,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.182051+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.182051+00:00",
+  "sort_date": "2026-07-15T21:08:30.694371+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.694371+00:00",
   "domains": [
    "juridique"
   ],
@@ -8226,8 +8648,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "bd67dabb3ea02ad8": {
@@ -8240,8 +8662,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:30:40.561173+00:00",
-  "freshness_verified_at": "2026-07-15T19:30:40.561173+00:00",
+  "sort_date": "2026-07-15T21:08:38.759566+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:38.759566+00:00",
   "domains": [
    "genie_civil_btp"
   ],
@@ -8268,8 +8690,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "bd6e1e40b5aac53c": {
@@ -8310,7 +8732,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "bdde169d640caea8": {
@@ -8323,8 +8745,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:56.338506+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:56.338506+00:00",
+  "sort_date": "2026-07-15T21:07:20.971673+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:20.971673+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -8351,8 +8773,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "be4017044f5032c9": {
@@ -8395,7 +8817,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "be4959649f27346a": {
@@ -8436,7 +8858,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "c07faddfff4e95d9": {
@@ -8477,8 +8899,92 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
+ },
+ "c0edca39529f7b73": {
+  "id": "c0edca39529f7b73",
+  "title": "(EN/FR) Stage Robotique & IA",
+  "company": "Gobano Robotics",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440273350",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:09:21.806282+00:00",
+  "freshness_verified_at": "2026-07-15T21:09:21.806282+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "c31e14ff007145f1": {
+  "id": "c31e14ff007145f1",
+  "title": "Stage Ingénieur(e) Réseau Sécurité - DSI - Ile de france",
+  "company": "Sopra Steria",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=ee4d9ecff5f57ba2",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:22.697847+00:00",
+  "domains": [
+   "devops_cloud"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 2,
+   "cybersecurite": 0,
+   "reseaux_systemes": 1,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 1
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "c364a6034000f30f": {
   "id": "c364a6034000f30f",
@@ -8518,7 +9024,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "c5f39849f1b902ab": {
@@ -8531,8 +9037,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:27:45.501361+00:00",
-  "freshness_verified_at": "2026-07-15T19:27:45.501361+00:00",
+  "sort_date": "2026-07-15T21:14:36.103858+00:00",
+  "freshness_verified_at": "2026-07-15T21:14:36.103858+00:00",
   "domains": [
    "mecanique_industriel"
   ],
@@ -8559,8 +9065,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "c644930c4787c2cb": {
@@ -8600,10 +9106,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:58.256480+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:45.234173+00:00"
  },
  "c6a53ee8e04f3462": {
   "id": "c6a53ee8e04f3462",
@@ -8643,7 +9149,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "c6ca860bf25fad25": {
@@ -8657,7 +9163,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:00.054436+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:44.899071+00:00",
   "domains": [
    "finance",
    "juridique"
@@ -8685,8 +9191,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "c7ed08f45b94adff": {
@@ -8726,10 +9232,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:40.239792+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:25.023493+00:00"
  },
  "c8a5b7527d7a5e2f": {
   "id": "c8a5b7527d7a5e2f",
@@ -8741,8 +9247,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:24:27.876168+00:00",
-  "freshness_verified_at": "2026-07-15T19:24:27.876168+00:00",
+  "sort_date": "2026-07-15T21:05:31.318348+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:31.318348+00:00",
   "domains": [
    "dev_web"
   ],
@@ -8751,17 +9257,17 @@
   ],
   "domain_scores": {
    "data_ia": 0,
-   "dev_web": 3,
+   "dev_web": 6,
    "devops_cloud": 0,
    "cybersecurite": 0,
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
-   "finance": 0,
+   "finance": 1,
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
-   "rh": 0,
+   "rh": 1,
    "juridique": 0,
    "electronique_embarque": 0,
    "genie_civil_btp": 0,
@@ -8769,8 +9275,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "c952ad521b4c8ac1": {
@@ -8810,10 +9316,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:18:54.477302+00:00"
+  "freshness_verified_at": "2026-07-15T21:05:33.740233+00:00"
  },
  "c95d5ef89ab9c939": {
   "id": "c95d5ef89ab9c939",
@@ -8825,8 +9331,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:14.188150+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:14.188150+00:00",
+  "sort_date": "2026-07-15T21:08:30.700333+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.700333+00:00",
   "domains": [
    "juridique"
   ],
@@ -8853,8 +9359,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "ca894ae24571f43d": {
@@ -8867,8 +9373,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:30:01.864366+00:00",
-  "freshness_verified_at": "2026-07-15T19:30:01.864366+00:00",
+  "sort_date": "2026-07-15T21:17:00.510308+00:00",
+  "freshness_verified_at": "2026-07-15T21:17:00.510308+00:00",
   "domains": [
    "mecanique_industriel"
   ],
@@ -8895,8 +9401,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "cc2bdb35d76d77fe": {
@@ -8937,7 +9443,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "cd4b6ef875912b2c": {
@@ -8978,7 +9484,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "cd4ba03cabef6744": {
@@ -8991,8 +9497,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:18:17.390198+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:17.390198+00:00",
+  "sort_date": "2026-07-15T21:09:21.811976+00:00",
+  "freshness_verified_at": "2026-07-15T21:09:21.811976+00:00",
   "domains": [
    "data_ia"
   ],
@@ -9000,7 +9506,7 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 11,
+   "data_ia": 6,
    "dev_web": 0,
    "devops_cloud": 0,
    "cybersecurite": -4,
@@ -9019,8 +9525,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "cd6004f399503e93": {
@@ -9033,8 +9539,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:13.047562+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:13.047562+00:00",
+  "sort_date": "2026-07-15T21:09:45.415102+00:00",
+  "freshness_verified_at": "2026-07-15T21:09:45.415102+00:00",
   "domains": [
    "data_ia"
   ],
@@ -9061,8 +9567,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "ce9d05280ce0ac1f": {
@@ -9104,7 +9610,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "cee129181918a604": {
@@ -9146,7 +9652,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "cef49b3781d7fbbf": {
@@ -9188,7 +9694,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "cfcdaa83703fbedc": {
@@ -9201,8 +9707,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:28:11.532009+00:00",
-  "freshness_verified_at": "2026-07-15T19:28:11.532009+00:00",
+  "sort_date": "2026-07-15T21:15:02.735183+00:00",
+  "freshness_verified_at": "2026-07-15T21:15:02.735183+00:00",
   "domains": [
    "data_ia"
   ],
@@ -9229,8 +9735,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "cfde31d73ba4245b": {
@@ -9271,7 +9777,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "d03a8ea5e040e23d": {
@@ -9315,7 +9821,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "d05ad1b8a2a82d71": {
@@ -9328,8 +9834,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T14:47:14.518695+00:00",
-  "freshness_verified_at": "2026-07-15T14:47:14.518695+00:00",
+  "sort_date": "2026-07-15T21:17:44.230454+00:00",
+  "freshness_verified_at": "2026-07-15T21:17:44.230454+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -9356,9 +9862,52 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "d1372e49acc85c05": {
+  "id": "d1372e49acc85c05",
+  "title": "Stagiaire Industrialisation Supply Chain F/H",
+  "company": "KNDS France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4412939536",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:12:58.633870+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:58.633870+00:00",
+  "domains": [
+   "supply_chain",
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "d1bc367d58945ead": {
   "id": "d1bc367d58945ead",
@@ -9398,7 +9947,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "d20f6eec73923675": {
@@ -9440,7 +9989,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T18:10:41+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "d32dbcb52ae0158c": {
@@ -9480,8 +10029,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
   "freshness_verified_at": ""
  },
@@ -9495,9 +10044,10 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:13.041897+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:13.041897+00:00",
+  "sort_date": "2026-07-15T21:05:30.612969+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:30.612969+00:00",
   "domains": [
+   "devops_cloud",
    "cybersecurite"
   ],
   "regions": [
@@ -9506,13 +10056,13 @@
   "domain_scores": {
    "data_ia": -4,
    "dev_web": -4,
-   "devops_cloud": 0,
-   "cybersecurite": 3,
+   "devops_cloud": 3,
+   "cybersecurite": 4,
    "reseaux_systemes": 0,
    "product_management": 0,
    "compta_gestion": 0,
    "finance": 0,
-   "audit": 0,
+   "audit": 1,
    "supply_chain": 0,
    "commerce_bizdev": 0,
    "rh": 0,
@@ -9523,8 +10073,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "d5c83a555cac108b": {
@@ -9538,7 +10088,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:08.959880+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:55.803238+00:00",
   "domains": [
    "commerce_bizdev"
   ],
@@ -9565,8 +10115,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "d691b91a2e69168c": {
@@ -9606,10 +10156,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:18:02.656666+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:47.722445+00:00"
  },
  "d766e996bdda6c8b": {
   "id": "d766e996bdda6c8b",
@@ -9649,10 +10199,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:17:17.259467+00:00"
+  "freshness_verified_at": "2026-07-15T21:04:04.068296+00:00"
  },
  "d7d0206bedf87f4f": {
   "id": "d7d0206bedf87f4f",
@@ -9664,8 +10214,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:56.334138+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:56.334138+00:00",
+  "sort_date": "2026-07-15T21:07:20.967502+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:20.967502+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -9692,8 +10242,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "d7ff72e9b9b775f7": {
@@ -9706,8 +10256,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:29:51.562401+00:00",
-  "freshness_verified_at": "2026-07-15T19:29:51.562401+00:00",
+  "sort_date": "2026-07-15T21:12:21.550253+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:21.550253+00:00",
   "domains": [
    "finance"
   ],
@@ -9734,8 +10284,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "d90470926f2161cc": {
@@ -9748,8 +10298,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:27:17.498824+00:00",
-  "freshness_verified_at": "2026-07-15T19:27:17.498824+00:00",
+  "sort_date": "2026-07-15T21:13:52.558251+00:00",
+  "freshness_verified_at": "2026-07-15T21:13:52.558251+00:00",
   "domains": [
    "rh"
   ],
@@ -9776,8 +10326,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "d90be7d8601bbdae": {
@@ -9790,8 +10340,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:30.433822+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:30.433822+00:00",
+  "sort_date": "2026-07-15T21:07:03.850627+00:00",
+  "freshness_verified_at": "2026-07-15T21:07:03.850627+00:00",
   "domains": [
    "audit"
   ],
@@ -9818,8 +10368,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "db92e71ba452c1ea": {
@@ -9832,8 +10382,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:56.376665+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:56.376665+00:00",
+  "sort_date": "2026-07-15T21:12:58.644126+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:58.644126+00:00",
   "domains": [
    "supply_chain"
   ],
@@ -9860,8 +10410,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "dd9994bae1af15e2": {
@@ -9902,7 +10452,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "ddb9859fac6beddf": {
@@ -9942,8 +10492,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
   "freshness_verified_at": ""
  },
@@ -9957,17 +10507,19 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:36:37.379927+00:00",
-  "freshness_verified_at": "2026-07-15T19:36:37.379927+00:00",
+  "sort_date": "2026-07-15T21:04:43.963298+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:43.963298+00:00",
   "domains": [
-   "data_ia"
+   "data_ia",
+   "dev_web",
+   "mecanique_industriel"
   ],
   "regions": [
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3,
-   "dev_web": 0,
+   "data_ia": 4,
+   "dev_web": 2,
    "devops_cloud": 0,
    "cybersecurite": 0,
    "reseaux_systemes": 0,
@@ -9977,6 +10529,48 @@
    "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
+   "rh": 1,
+   "juridique": 0,
+   "electronique_embarque": 1,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "e0166fb62508d306": {
+  "id": "e0166fb62508d306",
+  "title": "[Stage] Chargé Opérationnel & Logistique H/F",
+  "company": "KONCRETE",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440270385",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:12:10.391174+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:10.391174+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": 0,
    "rh": 0,
    "juridique": 0,
    "electronique_embarque": 0,
@@ -9984,9 +10578,9 @@
    "mecanique_industriel": 0
   },
   "highlighted": false,
-  "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "e0e138b60c47145d": {
@@ -10000,7 +10594,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:35.709267+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:23.226999+00:00",
   "domains": [
    "rh"
   ],
@@ -10027,8 +10621,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "e4e8243aff767211": {
@@ -10069,7 +10663,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "e5e79ceb856d58b4": {
@@ -10110,7 +10704,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "e690296d9a5fe75b": {
@@ -10123,8 +10717,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:20:03.397477+00:00",
-  "freshness_verified_at": "2026-07-15T19:20:03.397477+00:00",
+  "sort_date": "2026-07-15T21:22:37.154042+00:00",
+  "freshness_verified_at": "2026-07-15T21:22:37.154042+00:00",
   "domains": [
    "compta_gestion"
   ],
@@ -10151,8 +10745,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "e71c4c219cf49e9f": {
@@ -10194,7 +10788,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "e91c15d91caf08c1": {
@@ -10237,7 +10831,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T16:17:05+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "ea26a0417a48a85f": {
@@ -10250,8 +10844,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:43:14.429314+00:00",
-  "freshness_verified_at": "2026-07-15T19:43:14.429314+00:00",
+  "sort_date": "2026-07-15T21:27:21.024038+00:00",
+  "freshness_verified_at": "2026-07-15T21:27:21.024038+00:00",
   "domains": [
    "finance"
   ],
@@ -10278,8 +10872,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "eb090d87923d02ca": {
@@ -10292,8 +10886,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:27:45.497302+00:00",
-  "freshness_verified_at": "2026-07-15T19:27:45.497302+00:00",
+  "sort_date": "2026-07-15T21:14:36.099881+00:00",
+  "freshness_verified_at": "2026-07-15T21:14:36.099881+00:00",
   "domains": [
    "mecanique_industriel"
   ],
@@ -10320,8 +10914,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "ebc16297864e11d1": {
@@ -10334,8 +10928,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:27:17.504351+00:00",
-  "freshness_verified_at": "2026-07-15T19:27:17.504351+00:00",
+  "sort_date": "2026-07-15T21:13:52.563776+00:00",
+  "freshness_verified_at": "2026-07-15T21:13:52.563776+00:00",
   "domains": [
    "rh"
   ],
@@ -10362,8 +10956,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "eda89e4925969eaa": {
@@ -10376,7 +10970,7 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:23:41.453709+00:00",
+  "sort_date": "2026-07-15T21:05:30.179815+00:00",
   "domains": [
    "data_ia"
   ],
@@ -10384,7 +10978,7 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3,
+   "data_ia": 5,
    "dev_web": -4,
    "devops_cloud": -4,
    "cybersecurite": 0,
@@ -10403,10 +10997,52 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:23:41.453709+00:00"
+  "freshness_verified_at": "2026-07-15T21:05:30.179815+00:00"
+ },
+ "ee8d982f55f68d4c": {
+  "id": "ee8d982f55f68d4c",
+  "title": "STAGE Assistant ADV & Logistique",
+  "company": "La Limonaderie de Paris",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440257821",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:12:58.641755+00:00",
+  "freshness_verified_at": "2026-07-15T21:12:58.641755+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
  },
  "eef435fc0770d499": {
   "id": "eef435fc0770d499",
@@ -10418,7 +11054,7 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:13.036984+00:00",
+  "sort_date": "2026-07-15T21:08:30.726818+00:00",
   "domains": [
    "juridique"
   ],
@@ -10445,10 +11081,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:19:13.036984+00:00"
+  "freshness_verified_at": "2026-07-15T21:08:30.726818+00:00"
  },
  "f0a9e99cff0d227d": {
   "id": "f0a9e99cff0d227d",
@@ -10488,7 +11124,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "f11164edeba016b3": {
@@ -10501,8 +11137,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:29:51.568522+00:00",
-  "freshness_verified_at": "2026-07-15T19:29:51.568522+00:00",
+  "sort_date": "2026-07-15T21:16:31.907056+00:00",
+  "freshness_verified_at": "2026-07-15T21:16:31.907056+00:00",
   "domains": [
    "finance"
   ],
@@ -10529,8 +11165,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T16:17:05+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "f30f152947877531": {
@@ -10543,8 +11179,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:18:17.703526+00:00",
-  "freshness_verified_at": "2026-07-15T19:18:17.703526+00:00",
+  "sort_date": "2026-07-15T21:09:45.419241+00:00",
+  "freshness_verified_at": "2026-07-15T21:09:45.419241+00:00",
   "domains": [
    "data_ia"
   ],
@@ -10560,7 +11196,7 @@
    "product_management": 0,
    "compta_gestion": 0,
    "finance": 0,
-   "audit": 1,
+   "audit": 0,
    "supply_chain": 0,
    "commerce_bizdev": 0,
    "rh": 0,
@@ -10571,8 +11207,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "f44b33536a38c425": {
@@ -10586,7 +11222,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:57.777956+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:44.759991+00:00",
   "domains": [
    "audit"
   ],
@@ -10613,8 +11249,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T20:09:08+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "f4afb53bd6e6f57d": {
@@ -10654,10 +11290,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:34.568447+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:21.969394+00:00"
  },
  "f5d2a7f898d33946": {
   "id": "f5d2a7f898d33946",
@@ -10697,7 +11333,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "f75a20fe3f0c9992": {
@@ -10710,8 +11346,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:23:41.502205+00:00",
-  "freshness_verified_at": "2026-07-15T19:23:41.502205+00:00",
+  "sort_date": "2026-07-15T21:23:48.386496+00:00",
+  "freshness_verified_at": "2026-07-15T21:23:48.386496+00:00",
   "domains": [
    "juridique"
   ],
@@ -10738,8 +11374,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "f996dd2a8d2e0f50": {
@@ -10752,21 +11388,22 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:24:27.878792+00:00",
-  "freshness_verified_at": "2026-07-15T19:24:27.878792+00:00",
+  "sort_date": "2026-07-15T21:05:32.036320+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:32.036320+00:00",
   "domains": [
-   "dev_web"
+   "dev_web",
+   "devops_cloud"
   ],
   "regions": [
    "france"
   ],
   "domain_scores": {
    "data_ia": 0,
-   "dev_web": 6,
-   "devops_cloud": 0,
+   "dev_web": 9,
+   "devops_cloud": 6,
    "cybersecurite": 0,
    "reseaux_systemes": 0,
-   "product_management": 0,
+   "product_management": 1,
    "compta_gestion": 0,
    "finance": 0,
    "audit": 0,
@@ -10780,8 +11417,50 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "f99c039475615617": {
+  "id": "f99c039475615617",
+  "title": "Stage Data Enrichment & Master Data Assistant H/F",
+  "company": "Bonduelle",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438408698",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:04:43.598245+00:00",
+  "freshness_verified_at": "2026-07-15T21:04:43.598245+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 1,
+   "commerce_bizdev": -1,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "fa1557578cf43b63": {
@@ -10823,7 +11502,7 @@
   "highlighted": true,
   "first_seen": "2026-07-15T15:24:34+00:00",
   "last_seen_run": "2026-07-15T15:24:34+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "fa81b70f7e930480": {
@@ -10836,8 +11515,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:19:13.057431+00:00",
-  "freshness_verified_at": "2026-07-15T19:19:13.057431+00:00",
+  "sort_date": "2026-07-15T21:08:30.685361+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:30.685361+00:00",
   "domains": [
    "juridique"
   ],
@@ -10864,8 +11543,50 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "fadfda87a92c4249": {
+  "id": "fadfda87a92c4249",
+  "title": "Geopolitical Security Analyst Internship",
+  "company": "AXA Group Operations",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4422958524",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:05:41.088745+00:00",
+  "freshness_verified_at": "2026-07-15T21:05:41.088745+00:00",
+  "domains": [
+   "cybersecurite"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 3,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "fb3b87f37ac555cc": {
@@ -10906,7 +11627,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": false
  },
  "fba68dc36c84e4a7": {
@@ -10946,10 +11667,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true,
-  "freshness_verified_at": "2026-07-15T19:16:36.139773+00:00"
+  "freshness_verified_at": "2026-07-15T21:03:23.649461+00:00"
  },
  "fc3c06b5a554b7ca": {
   "id": "fc3c06b5a554b7ca",
@@ -10962,7 +11683,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:17:01.317675+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:48.342169+00:00",
   "domains": [
    "juridique"
   ],
@@ -10989,8 +11710,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T18:10:41+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "fcc919be0bf87384": {
@@ -11004,7 +11725,7 @@
   "date_known": true,
   "date_raw": "2026-07-15",
   "sort_date": "2026-07-15T00:00:00+00:00",
-  "freshness_verified_at": "2026-07-15T19:16:54.674813+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:42.534420+00:00",
   "domains": [
    "rh"
   ],
@@ -11031,8 +11752,92 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "feb2e1842c57cb62": {
+  "id": "feb2e1842c57cb62",
+  "title": "STAGE 2026_DEVLOG_01 Qualification et Développement Logiciel",
+  "company": "BLAST SOLUTIONS ET ASSOCIES",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=70e7a1582a51b115",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T21:03:24.624812+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 3,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
+  "active": true
+ },
+ "ff3904dbe3f5c2ec": {
+  "id": "ff3904dbe3f5c2ec",
+  "title": "Stage : Projets d'amélioration continue dans les départements Qualité et Contrôle Qualité, Belgique - 2026",
+  "company": "GSK",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4423653123",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T21:27:46.744353+00:00",
+  "freshness_verified_at": "2026-07-15T21:27:46.744353+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "belgique"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T21:54:19+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  },
  "ffff333efa700f25": {
@@ -11045,8 +11850,8 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T19:22:19.549466+00:00",
-  "freshness_verified_at": "2026-07-15T19:22:19.549466+00:00",
+  "sort_date": "2026-07-15T21:08:34.530619+00:00",
+  "freshness_verified_at": "2026-07-15T21:08:34.530619+00:00",
   "domains": [
    "dev_web"
   ],
@@ -11073,8 +11878,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T15:24:34+00:00",
-  "last_seen_run": "2026-07-15T20:09:08+00:00",
-  "last_seen_success": "2026-07-15T20:09:08+00:00",
+  "last_seen_run": "2026-07-15T21:54:19+00:00",
+  "last_seen_success": "2026-07-15T21:54:19+00:00",
   "active": true
  }
 }
