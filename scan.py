@@ -23,6 +23,7 @@ sauvegardé dans data/source_status.json et rendu sur le dashboard.
 Sorties :
   - Email HTML si nouvelles offres (SMTP)
   - docs/index.html : LE dashboard (GitHub Pages) avec toutes les offres
+  - data/offers.json : store complet persistant des offres actives/récentes
   - data/seen_offers.json : mémoire des offres déjà vues (delta detection)
   - data/source_status.json : diagnostic détaillé du dernier scan
 """
@@ -56,6 +57,7 @@ DOMAINS_FILE = Path("data/domains.json")
 REGIONS_FILE = Path("data/regions.json")
 SEEN_FILE = Path("data/seen_offers.json")
 STATUS_FILE = Path("data/source_status.json")
+OFFERS_FILE = Path("data/offers.json")
 DOCS_INDEX = Path("docs/index.html")
 
 
@@ -82,6 +84,9 @@ def load_domains(path: Path = DOMAINS_FILE) -> dict:
                 raise ValueError(f"Domaine {domain_id}: {field_name} invalide")
             if len({value.casefold() for value in values}) != len(values):
                 raise ValueError(f"Domaine {domain_id}: doublon dans {field_name}")
+        priority = domain.get("priority", 1)
+        if isinstance(priority, bool) or not isinstance(priority, int) or priority < 1:
+            raise ValueError(f"Domaine {domain_id}: priority doit être un entier positif")
     return domains
 
 
@@ -151,7 +156,8 @@ REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
 MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source (run courant)
 MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
 APEC_DETAIL_MAX_CALLS = 25    # budget de lectures du texte complet APEC par run
-MAX_LINKEDIN_QUERIES = 6      # allocation équitable entre domaines actifs
+MAX_LINKEDIN_QUERIES = 6      # allocation pondérée entre domaines actifs
+MAX_LINKEDIN_DESCRIPTION_QUERIES = 3  # descriptions des requêtes prioritaires
 
 # Volume par requête et par site (mesuré le 2026-07-10) :
 #  - linkedin : 25 ≈ 13 s/requête (au-delà, la pagination ajoute ~5 s/page) ;
@@ -174,6 +180,12 @@ SCAN_COMBINATION_BUDGET = 6
 MIN_JOBSPY_RESULTS_WANTED = 5
 SCAN_FIXED_ESTIMATE_S = 45
 SCAN_SECONDS_PER_EFFECTIVE_COMBINATION = 35
+
+# Une offre confirmée absente reste archivée brièvement avant purge. Cette
+# marge protège l'historique pendant un blocage prolongé tout en gardant le
+# dashboard limité à ``days_window``.
+OFFER_RETENTION_GRACE_DAYS = 7
+OFFER_RETENTION_DAYS = MAX_OFFER_AGE_DAYS + OFFER_RETENTION_GRACE_DAYS
 
 
 @dataclass(frozen=True)
@@ -389,22 +401,58 @@ def active_queries(domains: dict | None = None,
 
 def linkedin_queries(domains: dict | None = None,
                      active_ids: list[str] | None = None) -> list[str]:
-    """Allocation round-robin bornée entre domaines pour tenir sous 3 min."""
+    """Allocation pondérée et bornée des requêtes LinkedIn.
+
+    Si le budget couvre tous les domaines, chacun reçoit d'abord une requête.
+    Les créneaux restants sont distribués par tours : un domaine reçoit autant
+    de requêtes consécutives que sa priorité. Quand le budget est inférieur au
+    nombre de domaines, les priorités les plus hautes passent d'abord ; l'ordre
+    du catalogue départage les priorités égales.
+    """
     selected = active_domains(domains, active_ids)
-    buckets = [list(dict.fromkeys(domain["queries"])) for domain in selected.values()]
+    buckets = {
+        domain_id: list(dict.fromkeys(domain["queries"]))
+        for domain_id, domain in selected.items()
+    }
+    priorities = {
+        domain_id: domain.get("priority", 1)
+        for domain_id, domain in selected.items()
+    }
+    ordered_ids = sorted(
+        selected,
+        key=lambda domain_id: (-priorities[domain_id], list(selected).index(domain_id)),
+    )
     plan: list[str] = []
     seen: set[str] = set()
-    depth = 0
-    while len(plan) < MAX_LINKEDIN_QUERIES and any(depth < len(bucket) for bucket in buckets):
-        for bucket in buckets:
-            if depth < len(bucket):
-                query = bucket[depth].strip()
-                if query and query not in seen:
-                    plan.append(query)
-                    seen.add(query)
-                    if len(plan) == MAX_LINKEDIN_QUERIES:
-                        break
-        depth += 1
+    next_index = {domain_id: 0 for domain_id in selected}
+
+    def take(domain_id: str) -> bool:
+        bucket = buckets[domain_id]
+        while next_index[domain_id] < len(bucket):
+            query = bucket[next_index[domain_id]].strip()
+            next_index[domain_id] += 1
+            if query and query not in seen:
+                plan.append(query)
+                seen.add(query)
+                return True
+        return False
+
+    # Minimum garanti lorsque le nombre de créneaux le permet.
+    if MAX_LINKEDIN_QUERIES >= len(selected):
+        for domain_id in selected:
+            take(domain_id)
+            if len(plan) >= MAX_LINKEDIN_QUERIES:
+                return plan
+
+    while len(plan) < MAX_LINKEDIN_QUERIES:
+        added = False
+        for domain_id in ordered_ids:
+            for _ in range(priorities[domain_id]):
+                if len(plan) >= MAX_LINKEDIN_QUERIES:
+                    break
+                added = take(domain_id) or added
+        if not added:
+            break
     return plan
 
 
@@ -722,9 +770,12 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             verbose=int(os.environ.get("JOBSPY_VERBOSE", "1")),
         )
         if site == "linkedin":
-            # Une seule requête enrichie par run suffit au scoring de la
-            # description et garde la collecte LinkedIn dans un budget borné.
-            kwargs["linkedin_fetch_description"] = query == site_queries[0]
+            # Les trois requêtes les plus prioritaires reçoivent la description
+            # complète. Ce compromis réduit le biais « titre seul » sans payer
+            # le coût réseau de l'enrichissement sur les six requêtes.
+            kwargs["linkedin_fetch_description"] = (
+                site_queries.index(query) < MAX_LINKEDIN_DESCRIPTION_QUERIES
+            )
         if site == "google":
             # google_search_term remplace toute la requête côté JobSpy : on
             # évite la redondance « stage … stage » et on garde une syntaxe
@@ -809,7 +860,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
 # SOURCE 5 : APEC (recherche publique de stages, sans compte)
 # ============================================================
 
-APEC_HEADERS = {"Accept": "application/json", "User-Agent": "radar-stage-france/1.0"}
+APEC_HEADERS = {"Accept": "application/json", "User-Agent": "stage-radar/1.0"}
 APEC_ADVERTISER_TYPES = [143684, 143685, 143686, 143687, 143706]
 APEC_BAC5_LEVEL = 20019
 
@@ -1266,6 +1317,141 @@ def save_seen(ids: set) -> None:
     SEEN_FILE.write_text(json.dumps(sorted(ids)[-5000:], ensure_ascii=False, indent=1))
 
 
+def load_offer_store(path: Path = OFFERS_FILE) -> dict[str, dict]:
+    """Charge le store complet ; son absence est une migration valide."""
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} doit contenir un objet JSON")
+    return {
+        str(offer_id_value): dict(offer)
+        for offer_id_value, offer in data.items()
+        if isinstance(offer, dict)
+    }
+
+
+def save_offer_store(store: dict[str, dict], path: Path = OFFERS_FILE) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    ordered = {offer_id_value: store[offer_id_value] for offer_id_value in sorted(store)}
+    path.write_text(json.dumps(ordered, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
+def source_succeeded_for_offer(offer: dict, statuses: list[SourceStatus]) -> bool:
+    """Vrai si la source a répondu sainement pour toutes les régions de l'offre.
+
+    ``empty`` est un succès réseau fiable : il confirme précisément que la
+    source n'a rien renvoyé. Les statuts bloqués, en erreur, non configurés ou
+    non applicables ne doivent jamais faire disparaître une offre persistée.
+    """
+    source = offer.get("source")
+    region_ids = offer.get("regions") or [DEFAULT_REGION_ID]
+    by_region = {
+        status.region_id: status.status
+        for status in statuses
+        if status.source == source
+    }
+    return bool(region_ids) and all(
+        by_region.get(region_id) in {"success", "empty"}
+        for region_id in region_ids
+    )
+
+
+def _store_datetime(value: str) -> datetime | None:
+    if not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def reconcile_offer_store(found_offers: list[dict], statuses: list[SourceStatus],
+                          store: dict[str, dict] | None = None,
+                          run_at: datetime | None = None,
+                          retention_days: int = OFFER_RETENTION_DAYS) -> dict[str, dict]:
+    """Fusionne un run dans le store sans clignotement lors d'une panne source.
+
+    Une absence après un run sain rend l'offre inactive immédiatement. Une
+    absence causée par un connecteur bloqué laisse l'offre inchangée. Les
+    entrées inactives confirmées et âgées de plus de 14 jours sont purgées.
+    """
+    run_at = (run_at or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    run_iso = run_at.isoformat(timespec="seconds")
+    current = {offer["id"]: offer for offer in found_offers}
+    merged = {
+        offer_id_value: dict(offer)
+        for offer_id_value, offer in (store if store is not None else load_offer_store()).items()
+    }
+
+    for offer_id_value, existing in list(merged.items()):
+        if offer_id_value in current:
+            found = current.pop(offer_id_value)
+            first_seen = existing.get("first_seen") or run_iso
+            updated = dict(existing)
+            updated.update(found)
+            updated["first_seen"] = first_seen
+            updated["last_seen_run"] = run_iso
+            updated["active"] = True
+            if source_succeeded_for_offer(found, statuses):
+                updated["last_seen_success"] = run_iso
+            else:
+                updated.setdefault("last_seen_success", "")
+            merged[offer_id_value] = updated
+        elif source_succeeded_for_offer(existing, statuses):
+            existing["active"] = False
+            existing["last_seen_success"] = run_iso
+
+    for offer_id_value, found in current.items():
+        entry = dict(found)
+        entry["first_seen"] = run_iso
+        entry["last_seen_run"] = run_iso
+        entry["last_seen_success"] = (
+            run_iso if source_succeeded_for_offer(found, statuses) else ""
+        )
+        entry["active"] = True
+        merged[offer_id_value] = entry
+
+    cutoff = run_at - timedelta(days=retention_days)
+    for offer_id_value, offer in list(merged.items()):
+        first_seen = _store_datetime(offer.get("first_seen", ""))
+        last_seen_run = _store_datetime(offer.get("last_seen_run", ""))
+        last_seen_success = _store_datetime(offer.get("last_seen_success", ""))
+        confirmed_absent = (
+            not offer.get("active", True)
+            and last_seen_success is not None
+            and (last_seen_run is None or last_seen_success >= last_seen_run)
+        )
+        if first_seen and first_seen < cutoff and confirmed_absent:
+            del merged[offer_id_value]
+    return merged
+
+
+def dashboard_offers_from_store(store: dict[str, dict],
+                                now: datetime | None = None,
+                                days_window: int = MAX_OFFER_AGE_DAYS) -> list[dict]:
+    """Offres actives et fraîches à afficher, extraites du store persistant."""
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    cutoff_date = (now - timedelta(days=days_window)).date()
+    visible: list[dict] = []
+    for offer in store.values():
+        if not offer.get("active", True):
+            continue
+        published = parse_offer_date(offer.get("date"), now)
+        if published:
+            if published.date() < cutoff_date:
+                continue
+        else:
+            first_seen = _store_datetime(offer.get("first_seen", ""))
+            if first_seen and first_seen < now - timedelta(days=days_window):
+                continue
+        visible.append(offer)
+    return visible
+
+
 def send_email(new_offers: list[dict], dashboard_url: str,
                domains: dict | None = None, config: dict | None = None,
                regions: dict | None = None) -> None:
@@ -1479,12 +1665,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
         "regionLabels": {
             region_id: regions[region_id]["label"] for region_id in active_region_ids
         },
-        "activeRegionIds": active_region_ids,
         "defaultRegion": default_region_id,
-        "pageGeneratedAt": generated_at_iso,
-        "workflowFile": "scan.yml",
-        "workflowRef": "main",
-        "repository": "neyos10/radar-stage-france",
     }, ensure_ascii=False).replace("</", "<\\/")
 
     html_page = f"""<!DOCTYPE html>
@@ -1493,7 +1674,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
 <meta name="google" content="notranslate">
 <meta name="radar-generated-at" content="{html.escape(generated_at_iso, quote=True)}">
 <meta name="theme-color" content="#07111f">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
 <title>{app_name} — Dashboard</title>
 <link rel="stylesheet" href="assets/dashboard.css">
 </head>
@@ -1504,7 +1685,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
     <span class="brand-mark" aria-hidden="true">◎</span>
     <span>{app_name}</span>
   </a>
-  <div class="automation-status"><span class="live-dot" aria-hidden="true"></span><span>Automatisation active · toutes les 30 min</span></div>
+  <div class="automation-status"><span class="live-dot" aria-hidden="true"></span><span>Automatisation active · toutes les heures</span></div>
 </header>
 <main id="top">
 <section class="hero" aria-labelledby="pageTitle">
@@ -1519,9 +1700,6 @@ def render_dashboard(offers: list[dict], new_ids: set,
     </div>
   </div>
   <div class="hero-actions">
-    <button id="scanTriggerBtn" class="button button-primary" type="button">
-      <span class="button-icon" aria-hidden="true">↻</span><span class="button-label">Lancer un scan</span>
-    </button>
     <button id="refreshBtn" class="button button-secondary" type="button">
       <span class="button-icon" aria-hidden="true">↺</span><span>Actualiser les offres</span>
     </button>
@@ -1583,38 +1761,9 @@ def render_dashboard(offers: list[dict], new_ids: set,
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
 <div id="jobs">{"".join(cards)}</div>
 </section>
-<p class="footer-note">Le statut de candidature et l’accès GitHub restent uniquement dans ce navigateur. Aucun secret n’est intégré au site ni envoyé ailleurs qu’à l’API GitHub.</p>
+<p class="footer-note">Le statut de candidature reste uniquement dans ce navigateur et n’est jamais envoyé au dépôt.</p>
 </main>
 </div>
-
-<dialog id="scanDialog" class="scan-dialog" aria-labelledby="scanDialogTitle">
-  <div class="dialog-content">
-    <button id="scanDialogClose" class="dialog-close" type="button" aria-label="Fermer">×</button>
-    <div class="dialog-icon" aria-hidden="true">↻</div>
-    <p class="eyebrow">GitHub Actions</p>
-    <h2 id="scanDialogTitle">Lancer un nouveau scan</h2>
-    <p class="dialog-copy">Le workflow sera déclenché et suivi directement ici. À la fin, le dashboard se rechargera automatiquement.</p>
-    <div class="security-note"><span aria-hidden="true">◇</span><span>Le token est conservé uniquement dans la session de cet onglet. Il n’est jamais écrit dans Git, un fichier ou le dashboard.</span></div>
-    <div class="token-setup">
-      <label for="githubToken">Token GitHub finement limité</label>
-      <div class="token-row">
-        <input id="githubToken" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
-        <button id="toggleTokenVisibility" class="button button-secondary" type="button">Afficher</button>
-      </div>
-      <p class="token-help">Première utilisation uniquement : <a id="tokenCreationLink" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">créer un token sécurisé préconfiguré</a>, choisir « Only select repositories » → <strong id="tokenRepositoryName">radar-stage-france</strong>, puis vérifier « Actions: Read and write ».</p>
-    </div>
-    <div id="runState" class="run-state" data-kind="idle" hidden aria-live="polite">
-      <div class="run-state-head"><span class="state-dot" aria-hidden="true"></span><span id="runStateTitle"></span></div>
-      <p id="runStateCopy" class="run-state-copy"></p>
-      <a id="runDetailsLink" class="run-link" href="https://github.com" target="_blank" rel="noopener noreferrer" hidden>Voir les détails techniques</a>
-    </div>
-    <div class="dialog-actions">
-      <button id="forgetTokenBtn" class="button button-danger" type="button" hidden>Oublier l’accès</button>
-      <button id="runNowBtn" class="button button-primary" type="button"><span class="button-icon" aria-hidden="true">↻</span>Lancer maintenant</button>
-    </div>
-  </div>
-</dialog>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script id="radarConfig" type="application/json">{dashboard_config_json}</script>
 <script src="assets/dashboard.js" defer></script>
 </body></html>"""
@@ -1658,6 +1807,11 @@ def main() -> None:
     seen = load_seen()
     new_offers = [o for oid, o in all_offers.items() if oid not in seen]
     new_ids = {o["id"] for o in new_offers}
+    run_at = datetime.now(timezone.utc)
+    offer_store = reconcile_offer_store(
+        list(all_offers.values()), statuses, run_at=run_at
+    )
+    dashboard_offers = dashboard_offers_from_store(offer_store, run_at)
 
     final_counts = {name: 0 for name in SOURCE_NAMES}
     for o in all_offers.values():
@@ -1674,6 +1828,8 @@ def main() -> None:
 
     print(f"\nTotal : {len(all_offers)} offres · Nouvelles : {len(new_offers)} · "
           f"Durée : {human_duration(scan_duration)}")
+    print(f"Dashboard persistant : {len(dashboard_offers)} offres actives · "
+          f"store={len(offer_store)} entrées")
     for st in statuses:
         reasons = ", ".join(
             f"{k} ×{v}" for k, v in sorted(st.reject_reasons.items(), key=lambda kv: -kv[1])
@@ -1702,7 +1858,8 @@ def main() -> None:
         else:
             print("[INFO] SMTP non configuré (SMTP_USER/SMTP_PASS absents) — pas d'email envoyé.")
 
-    render_dashboard(list(all_offers.values()), new_ids, statuses, scan_duration,
+    save_offer_store(offer_store)
+    render_dashboard(dashboard_offers, new_ids, statuses, scan_duration,
                      DOMAINS, APP_CONFIG, active_ids, REGIONS, active_region_ids)
     save_seen(seen | set(all_offers.keys()))
 

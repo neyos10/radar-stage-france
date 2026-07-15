@@ -2,7 +2,7 @@ name: Radar Stage France
 
 on:
   schedule:
-    - cron: "*/30 * * * *"   # toutes les 30 min — repo public = minutes GitHub Actions gratuites et illimitées
+    - cron: "0 * * * *"      # toutes les heures, à l'heure pile
   workflow_dispatch: {}       # bouton "Run workflow" pour lancer à la main
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
 # Jamais deux scans simultanés : le suivant attend la fin du précédent
 # (cancel-in-progress: false pour ne pas interrompre un scan en cours).
 concurrency:
-  group: radar-stage-france-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -59,7 +59,7 @@ jobs:
           fi
           git config user.name "radar-stage-bot"
           git config user.email "actions@github.com"
-          git add data/seen_offers.json data/source_status.json docs/index.html
+          git add data/seen_offers.json data/offers.json data/source_status.json docs/index.html
           if git diff --quiet --cached; then
             echo "Aucun changement à committer — rien à pousser."
             exit 0

@@ -46,11 +46,33 @@ class TestDomainCatalogAndScoring(unittest.TestCase):
     def test_catalog_has_sixteen_enabled_domains(self):
         self.assertEqual(len(scan.DOMAINS), 16)
         self.assertEqual(scan.enabled_domain_ids(), list(scan.DOMAINS))
-        for domain in scan.DOMAINS.values():
+        for domain_id, domain in scan.DOMAINS.items():
             self.assertGreaterEqual(len(domain["queries"]), 4)
             self.assertLessEqual(len(domain["queries"]), 6)
             self.assertGreaterEqual(len(domain["positive"]), 12)
             self.assertLessEqual(len(domain["positive"]), 20)
+            self.assertEqual(domain["priority"], 3 if domain_id == "data_ia" else 1)
+
+    def test_linkedin_priority_gives_data_three_of_six_slots(self):
+        plan = scan.linkedin_queries()
+        data_queries = scan.DOMAINS["data_ia"]["queries"]
+        self.assertEqual(plan[:3], data_queries[:3])
+        self.assertEqual(sum(query in data_queries for query in plan), 3)
+        self.assertEqual(len(plan), scan.MAX_LINKEDIN_QUERIES)
+
+    def test_single_data_domain_has_nominal_budget_and_all_linkedin_queries(self):
+        with mock.patch.dict(os.environ, {"RADAR_DOMAINS": "data_ia"}):
+            active_ids = scan.enabled_domain_ids()
+            budget = scan.calculate_scan_budget(
+                len(active_ids), len(scan.enabled_region_ids())
+            )
+            self.assertEqual(active_ids, ["data_ia"])
+            self.assertEqual(budget.scale, 1.0)
+            self.assertEqual(budget.results_wanted, scan.JOBSPY_RESULTS_WANTED)
+            self.assertEqual(
+                scan.linkedin_queries(active_ids=active_ids),
+                scan.DOMAINS["data_ia"]["queries"],
+            )
 
     def test_title_positive_and_description_negative_score(self):
         domain = {"positive": ["signal fort"], "negative": ["risque voisin"]}
@@ -688,7 +710,7 @@ class TestJobspyAccounting(unittest.TestCase):
         self.assertEqual([call["search_term"] for call in seen], scan.linkedin_queries())
         self.assertEqual(
             [call["search_term"] for call in seen if call["linkedin_fetch_description"]],
-            [scan.linkedin_queries()[0]],
+            scan.linkedin_queries()[:scan.MAX_LINKEDIN_DESCRIPTION_QUERIES],
         )
         self.assertTrue(any(not call["linkedin_fetch_description"] for call in seen))
         self.assertTrue(all("f_SAL" not in str(call) for call in seen))
@@ -738,6 +760,79 @@ class TestMissingCredentials(unittest.TestCase):
         dump = str(st)
         self.assertNotIn("id-secret-xyz", dump)
         self.assertNotIn("pass-secret-xyz", dump)
+
+
+class TestOfferStore(unittest.TestCase):
+    RUN_N = datetime(2026, 7, 15, 10, 0, tzinfo=timezone.utc)
+
+    @staticmethod
+    def source_state(status="success"):
+        return [scan.SourceStatus(
+            source="LinkedIn", region_id="france", region_label="France",
+            status=status,
+        )]
+
+    def candidate(self):
+        candidate, reason = offer(date="2026-07-15")
+        self.assertIsNone(reason)
+        return candidate
+
+    def test_confirmed_absence_is_hidden_after_successful_run(self):
+        candidate = self.candidate()
+        store = scan.reconcile_offer_store(
+            [candidate], self.source_state(), store={}, run_at=self.RUN_N
+        )
+        next_run = self.RUN_N + timedelta(hours=1)
+        store = scan.reconcile_offer_store(
+            [], self.source_state(), store=store, run_at=next_run
+        )
+
+        self.assertFalse(store[candidate["id"]]["active"])
+        self.assertEqual(
+            store[candidate["id"]]["last_seen_success"],
+            next_run.isoformat(timespec="seconds"),
+        )
+        self.assertEqual(scan.dashboard_offers_from_store(store, next_run), [])
+
+    def test_blocked_source_keeps_offer_visible_and_unchanged(self):
+        candidate = self.candidate()
+        store = scan.reconcile_offer_store(
+            [candidate], self.source_state(), store={}, run_at=self.RUN_N
+        )
+        before = dict(store[candidate["id"]])
+        next_run = self.RUN_N + timedelta(hours=1)
+        store = scan.reconcile_offer_store(
+            [], self.source_state("blocked"), store=store, run_at=next_run
+        )
+
+        self.assertEqual(store[candidate["id"]], before)
+        self.assertEqual(
+            [item["id"] for item in scan.dashboard_offers_from_store(store, next_run)],
+            [candidate["id"]],
+        )
+
+    def test_old_confirmed_absent_offer_is_purged(self):
+        candidate = self.candidate()
+        old_run = self.RUN_N - timedelta(days=scan.OFFER_RETENTION_DAYS + 1)
+        store = scan.reconcile_offer_store(
+            [candidate], self.source_state(), store={}, run_at=old_run
+        )
+        store = scan.reconcile_offer_store(
+            [], self.source_state(), store=store, run_at=self.RUN_N
+        )
+        self.assertNotIn(candidate["id"], store)
+
+    def test_missing_store_migrates_without_crash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "offers.json"
+            self.assertEqual(scan.load_offer_store(path), {})
+            candidate = self.candidate()
+            store = scan.reconcile_offer_store(
+                [candidate], self.source_state(),
+                store=scan.load_offer_store(path), run_at=self.RUN_N,
+            )
+            scan.save_offer_store(store, path)
+            self.assertIn(candidate["id"], scan.load_offer_store(path))
 
 
 class TestStatusLabel(unittest.TestCase):
@@ -826,16 +921,12 @@ class TestDashboard(unittest.TestCase):
         self.assertIn('rel="noopener noreferrer"', page)
         self.assertIn('<meta name="google" content="notranslate">', page)
         self.assertIn('translate="no"', page)
-        self.assertIn("Lancer un scan", page)
-        self.assertIn('id="scanTriggerBtn"', page)
         self.assertIn("Actualiser les offres", page)
         self.assertIn('href="assets/dashboard.css"', page)
         self.assertIn('src="assets/dashboard.js" defer', page)
-        self.assertIn("connect-src 'self' https://api.github.com", page)
-        self.assertIn('id="githubToken" type="password"', page)
+        self.assertNotIn("api.github.com", page)
         self.assertNotIn("onclick=", page)
         self.assertIn('elements.refreshButton.addEventListener("click"', javascript)
-        self.assertIn('elements.scanButton.addEventListener("click"', javascript)
         self.assertIn('$$(".source-chip").forEach', javascript)
         self.assertIn('$$(".status-chip").forEach', javascript)
         self.assertIn('elements.highlightFilter.addEventListener("click"', javascript)
@@ -855,23 +946,28 @@ class TestDashboard(unittest.TestCase):
         # une source jamais appelée n'affiche pas un simple « 0 »
         self.assertIn("non configuré", page)
 
-    def test_direct_scan_uses_session_only_github_access(self):
+    def test_manual_scan_controls_and_github_api_code_are_removed(self):
         candidate, _ = offer()
         page = self.render([candidate])
         javascript = self.dashboard_javascript()
         config = self.dashboard_config(page)
 
-        self.assertEqual(config["workflowFile"], "scan.yml")
-        self.assertEqual(config["workflowRef"], "main")
-        self.assertIn("sessionStorage.getItem(TOKEN_STORAGE_KEY)", javascript)
-        self.assertIn("sessionStorage.setItem(TOKEN_STORAGE_KEY, token)", javascript)
-        self.assertNotIn("localStorage.setItem(TOKEN_STORAGE_KEY", javascript)
-        self.assertIn('`/actions/workflows/${workflow}/dispatches`', javascript)
-        self.assertIn('Authorization: `Bearer ${token}`', javascript)
-        self.assertIn('tokenUrl.searchParams.set("actions", "write")', javascript)
-        self.assertIn("waitForDashboardPublication", javascript)
+        for key in ("workflowFile", "workflowRef", "repository", "pageGeneratedAt"):
+            self.assertNotIn(key, config)
+        for removed in ("scanTriggerBtn", "scanDialog", "githubToken", "runNowBtn"):
+            self.assertNotIn(removed, page)
+            self.assertNotIn(removed, javascript)
+        self.assertNotIn("api.github.com", javascript)
+        self.assertNotIn("sessionStorage", javascript)
         self.assertIn("window.location.reload()", javascript)
-        self.assertNotRegex(page, r'id="githubToken"[^>]+value=')
+
+    def test_workflow_runs_hourly_and_keeps_manual_github_dispatch(self):
+        workflow = (Path(scan.__file__).resolve().parent
+                    / ".github/workflows/scan.yml").read_text(encoding="utf-8")
+        self.assertIn('cron: "0 * * * *"', workflow)
+        self.assertNotIn("*/30 * * * *", workflow)
+        self.assertIn("workflow_dispatch", workflow)
+        self.assertIn("data/offers.json", workflow)
 
     def test_search_indexes_title_company_and_location(self):
         candidate, _ = offer(

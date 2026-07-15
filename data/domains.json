@@ -2,6 +2,7 @@
   "data_ia": {
     "label": "Data / IA",
     "group": "Tech",
+    "priority": 3,
     "queries": [
       "stage data engineer",
       "stage data engineering PFE",
@@ -64,6 +65,7 @@
   "dev_web": {
     "label": "Développement Web / Logiciel",
     "group": "Tech",
+    "priority": 1,
     "queries": [
       "stage développeur web",
       "stage développeur logiciel",
@@ -111,6 +113,7 @@
   "devops_cloud": {
     "label": "DevOps / Cloud",
     "group": "Tech",
+    "priority": 1,
     "queries": [
       "stage devops",
       "stage cloud engineer",
@@ -155,6 +158,7 @@
   "cybersecurite": {
     "label": "Cybersécurité",
     "group": "Tech",
+    "priority": 1,
     "queries": [
       "stage cybersécurité",
       "stage analyste SOC",
@@ -199,6 +203,7 @@
   "reseaux_systemes": {
     "label": "Réseaux / Systèmes",
     "group": "Tech",
+    "priority": 1,
     "queries": [
       "stage ingénieur réseaux",
       "stage administrateur systèmes",
@@ -241,6 +246,7 @@
   "product_management": {
     "label": "Product Management",
     "group": "Tech",
+    "priority": 1,
     "queries": [
       "stage product manager",
       "stage product owner",
@@ -282,6 +288,7 @@
   "compta_gestion": {
     "label": "Comptabilité / Contrôle de gestion",
     "group": "Business / Gestion",
+    "priority": 1,
     "queries": [
       "stage comptabilité",
       "stage contrôle de gestion",
@@ -323,6 +330,7 @@
   "finance": {
     "label": "Finance / Marchés",
     "group": "Business / Gestion",
+    "priority": 1,
     "queries": [
       "stage analyste financier",
       "stage finance de marché",
@@ -366,6 +374,7 @@
   "audit": {
     "label": "Audit",
     "group": "Business / Gestion",
+    "priority": 1,
     "queries": [
       "stage audit financier",
       "stage auditeur junior",
@@ -406,6 +415,7 @@
   "supply_chain": {
     "label": "Supply Chain / Logistique / Achats",
     "group": "Business / Gestion",
+    "priority": 1,
     "queries": [
       "stage supply chain",
       "stage logistique",
@@ -446,6 +456,7 @@
   "commerce_bizdev": {
     "label": "Commerce / Business Development",
     "group": "Business / Gestion",
+    "priority": 1,
     "queries": [
       "stage business development",
       "stage commercial B2B",
@@ -487,6 +498,7 @@
   "rh": {
     "label": "Ressources Humaines",
     "group": "RH / Juridique",
+    "priority": 1,
     "queries": [
       "stage ressources humaines",
       "stage recrutement",
@@ -528,6 +540,7 @@
   "juridique": {
     "label": "Juridique / Droit des affaires",
     "group": "RH / Juridique",
+    "priority": 1,
     "queries": [
       "stage juriste droit des affaires",
       "stage juridique contrats",
@@ -568,6 +581,7 @@
   "electronique_embarque": {
     "label": "Électronique / Systèmes embarqués",
     "group": "Ingénierie",
+    "priority": 1,
     "queries": [
       "stage systèmes embarqués",
       "stage électronique embarquée",
@@ -611,6 +625,7 @@
   "genie_civil_btp": {
     "label": "Génie civil / BTP",
     "group": "Ingénierie",
+    "priority": 1,
     "queries": [
       "stage génie civil",
       "stage ingénieur BTP",
@@ -652,6 +667,7 @@
   "mecanique_industriel": {
     "label": "Mécanique / Industriel",
     "group": "Ingénierie",
+    "priority": 1,
     "queries": [
       "stage ingénieur mécanique",
       "stage génie industriel",

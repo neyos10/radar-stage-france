@@ -1,6 +1,6 @@
 # 🎯 Radar Stage France
 
-Pipeline autonome qui collecte toutes les 30 minutes des offres de stage dans
+Pipeline autonome qui collecte toutes les heures des offres de stage dans
 les régions activées, les classe dans un ou plusieurs domaines, détecte les
 nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
 GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
@@ -14,8 +14,8 @@ un timeout ou l'absence d'une clé API n'arrête pas les autres connecteurs.
 
 Le code métier n'est pas personnalisé dans `scan.py` :
 
-- `data/domains.json` contient les 16 domaines actifs, leurs requêtes et leurs
-  vocabulaires positifs/négatifs.
+- `data/domains.json` contient les 16 domaines actifs, leurs requêtes, leurs
+  vocabulaires positifs/négatifs et leur priorité de collecte optionnelle.
 - `data/regions.json` contient les paramètres natifs de localisation. Les quatre
   régions sont actives ; passer `enabled` à `false` permet d'en retirer une sans
   modifier le code.
@@ -42,6 +42,11 @@ lorsqu'une seule région est active et réapparaît automatiquement dès la
 seconde. Le statut « postulé » reste dans le `localStorage` du navigateur et
 n'est jamais envoyé à GitHub.
 
+`data/offers.json` conserve le contenu complet des offres et leurs dates de
+première/dernière observation. Une offre ne disparaît pas si son connecteur est
+temporairement bloqué ; elle est masquée seulement après une absence confirmée
+par un run sain. Les entrées inactives sont purgées après 14 jours.
+
 ## Installation
 
 1. Publier le projet dans un dépôt GitHub public.
@@ -60,27 +65,10 @@ n'est jamais envoyé à GitHub.
 Sans identifiants optionnels, leur source apparaît « non configurée » et le
 reste du scan continue normalement.
 
-### Lancement direct depuis le dashboard
-
-Le bouton **Lancer un scan** déclenche `scan.yml`, suit son exécution puis
-recharge automatiquement les nouvelles offres, sans ouvrir l'interface GitHub
-Actions. Lors de la première utilisation seulement :
-
-1. cliquer sur le lien de création proposé dans la fenêtre du dashboard ;
-2. limiter le fine-grained personal access token au dépôt
-   `neyos10/radar-stage-france` ;
-3. vérifier la permission **Actions: Read and write**, puis coller le token.
-
-GitHub Pages étant un site statique public, ce consentement côté navigateur est
-nécessaire pour authentifier l'appel à l'API. Le token reste exclusivement dans
-le `sessionStorage` de l'onglet, peut être oublié à tout moment et n'est jamais
-écrit dans le dépôt, le HTML ou les logs. GitHub recommande de limiter les
-fine-grained tokens au dépôt et aux permissions strictement nécessaires :
-[gestion des tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) et
-[API workflow dispatch](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event).
-
-Le bouton **Actualiser les offres** recharge uniquement le dernier dashboard
-déjà publié.
+Le scan tourne automatiquement chaque heure. Pour un run immédiat, utiliser
+**Run workflow** dans l'onglet GitHub Actions du dépôt. Le bouton
+**Actualiser les offres** recharge uniquement le dernier dashboard publié ; le
+site ne demande et ne conserve aucun token GitHub.
 
 ## Fraîcheur et robustesse
 
@@ -96,13 +84,19 @@ déjà publié.
   également ignorés proprement pour cette source.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
-- LinkedIn est limité à six requêtes distribuées équitablement entre domaines
-  actifs afin de garder un temps de scan maîtrisé.
+- LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.
+  Chaque domaine reçoit d'abord un créneau lorsque le budget le permet, puis les
+  créneaux restants suivent une rotation pondérée. Les trois requêtes les plus
+  prioritaires récupèrent aussi la description complète pour améliorer le
+  scoring sans enrichir les six appels.
 - le budget est calculé par `domaines actifs × régions actives`. Au-delà de six
   combinaisons, `results_wanted` est multiplié par `6 / combinaisons`, avec un
   plancher de cinq résultats. L'estimation affichée utilise `45 s + 35 s ×`
   le nombre de combinaisons effectives, plafonné à six (maximum indicatif :
-  4 min 15 s).
+  4 min 15 s). Cette réduction reste uniforme : Indeed, Glassdoor et Google
+  exécutent toutes les requêtes actives, donc aucun domaine n'y perd de
+  créneau ; seule l'allocation LinkedIn, globalement plafonnée, doit être
+  pondérée par priorité.
 - le commit automatisé utilise un rebase et trois tentatives sans force-push.
 
 Pour un benchmark ponctuel sans modifier le catalogue, les environnements
