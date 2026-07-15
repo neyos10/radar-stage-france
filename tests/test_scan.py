@@ -23,11 +23,21 @@ import scan
 TODAY = datetime.now(timezone.utc).date().isoformat()
 YESTERDAY = (datetime.now(timezone.utc) - timedelta(days=1)).date().isoformat()
 TOO_OLD = (datetime.now(timezone.utc) - timedelta(days=30)).date().isoformat()
+RECENT_1H = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()
+RECENT_2H = (datetime.now(timezone.utc) - timedelta(hours=2)).isoformat()
+RECENT_3H = (datetime.now(timezone.utc) - timedelta(hours=3)).isoformat()
 
 
 def offer(title="Stage Data Engineer", company="ACME", location="Paris",
           url="https://example.com/o/1", source="LinkedIn", date=TODAY, **kw):
     return scan.make_offer(title, company, location, url, source, date, **kw)
+
+
+def fake_response(payload=None, status=200, headers=None):
+    response = mock.Mock(status_code=status, headers=headers or {})
+    response.json.return_value = payload or {}
+    response.raise_for_status.return_value = None
+    return response
 
 
 class TestCleanText(unittest.TestCase):
@@ -53,12 +63,12 @@ class TestDomainCatalogAndScoring(unittest.TestCase):
             self.assertLessEqual(len(domain["positive"]), 20)
             self.assertEqual(domain["priority"], 3 if domain_id == "data_ia" else 1)
 
-    def test_linkedin_priority_gives_data_three_of_six_slots(self):
+    def test_linkedin_plan_covers_every_active_query(self):
         plan = scan.linkedin_queries()
-        data_queries = scan.DOMAINS["data_ia"]["queries"]
-        self.assertEqual(plan[:3], data_queries[:3])
-        self.assertEqual(sum(query in data_queries for query in plan), 3)
-        self.assertEqual(len(plan), scan.MAX_LINKEDIN_QUERIES)
+        self.assertEqual(set(plan), set(scan.active_queries()))
+        self.assertEqual(len(plan), len(scan.active_queries()))
+        for domain in scan.DOMAINS.values():
+            self.assertTrue(set(domain["queries"]).issubset(plan))
 
     def test_single_data_domain_has_nominal_budget_and_all_linkedin_queries(self):
         with mock.patch.dict(os.environ, {"RADAR_DOMAINS": "data_ia"}):
@@ -255,16 +265,12 @@ class TestRegions(unittest.TestCase):
         self.assertEqual(set(offers[0]["regions"]), {"france", "belgique"})
         self.assertEqual(len(statuses), 2)
 
-    def test_high_combination_budget_scales_results(self):
+    def test_high_combination_budget_never_scales_results(self):
         budget = scan.calculate_scan_budget(4, 2)
         self.assertTrue(budget.is_high)
         self.assertEqual(budget.combination_count, 8)
-        self.assertAlmostEqual(budget.scale, 6 / 8)
-        for site, base in scan.JOBSPY_RESULTS_WANTED.items():
-            self.assertGreaterEqual(budget.results_wanted[site],
-                                    scan.MIN_JOBSPY_RESULTS_WANTED)
-            self.assertLess(budget.results_wanted[site], base)
-        self.assertLessEqual(budget.estimated_duration_s, 255)
+        self.assertEqual(budget.scale, 1.0)
+        self.assertEqual(budget.results_wanted, scan.JOBSPY_RESULTS_WANTED)
 
 
 class TestParseOfferDate(unittest.TestCase):
@@ -307,12 +313,45 @@ class TestMakeOffer(unittest.TestCase):
         self.assertIn(f"date_brute='{TOO_OLD}'", stderr.getvalue())
         self.assertIn("date_parsee=", stderr.getvalue())
 
+    def test_sliding_24_hour_boundaries_and_utc_normalization(self):
+        now = datetime(2026, 7, 15, 12, 0, tzinfo=timezone.utc)
+        cases = [
+            (now - timedelta(hours=23, minutes=59), True),
+            (now - timedelta(hours=24), True),
+            (now - timedelta(hours=24, minutes=1), False),
+        ]
+        for index, (published, accepted) in enumerate(cases):
+            candidate, reason = offer(
+                date=published.isoformat(), now=now,
+                url=f"https://example.com/boundary/{index}",
+            )
+            self.assertEqual(candidate is not None, accepted)
+            self.assertEqual(reason, None if accepted else scan.REASON_TOO_OLD)
+
+        naive = (now - timedelta(hours=1)).replace(tzinfo=None).isoformat()
+        candidate, reason = offer(date=naive, now=now,
+                                  url="https://example.com/naive")
+        self.assertIsNone(reason)
+        self.assertEqual(candidate["sort_date"],
+                         (now - timedelta(hours=1)).isoformat())
+
+        offset_date = (now - timedelta(hours=2)).astimezone(
+            timezone(timedelta(hours=2))
+        ).isoformat()
+        candidate, reason = offer(date=offset_date, now=now,
+                                  url="https://example.com/offset")
+        self.assertIsNone(reason)
+        self.assertEqual(candidate["sort_date"],
+                         (now - timedelta(hours=2)).isoformat())
+
     def test_missing_and_unreadable_dates_are_kept(self):
         for date in (None, "", "à confirmer"):
-            o, reason = offer(date=date, url=f"https://example.com/{date!r}")
+            with mock.patch("sys.stderr", new_callable=io.StringIO) as stderr:
+                o, reason = offer(date=date, url=f"https://example.com/{date!r}")
             self.assertIsNone(reason)
             self.assertFalse(o["date_known"])
             self.assertEqual(o["date"], "")
+            self.assertIn("DATE_INCONNUE", stderr.getvalue())
 
     def test_fresh_relative_date_is_accepted(self):
         o, reason = offer(date="à l'instant")
@@ -529,6 +568,7 @@ class TestDedup(unittest.TestCase):
         scan.register_offer(st, offers, a, r)
         self.assertEqual(st.accepted_count, 1)
         self.assertEqual(st.reject_reasons.get(scan.REASON_DUPLICATE), 1)
+        self.assertEqual(st.duplicate_count, 1)
 
     def test_unknown_date_counted_when_accepted(self):
         st = scan.SourceStatus(source="Test")
@@ -557,15 +597,15 @@ class TestDedup(unittest.TestCase):
 
 class TestSort(unittest.TestCase):
     def test_three_known_dates_newest_first(self):
-        oldest_date = (datetime.now(timezone.utc) - timedelta(days=2)).date().isoformat()
-        old, _ = offer(title="Stage ETL ancien", date=oldest_date, url="https://e.com/1")
-        middle, _ = offer(title="Stage ETL milieu", date=YESTERDAY, url="https://e.com/2")
-        new, _ = offer(title="Stage ETL récent", date=TODAY, url="https://e.com/3")
+        old, _ = offer(title="Stage ETL ancien", date=RECENT_3H, url="https://e.com/1")
+        middle, _ = offer(title="Stage ETL milieu", date=RECENT_2H, url="https://e.com/2")
+        new, _ = offer(title="Stage ETL récent", date=RECENT_1H, url="https://e.com/3")
         ordered = scan.sort_offers([old, new, middle])
-        self.assertEqual([o["date"] for o in ordered], [TODAY, YESTERDAY, oldest_date])
+        self.assertEqual([o["title"] for o in ordered],
+                         ["Stage ETL récent", "Stage ETL milieu", "Stage ETL ancien"])
 
     def test_unknown_date_is_kept_and_visible_first(self):
-        known, _ = offer(date=YESTERDAY, url="https://e.com/known")
+        known, _ = offer(date=RECENT_1H, url="https://e.com/known")
         unknown, _ = offer(date=None, url="https://e.com/unknown")
         ordered = scan.sort_offers([known, unknown])
         self.assertEqual(ordered[0]["id"], unknown["id"])
@@ -655,12 +695,15 @@ class TestJobspyAccounting(unittest.TestCase):
 
         offers, st = scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=fake_scrape)
         self.assertEqual(st.raw_count, 3)
-        self.assertEqual(st.accepted_count, 1)
-        self.assertEqual(st.rejected_count, 2)
-        self.assertEqual(st.reject_reasons.get(scan.REASON_TOO_OLD), 1)
+        # JobSpy a déjà appliqué son filtre natif 24 h ; une date réduite au
+        # jour par la librairie n'est pas réinterprétée comme une heure exacte.
+        self.assertEqual(st.accepted_count, 2)
+        self.assertEqual(st.rejected_count, 1)
+        self.assertIsNone(st.reject_reasons.get(scan.REASON_TOO_OLD))
         self.assertEqual(st.reject_reasons.get(scan.REASON_NO_DOMAIN), 1)
         self.assertEqual(st.status, "success")
-        self.assertEqual(len(offers), 1)
+        self.assertEqual(len(offers), 2)
+        self.assertGreaterEqual(st.pages_fetched, 1)
 
     def test_google_search_term_not_redundant(self):
         import pandas as pd
@@ -690,10 +733,10 @@ class TestJobspyAccounting(unittest.TestCase):
 
         scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=make_fake("linkedin"))
         scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=make_fake("indeed"))
-        self.assertEqual(seen["linkedin"]["results_wanted"], 25)
-        self.assertEqual(seen["indeed"]["results_wanted"], 30)
-        self.assertEqual(seen["linkedin"]["hours_old"], 168)
-        self.assertEqual(seen["indeed"]["hours_old"], 168)
+        self.assertEqual(seen["linkedin"]["results_wanted"], 1000)
+        self.assertEqual(seen["indeed"]["results_wanted"], 1000)
+        self.assertEqual(seen["linkedin"]["hours_old"], 24)
+        self.assertEqual(seen["indeed"]["hours_old"], 24)
         self.assertEqual(seen["indeed"]["country_indeed"], "France")
         self.assertNotIn("job_type", seen["linkedin"])
         self.assertNotIn("job_type", seen["indeed"])
@@ -732,6 +775,103 @@ class TestApecNativeFilters(unittest.TestCase):
         self.assertEqual(p["typesContrat"], [597171])
         self.assertEqual(p["niveauEtude"], 20019)  # Bac+5 ; 20020 signifie > Bac+5.
         self.assertEqual(p["sorts"], [{"type": "DATE", "direction": "DESCENDING"}])
+
+
+class TestSourcePagination(unittest.TestCase):
+    CATALOG = {
+        "data": {
+            "label": "Data", "group": "Test",
+            "queries": ["stage data engineer"],
+            "positive": ["data engineer"], "negative": ["hors sujet"],
+            "enabled": True,
+        }
+    }
+
+    @staticmethod
+    def apec_item(index):
+        return {
+            "numeroOffre": str(index), "intitule": "Stage Data Engineer",
+            "nomCommercial": "ACME", "lieuTexte": "Paris",
+            "datePublication": RECENT_1H, "texteOffre": "data engineer",
+        }
+
+    def test_apec_paginates_until_short_page(self):
+        responses = [
+            fake_response({"resultats": [self.apec_item(i) for i in range(100)]}),
+            fake_response({"resultats": [self.apec_item(100)]}),
+        ]
+        with mock.patch.object(scan.requests, "post", side_effect=responses) as post:
+            offers, status = scan.fetch_apec_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 101)
+        self.assertEqual(status.pages_fetched, 2)
+        self.assertEqual(status.raw_count, 101)
+        self.assertEqual(
+            [call.kwargs["json"]["pagination"]["startIndex"]
+             for call in post.call_args_list],
+            [0, 100],
+        )
+
+    def test_adzuna_paginates_and_uses_native_one_day_filter(self):
+        def item(index):
+            return {
+                "id": str(index), "title": "Stage Data Engineer",
+                "company": {"display_name": "ACME"},
+                "location": {"display_name": "Paris"},
+                "redirect_url": f"https://e.com/adzuna/{index}",
+                "created": RECENT_1H, "description": "data engineer",
+            }
+
+        responses = [
+            fake_response({"count": 51, "results": [item(i) for i in range(50)]}),
+            fake_response({"count": 51, "results": [item(50)]}),
+        ]
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "id",
+                                          "ADZUNA_APP_KEY": "key"}), \
+             mock.patch.object(scan.requests, "get", side_effect=responses) as get:
+            offers, status = scan.fetch_adzuna_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 51)
+        self.assertEqual(status.pages_fetched, 2)
+        self.assertEqual(get.call_args_list[0].kwargs["params"]["max_days_old"], 1)
+        self.assertTrue(get.call_args_list[1].args[0].endswith("/2"))
+
+    def test_france_travail_paginates_ranges_and_filters_one_day(self):
+        def item(index):
+            return {
+                "id": str(index), "intitule": "Stage Data Engineer",
+                "entreprise": {"nom": "ACME"},
+                "lieuTravail": {"libelle": "Paris"},
+                "dateCreation": RECENT_1H, "description": "data engineer",
+            }
+
+        responses = [
+            fake_response(
+                {"resultats": [item(i) for i in range(150)]},
+                headers={"Content-Range": "offres 0-149/151"},
+            ),
+            fake_response(
+                {"resultats": [item(150)]},
+                headers={"Content-Range": "offres 150-150/151"},
+            ),
+        ]
+        with mock.patch.dict(os.environ, {"FT_CLIENT_ID": "id",
+                                          "FT_CLIENT_SECRET": "key"}), \
+             mock.patch.object(scan, "ft_token", return_value="token"), \
+             mock.patch.object(scan.requests, "get", side_effect=responses) as get:
+            offers, status = scan.fetch_france_travail_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 151)
+        self.assertEqual(status.pages_fetched, 2)
+        self.assertEqual(
+            [call.kwargs["params"]["range"] for call in get.call_args_list],
+            ["0-149", "150-299"],
+        )
+        self.assertTrue(all(call.kwargs["params"]["publieeDepuis"] == 1
+                            for call in get.call_args_list))
 
 
 class TestMissingCredentials(unittest.TestCase):
@@ -809,6 +949,24 @@ class TestOfferStore(unittest.TestCase):
         self.assertEqual(
             [item["id"] for item in scan.dashboard_offers_from_store(store, next_run)],
             [candidate["id"]],
+        )
+
+    def test_native_freshness_verification_expires_after_24_hours(self):
+        checked_at = datetime(2026, 7, 15, 10, 0, tzinfo=timezone.utc)
+        candidate, reason = offer(
+            date="2026-07-15", now=checked_at, freshness_verified=True,
+            url="https://e.com/native-window",
+        )
+        self.assertIsNone(reason)
+        candidate["active"] = True
+        candidate["first_seen"] = checked_at.isoformat()
+        store = {candidate["id"]: candidate}
+        self.assertEqual(len(scan.dashboard_offers_from_store(store, checked_at)), 1)
+        self.assertEqual(
+            scan.dashboard_offers_from_store(
+                store, checked_at + timedelta(hours=24, minutes=1)
+            ),
+            [],
         )
 
     def test_old_confirmed_absent_offer_is_purged(self):
@@ -980,8 +1138,8 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("normalizeText(job.dataset.search).includes(searchTerm)", javascript)
 
     def test_offers_sorted_newest_first(self):
-        older, _ = offer(title="Stage ETL B", date=YESTERDAY, url="https://e.com/b")
-        newer, _ = offer(title="Stage ETL A", date=TODAY, url="https://e.com/a")
+        older, _ = offer(title="Stage ETL B", date=RECENT_2H, url="https://e.com/b")
+        newer, _ = offer(title="Stage ETL A", date=RECENT_1H, url="https://e.com/a")
         page = self.render([older, newer])
         self.assertLess(page.index("https://e.com/a"), page.index("https://e.com/b"))
 

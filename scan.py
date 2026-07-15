@@ -32,6 +32,7 @@ import hashlib
 import html
 import json
 import logging
+import math
 import os
 import re
 import smtplib
@@ -139,8 +140,11 @@ SOURCE_NAMES = [
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
 TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfa|pfe)\b", re.I)
 
-# On ne conserve que les offres publiées récemment.
+# Fenêtre métier de collecte : exactement 24 heures glissantes en UTC. La
+# configuration en jours reste utilisée par l'interface et la rétention ; elle
+# n'intervient plus dans la sélection des résultats du scan courant.
 MAX_OFFER_AGE_DAYS = int(APP_CONFIG["days_window"])
+OFFER_WINDOW_HOURS = 24
 
 # Calibration multi-label. Le seuil 2 conserve la dominance du titre (+3)
 # face à un seul signal négatif de description (-1) et permet aux intitulés
@@ -155,31 +159,38 @@ DOMAIN_SCORE_THRESHOLD = 2
 REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
 MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source (run courant)
 MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
-APEC_DETAIL_MAX_CALLS = 25    # budget de lectures du texte complet APEC par run
-MAX_LINKEDIN_QUERIES = 6      # allocation pondérée entre domaines actifs
+APEC_DETAIL_MAX_CALLS = 1000  # plafond technique, jamais un quota métier
+MAX_LINKEDIN_QUERIES = 1000   # plafond anti-boucle ; couvre le catalogue entier
 MAX_LINKEDIN_DESCRIPTION_QUERIES = 3  # descriptions des requêtes prioritaires
 
-# Volume par requête et par site (mesuré le 2026-07-10) :
-#  - linkedin : 25 ≈ 13 s/requête (au-delà, la pagination ajoute ~5 s/page) ;
-#    à 15 on perdait des offres de stage réelles présentes en page 2.
-#  - indeed : l'API répond en ~1 s quel que soit le volume → 30.
-#  - glassdoor : souvent bloqué (403), on reste modeste pour ne pas insister.
-#  - google : jobspy plafonne lui-même selon ce que Google renvoie.
-JOBSPY_RESULTS_WANTED = {"linkedin": 25, "indeed": 30, "glassdoor": 15, "google": 30}
+# Plafonds purement techniques de JobSpy. Ils déclenchent sa pagination interne
+# jusqu'à la fin réelle des résultats ; Google et Glassdoor plafonnent eux-mêmes
+# à 900, LinkedIn à 1000. Ces valeurs ne sont jamais réduites par le nombre de
+# domaines ou de régions.
+JOBSPY_RESULTS_WANTED = {
+    "linkedin": 1000, "indeed": 1000, "glassdoor": 900, "google": 900,
+}
+JOBSPY_PAGE_SIZES = {"linkedin": 25, "indeed": 100, "glassdoor": 30, "google": 10}
 # Dans la table officielle JobSpy 1.1.82, seules France et Belgium portent le
 # marqueur Glassdoor parmi les quatre pays du catalogue. Indeed accepte les
 # quatre valeurs, mais Glassdoor ne doit pas être appelé pour LU/MA.
 GLASSDOOR_SUPPORTED_REGION_COUNTRIES = {"France", "Belgium"}
 
-# Garde-fou combinatoire. Au-delà de six couples domaine × région, le volume
-# demandé à JobSpy est multiplié par 6/Z (Z = nombre de combinaisons), avec
-# un plancher de cinq résultats pour garder chaque recherche utile. L'estimation
-# affichée est volontairement prudente : 45 s fixes + 35 s par combinaison
-# effective, plafonnée à six, soit environ 4 min 15 s pour un gros catalogue.
+# Le garde-fou combinatoire reste uniquement informatif : il ne réduit plus le
+# volume. Les limites effectives sont celles des connecteurs et les plafonds de
+# pagination élevés ci-dessus.
 SCAN_COMBINATION_BUDGET = 6
-MIN_JOBSPY_RESULTS_WANTED = 5
 SCAN_FIXED_ESTIMATE_S = 45
 SCAN_SECONDS_PER_EFFECTIVE_COMBINATION = 35
+
+# Pagination explicite des API non-JobSpy. Arrêt à la fin réelle, ou après deux
+# pages successives sans nouveau résultat ; MAX_SOURCE_PAGES est la seule
+# protection contre une boucle distante défectueuse.
+MAX_SOURCE_PAGES = 100
+MAX_STALE_PAGES = 2
+APEC_PAGE_SIZE = 100
+ADZUNA_PAGE_SIZE = 50
+FRANCE_TRAVAIL_PAGE_SIZE = 150
 
 # Une offre confirmée absente reste archivée brièvement avant purge. Cette
 # marge protège l'historique pendant un blocage prolongé tout en gardant le
@@ -207,12 +218,9 @@ def calculate_scan_budget(domain_count: int, region_count: int) -> ScanBudget:
     if domain_count <= 0 or region_count <= 0:
         raise ValueError("Le budget exige au moins un domaine et une région")
     combinations = domain_count * region_count
-    scale = min(1.0, SCAN_COMBINATION_BUDGET / combinations)
-    wanted = {
-        site: max(MIN_JOBSPY_RESULTS_WANTED, int(round(base * scale)))
-        for site, base in JOBSPY_RESULTS_WANTED.items()
-    }
-    effective_combinations = combinations * scale
+    scale = 1.0
+    wanted = dict(JOBSPY_RESULTS_WANTED)
+    effective_combinations = combinations
     estimated = int(round(
         SCAN_FIXED_ESTIMATE_S
         + SCAN_SECONDS_PER_EFFECTIVE_COMBINATION * effective_combinations
@@ -222,7 +230,7 @@ def calculate_scan_budget(domain_count: int, region_count: int) -> ScanBudget:
 # Raisons de rejet (diagnostic)
 REASON_NO_TITLE = "titre manquant"
 REASON_NOT_INTERNSHIP = "pas un stage"
-REASON_TOO_OLD = f"plus de {MAX_OFFER_AGE_DAYS} jours"
+REASON_TOO_OLD = f"plus de {OFFER_WINDOW_HOURS} heures"
 REASON_NO_DOMAIN = "aucun domaine"
 REASON_DUPLICATE = "doublon"
 
@@ -246,6 +254,9 @@ class SourceStatus:
     rejected_count: int = 0
     reject_reasons: dict = field(default_factory=dict)
     unknown_date_count: int = 0
+    too_old_count: int = 0
+    duplicate_count: int = 0
+    pages_fetched: int = 0
     duration_s: float = 0.0
     http_error: str = ""
     note: str = ""
@@ -254,6 +265,10 @@ class SourceStatus:
         reason = reason or "raison inconnue"
         self.rejected_count += 1
         self.reject_reasons[reason] = self.reject_reasons.get(reason, 0) + 1
+        if reason == REASON_TOO_OLD:
+            self.too_old_count += 1
+        elif reason == REASON_DUPLICATE:
+            self.duplicate_count += 1
 
     def finalize(self) -> None:
         if self.status in ("blocked", "error", "disabled_missing_credentials",
@@ -321,6 +336,19 @@ def register_offer(status: SourceStatus, offers: dict,
         status.accepted_count += 1
         if not offer.get("date_known", bool(offer.get("date"))):
             status.unknown_date_count += 1
+
+
+def log_collection_summary(status: SourceStatus) -> None:
+    """Bilan homogène demandé pour chaque source et chaque région."""
+    print(
+        f"[COLLECTE] {status.source} · {status.region_label} : "
+        f"récupérées={status.raw_count} "
+        f"conservées_24h={status.accepted_count} "
+        f"trop_anciennes={status.too_old_count} "
+        f"doublons={status.duplicate_count} "
+        f"dates_inconnues={status.unknown_date_count} "
+        f"pages={status.pages_fetched}"
+    )
 
 
 # ============================================================
@@ -624,7 +652,9 @@ def make_offer(title, company, location, url, source, date="",
                confirmed_internship=False, description="", domains: dict | None = None,
                active_ids: list[str] | None = None,
                region_id: str = DEFAULT_REGION_ID,
-               regions: dict | None = None) -> tuple[dict | None, str | None]:
+               regions: dict | None = None,
+               now: datetime | None = None,
+               freshness_verified: bool = False) -> tuple[dict | None, str | None]:
     """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
     regions = regions or REGIONS
     if region_id not in regions:
@@ -635,10 +665,23 @@ def make_offer(title, company, location, url, source, date="",
     if not confirmed_internship and not TITLE_MUST_MATCH.search(title):
         return None, REASON_NOT_INTERNSHIP
     description = clean_text(description)
-    published_at = parse_offer_date(date)
-    if published_at and published_at < datetime.now(timezone.utc) - timedelta(days=MAX_OFFER_AGE_DAYS):
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    now = now.astimezone(timezone.utc)
+    published_at = parse_offer_date(date, now)
+    if (published_at and not freshness_verified
+            and published_at < now - timedelta(hours=OFFER_WINDOW_HOURS)):
         _log_old_date_rejection(source, title, date, published_at)
         return None, REASON_TOO_OLD
+    if published_at is None:
+        safe_title = re.sub(r"[\r\n\t]+", " ", title)[:100]
+        raw = re.sub(r"[\r\n\t]+", " ", clean_text(date))[:100]
+        print(
+            f"[DATE_INCONNUE] source={source} titre={safe_title!r} "
+            f"date_brute={raw!r} — fraîcheur 24 h non vérifiable",
+            file=sys.stderr,
+        )
     matched_domains, domain_scores = score_offer_domains(
         title, description, domains=domains, active_ids=active_ids
     )
@@ -657,9 +700,10 @@ def make_offer(title, company, location, url, source, date="",
         "date": published_at.date().isoformat() if published_at else "",
         "date_known": published_at is not None,
         "date_raw": clean_text(date),
-        # Une date inconnue est classée prudemment au moment du scan : les
-        # sources sont déjà bornées nativement à 7 jours via hours_old ou API.
-        "sort_date": (published_at or datetime.now(timezone.utc)).isoformat(),
+        # Une date inconnue conserve le comportement historique : classement
+        # au moment du scan, sans prétendre qu'il s'agit de sa publication.
+        "sort_date": (published_at or now).isoformat(),
+        "freshness_verified_at": (now.isoformat() if freshness_verified else ""),
         "domains": matched_domains,
         "regions": [region_id],
         "domain_scores": domain_scores,
@@ -720,6 +764,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
         status.note = "Glassdoor non supporté par JobSpy 1.1.82 pour ce pays"
         status.duration_s = round(time.monotonic() - started, 1)
         print(f"[INFO] Glassdoor · {status.region_label} : non applicable à cette région")
+        log_collection_summary(status)
         return [], status
     if scrape_fn is None:
         try:
@@ -728,6 +773,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             status.status = "error"
             status.note = "python-jobspy non installé"
             status.duration_s = round(time.monotonic() - started, 1)
+            log_collection_summary(status)
             return [], status
 
     offers: dict[str, dict] = {}
@@ -743,6 +789,12 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
 
         def emit(self, record):
             self.records.append((record.levelno, record.getMessage()))
+
+    def pages_in_records(records: list[tuple[int, str]], raw_count: int) -> int:
+        logged = sum("search page:" in message for _, message in records)
+        fallback = max(1, math.ceil(raw_count / JOBSPY_PAGE_SIZES[site]))
+        # Google journalise seulement les pages suivant sa page initiale.
+        return max(fallback, logged + (1 if site == "google" else 0))
 
     for query in site_queries:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
@@ -766,7 +818,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             results_wanted=(results_wanted if results_wanted is not None
                             else JOBSPY_RESULTS_WANTED.get(site, 15)),
             country_indeed=region_config["country_indeed"],
-            hours_old=MAX_OFFER_AGE_DAYS * 24,
+            hours_old=OFFER_WINDOW_HOURS,
             verbose=int(os.environ.get("JOBSPY_VERBOSE", "1")),
         )
         if site == "linkedin":
@@ -788,6 +840,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             df = scrape_fn(**kwargs)
         except Exception as exc:
             jobspy_logger.removeHandler(capture)
+            status.pages_fetched += pages_in_records(capture.records, 0)
             failed += 1
             code = block_code(exc)
             if code:
@@ -801,6 +854,9 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
         finally:
             if capture in jobspy_logger.handlers:
                 jobspy_logger.removeHandler(capture)
+
+        raw = len(df)
+        status.pages_fetched += pages_in_records(capture.records, raw)
 
         # JobSpy journalise parfois un 403/429 puis retourne un DataFrame vide
         # sans lever d'exception (cas Glassdoor). On transforme ce signal en
@@ -831,7 +887,6 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             status.http_error = status.http_error or captured_error[:200]
             print(f"[WARN] {label} '{query}' a échoué : {captured_error}", file=sys.stderr)
             continue
-        raw = len(df)
         status.raw_count += raw
         print(f"[INFO] {label} '{query}' : {raw} résultats bruts")
         for _, row in df.iterrows():
@@ -842,6 +897,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
                 description=clean_text(row.get("description")),
                 domains=domains, active_ids=active_ids,
                 region_id=region_id, regions=regions,
+                freshness_verified=True,
             )
             register_offer(status, offers, offer, reason)
 
@@ -853,6 +909,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
         status.status = "error"
     else:
         status.finalize()
+    log_collection_summary(status)
     return list(offers.values()), status
 
 
@@ -865,7 +922,8 @@ APEC_ADVERTISER_TYPES = [143684, 143685, 143686, 143687, 143706]
 APEC_BAC5_LEVEL = 20019
 
 
-def apec_search_payload(query: str) -> dict:
+def apec_search_payload(query: str, start_index: int = 0,
+                        page_size: int = APEC_PAGE_SIZE) -> dict:
     return {
         "motsCles": query,
         "lieux": [], "fonctions": [], "statutPoste": [],
@@ -885,9 +943,7 @@ def apec_search_payload(query: str) -> dict:
         "typesTeletravail": [], "idNomZonesDeplacement": [],
         "positionNumbersExcluded": [], "typeClient": "CADRE",
         "sorts": [{"type": "DATE", "direction": "DESCENDING"}],
-        # Une seule page large pour couvrir les 7 derniers jours sans
-        # multiplier les appels à la recherche publique.
-        "pagination": {"range": 100, "startIndex": 0},
+        "pagination": {"range": page_size, "startIndex": start_index},
         "activeFiltre": True, "pointGeolocDeReference": {},
     }
 
@@ -928,6 +984,7 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
         status.note = "APEC est une source nationale française"
         status.duration_s = round(time.monotonic() - started, 1)
         print(f"[INFO] APEC · {status.region_label} : non applicable à cette région")
+        log_collection_summary(status)
         return [], status
 
     queries = list(dict.fromkeys(
@@ -936,26 +993,52 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
     raw_by_number: dict[str, dict] = {}
     failed = 0
     for query in queries:
-        try:
-            resp = requests.post(
-                "https://www.apec.fr/cms/webservices/rechercheOffre",
-                json=apec_search_payload(query),
-                headers=APEC_HEADERS, timeout=REQUEST_TIMEOUT,
-            )
-            resp.raise_for_status()
-            results = resp.json().get("resultats", [])
-        except Exception as exc:
+        query_succeeded = False
+        stale_pages = 0
+        for page in range(MAX_SOURCE_PAGES):
+            start_index = page * APEC_PAGE_SIZE
+            try:
+                resp = requests.post(
+                    "https://www.apec.fr/cms/webservices/rechercheOffre",
+                    json=apec_search_payload(query, start_index),
+                    headers=APEC_HEADERS, timeout=REQUEST_TIMEOUT,
+                )
+                resp.raise_for_status()
+                results = resp.json().get("resultats", [])
+            except Exception as exc:
+                code = block_code(exc)
+                status.http_error = (f"HTTP {code}" if code
+                                     else (status.http_error or str(exc)[:200]))
+                print(f"[WARN] APEC '{query}' page {page + 1} a échoué : {exc}",
+                      file=sys.stderr)
+                break
+            query_succeeded = True
+            status.pages_fetched += 1
+            status.raw_count += len(results)
+            print(f"[INFO] APEC '{query}' page {page + 1} : "
+                  f"{len(results)} résultats bruts")
+            if not results:
+                break
+            before = len(raw_by_number)
+            for r in results:
+                number = str(r.get("numeroOffre") or "")
+                if number:
+                    if number in raw_by_number:
+                        status.add_reject(REASON_DUPLICATE)
+                    else:
+                        raw_by_number[number] = r
+            stale_pages = stale_pages + 1 if len(raw_by_number) == before else 0
+            if stale_pages >= MAX_STALE_PAGES or len(results) < APEC_PAGE_SIZE:
+                break
+            page_dates = [parse_offer_date(r.get("datePublication")) for r in results]
+            if (page_dates and all(page_dates)
+                    and min(page_dates) < datetime.now(timezone.utc)
+                    - timedelta(hours=OFFER_WINDOW_HOURS)):
+                # Le payload impose DATE DESCENDING : les pages suivantes sont
+                # nécessairement plus anciennes.
+                break
+        if not query_succeeded:
             failed += 1
-            code = block_code(exc)
-            status.http_error = f"HTTP {code}" if code else (status.http_error or str(exc)[:200])
-            print(f"[WARN] APEC '{query}' a échoué : {exc}", file=sys.stderr)
-            continue
-        print(f"[INFO] APEC '{query}' : {len(results)} résultats bruts")
-        for r in results:
-            number = str(r.get("numeroOffre") or "")
-            if number:
-                raw_by_number.setdefault(number, r)  # dédoublonnage inter-requêtes
-    status.raw_count = len(raw_by_number)
 
     offers: dict[str, dict] = {}
     detail_budget = APEC_DETAIL_MAX_CALLS
@@ -987,6 +1070,7 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
         status.status = "blocked" if status.http_error.startswith("HTTP") else "error"
     else:
         status.finalize()
+    log_collection_summary(status)
     return list(offers.values()), status
 
 
@@ -1010,57 +1094,88 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
     if region_id != DEFAULT_REGION_ID:
         status.status = "not_applicable_region"
         status.note = "connecteur Adzuna actuel limité à l'index France"
+        log_collection_summary(status)
         return [], status
     app_id = os.environ.get("ADZUNA_APP_ID")
     app_key = os.environ.get("ADZUNA_APP_KEY")
     if not app_id or not app_key:
         status.status = "disabled_missing_credentials"
         status.note = "secrets ADZUNA_APP_ID / ADZUNA_APP_KEY absents"
+        log_collection_summary(status)
         return [], status
 
     offers: dict[str, dict] = {}
+    remote_seen: set[str] = set()
     consecutive_blocks = attempted = failed = 0
     for query in active_queries(domains, active_ids):
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = "circuit breaker : requêtes restantes ignorées"
             break
         attempted += 1
-        try:
-            resp = requests.get(
-                "https://api.adzuna.com/v1/api/jobs/fr/search/1",
-                params={
-                    "app_id": app_id, "app_key": app_key,
-                    "what": query, "where": region_config["label"],
-                    "results_per_page": 20, "sort_by": "date",
-                    "content-type": "application/json",
-                },
-                timeout=REQUEST_TIMEOUT,
-            )
-            resp.raise_for_status()
-            results = resp.json().get("results", [])
-        except Exception as exc:
+        query_succeeded = False
+        stale_pages = 0
+        for page in range(1, MAX_SOURCE_PAGES + 1):
+            try:
+                resp = requests.get(
+                    f"https://api.adzuna.com/v1/api/jobs/fr/search/{page}",
+                    params={
+                        "app_id": app_id, "app_key": app_key,
+                        "what": query, "where": region_config["label"],
+                        "results_per_page": ADZUNA_PAGE_SIZE,
+                        "sort_by": "date", "max_days_old": 1,
+                        "content-type": "application/json",
+                    },
+                    timeout=REQUEST_TIMEOUT,
+                )
+                resp.raise_for_status()
+                payload = resp.json()
+                results = payload.get("results", [])
+            except Exception as exc:
+                code = block_code(exc)
+                if code:
+                    consecutive_blocks += 1
+                    status.http_error = f"HTTP {code}"
+                else:
+                    status.http_error = status.http_error or str(exc)[:200]
+                print(f"[WARN] Adzuna '{query}' page {page} a échoué : {exc}",
+                      file=sys.stderr)
+                break
+            query_succeeded = True
+            consecutive_blocks = 0
+            status.pages_fetched += 1
+            status.raw_count += len(results)
+            print(f"[INFO] Adzuna '{query}' page {page} : "
+                  f"{len(results)} résultats bruts")
+            if not results:
+                break
+            page_keys = {
+                clean_text(r.get("id") or r.get("redirect_url")) for r in results
+            } - {""}
+            new_keys = page_keys - remote_seen
+            remote_seen.update(page_keys)
+            stale_pages = stale_pages + 1 if not new_keys else 0
+            for r in results:
+                offer, reason = make_offer(
+                    r.get("title"), (r.get("company") or {}).get("display_name"),
+                    (r.get("location") or {}).get("display_name"),
+                    r.get("redirect_url"), "Adzuna", r.get("created") or "",
+                    description=clean_text(r.get("description")),
+                    domains=domains, active_ids=active_ids,
+                    region_id=region_id, regions=regions,
+                )
+                register_offer(status, offers, offer, reason)
+            total = int(payload.get("count") or 0)
+            if (len(results) < ADZUNA_PAGE_SIZE
+                    or (total and page * ADZUNA_PAGE_SIZE >= total)
+                    or stale_pages >= MAX_STALE_PAGES):
+                break
+            page_dates = [parse_offer_date(r.get("created")) for r in results]
+            if (page_dates and all(page_dates)
+                    and min(page_dates) < datetime.now(timezone.utc)
+                    - timedelta(hours=OFFER_WINDOW_HOURS)):
+                break
+        if not query_succeeded:
             failed += 1
-            code = block_code(exc)
-            if code:
-                consecutive_blocks += 1
-                status.http_error = f"HTTP {code}"
-            else:
-                status.http_error = status.http_error or str(exc)[:200]
-            print(f"[WARN] Adzuna '{query}' a échoué : {exc}", file=sys.stderr)
-            continue
-        consecutive_blocks = 0
-        status.raw_count += len(results)
-        print(f"[INFO] Adzuna '{query}' : {len(results)} résultats bruts")
-        for r in results:
-            offer, reason = make_offer(
-                r.get("title"), (r.get("company") or {}).get("display_name"),
-                (r.get("location") or {}).get("display_name"),
-                r.get("redirect_url"), "Adzuna", (r.get("created") or "")[:10],
-                description=clean_text(r.get("description")),
-                domains=domains, active_ids=active_ids,
-                region_id=region_id, regions=regions,
-            )
-            register_offer(status, offers, offer, reason)
 
     status.duration_s = round(time.monotonic() - started, 1)
     if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
@@ -1070,6 +1185,7 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
         status.status = "error"
     else:
         status.finalize()
+    log_collection_summary(status)
     return list(offers.values()), status
 
 
@@ -1111,12 +1227,14 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
         status.note = "France Travail est une API nationale française"
         status.duration_s = round(time.monotonic() - started, 1)
         print(f"[INFO] France Travail · {status.region_label} : non applicable à cette région")
+        log_collection_summary(status)
         return [], status
     client_id = os.environ.get("FT_CLIENT_ID")
     client_secret = os.environ.get("FT_CLIENT_SECRET")
     if not client_id or not client_secret:
         status.status = "disabled_missing_credentials"
         status.note = "secrets FT_CLIENT_ID / FT_CLIENT_SECRET absents"
+        log_collection_summary(status)
         return [], status
 
     token = ft_token(client_id, client_secret)
@@ -1124,9 +1242,11 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
         status.status = "error"
         status.note = "authentification OAuth échouée (voir logs)"
         status.duration_s = round(time.monotonic() - started, 1)
+        log_collection_summary(status)
         return [], status
 
     offers: dict[str, dict] = {}
+    remote_seen: set[str] = set()
     consecutive_blocks = attempted = failed = 0
     queries = list(dict.fromkeys(
         source_keywords(query) for query in active_queries(domains, active_ids)
@@ -1136,48 +1256,76 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
             status.note = "circuit breaker : requêtes restantes ignorées"
             break
         attempted += 1
-        try:
-            resp = requests.get(
-                "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search",
-                headers={"Authorization": f"Bearer {token}"},
-                # Les stages n'ont pas de code typeContrat dans l'API v2 :
-                # c'est natureContrat=FS (convention de stage).
-                params={"motsCles": query, "natureContrat": "FS",
-                        "publieeDepuis": MAX_OFFER_AGE_DAYS,
-                        "sort": "1", "range": "0-49"},
-                timeout=REQUEST_TIMEOUT,
-            )
-            if resp.status_code == 204:  # aucune offre pour cette requête
-                results = []
-            else:
-                resp.raise_for_status()
-                results = resp.json().get("resultats", [])
-        except Exception as exc:
+        query_succeeded = False
+        stale_pages = 0
+        for page in range(MAX_SOURCE_PAGES):
+            start = page * FRANCE_TRAVAIL_PAGE_SIZE
+            end = start + FRANCE_TRAVAIL_PAGE_SIZE - 1
+            try:
+                resp = requests.get(
+                    "https://api.francetravail.io/partenaire/offresdemploi/v2/offres/search",
+                    headers={"Authorization": f"Bearer {token}"},
+                    # Stage natif + publications du dernier jour ; le filtre
+                    # local UTC reste l'autorité à la seconde près.
+                    params={"motsCles": query, "natureContrat": "FS",
+                            "publieeDepuis": 1, "sort": "1",
+                            "range": f"{start}-{end}"},
+                    timeout=REQUEST_TIMEOUT,
+                )
+                status.pages_fetched += 1
+                if resp.status_code == 204:
+                    results = []
+                else:
+                    resp.raise_for_status()
+                    results = resp.json().get("resultats", [])
+            except Exception as exc:
+                code = block_code(exc)
+                if code:
+                    consecutive_blocks += 1
+                    status.http_error = f"HTTP {code}"
+                else:
+                    status.http_error = status.http_error or str(exc)[:200]
+                print(f"[WARN] France Travail '{query}' page {page + 1} "
+                      f"a échoué : {exc}", file=sys.stderr)
+                break
+            query_succeeded = True
+            consecutive_blocks = 0
+            status.raw_count += len(results)
+            print(f"[INFO] France Travail '{query}' page {page + 1} : "
+                  f"{len(results)} résultats bruts")
+            if not results:
+                break
+            page_keys = {clean_text(r.get("id")) for r in results} - {""}
+            new_keys = page_keys - remote_seen
+            remote_seen.update(page_keys)
+            stale_pages = stale_pages + 1 if not new_keys else 0
+            for r in results:
+                url = (r.get("origineOffre") or {}).get("urlOrigine") or \
+                      f"https://candidat.francetravail.fr/offres/recherche/detail/{r.get('id')}"
+                offer, reason = make_offer(
+                    r.get("intitule"), (r.get("entreprise") or {}).get("nom"),
+                    (r.get("lieuTravail") or {}).get("libelle"),
+                    url, "France Travail", r.get("dateCreation") or "",
+                    confirmed_internship=True,
+                    description=clean_text(r.get("description")),
+                    domains=domains, active_ids=active_ids,
+                    region_id=region_id, regions=regions,
+                )
+                register_offer(status, offers, offer, reason)
+            content_range = resp.headers.get("Content-Range", "")
+            total_match = re.search(r"/(\d+)$", content_range)
+            total = int(total_match.group(1)) if total_match else 0
+            if (len(results) < FRANCE_TRAVAIL_PAGE_SIZE
+                    or (total and end + 1 >= total)
+                    or stale_pages >= MAX_STALE_PAGES):
+                break
+            page_dates = [parse_offer_date(r.get("dateCreation")) for r in results]
+            if (page_dates and all(page_dates)
+                    and min(page_dates) < datetime.now(timezone.utc)
+                    - timedelta(hours=OFFER_WINDOW_HOURS)):
+                break
+        if not query_succeeded:
             failed += 1
-            code = block_code(exc)
-            if code:
-                consecutive_blocks += 1
-                status.http_error = f"HTTP {code}"
-            else:
-                status.http_error = status.http_error or str(exc)[:200]
-            print(f"[WARN] France Travail '{query}' a échoué : {exc}", file=sys.stderr)
-            continue
-        consecutive_blocks = 0
-        status.raw_count += len(results)
-        print(f"[INFO] France Travail '{query}' : {len(results)} résultats bruts")
-        for r in results:
-            url = (r.get("origineOffre") or {}).get("urlOrigine") or \
-                  f"https://candidat.francetravail.fr/offres/recherche/detail/{r.get('id')}"
-            offer, reason = make_offer(
-                r.get("intitule"), (r.get("entreprise") or {}).get("nom"),
-                (r.get("lieuTravail") or {}).get("libelle"),
-                url, "France Travail", (r.get("dateCreation") or "")[:10],
-                confirmed_internship=True,
-                description=clean_text(r.get("description")),
-                domains=domains, active_ids=active_ids,
-                region_id=region_id, regions=regions,
-            )
-            register_offer(status, offers, offer, reason)
 
     status.duration_s = round(time.monotonic() - started, 1)
     if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
@@ -1187,6 +1335,7 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
         status.status = "error"
     else:
         status.finalize()
+    log_collection_summary(status)
     return list(offers.values()), status
 
 
@@ -1433,16 +1582,27 @@ def reconcile_offer_store(found_offers: list[dict], statuses: list[SourceStatus]
 def dashboard_offers_from_store(store: dict[str, dict],
                                 now: datetime | None = None,
                                 days_window: int = MAX_OFFER_AGE_DAYS) -> list[dict]:
-    """Offres actives et fraîches à afficher, extraites du store persistant."""
+    """Offres actives validées sur 24 h, extraites du store persistant.
+
+    ``days_window`` reste réservé au comportement historique des dates
+    inconnues. Une source JobSpy ayant appliqué son filtre natif renseigne
+    ``freshness_verified_at`` sans inventer d'heure de publication.
+    """
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
-    cutoff_date = (now - timedelta(days=days_window)).date()
+    cutoff = now - timedelta(hours=OFFER_WINDOW_HOURS)
     visible: list[dict] = []
     for offer in store.values():
         if not offer.get("active", True):
             continue
-        published = parse_offer_date(offer.get("date"), now)
-        if published:
-            if published.date() < cutoff_date:
+        if offer.get("date_known", bool(offer.get("date"))):
+            verified_at = _store_datetime(offer.get("freshness_verified_at", ""))
+            published = _store_datetime(
+                offer.get("sort_date", "") or offer.get("date", "")
+            )
+            if verified_at:
+                if verified_at < cutoff:
+                    continue
+            elif published and published < cutoff:
                 continue
         else:
             first_seen = _store_datetime(offer.get("first_seen", ""))
@@ -1838,7 +1998,9 @@ def main() -> None:
         http = f" · {st.http_error}" if st.http_error else ""
         print(f"  - {st.source} · {st.region_label}: {status_label(st, st.accepted_count)} "
               f"[{st.status}] bruts={st.raw_count} acceptés={st.accepted_count} "
-              f"rejetés={st.rejected_count} dates_inconnues={st.unknown_date_count} "
+              f"rejetés={st.rejected_count} trop_anciens={st.too_old_count} "
+              f"doublons={st.duplicate_count} pages={st.pages_fetched} "
+              f"dates_inconnues={st.unknown_date_count} "
               f"durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
     for domain_id, count in domain_counts.items():
         print(f"  - domaine {domain_id}: {count} offres")
