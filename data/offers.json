@@ -37,8 +37,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "0b057fda26378088": {
   "id": "0b057fda26378088",
@@ -77,9 +77,52 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:32.934948+00:00"
+ },
+ "0c8e8813c6612b06": {
+  "id": "0c8e8813c6612b06",
+  "title": "[STAGE] Stagiaire Ressources Humaines (H-F) .",
+  "company": "Sofitel",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=2ff8679fd102e160",
+  "source": "Indeed",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:13.117705+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 7,
+   "juridique": -6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -5
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
  },
  "0dccaacab386f45c": {
   "id": "0dccaacab386f45c",
@@ -119,7 +162,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "0f1b500e6dc1f0d8": {
+  "id": "0f1b500e6dc1f0d8",
+  "title": "Stage Chargé.e de projet IA (H/F)",
+  "company": "Sport dans la ville",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440970038",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:43:40.824042+00:00",
+  "freshness_verified_at": "2026-07-15T14:43:40.824042+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "12e6011034a1e1ef": {
@@ -159,9 +244,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:01.997744+00:00"
  },
  "133ff5345eb0d4c8": {
   "id": "133ff5345eb0d4c8",
@@ -200,8 +286,93 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": ""
+ },
+ "1479fb897406b3ed": {
+  "id": "1479fb897406b3ed",
+  "title": "Product Manager Intern",
+  "company": "Skello",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440949206",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:40:47.743789+00:00",
+  "freshness_verified_at": "2026-07-15T14:40:47.743789+00:00",
+  "domains": [
+   "product_management"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 3,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": -4,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "14be6bf357913559": {
+  "id": "14be6bf357913559",
+  "title": "Consultant Stagiaire Finance Strategy & Transformation F/H",
+  "company": "KPMG France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440986802",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:46:26.106115+00:00",
+  "freshness_verified_at": "2026-07-15T14:46:26.106115+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -4,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "14ef112393123745": {
@@ -242,8 +413,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "14f4517f540fcbda": {
   "id": "14f4517f540fcbda",
@@ -282,9 +453,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:37.012270+00:00"
  },
  "150bcd59f14aac90": {
   "id": "150bcd59f14aac90",
@@ -324,8 +496,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "18c161739e4377ab": {
   "id": "18c161739e4377ab",
@@ -365,7 +537,50 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "18ed6ca360e3e8db": {
+  "id": "18ed6ca360e3e8db",
+  "title": "Stagiaire, Relations du travail",
+  "company": "Philip Morris International",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=9f05b7771de3fc5d",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:18.704074+00:00",
+  "domains": [
+   "rh",
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 2,
+   "juridique": 2,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "19b26eb92323ab7f": {
@@ -405,9 +620,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:40.322118+00:00"
  },
  "19d5dc4f2ce03f66": {
   "id": "19d5dc4f2ce03f66",
@@ -447,7 +663,175 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "1a08e445cabe8127": {
+  "id": "1a08e445cabe8127",
+  "title": "Comptabilité - Stage - Lille - H/F",
+  "company": "Club Employés",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439894150",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:15.254311+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:15.254311+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": -4,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -4,
+   "commerce_bizdev": -4,
+   "rh": -4,
+   "juridique": -4,
+   "electronique_embarque": -4,
+   "genie_civil_btp": -4,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "1cd8f4fdb4075cc6": {
+  "id": "1cd8f4fdb4075cc6",
+  "title": "Software Engineer Intern - Crossbeam Ventures (M/F/X)",
+  "company": "Crossbeam",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4434668263",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:43:55.215539+00:00",
+  "freshness_verified_at": "2026-07-15T14:43:55.215539+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 3,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "1d948397363ba6e1": {
+  "id": "1d948397363ba6e1",
+  "title": "Stage - Assistant(e) Contrôle de Gestion - Opérations (H/F)",
+  "company": "Officine Universelle Buly 1803",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440962406",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:47.063776+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:47.063776+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": -4,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": -4,
+   "audit": -4,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "1e7b2c4f13a14266": {
+  "id": "1e7b2c4f13a14266",
+  "title": "Stage - Juriste Innovation de Produit (x/f/m) - Janvier 2027",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440976037",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.529506+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.529506+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "1ed9466fa12648cb": {
@@ -488,8 +872,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "1f75b3d6e425ae47": {
   "id": "1f75b3d6e425ae47",
@@ -529,8 +913,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "1fc39f87e0786533": {
   "id": "1fc39f87e0786533",
@@ -570,8 +954,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "22bd28eaf885116e": {
   "id": "22bd28eaf885116e",
@@ -610,9 +994,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:14.503617+00:00"
  },
  "240944f0be059a90": {
   "id": "240944f0be059a90",
@@ -652,8 +1037,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "2412a96171f5ba04": {
   "id": "2412a96171f5ba04",
@@ -693,9 +1078,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:50.546046+00:00"
  },
  "25644e6b356028b0": {
   "id": "25644e6b356028b0",
@@ -735,7 +1121,175 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "26845a2b498606f6": {
+  "id": "26845a2b498606f6",
+  "title": "BALENCIAGA – EMEA Client Engagement Data Analyst Intern (F/M)",
+  "company": "BALENCIAGA",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=3084b749d7e0db8a",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:19.927562+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": -4,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 1,
+   "audit": -4,
+   "supply_chain": 0,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": -4,
+   "electronique_embarque": -4,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "269e9a9cf5af4daf": {
+  "id": "269e9a9cf5af4daf",
+  "title": "Stage - Juriste Corporate / Droit des sociétés - Janvier 2027 (x/f/m)",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440973168",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.515776+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.515776+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "271aaa1c174c0647": {
+  "id": "271aaa1c174c0647",
+  "title": "Stage ingénieur -Gestion de projet et Amélioration Continue",
+  "company": "ALTEN",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439982904",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:55:45.876055+00:00",
+  "freshness_verified_at": "2026-07-15T14:55:45.876055+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "2a6e78d2c343feac": {
+  "id": "2a6e78d2c343feac",
+  "title": "STAGIAIRE eleve Ing. Logistique / Supply chain management ( ref 12573 )",
+  "company": "STMicroelectronics",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4432408877",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T15:15:57.635773+00:00",
+  "freshness_verified_at": "2026-07-15T15:15:57.635773+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 7,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "2a95b7d5d7ca4360": {
@@ -775,9 +1329,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:42.565697+00:00"
  },
  "2aa5595cd7bad41d": {
   "id": "2aa5595cd7bad41d",
@@ -816,9 +1371,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:20.132415+00:00"
  },
  "2b6f43259d2a4138": {
   "id": "2b6f43259d2a4138",
@@ -857,9 +1413,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:30.339306+00:00"
  },
  "2ea537488412f21b": {
   "id": "2ea537488412f21b",
@@ -899,8 +1456,8 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "3049055fc591e68c": {
   "id": "3049055fc591e68c",
@@ -940,7 +1497,50 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "30c4943d021cf477": {
+  "id": "30c4943d021cf477",
+  "title": "Stage - Juriste Droit Social H/F",
+  "company": "SMCP – Sandro, Maje, Claudie Pierlot, Fursac",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440987753",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:20.365727+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:20.365727+00:00",
+  "domains": [
+   "rh",
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 3,
+   "juridique": 6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "316302026a0763ac": {
@@ -981,8 +1581,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "332aa5cde94d51d8": {
   "id": "332aa5cde94d51d8",
@@ -1022,8 +1622,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "367568d0febc0faa": {
   "id": "367568d0febc0faa",
@@ -1063,8 +1663,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "3a516578a1f55234": {
   "id": "3a516578a1f55234",
@@ -1104,8 +1704,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "3b9fc1e797862569": {
   "id": "3b9fc1e797862569",
@@ -1146,7 +1746,133 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "3ce6e22870348602": {
+  "id": "3ce6e22870348602",
+  "title": "Stagiaire Product Manager & Marketing",
+  "company": "Skello",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440940502",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:56:31.699853+00:00",
+  "freshness_verified_at": "2026-07-15T14:56:31.699853+00:00",
+  "domains": [
+   "product_management"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 3,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": -4,
+   "supply_chain": -4,
+   "commerce_bizdev": 0,
+   "rh": -4,
+   "juridique": -4,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "3ffa7d13e1e6a7d0": {
+  "id": "3ffa7d13e1e6a7d0",
+  "title": "Stagiaire Ressources Humaines F/H",
+  "company": "Hilton Garden Inn Bordeaux Centre",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440997023",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:34.833808+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:34.833808+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 3,
+   "juridique": -4,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "4248d92c6d98d6ff": {
+  "id": "4248d92c6d98d6ff",
+  "title": "Stagiaire Finance F/H",
+  "company": "Raffles Hotels & Resorts",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4403958703",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:41.118348+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:41.118348+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -4,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "4396e25234815597": {
@@ -1187,7 +1913,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "44a17a6a7e7089e9": {
+  "id": "44a17a6a7e7089e9",
+  "title": "Stage Developer Full Stack (Symfony & Angular/React)",
+  "company": "Webyn",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439930899",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:44:19.140344+00:00",
+  "freshness_verified_at": "2026-07-15T14:44:19.140344+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 9,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "497873b4cfaa2f30": {
@@ -1227,9 +1995,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:12.609977+00:00"
  },
  "4a3d56516169d095": {
   "id": "4a3d56516169d095",
@@ -1269,8 +2038,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "4a6349491c1e8764": {
   "id": "4a6349491c1e8764",
@@ -1310,7 +2079,91 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "4b4144bcf5c793c6": {
+  "id": "4b4144bcf5c793c6",
+  "title": "Chargé(e) de projet IA - Stage F/H",
+  "company": "Dynergie",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438084344",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:43:40.821158+00:00",
+  "freshness_verified_at": "2026-07-15T14:43:40.821158+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "4d3daa8d647537e0": {
+  "id": "4d3daa8d647537e0",
+  "title": "Auditeur financier Stagiaire (F/H)",
+  "company": "KPMG France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440567365",
+  "source": "LinkedIn",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:47:14.464483+00:00",
+  "domains": [
+   "audit"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 3,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "4f97895c4d9281a4": {
@@ -1351,8 +2204,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "4fbe0faf4cdf9f6b": {
   "id": "4fbe0faf4cdf9f6b",
@@ -1392,8 +2245,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "51849a5ca7ad0eec": {
   "id": "51849a5ca7ad0eec",
@@ -1433,7 +2286,217 @@
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "51d64003640048d5": {
+  "id": "51d64003640048d5",
+  "title": "Stage - Juriste Innovation de Produit (x/f/m) - Janvier 2027",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440975049",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.532929+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.532929+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "51da2f281c3dbf75": {
+  "id": "51da2f281c3dbf75",
+  "title": "STAGE CHARGE.E D’ETUDE",
+  "company": "Made In Past",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=6cf05accf1675a33",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:03.015223+00:00",
+  "domains": [
+   "genie_civil_btp"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 1,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 2,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "5204536782ec28b1": {
+  "id": "5204536782ec28b1",
+  "title": "Stage - Assistant(e) Contrôle de Gestion (H/F)",
+  "company": "Officine Universelle Buly 1803",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440972098",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:15.267475+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:15.267475+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": -4,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": -4,
+   "audit": -4,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "5226b2dd5f8d23cc": {
+  "id": "5226b2dd5f8d23cc",
+  "title": "Chargé de développement commercial IT (Stage)",
+  "company": "SYXPERIANE",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439994704",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:57:14.056826+00:00",
+  "freshness_verified_at": "2026-07-15T14:57:14.056826+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": -4,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -4,
+   "commerce_bizdev": 3,
+   "rh": -4,
+   "juridique": -4,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "52a639289ac69d25": {
+  "id": "52a639289ac69d25",
+  "title": "Stage rémunéré (6 mois) – Assistant Développement Retail & E-commerce (H/F)",
+  "company": "Psartek Friperie",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=bb29f645e677bdc1",
+  "source": "Indeed",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:26.160094+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": -1,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 2,
+   "rh": -1,
+   "juridique": -1,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "55498816002a750c": {
@@ -1474,8 +2537,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "55f13be1f1f1efcf": {
   "id": "55f13be1f1f1efcf",
@@ -1515,7 +2578,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "581e34de99e91b46": {
+  "id": "581e34de99e91b46",
+  "title": "Comptable Stagiaire ITAA - Qualité, autonomie et équilibre",
+  "company": "Austin Bright Belgium",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440236183",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:59:45.460157+00:00",
+  "freshness_verified_at": "2026-07-15T14:59:45.460157+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "belgique"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "590a0464b59cf058": {
@@ -1557,8 +2662,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "59a3b3d9988ac26c": {
   "id": "59a3b3d9988ac26c",
@@ -1597,9 +2702,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:40:05.429480+00:00"
  },
  "5a938ce7a2e30f33": {
   "id": "5a938ce7a2e30f33",
@@ -1638,9 +2744,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:06.845565+00:00"
  },
  "5b47180463fddd34": {
   "id": "5b47180463fddd34",
@@ -1679,9 +2786,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:40:01.883487+00:00"
  },
  "5c099f7ac982827b": {
   "id": "5c099f7ac982827b",
@@ -1721,7 +2829,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "5c343bd8a67de15c": {
+  "id": "5c343bd8a67de15c",
+  "title": "Stagiaire data science",
+  "company": "Boralex Inc.",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440205456",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:39:32.536233+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:32.536233+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 1,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 1,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "5c65aec87fd918d1": {
@@ -1761,9 +2911,94 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:25.909423+00:00"
+ },
+ "5d29e996145e511a": {
+  "id": "5d29e996145e511a",
+  "title": "Stage – Assistant(e) Data / Support Recrutement H/F",
+  "company": "ALTEN",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440201435",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:03.915402+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:03.915402+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 3,
+   "juridique": -4,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "5e0d85948f82b883": {
+  "id": "5e0d85948f82b883",
+  "title": "[Stage] Processus Leader Junior Supply Chain international - H/F",
+  "company": "ADEO",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4407185399",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:59.846240+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:59.846240+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
  },
  "5f7bcf2bb5f3b3e4": {
   "id": "5f7bcf2bb5f3b3e4",
@@ -1803,8 +3038,52 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:30.160635+00:00"
+ },
+ "60842e15008c83b2": {
+  "id": "60842e15008c83b2",
+  "title": "Stage Ingénieur(e) Méthodes Industrielles H/F",
+  "company": "Vantive",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d0dbb95cdcad0495",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:21.211622+00:00",
+  "domains": [
+   "supply_chain",
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 2,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "60ceea3538f5ccc3": {
@@ -1845,8 +3124,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "60ee8e3ac5efdaeb": {
   "id": "60ee8e3ac5efdaeb",
@@ -1887,7 +3166,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": false
  },
  "611a63dd882ed8c1": {
@@ -1928,7 +3207,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "631c6051434ec24a": {
+  "id": "631c6051434ec24a",
+  "title": "Stagiaire juridique - 4 ou 6 mois",
+  "company": "BIOGROUP",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438404359",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.520273+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.520273+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -4,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "636e505c5a4063b7": {
@@ -1968,9 +3289,52 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:12.777980+00:00"
+ },
+ "63fc1eaa77d8fa48": {
+  "id": "63fc1eaa77d8fa48",
+  "title": "STAGE - ASSISTANT PRODUCT MANAGER AFTERSALES F/H",
+  "company": "Cdiscount",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4428954718",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:47:14.515680+00:00",
+  "freshness_verified_at": "2026-07-15T14:47:14.515680+00:00",
+  "domains": [
+   "product_management"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 6,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": -4,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
  },
  "65574d06ca1b25d5": {
   "id": "65574d06ca1b25d5",
@@ -2010,8 +3374,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "66826ab2e115a386": {
   "id": "66826ab2e115a386",
@@ -2051,8 +3415,92 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": false
+ },
+ "67563946ca3a20f8": {
+  "id": "67563946ca3a20f8",
+  "title": "Contrôleur de gestion international - Stage - H/F",
+  "company": "Lagardère Travel Retail",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440557899",
+  "source": "LinkedIn",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:46:26.088940+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "69c499c7972f1c83": {
+  "id": "69c499c7972f1c83",
+  "title": "Stagiaire RH - Soho House Paris",
+  "company": "Soho House & Co.",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=3a41231217a7ae3e",
+  "source": "Indeed",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:12.963241+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 2,
+   "juridique": -2,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
  },
  "6b0d58d250d7cb42": {
   "id": "6b0d58d250d7cb42",
@@ -2091,9 +3539,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:37.478037+00:00"
  },
  "6b31e78f9856f9f3": {
   "id": "6b31e78f9856f9f3",
@@ -2133,8 +3582,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "6b43ceaa9325bf95": {
   "id": "6b43ceaa9325bf95",
@@ -2174,7 +3623,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "6b757f2078c59b94": {
+  "id": "6b757f2078c59b94",
+  "title": "Stage Chargé Approvisionnement/Achats - E-commerce Sports Outdoor",
+  "company": "Hardloop",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d1b440bcda6469bd",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:57.288698+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -5,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -5,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "6e30839d1f07b19f": {
@@ -2215,7 +3706,91 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "6e84547e84510bab": {
+  "id": "6e84547e84510bab",
+  "title": "STAGE - Logistique (H/F)",
+  "company": "Alloga",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4437684940",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:59.823048+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:59.823048+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "6f9f952dd19b2f89": {
+  "id": "6f9f952dd19b2f89",
+  "title": "Stage - Chef de projet IA F/H",
+  "company": "Asys",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438188561",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:03.977164+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:03.977164+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -4,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "7052e46cc1d30053": {
@@ -2255,8 +3830,52 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:20.388429+00:00"
+ },
+ "709a8ebf107c0c9b": {
+  "id": "709a8ebf107c0c9b",
+  "title": "School Internship in AI Agent Development in Deals M&A (2026-2027)",
+  "company": "PwC Belgium",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4421126960",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:58:47.302767+00:00",
+  "freshness_verified_at": "2026-07-15T14:58:47.302767+00:00",
+  "domains": [
+   "data_ia",
+   "finance"
+  ],
+  "regions": [
+   "belgique"
+  ],
+  "domain_scores": {
+   "data_ia": 2,
+   "dev_web": 0,
+   "devops_cloud": 1,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": -4,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "70bcae16d41f902f": {
@@ -2297,7 +3916,92 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "74c7eeac1e8e5b2c": {
+  "id": "74c7eeac1e8e5b2c",
+  "title": "Expert-Comptable Stagiaire ou Mémorialiste (H/F)",
+  "company": "ŌDAS CONSEIL",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440211737",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:53:13.574725+00:00",
+  "freshness_verified_at": "2026-07-15T14:53:13.574725+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "76f984698816a499": {
+  "id": "76f984698816a499",
+  "title": "Stage en droit des affaires / corporate m&a F/H",
+  "company": "Deloitte",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440232303",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.512835+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.512835+00:00",
+  "domains": [
+   "finance",
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": -4,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "77934d7531a09a3b": {
@@ -2337,9 +4041,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:05.356086+00:00"
  },
  "77b07da41eadabda": {
   "id": "77b07da41eadabda",
@@ -2379,7 +4084,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "78777aabec40adba": {
+  "id": "78777aabec40adba",
+  "title": "STAGIAIRE eleve Ing. Logistique / Supply chain management ( ref 12395 )",
+  "company": "STMicroelectronics",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4432413774",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T15:15:57.492952+00:00",
+  "freshness_verified_at": "2026-07-15T15:15:57.492952+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 8,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "78de94f36bb1ddb0": {
@@ -2420,8 +4167,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "7f0103c4b1af3d1f": {
   "id": "7f0103c4b1af3d1f",
@@ -2461,8 +4208,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "8338df0a02ac9b63": {
   "id": "8338df0a02ac9b63",
@@ -2502,7 +4249,175 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "83eb62ccc8611f7a": {
+  "id": "83eb62ccc8611f7a",
+  "title": "Analyste Comptable en stage F/H",
+  "company": "RYDGE Conseil",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4404098531",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:15.251826+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:15.251826+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "85cd3cea1dfe02ec": {
+  "id": "85cd3cea1dfe02ec",
+  "title": "Campus & Talent Recruiter  - Stage Paris - Theodo",
+  "company": "Theodo",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4428388216",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:03.907942+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:03.907942+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 3,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "86039abf71a6002f": {
+  "id": "86039abf71a6002f",
+  "title": "STAGE - Juriste TIC F/H",
+  "company": "Asys",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438593967",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:20.340405+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:20.340405+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "8707d8f9eade1517": {
+  "id": "8707d8f9eade1517",
+  "title": "Stage - Ingénieur.e Méthode Amélioration Continue (F/H)",
+  "company": "Louis Vuitton",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4422154538",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:41.082905+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:41.082905+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "875c48e871b273ba": {
@@ -2543,8 +4458,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "88a7bc4ecbda70a6": {
   "id": "88a7bc4ecbda70a6",
@@ -2584,7 +4499,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "8a38937e967729dc": {
+  "id": "8a38937e967729dc",
+  "title": "stagiaire Assistant (e) rh",
+  "company": "ASSOCIATION AKNDJ",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=443c8e614f831cff",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:38.889636+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -7,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 2,
+   "juridique": -1,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 1,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "8ab2dfc30fc32f4b": {
@@ -2625,7 +4582,218 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "8cc57b49992809d8": {
+  "id": "8cc57b49992809d8",
+  "title": "Internship, Private Equity Performance Improvement, Paris",
+  "company": "Alvarez & Marsal",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440987718",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:46:39.077960+00:00",
+  "freshness_verified_at": "2026-07-15T14:46:39.077960+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "904c4e26d6d48e3f": {
+  "id": "904c4e26d6d48e3f",
+  "title": "STAGE JURIDIQUE CONTRACTUEL",
+  "company": "Groupe Cassous",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438049631",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.527163+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.527163+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -4,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "90555f6c4cc2c4ea": {
+  "id": "90555f6c4cc2c4ea",
+  "title": "Stagiaire : Transformation Digitale / IA Générative & Assistants",
+  "company": "LISI AEROSPACE",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4406142853",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:39:33.199274+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:33.199274+00:00",
+  "domains": [
+   "audit",
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 1,
+   "finance": 1,
+   "audit": 2,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "90db4068eacbe182": {
+  "id": "90db4068eacbe182",
+  "title": "Auditeur financier Stagiaire (F/H)",
+  "company": "KPMG France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4437809404",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:50:42.222126+00:00",
+  "freshness_verified_at": "2026-07-15T14:50:42.222126+00:00",
+  "domains": [
+   "audit"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 3,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "911bfd0ac7b9a101": {
+  "id": "911bfd0ac7b9a101",
+  "title": "Stagiaire Customer Success Engineer - Microfluidique",
+  "company": "ELVESYS",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=a5eed464dfa92620",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:34.533914+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 1,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 4,
+   "rh": -5,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "931c8ff511620286": {
@@ -2665,9 +4833,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": ""
  },
  "94007092b4b13942": {
   "id": "94007092b4b13942",
@@ -2707,8 +4876,8 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "94287f0a98338a72": {
   "id": "94287f0a98338a72",
@@ -2748,7 +4917,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "944eb3a85c1448bf": {
+  "id": "944eb3a85c1448bf",
+  "title": "STAGE - Juriste immobilier (H/F)",
+  "company": "KLEPIERRE",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439983716",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.536373+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.536373+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "947edf3b7d6207f0": {
@@ -2788,8 +4999,51 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:07.909044+00:00"
+ },
+ "94927918d7647848": {
+  "id": "94927918d7647848",
+  "title": "Auditeur financier Stagiaire (F/H)",
+  "company": "KPMG France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440559858",
+  "source": "LinkedIn",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:47:14.469062+00:00",
+  "domains": [
+   "audit"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 3,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "953d78196d09d275": {
@@ -2830,7 +5084,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "98a1369636117738": {
+  "id": "98a1369636117738",
+  "title": "Stage - Assistant(e) Coordination Logistique Transport - Janvier 2027 (H/F/X)",
+  "company": "Henkel",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=27c11ec274ab5856",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:44.450453+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -7,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 5,
+   "commerce_bizdev": -1,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "999647f97e643e82": {
@@ -2870,9 +5166,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:37.218802+00:00"
  },
  "9a77b82f5ccde4bc": {
   "id": "9a77b82f5ccde4bc",
@@ -2912,8 +5209,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "9b5a62e7896871bf": {
   "id": "9b5a62e7896871bf",
@@ -2954,7 +5251,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "9c73219dc2f95704": {
+  "id": "9c73219dc2f95704",
+  "title": "Stage – Juriste Droit des Affaires / Life Sciences",
+  "company": "Orano Med",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4435919014",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.501775+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.501775+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "9d49d1ddf075ad3b": {
@@ -2994,9 +5333,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:20.547894+00:00"
  },
  "9e189f3d6ae84d4c": {
   "id": "9e189f3d6ae84d4c",
@@ -3035,8 +5375,135 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:24.109180+00:00"
+ },
+ "9e227477b837cd6a": {
+  "id": "9e227477b837cd6a",
+  "title": "Sales Development Representative (Stage)",
+  "company": "Webyn",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439952147",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:47:14.527997+00:00",
+  "freshness_verified_at": "2026-07-15T14:47:14.527997+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 3,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "9e264286b57b2116": {
+  "id": "9e264286b57b2116",
+  "title": "Internship: Master in Immersion - Supply Chain Process Improvement & Digital Tools, Belgium – 2026",
+  "company": "GSK",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4423652143",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T15:00:33.351669+00:00",
+  "freshness_verified_at": "2026-07-15T15:00:33.351669+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "belgique"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "a034999c17fabb77": {
+  "id": "a034999c17fabb77",
+  "title": "Data Engineering Internship",
+  "company": "Procter & Gamble",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4432260996",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:58:46.902699+00:00",
+  "freshness_verified_at": "2026-07-15T14:58:46.902699+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "belgique"
+  ],
+  "domain_scores": {
+   "data_ia": 5,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "a15dea62d9d4602f": {
@@ -3076,9 +5543,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:23.417632+00:00"
  },
  "a29d16a44c5ef5f2": {
   "id": "a29d16a44c5ef5f2",
@@ -3118,8 +5586,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "a4212e318f2e93ae": {
   "id": "a4212e318f2e93ae",
@@ -3159,8 +5627,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "a43c877109082dee": {
   "id": "a43c877109082dee",
@@ -3200,8 +5668,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "a79019d8d59190db": {
   "id": "a79019d8d59190db",
@@ -3240,9 +5708,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:40.889754+00:00"
  },
  "a848674ea10832a0": {
   "id": "a848674ea10832a0",
@@ -3282,8 +5751,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "a8d92e09a57b353d": {
   "id": "a8d92e09a57b353d",
@@ -3323,8 +5792,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "aa0ea22996d5e5ef": {
   "id": "aa0ea22996d5e5ef",
@@ -3364,7 +5833,91 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "ab797327a1b1e184": {
+  "id": "ab797327a1b1e184",
+  "title": "Intern Portfolio Management (m/f/d)",
+  "company": "Finance in Motion",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440955348",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T15:10:29.311764+00:00",
+  "freshness_verified_at": "2026-07-15T15:10:29.311764+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "luxembourg"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "adbb254b8b77115e": {
+  "id": "adbb254b8b77115e",
+  "title": "Stage - Chargé(e) de Projet Supply Chain (H/F/X)",
+  "company": "Amplifon",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=bbefdd146317b845",
+  "source": "Indeed",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:45.957658+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -5,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 6,
+   "commerce_bizdev": -5,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "adf4bafbf36cdb7a": {
@@ -3405,9 +5958,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:23.647722+00:00"
  },
  "ae48e2bce9747ec4": {
   "id": "ae48e2bce9747ec4",
@@ -3447,8 +6001,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "afce0a41067c0e5c": {
   "id": "afce0a41067c0e5c",
@@ -3488,8 +6042,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "b0bcd01757c2d59c": {
   "id": "b0bcd01757c2d59c",
@@ -3528,9 +6082,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:40:00.938099+00:00"
  },
  "b0f04dcc1dc34d0b": {
   "id": "b0f04dcc1dc34d0b",
@@ -3570,8 +6125,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "b198fd4f6c6dd2e9": {
   "id": "b198fd4f6c6dd2e9",
@@ -3611,7 +6166,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "b2b18198897b0058": {
+  "id": "b2b18198897b0058",
+  "title": "Financial Analyst & Operations Intern",
+  "company": "Skello",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440949203",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:41.115266+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:41.115266+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "b32ea8198f5697e0": {
@@ -3652,7 +6249,133 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "b4a9dc77825b9d79": {
+  "id": "b4a9dc77825b9d79",
+  "title": "BALENCIAGA – EMEA Client Engagement Data Analyst Intern (F/M)",
+  "company": "BALENCIAGA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440992348",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:39:33.366241+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:33.366241+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": -4,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 1,
+   "audit": -4,
+   "supply_chain": 0,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": -4,
+   "electronique_embarque": -4,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "b4c7e20e254ac2ba": {
+  "id": "b4c7e20e254ac2ba",
+  "title": "Stage - Coordinateur(trice) Export et Supply Chain",
+  "company": "MI IN PARIS",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=da569130bc888735",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:56.628755+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -6,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -1,
+   "compta_gestion": 0,
+   "finance": -1,
+   "audit": 0,
+   "supply_chain": 4,
+   "commerce_bizdev": -5,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "b67abd088effc921": {
+  "id": "b67abd088effc921",
+  "title": "STAGE – Assistant Chef de Projet Finance (H/F)",
+  "company": "Hermès",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4431280057",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:50:42.240458+00:00",
+  "freshness_verified_at": "2026-07-15T14:50:42.240458+00:00",
+  "domains": [
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -4,
+   "compta_gestion": 0,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -4,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "b95430e7ec441b74": {
@@ -3693,8 +6416,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "b98bbf7180e023cc": {
   "id": "b98bbf7180e023cc",
@@ -3735,8 +6458,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "ba2ce7074c912461": {
   "id": "ba2ce7074c912461",
@@ -3776,7 +6499,91 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "ba2e5d42dc23d645": {
+  "id": "ba2e5d42dc23d645",
+  "title": "Stage - Juriste Droit des Affaires / Contrats (F/H)",
+  "company": "Eiffage Énergie Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4412925828",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.505303+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.505303+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "bd67dabb3ea02ad8": {
+  "id": "bd67dabb3ea02ad8",
+  "title": "Stage fin d'études - Conduite de travaux H/F",
+  "company": "Bouygues Bâtiment Ile-de-France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438412124",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:43:00.481286+00:00",
+  "freshness_verified_at": "2026-07-15T14:43:00.481286+00:00",
+  "domains": [
+   "genie_civil_btp"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 3,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "bd6e1e40b5aac53c": {
@@ -3817,7 +6624,50 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "be4017044f5032c9": {
+  "id": "be4017044f5032c9",
+  "title": "Stage - Quantitative Risk Analyst H/F",
+  "company": "Swiss Life Asset Managers France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438076649",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:39:32.847463+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:32.847463+00:00",
+  "domains": [
+   "devops_cloud",
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 2,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 2,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "be4959649f27346a": {
@@ -3858,8 +6708,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "c07faddfff4e95d9": {
   "id": "c07faddfff4e95d9",
@@ -3899,8 +6749,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "c364a6034000f30f": {
   "id": "c364a6034000f30f",
@@ -3940,7 +6790,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "c5f39849f1b902ab": {
+  "id": "c5f39849f1b902ab",
+  "title": "stage ingénieur génie industriel / amélioration continue (h/f)",
+  "company": "Saint-Gobain Research Compiegne",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440978809",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:41.087079+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:41.087079+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "c644930c4787c2cb": {
@@ -3980,9 +6872,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:37.400712+00:00"
  },
  "c6a53ee8e04f3462": {
   "id": "c6a53ee8e04f3462",
@@ -4022,8 +6915,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "c7ed08f45b94adff": {
   "id": "c7ed08f45b94adff",
@@ -4062,8 +6955,51 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:06.712490+00:00"
+ },
+ "c8a5b7527d7a5e2f": {
+  "id": "c8a5b7527d7a5e2f",
+  "title": "Stagiaire Software Engineer (H/F)",
+  "company": "Marianne Education",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4434976419",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:57:59.368893+00:00",
+  "freshness_verified_at": "2026-07-15T14:57:59.368893+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 3,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "c952ad521b4c8ac1": {
@@ -4103,8 +7039,93 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:40:00.612681+00:00"
+ },
+ "c95d5ef89ab9c939": {
+  "id": "c95d5ef89ab9c939",
+  "title": "Stage - Juriste Corporate / Droit des sociétés - Janvier 2027 (x/f/m)",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440961601",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.508370+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.508370+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "ca894ae24571f43d": {
+  "id": "ca894ae24571f43d",
+  "title": "STAGE - Assistant Chargé de Projet Amélioration Continue des Achats Outillages (H/F)",
+  "company": "Hermès",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4423224060",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:59.837393+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:59.837393+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -4,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "cc2bdb35d76d77fe": {
@@ -4145,8 +7166,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "cd4b6ef875912b2c": {
   "id": "cd4b6ef875912b2c",
@@ -4186,8 +7207,176 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": false
+ },
+ "cd4ba03cabef6744": {
+  "id": "cd4ba03cabef6744",
+  "title": "Stage Data Analyst IA (H/F)",
+  "company": "Fives",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440204688",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:43:40.817816+00:00",
+  "freshness_verified_at": "2026-07-15T14:43:40.817816+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": -4,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": -4,
+   "supply_chain": 0,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": -4,
+   "electronique_embarque": -4,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "ce9d05280ce0ac1f": {
+  "id": "ce9d05280ce0ac1f",
+  "title": "Stage – Dessinateur technique / CAO mécanique",
+  "company": "Rotarex",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440585810",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T15:08:23.822642+00:00",
+  "freshness_verified_at": "2026-07-15T15:08:23.822642+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "luxembourg"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "cee129181918a604": {
+  "id": "cee129181918a604",
+  "title": "Stage - Chef(fe) de Projet Supply Chain (H/F/X)",
+  "company": "Amplifon",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d8078707d969a61c",
+  "source": "Indeed",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:45.803751+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -5,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 5,
+   "commerce_bizdev": -5,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "cfcdaa83703fbedc": {
+  "id": "cfcdaa83703fbedc",
+  "title": "Consultant Stagiaire Tech, Data & IA – Consumer Retail & Manufacturing H/F",
+  "company": "BearingPoint",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440977486",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:39:33.072399+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:33.072399+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
  },
  "cfde31d73ba4245b": {
   "id": "cfde31d73ba4245b",
@@ -4227,7 +7416,93 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "d03a8ea5e040e23d": {
+  "id": "d03a8ea5e040e23d",
+  "title": "Trainee NetSec - (Internship September 2026)",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440587581",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:58:58.542342+00:00",
+  "freshness_verified_at": "2026-07-15T14:58:58.542342+00:00",
+  "domains": [
+   "devops_cloud",
+   "cybersecurite",
+   "reseaux_systemes"
+  ],
+  "regions": [
+   "belgique"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 0,
+   "devops_cloud": 6,
+   "cybersecurite": 3,
+   "reseaux_systemes": 3,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 1,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "d05ad1b8a2a82d71": {
+  "id": "d05ad1b8a2a82d71",
+  "title": "Customer Success Intern - Stage - (H/F)",
+  "company": "Rue des Vignerons",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4438069803",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:47:14.518695+00:00",
+  "freshness_verified_at": "2026-07-15T14:47:14.518695+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 3,
+   "rh": -4,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "d1bc367d58945ead": {
@@ -4268,7 +7543,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "d20f6eec73923675": {
+  "id": "d20f6eec73923675",
+  "title": "Stage - Ingénieur.e amélioration continue",
+  "company": "Louis Vuitton",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4421684741",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:59.819782+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:59.819782+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "d32dbcb52ae0158c": {
@@ -4308,8 +7625,93 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": ""
+ },
+ "d49f490f9b76aee9": {
+  "id": "d49f490f9b76aee9",
+  "title": "Stage en développement Full-Stack et en cybersécurité pour un écosystème de gestion des données",
+  "company": "INRAE Occitanie-Toulouse",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440990714",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:49:13.547806+00:00",
+  "freshness_verified_at": "2026-07-15T14:49:13.547806+00:00",
+  "domains": [
+   "cybersecurite"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": -4,
+   "devops_cloud": 0,
+   "cybersecurite": 3,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "d5c83a555cac108b": {
+  "id": "d5c83a555cac108b",
+  "title": "Assistant Sales Operations sport-tech -STAGE TEMPS PLEIN (6 mois - Démarrage Septembre)",
+  "company": "NGTV EXPERIENCE (SPASH)",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=3b35a090a4d5d855",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:43.462725+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -2,
+   "dev_web": -1,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -1,
+   "compta_gestion": -2,
+   "finance": 0,
+   "audit": -1,
+   "supply_chain": -2,
+   "commerce_bizdev": 4,
+   "rh": -2,
+   "juridique": -1,
+   "electronique_embarque": -1,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "d691b91a2e69168c": {
@@ -4349,9 +7751,10 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:39:23.144337+00:00"
  },
  "d766e996bdda6c8b": {
   "id": "d766e996bdda6c8b",
@@ -4391,8 +7794,93 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:50.260673+00:00"
+ },
+ "d7d0206bedf87f4f": {
+  "id": "d7d0206bedf87f4f",
+  "title": "Che.fe de Projets Prévision et Flux Supply Chain – Stage (H/F)",
+  "company": "Franprix",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440955206",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:59.815433+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:59.815433+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 3,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "d90be7d8601bbdae": {
+  "id": "d90be7d8601bbdae",
+  "title": "Stage/Alternance Auditeur financier - Lille - Septembre 2026 F/H",
+  "company": "PwC France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4421848029",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:47.057351+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:47.057351+00:00",
+  "domains": [
+   "audit"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 3,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "dd9994bae1af15e2": {
@@ -4433,8 +7921,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "ddb9859fac6beddf": {
   "id": "ddb9859fac6beddf",
@@ -4473,9 +7961,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": ""
  },
  "e4e8243aff767211": {
   "id": "e4e8243aff767211",
@@ -4515,8 +8004,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "e5e79ceb856d58b4": {
   "id": "e5e79ceb856d58b4",
@@ -4556,7 +8045,176 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
+ },
+ "e690296d9a5fe75b": {
+  "id": "e690296d9a5fe75b",
+  "title": "Comptable stagiaire F/H",
+  "company": "IROISE BELLEVIE",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440980881",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:15.249607+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:15.249607+00:00",
+  "domains": [
+   "compta_gestion"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 3,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "e71c4c219cf49e9f": {
+  "id": "e71c4c219cf49e9f",
+  "title": "Stage fin d'étude - Chargé d’affaires logistique / supply chain – nucléaire",
+  "company": "ALTEN",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4439990912",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:41:59.832436+00:00",
+  "freshness_verified_at": "2026-07-15T14:41:59.832436+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 6,
+   "commerce_bizdev": -4,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "e91c15d91caf08c1": {
+  "id": "e91c15d91caf08c1",
+  "title": "[Stage] - Assistant(e) Juriste M&A et Partenariats Stratégiques H-F",
+  "company": "Abeille Assurances",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4336851764",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.522759+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.522759+00:00",
+  "domains": [
+   "finance",
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": -4,
+   "finance": 3,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 3,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "ebc16297864e11d1": {
+  "id": "ebc16297864e11d1",
+  "title": "STAGE - Chargé de recrutement / Talent Acquisition - H/F Lille",
+  "company": "Extia",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440217902",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:03.903811+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:03.903811+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 6,
+   "juridique": -4,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  },
  "eda89e4925969eaa": {
@@ -4569,7 +8227,7 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T13:49:50.315334+00:00",
+  "sort_date": "2026-07-15T14:43:40.813363+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4596,9 +8254,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:43:40.813363+00:00"
  },
  "eef435fc0770d499": {
   "id": "eef435fc0770d499",
@@ -4610,7 +8269,7 @@
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-07-15T11:21:51.784328+00:00",
+  "sort_date": "2026-07-15T14:42:48.538859+00:00",
   "domains": [
    "juridique"
   ],
@@ -4637,9 +8296,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": false
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:42:48.538859+00:00"
  },
  "f0a9e99cff0d227d": {
   "id": "f0a9e99cff0d227d",
@@ -4679,7 +8339,7 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": false
  },
  "f4afb53bd6e6f57d": {
@@ -4719,9 +8379,10 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T13:52:11+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:21.463511+00:00"
  },
  "f5d2a7f898d33946": {
   "id": "f5d2a7f898d33946",
@@ -4761,8 +8422,177 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": false
+ },
+ "f75a20fe3f0c9992": {
+  "id": "f75a20fe3f0c9992",
+  "title": "Stagiaire - Consultant(e)Juriste en protection des données",
+  "company": "Trustem",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440974350",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:48:20.361708+00:00",
+  "freshness_verified_at": "2026-07-15T14:48:20.361708+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "f996dd2a8d2e0f50": {
+  "id": "f996dd2a8d2e0f50",
+  "title": "Stage - Software Engineer - Backend / Fullstack",
+  "company": "Numberly",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440213883",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:39:42.650850+00:00",
+  "freshness_verified_at": "2026-07-15T14:39:42.650850+00:00",
+  "domains": [
+   "dev_web",
+   "devops_cloud"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 9,
+   "devops_cloud": 6,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 1,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "fa1557578cf43b63": {
+  "id": "fa1557578cf43b63",
+  "title": "Auditeur financier Stagiaire (F/H)",
+  "company": "KPMG France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440558837",
+  "source": "LinkedIn",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:47:14.466836+00:00",
+  "domains": [
+   "audit"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 3,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "fa81b70f7e930480": {
+  "id": "fa81b70f7e930480",
+  "title": "Stage - Juriste Droit des Affaires et Droit des Contrats H/F",
+  "company": "mc2i",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4419604119",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:42:48.498222+00:00",
+  "freshness_verified_at": "2026-07-15T14:42:48.498222+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 9,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
  },
  "fb3b87f37ac555cc": {
   "id": "fb3b87f37ac555cc",
@@ -4802,8 +8632,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": false
  },
  "fba68dc36c84e4a7": {
   "id": "fba68dc36c84e4a7",
@@ -4842,8 +8672,93 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T13:52:11+00:00",
-  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true,
+  "freshness_verified_at": "2026-07-15T14:38:22.669243+00:00"
+ },
+ "fcc919be0bf87384": {
+  "id": "fcc919be0bf87384",
+  "title": "Stage 6 mois | MARKETING Janvier 2027 - Juillet 2027 | Master | €1,700 / mois | 4 divisions",
+  "company": "L'Oréal",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=cd431cae89d2080a",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "freshness_verified_at": "2026-07-15T14:38:34.894700+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": -1,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": -5,
+   "supply_chain": -5,
+   "commerce_bizdev": 0,
+   "rh": 2,
+   "juridique": -6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -5
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
+  "active": true
+ },
+ "ffff333efa700f25": {
+  "id": "ffff333efa700f25",
+  "title": "Embedded Software Engineer Intern",
+  "company": "Harmattan AI",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440901028",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T14:51:36.098372+00:00",
+  "freshness_verified_at": "2026-07-15T14:51:36.098372+00:00",
+  "domains": [
+   "dev_web"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 3,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T15:24:34+00:00",
+  "last_seen_run": "2026-07-15T15:24:34+00:00",
+  "last_seen_success": "2026-07-15T15:24:34+00:00",
   "active": true
  }
 }
