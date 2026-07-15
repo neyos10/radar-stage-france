@@ -2,97 +2,115 @@
 <html lang="fr" translate="no"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
+<meta name="radar-generated-at" content="2026-07-15T10:29:31.652991+00:00">
+<meta name="theme-color" content="#07111f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
 <title>Radar Stage France — Dashboard</title>
-<style>
-:root{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598;--err:#FF7B7B}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}
-.wrap{max-width:840px;margin:0 auto}
-h1{font-size:26px} .sub{color:var(--encre2);font-size:13px;margin-top:6px}
-.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}
-.hero-actions{text-align:right}
-.scan-btn{display:inline-block;background:var(--maj);color:white;text-decoration:none;border:0;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}
-.scan-btn.refresh-btn{background:transparent;border:1px solid var(--maj);color:#CFC8FF;margin-right:6px}
-.scan-hint{color:var(--encre2);font-size:11px;margin-top:6px;max-width:280px}
-.reset-btn:disabled{opacity:.4;cursor:not-allowed}
-.domain-note{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}
-.sources-panel{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.src-stat{font-size:11.5px;border-radius:8px;padding:5px 9px;border:1px solid rgba(255,255,255,.08);color:var(--encre2);background:rgba(255,255,255,.02)}
-.src-stat.st-ok{border-color:rgba(62,213,152,.35);color:var(--ok)}
-.src-stat.st-warn{border-color:rgba(245,184,65,.3);color:var(--saf)}
-.src-stat.st-bad{border-color:rgba(255,123,123,.4);color:var(--err)}
-.src-stat.st-muted{opacity:.6}
-.filter-panel{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}
-.filter-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}
-.filter-group.single-region{display:none}
-.filter-label{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}
-.fchip{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}
-.fchip.on{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}
-.filter-group.single-domain{opacity:.78}
-.reset-btn{border-color:rgba(255,123,123,.35);color:#FFA8A8}
-.active-filters{color:var(--encre2);font-size:12px}
-.job{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}
-.job.is-new{border-left:3px solid var(--saf)}
-.job.applied{opacity:.72;border-color:rgba(62,213,152,.35)}
-.job-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
-.job h3{font-size:15px} .job h3 a{color:var(--encre);text-decoration:none}
-.job h3 a:hover{text-decoration:underline}
-.meta{color:var(--encre2);font-size:13px;margin-top:2px}
-.published{color:#B8C3D5;font-size:11.5px;margin-top:4px}
-.apply-btn{border:1px solid rgba(62,213,152,.45);background:rgba(62,213,152,.08);color:var(--ok);border-radius:9px;padding:7px 10px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
-.apply-btn.undo{border-color:rgba(255,255,255,.16);background:transparent;color:var(--encre2)}
-.tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.tag{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}
-.tag.new{background:var(--saf);color:#3A2C05}
-.tag.highlight{background:rgba(62,213,152,.15);color:var(--ok)}
-.tag.date-unknown{background:rgba(245,184,65,.14);color:var(--saf)}
-.tag.domain{background:rgba(107,91,255,.15);color:#CFC8FF}
-.tag.region{background:rgba(245,184,65,.13);color:var(--saf)}
-.tag.src{background:#212D44;color:var(--encre2);font-weight:500}
-.empty{color:var(--encre2);text-align:center;padding:30px 10px}
-.storage-note{color:#66748A;font-size:11px;text-align:center;margin-top:18px}
-@media(max-width:620px){.hero{display:block}.hero-actions{text-align:left;margin-top:12px}.scan-hint{max-width:none}.job-top{display:block}.apply-btn{margin-top:10px}.filter-label{width:100%}}
-</style></head>
-<body><div class="wrap">
-<div class="hero"><div><h1>🎯 Radar Stage France</h1>
-<p class="sub">Veille automatique d&#x27;offres de stage multi-sources</p>
-<p class="sub">Dernier scan : 15/07/2026 10:25 UTC · 103 offres des 7 derniers jours · durée du scan : 2 min 11 s</p></div>
-<div class="hero-actions">
-<button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
-<a id="actionsLink" class="scan-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
-<p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
-<p class="domain-note">Domaines analysés : Data / IA · Développement Web / Logiciel · DevOps / Cloud · Cybersécurité · Réseaux / Systèmes · Product Management · Comptabilité / Contrôle de gestion · Finance / Marchés · Audit · Supply Chain / Logistique / Achats · Commerce / Business Development · Ressources Humaines · Juridique / Droit des affaires · Électronique / Systèmes embarqués · Génie civil / BTP · Mécanique / Industriel<br>
-Régions analysées : France · Belgique · Luxembourg · Maroc</p>
-<div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn · France</b> · 6 offres</span><span class="src-stat st-warn"><b>LinkedIn · Belgique</b> · 0 accepté / 25 reçus</span><span class="src-stat st-ok"><b>LinkedIn · Luxembourg</b> · 2 offres</span><span class="src-stat st-warn"><b>LinkedIn · Maroc</b> · 0 accepté / 25 reçus</span><span class="src-stat st-ok"><b>Indeed · France</b> · 46 offres</span><span class="src-stat st-ok"><b>Indeed · Belgique</b> · 4 offres</span><span class="src-stat st-ok"><b>Indeed · Luxembourg</b> · 6 offres</span><span class="src-stat st-ok"><b>Indeed · Maroc</b> · 18 offres</span><span class="src-stat st-bad"><b>Glassdoor · France</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-bad"><b>Glassdoor · Belgique</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-muted"><b>Glassdoor · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>Glassdoor · Maroc</b> · Non applicable à Maroc</span><span class="src-stat st-warn"><b>Google Jobs · France</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs · Belgique</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs · Luxembourg</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs · Maroc</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC · France</b> · 21 offres</span><span class="src-stat st-muted"><b>APEC · Belgique</b> · Non applicable à Belgique</span><span class="src-stat st-muted"><b>APEC · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>APEC · Maroc</b> · Non applicable à Maroc</span><span class="src-stat st-muted"><b>Adzuna · France</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>Adzuna · Belgique</b> · Non applicable à Belgique</span><span class="src-stat st-muted"><b>Adzuna · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>Adzuna · Maroc</b> · Non applicable à Maroc</span><span class="src-stat st-muted"><b>France Travail · France</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail · Belgique</b> · Non applicable à Belgique</span><span class="src-stat st-muted"><b>France Travail · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>France Travail · Maroc</b> · Non applicable à Maroc</span></div>
-<div class="filter-panel">
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Accueil Radar Stage France">
+    <span class="brand-mark" aria-hidden="true">◎</span>
+    <span>Radar Stage France</span>
+  </a>
+  <div class="automation-status"><span class="live-dot" aria-hidden="true"></span><span>Automatisation active · toutes les 30 min</span></div>
+</header>
+<main id="top">
+<section class="hero" aria-labelledby="pageTitle">
+  <div>
+    <p class="eyebrow">Radar de stages multi-sources</p>
+    <h1 id="pageTitle">Trouvez les offres qui méritent votre candidature.</h1>
+    <p class="hero-copy">Veille automatique d&#x27;offres de stage multi-sources. Les résultats récents sont consolidés, dédupliqués et classés automatiquement.</p>
+    <div class="scan-meta">
+      <span>Dernier scan <strong>15/07/2026 10:29 UTC</strong></span>
+      <span>Fenêtre <strong>7 jours</strong></span>
+      <span>Tri <strong>plus récent d’abord</strong></span>
+    </div>
+  </div>
+  <div class="hero-actions">
+    <button id="scanTriggerBtn" class="button button-primary" type="button">
+      <span class="button-icon" aria-hidden="true">↻</span><span class="button-label">Lancer un scan</span>
+    </button>
+    <button id="refreshBtn" class="button button-secondary" type="button">
+      <span class="button-icon" aria-hidden="true">↺</span><span>Actualiser les offres</span>
+    </button>
+  </div>
+</section>
+
+<section class="metrics" aria-label="Indicateurs du dernier scan">
+  <article class="metric"><span class="metric-label">Offres actives</span><strong class="metric-value">102</strong><span class="metric-note">sur les 7 derniers jours</span></article>
+  <article class="metric"><span class="metric-label">Nouvelles</span><strong class="metric-value">1</strong><span class="metric-note">depuis le scan précédent</span></article>
+  <article class="metric"><span class="metric-label">Marchés</span><strong class="metric-value">4</strong><span class="metric-note">régions analysées</span></article>
+  <article class="metric"><span class="metric-label">Durée du scan</span><strong class="metric-value">2 min 11 s</strong><span class="metric-note">collecte et classement</span></article>
+</section>
+
+<div class="catalog-summary">
+  <span class="catalog-icon" aria-hidden="true">⌁</span>
+  <span><strong>16 domaines</strong> et <strong>4 régions</strong> analysés : France · Belgique · Luxembourg · Maroc</span>
+</div>
+
+<details class="source-health">
+  <summary>
+    <span class="source-health-title"><span class="live-dot" aria-hidden="true"></span>État des connecteurs</span>
+    <span class="source-health-copy">7 opérationnels · 2 bloqués ou en erreur · afficher le détail</span>
+  </summary>
+  <div class="sources-panel" translate="no"><span class="src-stat st-ok"><b>LinkedIn · France</b> · 5 offres</span><span class="src-stat st-warn"><b>LinkedIn · Belgique</b> · 0 accepté / 30 reçus</span><span class="src-stat st-ok"><b>LinkedIn · Luxembourg</b> · 2 offres</span><span class="src-stat st-warn"><b>LinkedIn · Maroc</b> · 0 accepté / 29 reçus</span><span class="src-stat st-ok"><b>Indeed · France</b> · 46 offres</span><span class="src-stat st-ok"><b>Indeed · Belgique</b> · 4 offres</span><span class="src-stat st-ok"><b>Indeed · Luxembourg</b> · 6 offres</span><span class="src-stat st-ok"><b>Indeed · Maroc</b> · 18 offres</span><span class="src-stat st-bad"><b>Glassdoor · France</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-bad"><b>Glassdoor · Belgique</b> · Bloqué temporairement — HTTP 403</span><span class="src-stat st-muted"><b>Glassdoor · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>Glassdoor · Maroc</b> · Non applicable à Maroc</span><span class="src-stat st-warn"><b>Google Jobs · France</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs · Belgique</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs · Luxembourg</b> · Aucune offre reçue</span><span class="src-stat st-warn"><b>Google Jobs · Maroc</b> · Aucune offre reçue</span><span class="src-stat st-ok"><b>APEC · France</b> · 21 offres</span><span class="src-stat st-muted"><b>APEC · Belgique</b> · Non applicable à Belgique</span><span class="src-stat st-muted"><b>APEC · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>APEC · Maroc</b> · Non applicable à Maroc</span><span class="src-stat st-muted"><b>Adzuna · France</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>Adzuna · Belgique</b> · Non applicable à Belgique</span><span class="src-stat st-muted"><b>Adzuna · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>Adzuna · Maroc</b> · Non applicable à Maroc</span><span class="src-stat st-muted"><b>France Travail · France</b> · Non configuré — identifiants manquants</span><span class="src-stat st-muted"><b>France Travail · Belgique</b> · Non applicable à Belgique</span><span class="src-stat st-muted"><b>France Travail · Luxembourg</b> · Non applicable à Luxembourg</span><span class="src-stat st-muted"><b>France Travail · Maroc</b> · Non applicable à Maroc</span></div>
+</details>
+
+<section class="workspace" aria-labelledby="offersTitle">
+<div class="workspace-head">
+  <div><p class="eyebrow">Candidatures</p><h2 id="offersTitle" class="section-title">Explorer les offres</h2></div>
+  <label class="search-box" role="search">
+    <span aria-hidden="true">⌕</span>
+    <input id="searchInput" type="search" placeholder="Poste, entreprise ou ville…" autocomplete="off" aria-label="Rechercher une offre">
+  </label>
+</div>
+<div class="filter-panel" aria-label="Filtres des offres">
   <div class="filter-group"><span class="filter-label">Statut</span>
-    <button class="fchip status-chip on" data-status="todo">À postuler <b id="todoCount"></b></button>
-    <button class="fchip status-chip" data-status="applied">Déjà postulé <b id="appliedCount"></b></button>
-    <button class="fchip status-chip" data-status="all">Tous</button>
+    <button class="fchip status-chip on" data-status="todo" aria-pressed="true">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" data-status="applied" aria-pressed="false">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" data-status="all" aria-pressed="false">Tous</button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" data-src="*">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" >LinkedIn <b>(8)</b></button><button class="fchip source-chip" data-src="Indeed" >Indeed <b>(74)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Bloqué temporairement — HTTP 403" >Glassdoor <b>bloqué 403</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" >Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" >APEC <b>(21)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" >Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" >France Travail <b>non configuré</b></button>
+    <button class="fchip source-chip on" data-src="*" aria-pressed="true">Toutes</button><button class="fchip source-chip" data-src="LinkedIn" aria-pressed="false">LinkedIn <b>(7)</b></button><button class="fchip source-chip" data-src="Indeed" aria-pressed="false">Indeed <b>(74)</b></button><button class="fchip source-chip" data-src="Glassdoor" data-note="Bloqué temporairement — HTTP 403" aria-pressed="false">Glassdoor <b>bloqué 403</b></button><button class="fchip source-chip" data-src="Google Jobs" data-note="Aucune offre reçue" aria-pressed="false">Google Jobs <b>(0)</b></button><button class="fchip source-chip" data-src="APEC" aria-pressed="false">APEC <b>(21)</b></button><button class="fchip source-chip" data-src="Adzuna" data-note="Non configuré — identifiants manquants" aria-pressed="false">Adzuna <b>non configuré</b></button><button class="fchip source-chip" data-src="France Travail" data-note="Non configuré — identifiants manquants" aria-pressed="false">France Travail <b>non configuré</b></button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Domaine</span>
-    <button class="fchip domain-chip on" data-domain="*">Tous</button><button class="fchip domain-chip" data-domain="data_ia">Data / IA <b>(11)</b></button><button class="fchip domain-chip" data-domain="dev_web">Développement Web / Logiciel <b>(4)</b></button><button class="fchip domain-chip" data-domain="devops_cloud">DevOps / Cloud <b>(3)</b></button><button class="fchip domain-chip" data-domain="cybersecurite">Cybersécurité <b>(3)</b></button><button class="fchip domain-chip" data-domain="reseaux_systemes">Réseaux / Systèmes <b>(0)</b></button><button class="fchip domain-chip" data-domain="product_management">Product Management <b>(3)</b></button><button class="fchip domain-chip" data-domain="compta_gestion">Comptabilité / Contrôle de gestion <b>(12)</b></button><button class="fchip domain-chip" data-domain="finance">Finance / Marchés <b>(9)</b></button><button class="fchip domain-chip" data-domain="audit">Audit <b>(3)</b></button><button class="fchip domain-chip" data-domain="supply_chain">Supply Chain / Logistique / Achats <b>(4)</b></button><button class="fchip domain-chip" data-domain="commerce_bizdev">Commerce / Business Development <b>(9)</b></button><button class="fchip domain-chip" data-domain="rh">Ressources Humaines <b>(27)</b></button><button class="fchip domain-chip" data-domain="juridique">Juridique / Droit des affaires <b>(5)</b></button><button class="fchip domain-chip" data-domain="electronique_embarque">Électronique / Systèmes embarqués <b>(2)</b></button><button class="fchip domain-chip" data-domain="genie_civil_btp">Génie civil / BTP <b>(7)</b></button><button class="fchip domain-chip" data-domain="mecanique_industriel">Mécanique / Industriel <b>(7)</b></button>
+    <button class="fchip domain-chip on" data-domain="*" aria-pressed="true">Tous</button><button class="fchip domain-chip" data-domain="data_ia" aria-pressed="false">Data / IA <b>(11)</b></button><button class="fchip domain-chip" data-domain="dev_web" aria-pressed="false">Développement Web / Logiciel <b>(3)</b></button><button class="fchip domain-chip" data-domain="devops_cloud" aria-pressed="false">DevOps / Cloud <b>(3)</b></button><button class="fchip domain-chip" data-domain="cybersecurite" aria-pressed="false">Cybersécurité <b>(3)</b></button><button class="fchip domain-chip" data-domain="reseaux_systemes" aria-pressed="false">Réseaux / Systèmes <b>(0)</b></button><button class="fchip domain-chip" data-domain="product_management" aria-pressed="false">Product Management <b>(2)</b></button><button class="fchip domain-chip" data-domain="compta_gestion" aria-pressed="false">Comptabilité / Contrôle de gestion <b>(12)</b></button><button class="fchip domain-chip" data-domain="finance" aria-pressed="false">Finance / Marchés <b>(9)</b></button><button class="fchip domain-chip" data-domain="audit" aria-pressed="false">Audit <b>(3)</b></button><button class="fchip domain-chip" data-domain="supply_chain" aria-pressed="false">Supply Chain / Logistique / Achats <b>(4)</b></button><button class="fchip domain-chip" data-domain="commerce_bizdev" aria-pressed="false">Commerce / Business Development <b>(9)</b></button><button class="fchip domain-chip" data-domain="rh" aria-pressed="false">Ressources Humaines <b>(27)</b></button><button class="fchip domain-chip" data-domain="juridique" aria-pressed="false">Juridique / Droit des affaires <b>(6)</b></button><button class="fchip domain-chip" data-domain="electronique_embarque" aria-pressed="false">Électronique / Systèmes embarqués <b>(2)</b></button><button class="fchip domain-chip" data-domain="genie_civil_btp" aria-pressed="false">Génie civil / BTP <b>(7)</b></button><button class="fchip domain-chip" data-domain="mecanique_industriel" aria-pressed="false">Mécanique / Industriel <b>(7)</b></button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Région</span>
-    <button class="fchip region-chip" data-region="*">Toutes</button><button class="fchip region-chip on" data-region="france">France <b>(73)</b></button><button class="fchip region-chip" data-region="belgique">Belgique <b>(4)</b></button><button class="fchip region-chip" data-region="luxembourg">Luxembourg <b>(8)</b></button><button class="fchip region-chip" data-region="maroc">Maroc <b>(18)</b></button>
+    <button class="fchip region-chip" data-region="*" aria-pressed="false">Toutes</button><button class="fchip region-chip on" data-region="france" aria-pressed="true">France <b>(72)</b></button><button class="fchip region-chip" data-region="belgique" aria-pressed="false">Belgique <b>(4)</b></button><button class="fchip region-chip" data-region="luxembourg" aria-pressed="false">Luxembourg <b>(8)</b></button><button class="fchip region-chip" data-region="maroc" aria-pressed="false">Maroc <b>(18)</b></button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="highlightFilter" class="fchip" aria-pressed="false">✓ Visa-friendly probable</button>
   </div>
-  <div class="filter-group"><span class="filter-label">Actifs</span>
+  <div class="filter-group active-row"><span class="filter-label">Actifs</span>
     <span id="activeFilters" class="active-filters" translate="no"></span>
     <button id="resetBtn" class="fchip reset-btn" disabled>✕ Réinitialiser les filtres</button>
   </div>
 </div>
+<div class="list-head"><h3 class="list-title">Offres recommandées</h3><span id="visibleCount" class="visible-count" aria-live="polite"></span></div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
 <div id="jobs">
+      <article class="job is-new" data-id="eef435fc0770d499"
+               data-src="LinkedIn" data-domains="juridique" data-regions="france"
+               data-highlight="0" data-search="Stagiaire juriste, spécialisé IP/IT/Data protection Métadonnées du projet Leasys France">
+        <div class="job-top"><div class="job-content">
+          <h3><a href="https://www.linkedin.com/jobs/view/4440953488" target="_blank" rel="noopener noreferrer">Stagiaire juriste, spécialisé IP/IT/Data protection Métadonnées du projet</a></h3>
+          <div class="meta">Leasys · France</div>
+          <div class="published">Date de publication inconnue · conservée par précaution</div>
+        </div>
+        <button class="apply-btn" type="button" data-offer-id="eef435fc0770d499">✓ Marquer comme postulé</button></div>
+        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+
+          <span class="tag date-unknown">date inconnue</span>
+          <span class="tag domain">Juridique / Droit des affaires</span><span class="tag region">France</span><span class="tag src">LinkedIn</span></div>
+      </article>
       <article class="job " data-id="be4959649f27346a"
                data-src="LinkedIn" data-domains="devops_cloud" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage DevOps Engineer ChapsVision France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.linkedin.com/jobs/view/4430590151" target="_blank" rel="noopener noreferrer">Stage DevOps Engineer</a></h3>
           <div class="meta">ChapsVision · France</div>
           <div class="published">Date de publication inconnue · conservée par précaution</div>
@@ -103,24 +121,24 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
           <span class="tag date-unknown">date inconnue</span>
           <span class="tag domain">DevOps / Cloud</span><span class="tag region">France</span><span class="tag src">LinkedIn</span></div>
       </article>
-      <article class="job is-new" data-id="dfaae2771d964573"
+      <article class="job " data-id="dfaae2771d964573"
                data-src="LinkedIn" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire IA &amp; No-Code (H/F) – 100% Remote MyAIFactory France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.linkedin.com/jobs/view/4440926115" target="_blank" rel="noopener noreferrer">Stagiaire IA &amp; No-Code (H/F) – 100% Remote</a></h3>
           <div class="meta">MyAIFactory · France</div>
           <div class="published">Date de publication inconnue · conservée par précaution</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="dfaae2771d964573">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
           <span class="tag date-unknown">date inconnue</span>
           <span class="tag domain">Data / IA</span><span class="tag region">France</span><span class="tag src">LinkedIn</span></div>
       </article>
       <article class="job " data-id="133ff5345eb0d4c8"
                data-src="APEC" data-domains="compta_gestion" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Expert comptable stagiaire ou mémorialiste F/H Proaxian Aubagne - 13">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179116816W" target="_blank" rel="noopener noreferrer">Expert comptable stagiaire ou mémorialiste F/H</a></h3>
           <div class="meta">Proaxian · Aubagne - 13</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
@@ -133,8 +151,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="931c8ff511620286"
                data-src="APEC" data-domains="compta_gestion" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Expert Comptable Stagiaire Mémorialiste ou Diplômé F/H Proaxian Béziers - 34">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179116769W" target="_blank" rel="noopener noreferrer">Expert Comptable Stagiaire Mémorialiste ou Diplômé F/H</a></h3>
           <div class="meta">Proaxian · Béziers - 34</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
@@ -147,8 +165,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="d32dbcb52ae0158c"
                data-src="APEC" data-domains="compta_gestion" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Expert comptable stagiaire ou mémorialiste F/H Proaxian Aubagne - 13">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179116766W" target="_blank" rel="noopener noreferrer">Expert comptable stagiaire ou mémorialiste F/H</a></h3>
           <div class="meta">Proaxian · Aubagne - 13</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
@@ -159,94 +177,94 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
 
           <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag region">France</span><span class="tag src">APEC</span></div>
       </article>
-      <article class="job is-new" data-id="d5c83a555cac108b"
+      <article class="job " data-id="d5c83a555cac108b"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Assistant Sales Operations sport-tech -STAGE TEMPS PLEIN (6 mois - Démarrage Septembre) NGTV EXPERIENCE (SPASH) France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=3b35a090a4d5d855" target="_blank" rel="noopener noreferrer">Assistant Sales Operations sport-tech -STAGE TEMPS PLEIN (6 mois - Démarrage Septembre)</a></h3>
           <div class="meta">NGTV EXPERIENCE (SPASH) · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="d5c83a555cac108b">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Commerce / Business Development</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="51da2f281c3dbf75"
+      <article class="job " data-id="51da2f281c3dbf75"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="STAGE CHARGE.E D’ETUDE Made In Past France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=6cf05accf1675a33" target="_blank" rel="noopener noreferrer">STAGE CHARGE.E D’ETUDE</a></h3>
           <div class="meta">Made In Past · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="51da2f281c3dbf75">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Génie civil / BTP</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="98a1369636117738"
+      <article class="job " data-id="98a1369636117738"
                data-src="Indeed" data-domains="supply_chain" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Assistant(e) Coordination Logistique Transport - Janvier 2027 (H/F/X) Henkel France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=27c11ec274ab5856" target="_blank" rel="noopener noreferrer">Stage - Assistant(e) Coordination Logistique Transport - Janvier 2027 (H/F/X)</a></h3>
           <div class="meta">Henkel · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="98a1369636117738">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="fba68dc36c84e4a7"
+      <article class="job " data-id="fba68dc36c84e4a7"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Bras droit CEO - Business Development - Marketing AXIBIO France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=0c0432129b7225d0" target="_blank" rel="noopener noreferrer">Stage Bras droit CEO - Business Development - Marketing</a></h3>
           <div class="meta">AXIBIO · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="fba68dc36c84e4a7">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Commerce / Business Development</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="6b757f2078c59b94"
+      <article class="job " data-id="6b757f2078c59b94"
                data-src="Indeed" data-domains="supply_chain" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Chargé Approvisionnement/Achats - E-commerce Sports Outdoor Hardloop France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=d1b440bcda6469bd" target="_blank" rel="noopener noreferrer">Stage Chargé Approvisionnement/Achats - E-commerce Sports Outdoor</a></h3>
           <div class="meta">Hardloop · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="6b757f2078c59b94">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="5c65aec87fd918d1"
+      <article class="job " data-id="5c65aec87fd918d1"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Développement Commercial CHD-E-Commerce Agroalimentaire CHICHE SAS France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=948f8abacae19011" target="_blank" rel="noopener noreferrer">Stage Développement Commercial CHD-E-Commerce Agroalimentaire</a></h3>
           <div class="meta">CHICHE SAS · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="5c65aec87fd918d1">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Commerce / Business Development</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="c952ad521b4c8ac1"
                data-src="Indeed" data-domains="mecanique_industriel" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage – Dessinateur technique / CAO mécanique Rotarex France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://lu.indeed.com/viewjob?jk=02590e3015717f4f" target="_blank" rel="noopener noreferrer">Stage – Dessinateur technique / CAO mécanique</a></h3>
           <div class="meta">Rotarex · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
@@ -259,8 +277,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="5a938ce7a2e30f33"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire commercial(e) H/F GND Désamiantage France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=2077ec4c7e20b19a" target="_blank" rel="noopener noreferrer">Stagiaire commercial(e) H/F</a></h3>
           <div class="meta">GND Désamiantage · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
@@ -271,24 +289,24 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
 
           <span class="tag domain">Commerce / Business Development</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job is-new" data-id="6b0d58d250d7cb42"
+      <article class="job " data-id="6b0d58d250d7cb42"
                data-src="Indeed" data-domains="compta_gestion" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire comptable H/F Assouline France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=de5e2a8d5094875f" target="_blank" rel="noopener noreferrer">Stagiaire comptable H/F</a></h3>
           <div class="meta">Assouline · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
         </div>
         <button class="apply-btn" type="button" data-offer-id="6b0d58d250d7cb42">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no"><span class="tag new">NOUVEAU</span>
+        <div class="tags" translate="no">
 
 
           <span class="tag domain">Comptabilité / Contrôle de gestion</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
       <article class="job " data-id="c7ed08f45b94adff"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire en prospection H/F GND Désamiantage France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=8977d1ea91dea1b4" target="_blank" rel="noopener noreferrer">Stagiaire en prospection H/F</a></h3>
           <div class="meta">GND Désamiantage · France</div>
           <div class="published">Publiée aujourd'hui · 15/07/2026</div>
@@ -301,8 +319,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="88a7bc4ecbda70a6"
                data-src="Indeed" data-domains="compta_gestion" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Offre de Stage en Comptabilité – Agadir Vala Bleu France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=98f1849d7f942258" target="_blank" rel="noopener noreferrer">Offre de Stage en Comptabilité – Agadir</a></h3>
           <div class="meta">Vala Bleu · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -315,8 +333,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="497873b4cfaa2f30"
                data-src="Indeed" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Chargé(e) de Recrutement (H/F/X) - Septembre 2026 Amplifon France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=51b97cf67f720867" target="_blank" rel="noopener noreferrer">Stage - Chargé(e) de Recrutement (H/F/X) - Septembre 2026</a></h3>
           <div class="meta">Amplifon · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -329,8 +347,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="636e505c5a4063b7"
                data-src="Indeed" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Chargé(e) de Recrutement - Janvier 2027 (H/F/X) Amplifon France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=c261ec32bd1ad9d1" target="_blank" rel="noopener noreferrer">Stage - Chargé(e) de Recrutement - Janvier 2027 (H/F/X)</a></h3>
           <div class="meta">Amplifon · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -343,8 +361,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="70bcae16d41f902f"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Pré-Embauche Rémunéré – Marketing Digital / Business Développent / Community Manager AI Hub France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=5f864aa703bdc63b" target="_blank" rel="noopener noreferrer">Stage Pré-Embauche Rémunéré – Marketing Digital / Business Développent / Community Manager</a></h3>
           <div class="meta">AI Hub · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -357,8 +375,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="0b057fda26378088"
                data-src="Indeed" data-domains="mecanique_industriel" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage R&amp;D, Qualité, Industriel - Entreprise agroalimentaire Gourmie&#x27;s France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=1f017fbed9858f7a" target="_blank" rel="noopener noreferrer">Stage R&amp;D, Qualité, Industriel - Entreprise agroalimentaire</a></h3>
           <div class="meta">Gourmie&#x27;s · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -371,8 +389,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="b32ea8198f5697e0"
                data-src="Indeed" data-domains="compta_gestion" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage pré-embauche – Tanger Megalife France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=a5726b84a8a6b076" target="_blank" rel="noopener noreferrer">Stage pré-embauche – Tanger</a></h3>
           <div class="meta">Megalife · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -385,8 +403,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="b0bcd01757c2d59c"
                data-src="Indeed" data-domains="mecanique_industriel" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage – Dessinateur technique / CAO mécanique Rotarex France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://lu.indeed.com/viewjob?jk=b1518a5653629243" target="_blank" rel="noopener noreferrer">Stage – Dessinateur technique / CAO mécanique</a></h3>
           <div class="meta">Rotarex · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -399,8 +417,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="69c499c7972f1c83"
                data-src="Indeed" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire RH - Soho House Paris Soho House &amp; Co. France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=3a41231217a7ae3e" target="_blank" rel="noopener noreferrer">Stagiaire RH - Soho House Paris</a></h3>
           <div class="meta">Soho House &amp; Co. · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -413,8 +431,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="5b47180463fddd34"
                data-src="Indeed" data-domains="finance" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire en Gestion d&#x27;Actifs (BLI – Asset Management) Banque de Luxembourg France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://lu.indeed.com/viewjob?jk=c3a21936b9dcb89c" target="_blank" rel="noopener noreferrer">Stagiaire en Gestion d&#x27;Actifs (BLI – Asset Management)</a></h3>
           <div class="meta">Banque de Luxembourg · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -427,8 +445,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="0c8e8813c6612b06"
                data-src="Indeed" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="[STAGE] Stagiaire Ressources Humaines (H-F) . Sofitel France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=2ff8679fd102e160" target="_blank" rel="noopener noreferrer">[STAGE] Stagiaire Ressources Humaines (H-F) .</a></h3>
           <div class="meta">Sofitel · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -441,8 +459,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="1f75b3d6e425ae47"
                data-src="Indeed" data-domains="mecanique_industriel" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="stagiaire qualité AMICALE MAROCAINE DES HANDICAPES France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=dc6800a7e082bbd0" target="_blank" rel="noopener noreferrer">stagiaire qualité</a></h3>
           <div class="meta">AMICALE MAROCAINE DES HANDICAPES · France</div>
           <div class="published">Publiée hier · 14/07/2026</div>
@@ -455,8 +473,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="1ed9466fa12648cb"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Chargé de Recrutement F/H Proaxian Mougins - 06">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179100268W" target="_blank" rel="noopener noreferrer">Chargé de Recrutement F/H</a></h3>
           <div class="meta">Proaxian · Mougins - 06</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -469,8 +487,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="9a77b82f5ccde4bc"
                data-src="APEC" data-domains="mecanique_industriel" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Ingénieur.e en mécatronique F/H Proaxian Saint-Étienne - 42">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179100244W" target="_blank" rel="noopener noreferrer">Ingénieur.e en mécatronique F/H</a></h3>
           <div class="meta">Proaxian · Saint-Étienne - 42</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -483,8 +501,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="001fd4543d035d43"
                data-src="APEC" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Data Analyst MMM F/H Proaxian Arcueil - 94">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179100208W" target="_blank" rel="noopener noreferrer">Data Analyst MMM F/H</a></h3>
           <div class="meta">Proaxian · Arcueil - 94</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -497,8 +515,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="6b31e78f9856f9f3"
                data-src="Indeed" data-domains="compta_gestion" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Administrateur Fonctionnel EPM (F/H) en stage Carrefour France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=d735fa31fd46d8ec" target="_blank" rel="noopener noreferrer">Administrateur Fonctionnel EPM (F/H) en stage</a></h3>
           <div class="meta">Carrefour · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -511,8 +529,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="ae48e2bce9747ec4"
                data-src="Indeed" data-domains="finance" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Intern in Asset Servicing UBS France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://lu.indeed.com/viewjob?jk=98ef8900648db8db" target="_blank" rel="noopener noreferrer">Intern in Asset Servicing</a></h3>
           <div class="meta">UBS · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -525,8 +543,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="53cd1b1421f4af6f"
                data-src="LinkedIn" data-domains="data_ia" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Internship - Data Analyst (m/f/n) Enovos Luxembourg France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.linkedin.com/jobs/view/4439170207" target="_blank" rel="noopener noreferrer">Internship - Data Analyst (m/f/n)</a></h3>
           <div class="meta">Enovos Luxembourg · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -539,8 +557,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="e5e79ceb856d58b4"
                data-src="Indeed" data-domains="supply_chain" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Assistant ordonnancement et logistique F/H Framatome France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=91d5cc91419e5a06" target="_blank" rel="noopener noreferrer">Stage - Assistant ordonnancement et logistique F/H</a></h3>
           <div class="meta">Framatome · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -553,8 +571,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="f21fe11947cb6393"
                data-src="Indeed" data-domains="mecanique_industriel" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Ingénieur Conception - Technologies LiDAR et Développement Système (H/F) ALSTOM France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=dfb64b544fbb7064" target="_blank" rel="noopener noreferrer">Stage - Ingénieur Conception - Technologies LiDAR et Développement Système (H/F)</a></h3>
           <div class="meta">ALSTOM · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -567,8 +585,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="f5d2a7f898d33946"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Ingénieur technico-commercial H/F L&#x27;industrie recrute France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=2baeea6d0d167df9" target="_blank" rel="noopener noreferrer">Stage - Ingénieur technico-commercial H/F</a></h3>
           <div class="meta">L&#x27;industrie recrute · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -581,8 +599,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="c6a53ee8e04f3462"
                data-src="Indeed" data-domains="finance" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Analyste Reporting Financier au sein d&#x27;HSBC Global ASSET MANAGEMENT (f/m/d) HSBC France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=6761c73aa5e0020e" target="_blank" rel="noopener noreferrer">Stage Analyste Reporting Financier au sein d&#x27;HSBC Global ASSET MANAGEMENT (f/m/d)</a></h3>
           <div class="meta">HSBC · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -595,8 +613,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="ad632292d0a2b17b"
                data-src="Indeed" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Fin d&#x27;Études - Ingénieur IA et Data Seensys France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=9bb99fae29d3a372" target="_blank" rel="noopener noreferrer">Stage Fin d&#x27;Études - Ingénieur IA et Data</a></h3>
           <div class="meta">Seensys · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -609,8 +627,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="14ef112393123745"
                data-src="Indeed" data-domains="finance" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Finance Août 2026 pour 6 mois (H/F) Four Seasons France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=d98de979719fcf8a" target="_blank" rel="noopener noreferrer">Stage Finance Août 2026 pour 6 mois (H/F)</a></h3>
           <div class="meta">Four Seasons · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -623,8 +641,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="60ee8e3ac5efdaeb"
                data-src="Indeed" data-domains="rh,juridique" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Juriste Affaires Sociales F/H WPP Media France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=87be10e4ed11c24e" target="_blank" rel="noopener noreferrer">Stage Juriste Affaires Sociales F/H</a></h3>
           <div class="meta">WPP Media · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -637,8 +655,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="55f13be1f1f1efcf"
                data-src="Indeed" data-domains="compta_gestion" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Structureur financier / analyste DEEPINTECH France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=8446ffe9e601fa28" target="_blank" rel="noopener noreferrer">Stage Structureur financier / analyste</a></h3>
           <div class="meta">DEEPINTECH · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -651,8 +669,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="7f0103c4b1af3d1f"
                data-src="Indeed" data-domains="product_management" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage de fin d&#x27;étude AI Product Owner - F/H EY France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=051f0708a94961ea" target="_blank" rel="noopener noreferrer">Stage de fin d&#x27;étude AI Product Owner - F/H</a></h3>
           <div class="meta">EY · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -665,8 +683,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="150bcd59f14aac90"
                data-src="Indeed" data-domains="finance" data-regions="belgique"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage en Compliance / Portfolio Management Look&amp;Fin France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://be.indeed.com/viewjob?jk=5fd865e0569820c0" target="_blank" rel="noopener noreferrer">Stage en Compliance / Portfolio Management</a></h3>
           <div class="meta">Look&amp;Fin · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -679,8 +697,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="a29d16a44c5ef5f2"
                data-src="Indeed" data-domains="rh" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage en gestion portefeuille client / RH / support client DEEPINTECH France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=5602a4b704620a8a" target="_blank" rel="noopener noreferrer">Stage en gestion portefeuille client / RH / support client</a></h3>
           <div class="meta">DEEPINTECH · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -693,8 +711,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="c364a6034000f30f"
                data-src="Indeed" data-domains="data_ia" data-regions="belgique"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage en/of eindwerk in IT of Engineering Volvo Cars France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://be.indeed.com/viewjob?jk=7fc2bc26cb1ed587" target="_blank" rel="noopener noreferrer">Stage en/of eindwerk in IT of Engineering</a></h3>
           <div class="meta">Volvo Cars · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -707,8 +725,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="e4e8243aff767211"
                data-src="Indeed" data-domains="rh" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage rémunéré en RH JobPlus France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=4398f3abcfa195d5" target="_blank" rel="noopener noreferrer">Stage rémunéré en RH</a></h3>
           <div class="meta">JobPlus · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -721,8 +739,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="f0a9e99cff0d227d"
                data-src="Indeed" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage – Assistant.e Chargé.e de Ressources Humaines &amp; Talent Acquisition Campus (F/H) – Janvier 2027 Louis Vuitton France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=933ecc59c3c86cec" target="_blank" rel="noopener noreferrer">Stage – Assistant.e Chargé.e de Ressources Humaines &amp; Talent Acquisition Campus (F/H) – Janvier 2027</a></h3>
           <div class="meta">Louis Vuitton · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -735,8 +753,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="afce0a41067c0e5c"
                data-src="Indeed" data-domains="dev_web" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage – Pré-embauche – Développeur(se) Odoo BLACKSWAN TECHNOLOGY France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=00e1cf214e20059d" target="_blank" rel="noopener noreferrer">Stage – Pré-embauche – Développeur(se) Odoo</a></h3>
           <div class="meta">BLACKSWAN TECHNOLOGY · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -749,8 +767,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="78de94f36bb1ddb0"
                data-src="Indeed" data-domains="rh" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage – marketing, recrutement &amp; communication AFRICA STAFFING France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=b85f4271c77b77f5" target="_blank" rel="noopener noreferrer">Stage – marketing, recrutement &amp; communication</a></h3>
           <div class="meta">AFRICA STAFFING · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -763,8 +781,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="b198fd4f6c6dd2e9"
                data-src="Indeed" data-domains="finance" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire - Valuation &amp; Modeling - Neuilly-sur-Seine (H/F) Grant Thornton France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=e6614502bf17dae7" target="_blank" rel="noopener noreferrer">Stagiaire - Valuation &amp; Modeling - Neuilly-sur-Seine (H/F)</a></h3>
           <div class="meta">Grant Thornton · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -777,8 +795,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="8ab2dfc30fc32f4b"
                data-src="Indeed" data-domains="finance" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire - Valuation &amp; Modeling - Neuilly-sur-Seine (H/F) Grant Thornton France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=3449c3a856b66e48" target="_blank" rel="noopener noreferrer">Stagiaire - Valuation &amp; Modeling - Neuilly-sur-Seine (H/F)</a></h3>
           <div class="meta">Grant Thornton · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -791,8 +809,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="bd6e1e40b5aac53c"
                data-src="Indeed" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire Business Intelligence &amp; Marketing F/H VINCI France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=c7a69a8ecc806b90" target="_blank" rel="noopener noreferrer">Stagiaire Business Intelligence &amp; Marketing F/H</a></h3>
           <div class="meta">VINCI · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -805,8 +823,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="6b43ceaa9325bf95"
                data-src="Indeed" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire DATA ANALYST &amp; BUSINESS INTELLIGENCE H/F AMPLITUDES France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=66d6fc3422eb07d9" target="_blank" rel="noopener noreferrer">Stagiaire DATA ANALYST &amp; BUSINESS INTELLIGENCE H/F</a></h3>
           <div class="meta">AMPLITUDES · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -819,8 +837,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="60ceea3538f5ccc3"
                data-src="Indeed" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire Data Engineer (F/H) Swiss Life Group France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=b504d62377250a55" target="_blank" rel="noopener noreferrer">Stagiaire Data Engineer (F/H)</a></h3>
           <div class="meta">Swiss Life Group · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -833,8 +851,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="fb3b87f37ac555cc"
                data-src="Indeed" data-domains="rh" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire rh ( rémunéré, pré-embauche ) Entreprise non précisée France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=2937ebc64ae03865" target="_blank" rel="noopener noreferrer">Stagiaire rh ( rémunéré, pré-embauche )</a></h3>
           <div class="meta">Entreprise non précisée · France</div>
           <div class="published">Publiée il y a 2 jours · 13/07/2026</div>
@@ -847,8 +865,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="19d5dc4f2ce03f66"
                data-src="Indeed" data-domains="product_management" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage de fin d&#x27;étude AI Product Owner - F/H EY France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=4334821a7e66da4c" target="_blank" rel="noopener noreferrer">Stage de fin d&#x27;étude AI Product Owner - F/H</a></h3>
           <div class="meta">EY · France</div>
           <div class="published">Publiée il y a 3 jours · 12/07/2026</div>
@@ -861,8 +879,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="3a516578a1f55234"
                data-src="Indeed" data-domains="compta_gestion" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage en comptabilité Entreprise non précisée France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=c886c30e149d8a9e" target="_blank" rel="noopener noreferrer">Stage en comptabilité</a></h3>
           <div class="meta">Entreprise non précisée · France</div>
           <div class="published">Publiée il y a 3 jours · 12/07/2026</div>
@@ -875,8 +893,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="3b9fc1e797862569"
                data-src="Indeed" data-domains="dev_web,devops_cloud" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire Développeur Web &amp; Outils Numériques (H/F) Entreprise non précisée France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=1a39e583f7dbff87" target="_blank" rel="noopener noreferrer">Stagiaire Développeur Web &amp; Outils Numériques (H/F)</a></h3>
           <div class="meta">Entreprise non précisée · France</div>
           <div class="published">Publiée il y a 3 jours · 12/07/2026</div>
@@ -889,8 +907,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="3204ac4d80a4c355"
                data-src="LinkedIn" data-domains="data_ia" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Data Scientist (6 mois) – Conseil et Industrie (f/m/d) Avencore France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.linkedin.com/jobs/view/4439551280" target="_blank" rel="noopener noreferrer">Stage Data Scientist (6 mois) – Conseil et Industrie (f/m/d)</a></h3>
           <div class="meta">Avencore · France</div>
           <div class="published">Publiée il y a 4 jours · 11/07/2026</div>
@@ -903,8 +921,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="ba2ce7074c912461"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Chargé de recrutement F/H Proaxian Bordeaux - 33">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179092396W" target="_blank" rel="noopener noreferrer">Chargé de recrutement F/H</a></h3>
           <div class="meta">Proaxian · Bordeaux - 33</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -917,8 +935,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="a4212e318f2e93ae"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Hazebrouck - 59">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179090128W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Hazebrouck - 59</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -931,8 +949,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="dd9994bae1af15e2"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Arras - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179090023W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Arras - 62</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -945,8 +963,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="77b07da41eadabda"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Hénin-Beaumont - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179090009W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Hénin-Beaumont - 62</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -959,8 +977,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="18c161739e4377ab"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Lens - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089998W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Lens - 62</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -973,8 +991,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="4396e25234815597"
                data-src="APEC" data-domains="audit" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Auditeur junior F/H Proaxian Toulouse - 31">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089985W" target="_blank" rel="noopener noreferrer">Auditeur junior F/H</a></h3>
           <div class="meta">Proaxian · Toulouse - 31</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -987,8 +1005,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="332aa5cde94d51d8"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Lens - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089980W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Lens - 62</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1001,8 +1019,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="a8d92e09a57b353d"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Douai - 59">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089967W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Douai - 59</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1015,8 +1033,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="4fbe0faf4cdf9f6b"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Boves - 80">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089952W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Boves - 80</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1029,8 +1047,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="953d78196d09d275"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Cucq - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089908W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Cucq - 62</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1043,8 +1061,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="5c099f7ac982827b"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Bruay-la-Buissière - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089893W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Bruay-la-Buissière - 62</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1057,8 +1075,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="55498816002a750c"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Coudekerque-Branche - 59">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179089878W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Coudekerque-Branche - 59</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1071,8 +1089,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="2ea537488412f21b"
                data-src="Indeed" data-domains="juridique" data-regions="france"
-               data-highlight="1">
-        <div class="job-top"><div>
+               data-highlight="1" data-search="Chef de projet RGPD (H/F) en stage 6 mois TotalEnergies France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=a16c958f4687dc49" target="_blank" rel="noopener noreferrer">Chef de projet RGPD (H/F) en stage 6 mois</a></h3>
           <div class="meta">TotalEnergies · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1085,8 +1103,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="aa0ea22996d5e5ef"
                data-src="Indeed" data-domains="compta_gestion" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Consultant comptable stage pré-embauche (rémunéré) Cabinet d’expertise Comptable France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=23c41d097fffede4" target="_blank" rel="noopener noreferrer">Consultant comptable stage pré-embauche (rémunéré)</a></h3>
           <div class="meta">Cabinet d’expertise Comptable · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1099,8 +1117,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="367568d0febc0faa"
                data-src="Indeed" data-domains="finance" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Internship - Corporate Banking (M/F) Banque Internationale à Luxembourg (BIL) France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://lu.indeed.com/viewjob?jk=fe45ad5a3a77a3c0" target="_blank" rel="noopener noreferrer">Internship - Corporate Banking (M/F)</a></h3>
           <div class="meta">Banque Internationale à Luxembourg (BIL) · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1113,8 +1131,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="316302026a0763ac"
                data-src="Indeed" data-domains="electronique_embarque" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Offre de stage : Electronique flexible pour interfaçage de capteur de gaz portable - 3 à 5 mois Institut Mines-Télécom France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=0773403ff2ded8f6" target="_blank" rel="noopener noreferrer">Offre de stage : Electronique flexible pour interfaçage de capteur de gaz portable - 3 à 5 mois</a></h3>
           <div class="meta">Institut Mines-Télécom · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1127,8 +1145,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="94287f0a98338a72"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Offre du Stage Becomar France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=0315c90494f0b26f" target="_blank" rel="noopener noreferrer">Offre du Stage</a></h3>
           <div class="meta">Becomar · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1141,8 +1159,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="611a63dd882ed8c1"
                data-src="Indeed" data-domains="juridique" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="STAGIAIRE EN DROIT DES DONNEES PERSONNELLES – H/F - PARIS - S2 2027 DELSOL AVOCATS France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=56f66548e568cde1" target="_blank" rel="noopener noreferrer">STAGIAIRE EN DROIT DES DONNEES PERSONNELLES – H/F - PARIS - S2 2027</a></h3>
           <div class="meta">DELSOL AVOCATS · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1155,8 +1173,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="25644e6b356028b0"
                data-src="Indeed" data-domains="finance" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage - Analyste Recherche ESG - 6 mois - Paris (f/m/d) HSBC France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=bdca1f4216d244d0" target="_blank" rel="noopener noreferrer">Stage - Analyste Recherche ESG - 6 mois - Paris (f/m/d)</a></h3>
           <div class="meta">HSBC · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1169,8 +1187,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="a43c877109082dee"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage / PFE - Conducteur.rice de Travaux Bâtiment F/H VINCI France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=50860825fafff3cf" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux Bâtiment F/H</a></h3>
           <div class="meta">VINCI · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1183,8 +1201,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="4f97895c4d9281a4"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage / PFE - Conducteur.rice de Travaux Canalisation F/H VINCI France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=890343f841bf4b35" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de Travaux Canalisation F/H</a></h3>
           <div class="meta">VINCI · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1197,8 +1215,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="d1bc367d58945ead"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage / PFE - Conducteur.rice de travaux Electricité F/H VINCI France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=4fd0cc773ae3c3ac" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de travaux Electricité F/H</a></h3>
           <div class="meta">VINCI · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1211,8 +1229,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="cc2bdb35d76d77fe"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage / PFE - Conducteur.rice de travaux TP / VRD F/H VINCI France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=543bf6e82dff47d6" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de travaux TP / VRD F/H</a></h3>
           <div class="meta">VINCI · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1225,8 +1243,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="65574d06ca1b25d5"
                data-src="Indeed" data-domains="genie_civil_btp" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage / PFE - Conducteur.rice de travaux VRD / Routes F/H VINCI France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=4f04ddafda6db50b" target="_blank" rel="noopener noreferrer">Stage / PFE - Conducteur.rice de travaux VRD / Routes F/H</a></h3>
           <div class="meta">VINCI · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1237,24 +1255,10 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
 
           <span class="tag domain">Génie civil / BTP</span><span class="tag region">France</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="1fc39f87e0786533"
-               data-src="LinkedIn" data-domains="dev_web" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4439068255" target="_blank" rel="noopener noreferrer">Stage développeur web F/H</a></h3>
-          <div class="meta">Resaneo · France</div>
-          <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="1fc39f87e0786533">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag domain">Développement Web / Logiciel</span><span class="tag region">France</span><span class="tag src">LinkedIn</span></div>
-      </article>
       <article class="job " data-id="b98bbf7180e023cc"
                data-src="Indeed" data-domains="compta_gestion,rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire Finance et Contrôle de Gestion H/F SONEMA France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=5cb40761da5645e7" target="_blank" rel="noopener noreferrer">Stagiaire Finance et Contrôle de Gestion H/F</a></h3>
           <div class="meta">SONEMA · France</div>
           <div class="published">Publiée il y a 5 jours · 10/07/2026</div>
@@ -1267,8 +1271,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="cfde31d73ba4245b"
                data-src="APEC" data-domains="juridique" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Elève avocat en droit des sociétés F/H FIDAL Lyon 09 - 69">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178778970W" target="_blank" rel="noopener noreferrer">Elève avocat en droit des sociétés F/H</a></h3>
           <div class="meta">FIDAL · Lyon 09 - 69</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1281,8 +1285,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="9b5a62e7896871bf"
                data-src="APEC" data-domains="rh,juridique" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Elève avocat en Droit Social F/H FIDAL Nantes - 44">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/178778870W" target="_blank" rel="noopener noreferrer">Elève avocat en Droit Social F/H</a></h3>
           <div class="meta">FIDAL · Nantes - 44</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1295,8 +1299,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="240944f0be059a90"
                data-src="APEC" data-domains="rh" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="CHARGE DE RECRUTEMENT F/H Proaxian Calais - 62">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179061027W" target="_blank" rel="noopener noreferrer">CHARGE DE RECRUTEMENT F/H</a></h3>
           <div class="meta">Proaxian · Calais - 62</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1309,8 +1313,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="51849a5ca7ad0eec"
                data-src="LinkedIn" data-domains="cybersecurite" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="DevSecOps (stage) F/H padoa France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.linkedin.com/jobs/view/4424359418" target="_blank" rel="noopener noreferrer">DevSecOps (stage) F/H</a></h3>
           <div class="meta">padoa · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1323,8 +1327,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="590a0464b59cf058"
                data-src="Indeed" data-domains="cybersecurite,audit" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Développeur FullStack Python (H/F) – Stage 6 mois minimum / Temps plein Oaklen Consulting France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=00164786331c7202" target="_blank" rel="noopener noreferrer">Développeur FullStack Python (H/F) – Stage 6 mois minimum / Temps plein</a></h3>
           <div class="meta">Oaklen Consulting · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1337,8 +1341,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="3049055fc591e68c"
                data-src="Indeed" data-domains="mecanique_industriel" data-regions="maroc"
-               data-highlight="1">
-        <div class="job-top"><div>
+               data-highlight="1" data-search="Industrial Engineer-Internship Program Capgemini France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=17b9504bde90c950" target="_blank" rel="noopener noreferrer">Industrial Engineer-Internship Program</a></h3>
           <div class="meta">Capgemini · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1351,8 +1355,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="66826ab2e115a386"
                data-src="Indeed" data-domains="devops_cloud" data-regions="france"
-               data-highlight="1">
-        <div class="job-top"><div>
+               data-highlight="1" data-search="Ingénieur / Ingénieure Exploitation Applicative - Stage Capgemini France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=6c3b5ac671c598c9" target="_blank" rel="noopener noreferrer">Ingénieur / Ingénieure Exploitation Applicative - Stage</a></h3>
           <div class="meta">Capgemini · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1365,8 +1369,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="a848674ea10832a0"
                data-src="Indeed" data-domains="rh" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Intern-Human Resources Assistant United Nations Development Programme France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=cbcb53705a65e96e" target="_blank" rel="noopener noreferrer">Intern-Human Resources Assistant</a></h3>
           <div class="meta">United Nations Development Programme · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1379,8 +1383,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="c07faddfff4e95d9"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="belgique"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Internship - Inside Sales Vertuoza France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://be.indeed.com/viewjob?jk=48b2112afa513810" target="_blank" rel="noopener noreferrer">Internship - Inside Sales</a></h3>
           <div class="meta">Vertuoza · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1391,24 +1395,10 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
 
           <span class="tag domain">Commerce / Business Development</span><span class="tag region">Belgique</span><span class="tag src">Indeed</span></div>
       </article>
-      <article class="job " data-id="f7ba5c2f2707ce9d"
-               data-src="LinkedIn" data-domains="product_management" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
-          <h3><a href="https://www.linkedin.com/jobs/view/4438696276" target="_blank" rel="noopener noreferrer">Product Manager Intern</a></h3>
-          <div class="meta">Aircall · France</div>
-          <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
-        </div>
-        <button class="apply-btn" type="button" data-offer-id="f7ba5c2f2707ce9d">✓ Marquer comme postulé</button></div>
-        <div class="tags" translate="no">
-
-
-          <span class="tag domain">Product Management</span><span class="tag region">France</span><span class="tag src">LinkedIn</span></div>
-      </article>
       <article class="job " data-id="94007092b4b13942"
                data-src="Indeed" data-domains="data_ia" data-regions="maroc"
-               data-highlight="1">
-        <div class="job-top"><div>
+               data-highlight="1" data-search="Qualité &amp; PMO Stagiaire PFE Capgemini France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=26c603c8ceeb28c6" target="_blank" rel="noopener noreferrer">Qualité &amp; PMO Stagiaire PFE</a></h3>
           <div class="meta">Capgemini · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1421,8 +1411,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="4c3db65f35b24491"
                data-src="LinkedIn" data-domains="cybersecurite,audit" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="STAGE AUDIT IT &amp; DATA ANALYTICS (M/F/X) Banque Raiffeisen France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://www.linkedin.com/jobs/view/4437546295" target="_blank" rel="noopener noreferrer">STAGE AUDIT IT &amp; DATA ANALYTICS (M/F/X)</a></h3>
           <div class="meta">Banque Raiffeisen · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1435,8 +1425,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="875c48e871b273ba"
                data-src="Indeed" data-domains="compta_gestion" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Consultant projets Consolidation F/H VISEO France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=d4493beb22406255" target="_blank" rel="noopener noreferrer">Stage Consultant projets Consolidation F/H</a></h3>
           <div class="meta">VISEO · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1449,8 +1439,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="6e30839d1f07b19f"
                data-src="Indeed" data-domains="data_ia" data-regions="maroc"
-               data-highlight="1">
-        <div class="job-top"><div>
+               data-highlight="1" data-search="Stage Ingénieur Data Analyst &amp; Business Intelligence Capgemini France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=fee7c4360b817d1e" target="_blank" rel="noopener noreferrer">Stage Ingénieur Data Analyst &amp; Business Intelligence</a></h3>
           <div class="meta">Capgemini · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1463,8 +1453,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="8338df0a02ac9b63"
                data-src="Indeed" data-domains="electronique_embarque" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage Ingénieur Firmware embarqué - ESP32, Edge AI &amp; WiFi Sensing zoe care France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=c29699cb82f59626" target="_blank" rel="noopener noreferrer">Stage Ingénieur Firmware embarqué - ESP32, Edge AI &amp; WiFi Sensing</a></h3>
           <div class="meta">zoe care · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1477,8 +1467,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="4a3d56516169d095"
                data-src="Indeed" data-domains="dev_web" data-regions="france"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage fin d&#x27;études – Développement Fullstack &amp; Automatisation / Conception Ergonomique &amp; UX Drivecase France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://fr.indeed.com/viewjob?jk=cc3ec04d2c987db9" target="_blank" rel="noopener noreferrer">Stage fin d&#x27;études – Développement Fullstack &amp; Automatisation / Conception Ergonomique &amp; UX</a></h3>
           <div class="meta">Drivecase · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1491,8 +1481,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="b0f04dcc1dc34d0b"
                data-src="Indeed" data-domains="commerce_bizdev" data-regions="luxembourg"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage/Alternance – Business Development International Life, Sales Support France Helvetia France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://lu.indeed.com/viewjob?jk=aed0334976e87b77" target="_blank" rel="noopener noreferrer">Stage/Alternance – Business Development International Life, Sales Support France</a></h3>
           <div class="meta">Helvetia · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1505,8 +1495,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="0dccaacab386f45c"
                data-src="Indeed" data-domains="rh" data-regions="belgique"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stage: Productie: Uitbating energiecentrale (Antwerpen) ENGIE France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://be.indeed.com/viewjob?jk=7607577a66338b31" target="_blank" rel="noopener noreferrer">Stage: Productie: Uitbating energiecentrale (Antwerpen)</a></h3>
           <div class="meta">ENGIE · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1519,8 +1509,8 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
       </article>
       <article class="job " data-id="b95430e7ec441b74"
                data-src="Indeed" data-domains="supply_chain" data-regions="maroc"
-               data-highlight="0">
-        <div class="job-top"><div>
+               data-highlight="0" data-search="Stagiaire Pré-embauche Opérations - Dispositifs Médicaux (H/F) Entreprise non précisée France">
+        <div class="job-top"><div class="job-content">
           <h3><a href="https://ma.indeed.com/viewjob?jk=861109c453bc29bb" target="_blank" rel="noopener noreferrer">Stagiaire Pré-embauche Opérations - Dispositifs Médicaux (H/F)</a></h3>
           <div class="meta">Entreprise non précisée · France</div>
           <div class="published">Publiée il y a 6 jours · 09/07/2026</div>
@@ -1531,131 +1521,39 @@ Régions analysées : France · Belgique · Luxembourg · Maroc</p>
 
           <span class="tag domain">Supply Chain / Logistique / Achats</span><span class="tag region">Maroc</span><span class="tag src">Indeed</span></div>
       </article></div>
-<p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
+</section>
+<p class="footer-note">Le statut de candidature et l’accès GitHub restent uniquement dans ce navigateur. Aucun secret n’est intégré au site ni envoyé ailleurs qu’à l’API GitHub.</p>
+</main>
 </div>
-<script>
-const STORAGE_KEY='radar-stage-france-applied-v1';
-const STATUS_LABELS={todo:'À postuler',applied:'Déjà postulé',all:'Tous'};
-const HIGHLIGHT_LABEL="Visa-friendly probable";
-const DOMAIN_LABELS={"data_ia": "Data / IA", "dev_web": "Développement Web / Logiciel", "devops_cloud": "DevOps / Cloud", "cybersecurite": "Cybersécurité", "reseaux_systemes": "Réseaux / Systèmes", "product_management": "Product Management", "compta_gestion": "Comptabilité / Contrôle de gestion", "finance": "Finance / Marchés", "audit": "Audit", "supply_chain": "Supply Chain / Logistique / Achats", "commerce_bizdev": "Commerce / Business Development", "rh": "Ressources Humaines", "juridique": "Juridique / Droit des affaires", "electronique_embarque": "Électronique / Systèmes embarqués", "genie_civil_btp": "Génie civil / BTP", "mecanique_industriel": "Mécanique / Industriel"};
-const REGION_LABELS={"france": "France", "belgique": "Belgique", "luxembourg": "Luxembourg", "maroc": "Maroc"};
-const ACTIVE_REGION_IDS=["france", "belgique", "luxembourg", "maroc"];
-const DEFAULT_REGION="france";
-let activeSource='*', activeDomain='*', activeRegion=DEFAULT_REGION,
-    activeStatus='todo', highlightOnly=false;
-function readApplied(){
-  try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}
-  catch(_error){return new Set();}
-}
-let applied=readApplied();
-function configureActionsLink(){
-  const host=window.location.hostname;
-  const path=window.location.pathname.split('/').filter(Boolean);
-  if(host.endsWith('.github.io')&&path.length){
-    const owner=host.slice(0,-'.github.io'.length);
-    document.getElementById('actionsLink').href=
-      'https://github.com/'+encodeURIComponent(owner)+'/'+encodeURIComponent(path[0])+
-      '/actions/workflows/scan.yml';
-  }
-}
-function saveApplied(){localStorage.setItem(STORAGE_KEY,JSON.stringify([...applied]));}
-function setSource(btn,src){
-  activeSource=src;
-  document.querySelectorAll('.source-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}
-function setStatus(btn,status){
-  activeStatus=status;
-  document.querySelectorAll('.status-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}
-function setDomain(btn,domain){
-  activeDomain=domain;
-  document.querySelectorAll('.domain-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}
-function setRegion(btn,region){
-  activeRegion=region;
-  document.querySelectorAll('.region-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}
-function toggleHighlight(btn){
-  highlightOnly=!highlightOnly;btn.classList.toggle('on',highlightOnly);
-  btn.setAttribute('aria-pressed',highlightOnly?'true':'false');refresh();
-}
-function resetFilters(){
-  activeSource='*';activeDomain='*';activeRegion=DEFAULT_REGION;
-  activeStatus='todo';highlightOnly=false;
-  document.querySelectorAll('.source-chip').forEach(b=>b.classList.toggle('on',b.dataset.src==='*'));
-  document.querySelectorAll('.domain-chip').forEach(b=>b.classList.toggle('on',b.dataset.domain==='*'));
-  document.querySelectorAll('.region-chip').forEach(b=>
-    b.classList.toggle('on',b.dataset.region===DEFAULT_REGION));
-  document.querySelectorAll('.status-chip').forEach(b=>b.classList.toggle('on',b.dataset.status==='todo'));
-  const highlight=document.getElementById('highlightFilter');
-  highlight.classList.remove('on');highlight.setAttribute('aria-pressed','false');
-  refresh();
-}
-function updateActiveFilters(){
-  const parts=['Statut : '+STATUS_LABELS[activeStatus],
-               'Source : '+(activeSource==='*'?'Toutes':activeSource),
-               'Domaine : '+(activeDomain==='*'?'Tous':(DOMAIN_LABELS[activeDomain]||activeDomain)),
-               'Région : '+(activeRegion==='*'?'Toutes':(REGION_LABELS[activeRegion]||activeRegion))];
-  if(highlightOnly)parts.push(HIGHLIGHT_LABEL+' uniquement');
-  document.getElementById('activeFilters').textContent=parts.join(' · ');
-  const isDefault=activeStatus==='todo'&&activeSource==='*'&&activeDomain==='*'&&
-                  activeRegion===DEFAULT_REGION&&!highlightOnly;
-  document.getElementById('resetBtn').disabled=isDefault;
-}
-function toggleApplied(id){
-  applied.has(id)?applied.delete(id):applied.add(id);saveApplied();refresh();
-}
-function refresh(){
-  let visible=0,todo=0,done=0;
-  document.querySelectorAll('.job').forEach(job=>{
-    const isApplied=applied.has(job.dataset.id);
-    isApplied?done++:todo++;
-    job.classList.toggle('applied',isApplied);
-    const action=job.querySelector('.apply-btn');
-    action.textContent=isApplied?'↩ Remettre à postuler':'✓ Marquer comme postulé';
-    action.classList.toggle('undo',isApplied);
-    const sourceOk=activeSource==='*'||job.dataset.src===activeSource;
-    const domains=(job.dataset.domains||'').split(',').filter(Boolean);
-    const domainOk=activeDomain==='*'||domains.includes(activeDomain);
-    const regions=(job.dataset.regions||'').split(',').filter(Boolean);
-    const regionOk=activeRegion==='*'||regions.includes(activeRegion);
-    const statusOk=activeStatus==='all'||(activeStatus==='applied'?isApplied:!isApplied);
-    const highlightOk=!highlightOnly||job.dataset.highlight==='1';
-    const show=sourceOk&&domainOk&&regionOk&&statusOk&&highlightOk;
-    job.style.display=show?'':'none';if(show)visible++;
-  });
-  document.getElementById('todoCount').textContent='('+todo+')';
-  document.getElementById('appliedCount').textContent='('+done+')';
-  const empty=document.getElementById('emptyState');
-  if(visible===0){
-    let msg='Aucune offre ne correspond à ces filtres.';
-    if(activeSource!=='*'){
-      const chip=document.querySelector('.source-chip[data-src="'+activeSource+'"]');
-      if(chip&&chip.dataset.note){msg=activeSource+' : '+chip.dataset.note+' — aucune offre à afficher.';}
-    }
-    empty.textContent=msg;
-  }
-  empty.hidden=visible!==0;
-  updateActiveFilters();
-}
-document.getElementById('refreshBtn').addEventListener('click',()=>window.location.reload());
-document.querySelectorAll('.source-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setSource(btn,btn.dataset.src)));
-document.querySelectorAll('.status-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setStatus(btn,btn.dataset.status)));
-document.querySelectorAll('.domain-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setDomain(btn,btn.dataset.domain)));
-document.querySelectorAll('.region-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setRegion(btn,btn.dataset.region)));
-document.getElementById('highlightFilter').addEventListener('click',event=>toggleHighlight(event.currentTarget));
-document.getElementById('resetBtn').addEventListener('click',resetFilters);
-document.querySelectorAll('.apply-btn').forEach(btn=>
-  btn.addEventListener('click',()=>toggleApplied(btn.dataset.offerId)));
-configureActionsLink();
-refresh();
-</script>
+
+<dialog id="scanDialog" class="scan-dialog" aria-labelledby="scanDialogTitle">
+  <div class="dialog-content">
+    <button id="scanDialogClose" class="dialog-close" type="button" aria-label="Fermer">×</button>
+    <div class="dialog-icon" aria-hidden="true">↻</div>
+    <p class="eyebrow">GitHub Actions</p>
+    <h2 id="scanDialogTitle">Lancer un nouveau scan</h2>
+    <p class="dialog-copy">Le workflow sera déclenché et suivi directement ici. À la fin, le dashboard se rechargera automatiquement.</p>
+    <div class="security-note"><span aria-hidden="true">◇</span><span>Le token est conservé uniquement dans la session de cet onglet. Il n’est jamais écrit dans Git, un fichier ou le dashboard.</span></div>
+    <div class="token-setup">
+      <label for="githubToken">Token GitHub finement limité</label>
+      <div class="token-row">
+        <input id="githubToken" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+        <button id="toggleTokenVisibility" class="button button-secondary" type="button">Afficher</button>
+      </div>
+      <p class="token-help">Première utilisation uniquement : <a id="tokenCreationLink" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">créer un token sécurisé préconfiguré</a>, choisir « Only select repositories » → <strong id="tokenRepositoryName">radar-stage-france</strong>, puis vérifier « Actions: Read and write ».</p>
+    </div>
+    <div id="runState" class="run-state" data-kind="idle" hidden aria-live="polite">
+      <div class="run-state-head"><span class="state-dot" aria-hidden="true"></span><span id="runStateTitle"></span></div>
+      <p id="runStateCopy" class="run-state-copy"></p>
+      <a id="runDetailsLink" class="run-link" href="https://github.com" target="_blank" rel="noopener noreferrer" hidden>Voir les détails techniques</a>
+    </div>
+    <div class="dialog-actions">
+      <button id="forgetTokenBtn" class="button button-danger" type="button" hidden>Oublier l’accès</button>
+      <button id="runNowBtn" class="button button-primary" type="button"><span class="button-icon" aria-hidden="true">↻</span>Lancer maintenant</button>
+    </div>
+  </div>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script id="radarConfig" type="application/json">{"highlightLabel": "Visa-friendly probable", "domainLabels": {"data_ia": "Data / IA", "dev_web": "Développement Web / Logiciel", "devops_cloud": "DevOps / Cloud", "cybersecurite": "Cybersécurité", "reseaux_systemes": "Réseaux / Systèmes", "product_management": "Product Management", "compta_gestion": "Comptabilité / Contrôle de gestion", "finance": "Finance / Marchés", "audit": "Audit", "supply_chain": "Supply Chain / Logistique / Achats", "commerce_bizdev": "Commerce / Business Development", "rh": "Ressources Humaines", "juridique": "Juridique / Droit des affaires", "electronique_embarque": "Électronique / Systèmes embarqués", "genie_civil_btp": "Génie civil / BTP", "mecanique_industriel": "Mécanique / Industriel"}, "regionLabels": {"france": "France", "belgique": "Belgique", "luxembourg": "Luxembourg", "maroc": "Maroc"}, "activeRegionIds": ["france", "belgique", "luxembourg", "maroc"], "defaultRegion": "france", "pageGeneratedAt": "2026-07-15T10:29:31.652991+00:00", "workflowFile": "scan.yml", "workflowRef": "main", "repository": "neyos10/radar-stage-france"}</script>
+<script src="assets/dashboard.js" defer></script>
 </body></html>
