@@ -5,8 +5,10 @@ champs incomplets, sécurité HTML, sources optionnelles, circuit breaker et UI.
 """
 
 import io
+import json
 import logging
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -773,6 +775,20 @@ class TestDashboard(unittest.TestCase):
         scan.render_dashboard(offers, set(), statuses, scan_duration_s=42, **kwargs)
         return scan.DOCS_INDEX.read_text(encoding="utf-8")
 
+    def dashboard_config(self, page):
+        match = re.search(
+            r'<script id="radarConfig" type="application/json">(.*?)</script>',
+            page,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(match)
+        return json.loads(match.group(1))
+
+    def dashboard_javascript(self):
+        return (Path(scan.__file__).resolve().parent / "docs/assets/dashboard.js").read_text(
+            encoding="utf-8"
+        )
+
     def test_product_config_controls_dashboard(self):
         candidate, _ = offer()
         candidate["highlighted"] = True
@@ -787,7 +803,7 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("Stage Atlas — Dashboard", page)
         self.assertIn("Stages multi-sources configurables", page)
         self.assertIn("Grand compte", page)
-        self.assertIn("offres des 5 derniers jours", page)
+        self.assertIn("sur les 5 derniers jours", page)
 
     def test_html_escaping_and_url_safety(self):
         evil, _ = offer(title='Stage ETL <script>alert(1)</script>',
@@ -806,31 +822,66 @@ class TestDashboard(unittest.TestCase):
         statuses[2].http_error = "HTTP 403"
         statuses[5].status = "disabled_missing_credentials"
         page = self.render([o], statuses)
+        javascript = self.dashboard_javascript()
         self.assertIn('rel="noopener noreferrer"', page)
         self.assertIn('<meta name="google" content="notranslate">', page)
         self.assertIn('translate="no"', page)
-        self.assertIn("Ouvrir GitHub Actions", page)
-        self.assertIn("Run workflow", page)
+        self.assertIn("Lancer un scan", page)
+        self.assertIn('id="scanTriggerBtn"', page)
         self.assertIn("Actualiser les offres", page)
+        self.assertIn('href="assets/dashboard.css"', page)
+        self.assertIn('src="assets/dashboard.js" defer', page)
+        self.assertIn("connect-src 'self' https://api.github.com", page)
+        self.assertIn('id="githubToken" type="password"', page)
         self.assertNotIn("onclick=", page)
-        self.assertIn("refreshBtn').addEventListener('click'", page)
-        self.assertIn("source-chip').forEach", page)
-        self.assertIn("status-chip').forEach", page)
-        self.assertIn("highlightFilter').addEventListener('click'", page)
-        self.assertIn("domain-chip').forEach", page)
+        self.assertIn('elements.refreshButton.addEventListener("click"', javascript)
+        self.assertIn('elements.scanButton.addEventListener("click"', javascript)
+        self.assertIn('$$(".source-chip").forEach', javascript)
+        self.assertIn('$$(".status-chip").forEach', javascript)
+        self.assertIn('elements.highlightFilter.addEventListener("click"', javascript)
+        self.assertIn('$$(".domain-chip").forEach', javascript)
         self.assertIn('data-domain="data_ia"', page)
-        self.assertIn("region-chip').forEach", page)
+        self.assertIn('$$(".region-chip").forEach', javascript)
         self.assertIn('data-region="france"', page)
         self.assertIn('data-regions="france"', page)
-        self.assertIn("apply-btn').forEach", page)
+        self.assertIn('$$(".apply-btn").forEach', javascript)
         # le bouton reset est toujours visible, désactivé par défaut
         self.assertIn("Réinitialiser les filtres", page)
         self.assertIn('id="resetBtn" class="fchip reset-btn" disabled', page)
-        self.assertIn("resetBtn').addEventListener('click',resetFilters)", page)
+        self.assertIn('elements.resetButton.addEventListener("click", resetFilters)',
+                      javascript)
         self.assertIn("Bloqué temporairement — HTTP 403", page)
         self.assertIn("Non configuré — identifiants manquants", page)
         # une source jamais appelée n'affiche pas un simple « 0 »
         self.assertIn("non configuré", page)
+
+    def test_direct_scan_uses_session_only_github_access(self):
+        candidate, _ = offer()
+        page = self.render([candidate])
+        javascript = self.dashboard_javascript()
+        config = self.dashboard_config(page)
+
+        self.assertEqual(config["workflowFile"], "scan.yml")
+        self.assertEqual(config["workflowRef"], "main")
+        self.assertIn("sessionStorage.getItem(TOKEN_STORAGE_KEY)", javascript)
+        self.assertIn("sessionStorage.setItem(TOKEN_STORAGE_KEY, token)", javascript)
+        self.assertNotIn("localStorage.setItem(TOKEN_STORAGE_KEY", javascript)
+        self.assertIn('`/actions/workflows/${workflow}/dispatches`', javascript)
+        self.assertIn('Authorization: `Bearer ${token}`', javascript)
+        self.assertIn('tokenUrl.searchParams.set("actions", "write")', javascript)
+        self.assertIn("waitForDashboardPublication", javascript)
+        self.assertIn("window.location.reload()", javascript)
+        self.assertNotRegex(page, r'id="githubToken"[^>]+value=')
+
+    def test_search_indexes_title_company_and_location(self):
+        candidate, _ = offer(
+            title="Stage Data Engineer", company="ACME Analytics", location="Lyon"
+        )
+        page = self.render([candidate])
+        javascript = self.dashboard_javascript()
+        self.assertIn('id="searchInput" type="search"', page)
+        self.assertIn('data-search="Stage Data Engineer ACME Analytics Lyon"', page)
+        self.assertIn("normalizeText(job.dataset.search).includes(searchTerm)", javascript)
 
     def test_offers_sorted_newest_first(self):
         older, _ = offer(title="Stage ETL B", date=YESTERDAY, url="https://e.com/b")
@@ -857,16 +908,22 @@ class TestDashboard(unittest.TestCase):
         )
         self.assertIn('class="fchip region-chip on" data-region="france"', page)
         self.assertIn('data-region="belgique"', page)
-        self.assertIn('const DEFAULT_REGION="france";', page)
-        self.assertIn("const regionOk=activeRegion==='*'||regions.includes(activeRegion)",
-                      page)
-        self.assertIn("sourceOk&&domainOk&&regionOk&&statusOk&&highlightOk", page)
+        self.assertEqual(self.dashboard_config(page)["defaultRegion"], "france")
+        javascript = self.dashboard_javascript()
+        self.assertIn(
+            'const regionMatches = activeRegion === "*" || regions.includes(activeRegion);',
+            javascript,
+        )
+        self.assertIn(
+            "const show = sourceMatches && domainMatches && regionMatches && statusMatches &&",
+            javascript,
+        )
 
     def test_single_region_filter_is_hidden_but_france_stays_active(self):
         candidate, _ = offer()
         page = self.render([candidate], active_region_ids=["france"])
         self.assertIn('class="filter-group single-region"', page)
-        self.assertIn('const DEFAULT_REGION="france";', page)
+        self.assertEqual(self.dashboard_config(page)["defaultRegion"], "france")
         self.assertNotIn('data-region="belgique"', page)
 
 

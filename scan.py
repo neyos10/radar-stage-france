@@ -1346,10 +1346,11 @@ def render_dashboard(offers: list[dict], new_ids: set,
     active_region_ids = active_region_ids or enabled_region_ids(regions)
     days_window = int(config["days_window"])
     DOCS_INDEX.parent.mkdir(parents=True, exist_ok=True)
-    now = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
+    generated_at = datetime.now(timezone.utc)
+    now = generated_at.strftime("%d/%m/%Y %H:%M UTC")
+    generated_at_iso = generated_at.isoformat()
     statuses = statuses or [source_status(name, active_region_ids[0], regions)
                             for name in SOURCE_NAMES]
-    active_labels = [domains[domain_id]["label"] for domain_id in active_ids]
     active_region_labels = [regions[region_id]["label"]
                             for region_id in active_region_ids]
 
@@ -1379,6 +1380,10 @@ def render_dashboard(offers: list[dict], new_ids: set,
         company = html.escape(o["company"])
         location = html.escape(o["location"])
         source = html.escape(o["source"], quote=True)
+        search_attr = html.escape(
+            " ".join(str(o.get(field, "")) for field in ("title", "company", "location")),
+            quote=True,
+        )
         offer_domains = [domain_id for domain_id in o.get("domains", [])
                          if domain_id in active_ids]
         domain_attr = html.escape(",".join(offer_domains), quote=True)
@@ -1400,8 +1405,8 @@ def render_dashboard(offers: list[dict], new_ids: set,
         cards.append(f"""
       <article class="job {'is-new' if is_new else ''}" data-id="{oid}"
                data-src="{source}" data-domains="{domain_attr}" data-regions="{region_attr}"
-               data-highlight="{'1' if highlighted else '0'}">
-        <div class="job-top"><div>
+               data-highlight="{'1' if highlighted else '0'}" data-search="{search_attr}">
+        <div class="job-top"><div class="job-content">
           <h3>{link}</h3>
           <div class="meta">{company} · {location}</div>
           <div class="published">{published_line}</div>
@@ -1437,12 +1442,13 @@ def render_dashboard(offers: list[dict], new_ids: set,
                      f' data-note="{html.escape(status_label(representative, count), quote=True)}"')
         source_chips.append(
             f'<button class="fchip source-chip" data-src="{name}"{note_attr} '
-            f'>{name} <b>{hint}</b></button>'
+            f'aria-pressed="false">{name} <b>{hint}</b></button>'
         )
     filter_btns = "".join(source_chips)
 
     domain_chips = "".join(
-        f'<button class="fchip domain-chip" data-domain="{html.escape(domain_id, quote=True)}">'
+        f'<button class="fchip domain-chip" data-domain="{html.escape(domain_id, quote=True)}" '
+        f'aria-pressed="false">'
         f'{html.escape(domains[domain_id]["label"])} <b>({domain_counts[domain_id]})</b></button>'
         for domain_id in active_ids
     )
@@ -1451,7 +1457,8 @@ def render_dashboard(offers: list[dict], new_ids: set,
                          else active_region_ids[0])
     region_chips = "".join(
         f'<button class="fchip region-chip{(" on" if region_id == default_region_id else "")}" '
-        f'data-region="{html.escape(region_id, quote=True)}">'
+        f'data-region="{html.escape(region_id, quote=True)}" '
+        f'aria-pressed="{("true" if region_id == default_region_id else "false")}">'
         f'{html.escape(regions[region_id]["label"])} <b>({region_counts[region_id]})</b></button>'
         for region_id in active_region_ids
     )
@@ -1459,236 +1466,157 @@ def render_dashboard(offers: list[dict], new_ids: set,
     app_name = html.escape(str(config["app_name"]))
     tagline = html.escape(str(config["tagline"]))
     highlight_label = html.escape(str(config["highlight_label"]))
-    highlight_label_js = json.dumps(str(config["highlight_label"]), ensure_ascii=False)
-    domain_labels_js = json.dumps(
-        {domain_id: domains[domain_id]["label"] for domain_id in active_ids},
-        ensure_ascii=False,
+    new_offer_count = sum(1 for offer in offers if offer["id"] in new_ids)
+    successful_statuses = sum(1 for status in statuses if status.status == "success")
+    degraded_statuses = sum(
+        1 for status in statuses if status.status in {"blocked", "error"}
     )
-    region_labels_js = json.dumps(
-        {region_id: regions[region_id]["label"] for region_id in active_region_ids},
-        ensure_ascii=False,
-    )
-    active_region_ids_js = json.dumps(active_region_ids, ensure_ascii=False)
-    default_region_id_js = json.dumps(default_region_id, ensure_ascii=False)
+    dashboard_config_json = json.dumps({
+        "highlightLabel": str(config["highlight_label"]),
+        "domainLabels": {
+            domain_id: domains[domain_id]["label"] for domain_id in active_ids
+        },
+        "regionLabels": {
+            region_id: regions[region_id]["label"] for region_id in active_region_ids
+        },
+        "activeRegionIds": active_region_ids,
+        "defaultRegion": default_region_id,
+        "pageGeneratedAt": generated_at_iso,
+        "workflowFile": "scan.yml",
+        "workflowRef": "main",
+        "repository": "neyos10/radar-stage-france",
+    }, ensure_ascii=False).replace("</", "<\\/")
 
     html_page = f"""<!DOCTYPE html>
 <html lang="fr" translate="no"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
+<meta name="radar-generated-at" content="{html.escape(generated_at_iso, quote=True)}">
+<meta name="theme-color" content="#07111f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
 <title>{app_name} — Dashboard</title>
-<style>
-:root{{--nuit:#101726;--carte:#1A2436;--encre:#E9EEF6;--encre2:#93A1B8;--maj:#6B5BFF;--saf:#F5B841;--ok:#3ED598;--err:#FF7B7B}}
-*{{box-sizing:border-box;margin:0;padding:0}}
-body{{background:var(--nuit);color:var(--encre);font:15px/1.5 system-ui,sans-serif;padding:26px 16px 70px}}
-.wrap{{max-width:840px;margin:0 auto}}
-h1{{font-size:26px}} .sub{{color:var(--encre2);font-size:13px;margin-top:6px}}
-.hero{{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}}
-.hero-actions{{text-align:right}}
-.scan-btn{{display:inline-block;background:var(--maj);color:white;text-decoration:none;border:0;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}}
-.scan-btn.refresh-btn{{background:transparent;border:1px solid var(--maj);color:#CFC8FF;margin-right:6px}}
-.scan-hint{{color:var(--encre2);font-size:11px;margin-top:6px;max-width:280px}}
-.reset-btn:disabled{{opacity:.4;cursor:not-allowed}}
-.domain-note{{background:rgba(107,91,255,.09);border:1px solid rgba(107,91,255,.25);color:#CFC8FF;border-radius:11px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}}
-.sources-panel{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}}
-.src-stat{{font-size:11.5px;border-radius:8px;padding:5px 9px;border:1px solid rgba(255,255,255,.08);color:var(--encre2);background:rgba(255,255,255,.02)}}
-.src-stat.st-ok{{border-color:rgba(62,213,152,.35);color:var(--ok)}}
-.src-stat.st-warn{{border-color:rgba(245,184,65,.3);color:var(--saf)}}
-.src-stat.st-bad{{border-color:rgba(255,123,123,.4);color:var(--err)}}
-.src-stat.st-muted{{opacity:.6}}
-.filter-panel{{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px;margin-bottom:16px}}
-.filter-group{{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}}
-.filter-group.single-region{{display:none}}
-.filter-label{{color:var(--encre2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:54px}}
-.fchip{{border:1px solid rgba(255,255,255,.14);background:transparent;color:var(--encre2);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer}}
-.fchip.on{{background:rgba(107,91,255,.15);border-color:var(--maj);color:#CFC8FF}}
-.filter-group.single-domain{{opacity:.78}}
-.reset-btn{{border-color:rgba(255,123,123,.35);color:#FFA8A8}}
-.active-filters{{color:var(--encre2);font-size:12px}}
-.job{{background:var(--carte);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:14px 16px;margin-bottom:10px}}
-.job.is-new{{border-left:3px solid var(--saf)}}
-.job.applied{{opacity:.72;border-color:rgba(62,213,152,.35)}}
-.job-top{{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}}
-.job h3{{font-size:15px}} .job h3 a{{color:var(--encre);text-decoration:none}}
-.job h3 a:hover{{text-decoration:underline}}
-.meta{{color:var(--encre2);font-size:13px;margin-top:2px}}
-.published{{color:#B8C3D5;font-size:11.5px;margin-top:4px}}
-.apply-btn{{border:1px solid rgba(62,213,152,.45);background:rgba(62,213,152,.08);color:var(--ok);border-radius:9px;padding:7px 10px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}}
-.apply-btn.undo{{border-color:rgba(255,255,255,.16);background:transparent;color:var(--encre2)}}
-.tags{{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}}
-.tag{{font-size:10.5px;font-weight:700;border-radius:6px;padding:3px 8px}}
-.tag.new{{background:var(--saf);color:#3A2C05}}
-.tag.highlight{{background:rgba(62,213,152,.15);color:var(--ok)}}
-.tag.date-unknown{{background:rgba(245,184,65,.14);color:var(--saf)}}
-.tag.domain{{background:rgba(107,91,255,.15);color:#CFC8FF}}
-.tag.region{{background:rgba(245,184,65,.13);color:var(--saf)}}
-.tag.src{{background:#212D44;color:var(--encre2);font-weight:500}}
-.empty{{color:var(--encre2);text-align:center;padding:30px 10px}}
-.storage-note{{color:#66748A;font-size:11px;text-align:center;margin-top:18px}}
-@media(max-width:620px){{.hero{{display:block}}.hero-actions{{text-align:left;margin-top:12px}}.scan-hint{{max-width:none}}.job-top{{display:block}}.apply-btn{{margin-top:10px}}.filter-label{{width:100%}}}}
-</style></head>
-<body><div class="wrap">
-<div class="hero"><div><h1>🎯 {app_name}</h1>
-<p class="sub">{tagline}</p>
-<p class="sub">Dernier scan : {now} · {len(offers)} offres des {days_window} derniers jours · durée du scan : {human_duration(scan_duration_s)}</p></div>
-<div class="hero-actions">
-<button id="refreshBtn" class="scan-btn refresh-btn" type="button">↻ Actualiser les offres</button>
-<a id="actionsLink" class="scan-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">⚙ Ouvrir GitHub Actions</a>
-<p class="scan-hint">« Actualiser » recharge les offres du dernier scan (toutes les 30 min). Pour lancer un scan immédiat : GitHub Actions puis « Run workflow ».</p></div></div>
-<p class="domain-note">Domaines analysés : {html.escape(' · '.join(active_labels))}<br>
-Régions analysées : {html.escape(' · '.join(active_region_labels))}</p>
-<div class="sources-panel" translate="no">{status_rows}</div>
-<div class="filter-panel">
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Accueil {app_name}">
+    <span class="brand-mark" aria-hidden="true">◎</span>
+    <span>{app_name}</span>
+  </a>
+  <div class="automation-status"><span class="live-dot" aria-hidden="true"></span><span>Automatisation active · toutes les 30 min</span></div>
+</header>
+<main id="top">
+<section class="hero" aria-labelledby="pageTitle">
+  <div>
+    <p class="eyebrow">Radar de stages multi-sources</p>
+    <h1 id="pageTitle">Trouvez les offres qui méritent votre candidature.</h1>
+    <p class="hero-copy">{tagline}. Les résultats récents sont consolidés, dédupliqués et classés automatiquement.</p>
+    <div class="scan-meta">
+      <span>Dernier scan <strong>{now}</strong></span>
+      <span>Fenêtre <strong>{days_window} jours</strong></span>
+      <span>Tri <strong>plus récent d’abord</strong></span>
+    </div>
+  </div>
+  <div class="hero-actions">
+    <button id="scanTriggerBtn" class="button button-primary" type="button">
+      <span class="button-icon" aria-hidden="true">↻</span><span class="button-label">Lancer un scan</span>
+    </button>
+    <button id="refreshBtn" class="button button-secondary" type="button">
+      <span class="button-icon" aria-hidden="true">↺</span><span>Actualiser les offres</span>
+    </button>
+  </div>
+</section>
+
+<section class="metrics" aria-label="Indicateurs du dernier scan">
+  <article class="metric"><span class="metric-label">Offres actives</span><strong class="metric-value">{len(offers)}</strong><span class="metric-note">sur les {days_window} derniers jours</span></article>
+  <article class="metric"><span class="metric-label">Nouvelles</span><strong class="metric-value">{new_offer_count}</strong><span class="metric-note">depuis le scan précédent</span></article>
+  <article class="metric"><span class="metric-label">Marchés</span><strong class="metric-value">{len(active_region_ids)}</strong><span class="metric-note">régions analysées</span></article>
+  <article class="metric"><span class="metric-label">Durée du scan</span><strong class="metric-value">{human_duration(scan_duration_s)}</strong><span class="metric-note">collecte et classement</span></article>
+</section>
+
+<div class="catalog-summary">
+  <span class="catalog-icon" aria-hidden="true">⌁</span>
+  <span><strong>{len(active_ids)} domaines</strong> et <strong>{len(active_region_ids)} régions</strong> analysés : {html.escape(' · '.join(active_region_labels))}</span>
+</div>
+
+<details class="source-health">
+  <summary>
+    <span class="source-health-title"><span class="live-dot" aria-hidden="true"></span>État des connecteurs</span>
+    <span class="source-health-copy">{successful_statuses} opérationnels · {degraded_statuses} bloqués ou en erreur · afficher le détail</span>
+  </summary>
+  <div class="sources-panel" translate="no">{status_rows}</div>
+</details>
+
+<section class="workspace" aria-labelledby="offersTitle">
+<div class="workspace-head">
+  <div><p class="eyebrow">Candidatures</p><h2 id="offersTitle" class="section-title">Explorer les offres</h2></div>
+  <label class="search-box" role="search">
+    <span aria-hidden="true">⌕</span>
+    <input id="searchInput" type="search" placeholder="Poste, entreprise ou ville…" autocomplete="off" aria-label="Rechercher une offre">
+  </label>
+</div>
+<div class="filter-panel" aria-label="Filtres des offres">
   <div class="filter-group"><span class="filter-label">Statut</span>
-    <button class="fchip status-chip on" data-status="todo">À postuler <b id="todoCount"></b></button>
-    <button class="fchip status-chip" data-status="applied">Déjà postulé <b id="appliedCount"></b></button>
-    <button class="fchip status-chip" data-status="all">Tous</button>
+    <button class="fchip status-chip on" data-status="todo" aria-pressed="true">À postuler <b id="todoCount"></b></button>
+    <button class="fchip status-chip" data-status="applied" aria-pressed="false">Déjà postulé <b id="appliedCount"></b></button>
+    <button class="fchip status-chip" data-status="all" aria-pressed="false">Tous</button>
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Source</span>
-    <button class="fchip source-chip on" data-src="*">Toutes</button>{filter_btns}
+    <button class="fchip source-chip on" data-src="*" aria-pressed="true">Toutes</button>{filter_btns}
   </div>
   <div class="filter-group{single_domain_class}" translate="no"><span class="filter-label">Domaine</span>
-    <button class="fchip domain-chip on" data-domain="*">Tous</button>{domain_chips}
+    <button class="fchip domain-chip on" data-domain="*" aria-pressed="true">Tous</button>{domain_chips}
   </div>
   <div class="filter-group{single_region_class}" translate="no"><span class="filter-label">Région</span>
-    <button class="fchip region-chip" data-region="*">Toutes</button>{region_chips}
+    <button class="fchip region-chip" data-region="*" aria-pressed="false">Toutes</button>{region_chips}
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="highlightFilter" class="fchip" aria-pressed="false">✓ {highlight_label}</button>
   </div>
-  <div class="filter-group"><span class="filter-label">Actifs</span>
+  <div class="filter-group active-row"><span class="filter-label">Actifs</span>
     <span id="activeFilters" class="active-filters" translate="no"></span>
     <button id="resetBtn" class="fchip reset-btn" disabled>✕ Réinitialiser les filtres</button>
   </div>
 </div>
+<div class="list-head"><h3 class="list-title">Offres recommandées</h3><span id="visibleCount" class="visible-count" aria-live="polite"></span></div>
 <p id="emptyState" class="empty" hidden>Aucune offre ne correspond à ces filtres.</p>
 <div id="jobs">{"".join(cards)}</div>
-<p class="storage-note">Le statut de candidature est enregistré uniquement dans ce navigateur et n'est jamais envoyé sur GitHub.</p>
+</section>
+<p class="footer-note">Le statut de candidature et l’accès GitHub restent uniquement dans ce navigateur. Aucun secret n’est intégré au site ni envoyé ailleurs qu’à l’API GitHub.</p>
+</main>
 </div>
-<script>
-const STORAGE_KEY='radar-stage-france-applied-v1';
-const STATUS_LABELS={{todo:'À postuler',applied:'Déjà postulé',all:'Tous'}};
-const HIGHLIGHT_LABEL={highlight_label_js};
-const DOMAIN_LABELS={domain_labels_js};
-const REGION_LABELS={region_labels_js};
-const ACTIVE_REGION_IDS={active_region_ids_js};
-const DEFAULT_REGION={default_region_id_js};
-let activeSource='*', activeDomain='*', activeRegion=DEFAULT_REGION,
-    activeStatus='todo', highlightOnly=false;
-function readApplied(){{
-  try{{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return new Set(Array.isArray(value)?value:[]);}}
-  catch(_error){{return new Set();}}
-}}
-let applied=readApplied();
-function configureActionsLink(){{
-  const host=window.location.hostname;
-  const path=window.location.pathname.split('/').filter(Boolean);
-  if(host.endsWith('.github.io')&&path.length){{
-    const owner=host.slice(0,-'.github.io'.length);
-    document.getElementById('actionsLink').href=
-      'https://github.com/'+encodeURIComponent(owner)+'/'+encodeURIComponent(path[0])+
-      '/actions/workflows/scan.yml';
-  }}
-}}
-function saveApplied(){{localStorage.setItem(STORAGE_KEY,JSON.stringify([...applied]));}}
-function setSource(btn,src){{
-  activeSource=src;
-  document.querySelectorAll('.source-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}}
-function setStatus(btn,status){{
-  activeStatus=status;
-  document.querySelectorAll('.status-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}}
-function setDomain(btn,domain){{
-  activeDomain=domain;
-  document.querySelectorAll('.domain-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}}
-function setRegion(btn,region){{
-  activeRegion=region;
-  document.querySelectorAll('.region-chip').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');refresh();
-}}
-function toggleHighlight(btn){{
-  highlightOnly=!highlightOnly;btn.classList.toggle('on',highlightOnly);
-  btn.setAttribute('aria-pressed',highlightOnly?'true':'false');refresh();
-}}
-function resetFilters(){{
-  activeSource='*';activeDomain='*';activeRegion=DEFAULT_REGION;
-  activeStatus='todo';highlightOnly=false;
-  document.querySelectorAll('.source-chip').forEach(b=>b.classList.toggle('on',b.dataset.src==='*'));
-  document.querySelectorAll('.domain-chip').forEach(b=>b.classList.toggle('on',b.dataset.domain==='*'));
-  document.querySelectorAll('.region-chip').forEach(b=>
-    b.classList.toggle('on',b.dataset.region===DEFAULT_REGION));
-  document.querySelectorAll('.status-chip').forEach(b=>b.classList.toggle('on',b.dataset.status==='todo'));
-  const highlight=document.getElementById('highlightFilter');
-  highlight.classList.remove('on');highlight.setAttribute('aria-pressed','false');
-  refresh();
-}}
-function updateActiveFilters(){{
-  const parts=['Statut : '+STATUS_LABELS[activeStatus],
-               'Source : '+(activeSource==='*'?'Toutes':activeSource),
-               'Domaine : '+(activeDomain==='*'?'Tous':(DOMAIN_LABELS[activeDomain]||activeDomain)),
-               'Région : '+(activeRegion==='*'?'Toutes':(REGION_LABELS[activeRegion]||activeRegion))];
-  if(highlightOnly)parts.push(HIGHLIGHT_LABEL+' uniquement');
-  document.getElementById('activeFilters').textContent=parts.join(' · ');
-  const isDefault=activeStatus==='todo'&&activeSource==='*'&&activeDomain==='*'&&
-                  activeRegion===DEFAULT_REGION&&!highlightOnly;
-  document.getElementById('resetBtn').disabled=isDefault;
-}}
-function toggleApplied(id){{
-  applied.has(id)?applied.delete(id):applied.add(id);saveApplied();refresh();
-}}
-function refresh(){{
-  let visible=0,todo=0,done=0;
-  document.querySelectorAll('.job').forEach(job=>{{
-    const isApplied=applied.has(job.dataset.id);
-    isApplied?done++:todo++;
-    job.classList.toggle('applied',isApplied);
-    const action=job.querySelector('.apply-btn');
-    action.textContent=isApplied?'↩ Remettre à postuler':'✓ Marquer comme postulé';
-    action.classList.toggle('undo',isApplied);
-    const sourceOk=activeSource==='*'||job.dataset.src===activeSource;
-    const domains=(job.dataset.domains||'').split(',').filter(Boolean);
-    const domainOk=activeDomain==='*'||domains.includes(activeDomain);
-    const regions=(job.dataset.regions||'').split(',').filter(Boolean);
-    const regionOk=activeRegion==='*'||regions.includes(activeRegion);
-    const statusOk=activeStatus==='all'||(activeStatus==='applied'?isApplied:!isApplied);
-    const highlightOk=!highlightOnly||job.dataset.highlight==='1';
-    const show=sourceOk&&domainOk&&regionOk&&statusOk&&highlightOk;
-    job.style.display=show?'':'none';if(show)visible++;
-  }});
-  document.getElementById('todoCount').textContent='('+todo+')';
-  document.getElementById('appliedCount').textContent='('+done+')';
-  const empty=document.getElementById('emptyState');
-  if(visible===0){{
-    let msg='Aucune offre ne correspond à ces filtres.';
-    if(activeSource!=='*'){{
-      const chip=document.querySelector('.source-chip[data-src="'+activeSource+'"]');
-      if(chip&&chip.dataset.note){{msg=activeSource+' : '+chip.dataset.note+' — aucune offre à afficher.';}}
-    }}
-    empty.textContent=msg;
-  }}
-  empty.hidden=visible!==0;
-  updateActiveFilters();
-}}
-document.getElementById('refreshBtn').addEventListener('click',()=>window.location.reload());
-document.querySelectorAll('.source-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setSource(btn,btn.dataset.src)));
-document.querySelectorAll('.status-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setStatus(btn,btn.dataset.status)));
-document.querySelectorAll('.domain-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setDomain(btn,btn.dataset.domain)));
-document.querySelectorAll('.region-chip').forEach(btn=>
-  btn.addEventListener('click',()=>setRegion(btn,btn.dataset.region)));
-document.getElementById('highlightFilter').addEventListener('click',event=>toggleHighlight(event.currentTarget));
-document.getElementById('resetBtn').addEventListener('click',resetFilters);
-document.querySelectorAll('.apply-btn').forEach(btn=>
-  btn.addEventListener('click',()=>toggleApplied(btn.dataset.offerId)));
-configureActionsLink();
-refresh();
-</script>
+
+<dialog id="scanDialog" class="scan-dialog" aria-labelledby="scanDialogTitle">
+  <div class="dialog-content">
+    <button id="scanDialogClose" class="dialog-close" type="button" aria-label="Fermer">×</button>
+    <div class="dialog-icon" aria-hidden="true">↻</div>
+    <p class="eyebrow">GitHub Actions</p>
+    <h2 id="scanDialogTitle">Lancer un nouveau scan</h2>
+    <p class="dialog-copy">Le workflow sera déclenché et suivi directement ici. À la fin, le dashboard se rechargera automatiquement.</p>
+    <div class="security-note"><span aria-hidden="true">◇</span><span>Le token est conservé uniquement dans la session de cet onglet. Il n’est jamais écrit dans Git, un fichier ou le dashboard.</span></div>
+    <div class="token-setup">
+      <label for="githubToken">Token GitHub finement limité</label>
+      <div class="token-row">
+        <input id="githubToken" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+        <button id="toggleTokenVisibility" class="button button-secondary" type="button">Afficher</button>
+      </div>
+      <p class="token-help">Première utilisation uniquement : <a id="tokenCreationLink" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">créer un token sécurisé préconfiguré</a>, choisir « Only select repositories » → <strong id="tokenRepositoryName">radar-stage-france</strong>, puis vérifier « Actions: Read and write ».</p>
+    </div>
+    <div id="runState" class="run-state" data-kind="idle" hidden aria-live="polite">
+      <div class="run-state-head"><span class="state-dot" aria-hidden="true"></span><span id="runStateTitle"></span></div>
+      <p id="runStateCopy" class="run-state-copy"></p>
+      <a id="runDetailsLink" class="run-link" href="https://github.com" target="_blank" rel="noopener noreferrer" hidden>Voir les détails techniques</a>
+    </div>
+    <div class="dialog-actions">
+      <button id="forgetTokenBtn" class="button button-danger" type="button" hidden>Oublier l’accès</button>
+      <button id="runNowBtn" class="button button-primary" type="button"><span class="button-icon" aria-hidden="true">↻</span>Lancer maintenant</button>
+    </div>
+  </div>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script id="radarConfig" type="application/json">{dashboard_config_json}</script>
+<script src="assets/dashboard.js" defer></script>
 </body></html>"""
     # Les badges conditionnels peuvent laisser des espaces en fin de ligne ;
     # normaliser la sortie garde le fichier généré propre et diffable.
