@@ -36,8 +36,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "0b057fda26378088": {
@@ -78,8 +78,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "0dccaacab386f45c": {
   "id": "0dccaacab386f45c",
@@ -118,8 +118,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "12e6011034a1e1ef": {
@@ -160,8 +160,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "133ff5345eb0d4c8": {
   "id": "133ff5345eb0d4c8",
@@ -200,8 +200,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "14ef112393123745": {
@@ -241,8 +241,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "14f4517f540fcbda": {
+  "id": "14f4517f540fcbda",
+  "title": "Stagiaire - Audit (janvier 2027)- Toulon (H/F)",
+  "company": "Grant Thornton",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=ded362f840574013",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "audit"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -7,
+   "dev_web": -1,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 1,
+   "finance": 1,
+   "audit": 5,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 0,
+   "juridique": -1,
+   "electronique_embarque": -1,
+   "genie_civil_btp": -2,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "150bcd59f14aac90": {
@@ -282,8 +323,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "18c161739e4377ab": {
@@ -323,8 +364,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "19b26eb92323ab7f": {
+  "id": "19b26eb92323ab7f",
+  "title": "Stage - Assistant(e) Chargé(e) de Recrutement et Relations Ecoles - Janvier 2027 (H/F/X)",
+  "company": "Henkel",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=16a5f387ed6ab8f6",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -7,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 7,
+   "juridique": -6,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "19d5dc4f2ce03f66": {
@@ -364,8 +446,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "1ed9466fa12648cb": {
@@ -405,8 +487,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "1f75b3d6e425ae47": {
@@ -446,8 +528,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "1fc39f87e0786533": {
@@ -487,8 +569,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "22bd28eaf885116e": {
+  "id": "22bd28eaf885116e",
+  "title": "Stagiaire agence service à la personne (H/F)",
+  "company": "ADENIOR",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=6bc5984b97d072e5",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "rh"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": -1,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 2,
+   "juridique": -2,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "240944f0be059a90": {
@@ -528,8 +651,50 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "2412a96171f5ba04": {
+  "id": "2412a96171f5ba04",
+  "title": "Stage - Juriste Corporate / Droit des sociétés - Janvier 2027 (x/f/m)",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=ab8c423f06982f76",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "rh",
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 1,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 2,
+   "juridique": 7,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": -2
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "25644e6b356028b0": {
@@ -569,8 +734,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "2a95b7d5d7ca4360": {
@@ -610,8 +775,90 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "2aa5595cd7bad41d": {
+  "id": "2aa5595cd7bad41d",
+  "title": "Stage Data Scientist – Modélisation des Risques Climatiques H/F",
+  "company": "Groupama",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=8377450ab0dd1c46",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6,
+   "dev_web": -5,
+   "devops_cloud": -5,
+   "cybersecurite": 0,
+   "reseaux_systemes": -5,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -5
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "2b6f43259d2a4138": {
+  "id": "2b6f43259d2a4138",
+  "title": "Stage - Assistant(e) Analyst Supply Chain - Janvier 2027 (H/F/X)",
+  "company": "Henkel",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=18f8baf5fe2f88f7",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "supply_chain"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": -1,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": -2,
+   "audit": -1,
+   "supply_chain": 4,
+   "commerce_bizdev": -5,
+   "rh": -1,
+   "juridique": -1,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "2ea537488412f21b": {
@@ -651,8 +898,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "3049055fc591e68c": {
@@ -692,8 +939,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "316302026a0763ac": {
@@ -733,8 +980,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "332aa5cde94d51d8": {
@@ -774,8 +1021,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "367568d0febc0faa": {
@@ -815,8 +1062,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "3a516578a1f55234": {
@@ -856,8 +1103,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "3b9fc1e797862569": {
@@ -898,8 +1145,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "4396e25234815597": {
@@ -939,8 +1186,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "497873b4cfaa2f30": {
@@ -981,8 +1228,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "4a3d56516169d095": {
   "id": "4a3d56516169d095",
@@ -1021,8 +1268,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "4a6349491c1e8764": {
@@ -1062,8 +1309,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "4f97895c4d9281a4": {
@@ -1103,8 +1350,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "4fbe0faf4cdf9f6b": {
@@ -1144,8 +1391,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "51849a5ca7ad0eec": {
+  "id": "51849a5ca7ad0eec",
+  "title": "DevSecOps (stage) F/H",
+  "company": "padoa",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4424359418",
+  "source": "LinkedIn",
+  "date": "2026-07-09",
+  "date_known": true,
+  "date_raw": "2026-07-09",
+  "sort_date": "2026-07-09T00:00:00+00:00",
+  "domains": [
+   "cybersecurite"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -4,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 3,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "55498816002a750c": {
@@ -1185,8 +1473,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "55f13be1f1f1efcf": {
@@ -1226,8 +1514,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "590a0464b59cf058": {
@@ -1268,8 +1556,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "59a3b3d9988ac26c": {
@@ -1309,8 +1597,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "5a938ce7a2e30f33": {
@@ -1351,8 +1639,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "5b47180463fddd34": {
   "id": "5b47180463fddd34",
@@ -1391,8 +1679,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "5c099f7ac982827b": {
@@ -1432,8 +1720,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "5c65aec87fd918d1": {
@@ -1474,7 +1762,49 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
+ },
+ "5f7bcf2bb5f3b3e4": {
+  "id": "5f7bcf2bb5f3b3e4",
+  "title": "Stage - Quantitative Risk Analyst H/F",
+  "company": "Swiss Life Asset Managers",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=41737a8869344dfc",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "devops_cloud",
+   "finance"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 2,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 2,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 1,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "60ceea3538f5ccc3": {
@@ -1514,8 +1844,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "60ee8e3ac5efdaeb": {
@@ -1557,8 +1887,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "611a63dd882ed8c1": {
   "id": "611a63dd882ed8c1",
@@ -1597,8 +1927,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "636e505c5a4063b7": {
@@ -1639,8 +1969,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "65574d06ca1b25d5": {
   "id": "65574d06ca1b25d5",
@@ -1679,8 +2009,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "66826ab2e115a386": {
@@ -1721,8 +2051,8 @@
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "6b0d58d250d7cb42": {
   "id": "6b0d58d250d7cb42",
@@ -1761,8 +2091,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "6b31e78f9856f9f3": {
@@ -1802,8 +2132,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "6b43ceaa9325bf95": {
@@ -1843,8 +2173,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "6e30839d1f07b19f": {
@@ -1884,8 +2214,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "7052e46cc1d30053": {
@@ -1925,8 +2255,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "70bcae16d41f902f": {
@@ -1966,8 +2296,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "77934d7531a09a3b": {
+  "id": "77934d7531a09a3b",
+  "title": "Offre de stage — Business Developer & Growth (H/F) — Inov Technologies (Plateforme immobilière IA)",
+  "company": "INOV",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=550efb0ed9e38bb6",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": -1,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": -1,
+   "product_management": -1,
+   "compta_gestion": -1,
+   "finance": 0,
+   "audit": -2,
+   "supply_chain": -2,
+   "commerce_bizdev": 1,
+   "rh": -1,
+   "juridique": -1,
+   "electronique_embarque": -2,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -1
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "77b07da41eadabda": {
@@ -2007,8 +2378,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "78de94f36bb1ddb0": {
@@ -2048,8 +2419,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "7f0103c4b1af3d1f": {
@@ -2089,8 +2460,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "8338df0a02ac9b63": {
@@ -2130,8 +2501,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "875c48e871b273ba": {
@@ -2171,8 +2542,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "88a7bc4ecbda70a6": {
@@ -2212,8 +2583,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "8ab2dfc30fc32f4b": {
@@ -2253,8 +2624,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "931c8ff511620286": {
@@ -2294,8 +2665,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "94007092b4b13942": {
@@ -2335,8 +2706,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "94287f0a98338a72": {
@@ -2376,8 +2747,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "947edf3b7d6207f0": {
@@ -2417,8 +2788,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "953d78196d09d275": {
@@ -2458,8 +2829,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "999647f97e643e82": {
@@ -2499,8 +2870,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "9a77b82f5ccde4bc": {
@@ -2540,8 +2911,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "9b5a62e7896871bf": {
@@ -2582,8 +2953,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "9d49d1ddf075ad3b": {
@@ -2623,8 +2994,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "9e189f3d6ae84d4c": {
@@ -2664,8 +3035,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "a15dea62d9d4602f": {
+  "id": "a15dea62d9d4602f",
+  "title": "Stage - Juriste Innovation de Produit (x/f/m) - Janvier 2027",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=e1fc0bb89f35c759",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -6,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 1,
+   "juridique": 5,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 1,
+   "mecanique_industriel": -1
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "a29d16a44c5ef5f2": {
@@ -2705,8 +3117,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "a4212e318f2e93ae": {
@@ -2746,8 +3158,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "a43c877109082dee": {
@@ -2787,8 +3199,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "a79019d8d59190db": {
+  "id": "a79019d8d59190db",
+  "title": "STAGE \"Gestion des traductions pour les logiciels de simulation\" (H/F)",
+  "company": "Exail",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=f422dbcefef3c6a9",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "a848674ea10832a0": {
@@ -2828,8 +3281,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "a8d92e09a57b353d": {
@@ -2869,8 +3322,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "aa0ea22996d5e5ef": {
@@ -2910,8 +3363,50 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "adf4bafbf36cdb7a": {
+  "id": "adf4bafbf36cdb7a",
+  "title": "Stage en développement Full-Stack et en cybersécurité pour un écosystème de gestion des données",
+  "company": "INRAE",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=34282400e274e128",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "devops_cloud",
+   "cybersecurite"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -7,
+   "dev_web": -4,
+   "devops_cloud": 3,
+   "cybersecurite": 4,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 1,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "ae48e2bce9747ec4": {
@@ -2951,8 +3446,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "afce0a41067c0e5c": {
@@ -2992,8 +3487,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "b0bcd01757c2d59c": {
@@ -3033,8 +3528,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "b0f04dcc1dc34d0b": {
@@ -3074,8 +3569,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "b198fd4f6c6dd2e9": {
@@ -3115,8 +3610,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "b32ea8198f5697e0": {
@@ -3156,8 +3651,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "b95430e7ec441b74": {
@@ -3197,8 +3692,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "b98bbf7180e023cc": {
@@ -3239,8 +3734,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "ba2ce7074c912461": {
@@ -3280,8 +3775,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "bd6e1e40b5aac53c": {
@@ -3321,8 +3816,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "be4959649f27346a": {
@@ -3332,10 +3827,10 @@
   "location": "France",
   "url": "https://www.linkedin.com/jobs/view/4430590151",
   "source": "LinkedIn",
-  "date": "",
-  "date_known": false,
-  "date_raw": "",
-  "sort_date": "2026-07-15T11:21:51.258869+00:00",
+  "date": "2026-07-14",
+  "date_known": true,
+  "date_raw": "2026-07-14",
+  "sort_date": "2026-07-14T00:00:00+00:00",
   "domains": [
    "devops_cloud"
   ],
@@ -3362,8 +3857,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "c07faddfff4e95d9": {
@@ -3403,8 +3898,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "c364a6034000f30f": {
@@ -3444,8 +3939,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "c644930c4787c2cb": {
@@ -3486,8 +3981,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "c6a53ee8e04f3462": {
   "id": "c6a53ee8e04f3462",
@@ -3526,8 +4021,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "c7ed08f45b94adff": {
@@ -3567,8 +4062,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "c952ad521b4c8ac1": {
@@ -3608,8 +4103,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "cc2bdb35d76d77fe": {
@@ -3649,8 +4144,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "cd4b6ef875912b2c": {
@@ -3691,8 +4186,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "cfde31d73ba4245b": {
   "id": "cfde31d73ba4245b",
@@ -3731,8 +4226,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "d1bc367d58945ead": {
@@ -3772,8 +4267,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "d32dbcb52ae0158c": {
@@ -3813,8 +4308,91 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "d691b91a2e69168c": {
+  "id": "d691b91a2e69168c",
+  "title": "Stage - Juriste Innovation de Produit (x/f/m) - Janvier 2027",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=541c8ce802c9a043",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -6,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 1,
+   "juridique": 5,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 1,
+   "mecanique_industriel": -1
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "d766e996bdda6c8b": {
+  "id": "d766e996bdda6c8b",
+  "title": "Stage - Juriste Corporate / Droit des sociétés - Janvier 2027 (x/f/m)",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=442c5a89c417d1ee",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "rh",
+   "juridique"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -8,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 1,
+   "audit": 0,
+   "supply_chain": -1,
+   "commerce_bizdev": -1,
+   "rh": 2,
+   "juridique": 7,
+   "electronique_embarque": 0,
+   "genie_civil_btp": -1,
+   "mecanique_industriel": -2
+  },
+  "highlighted": true,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "dd9994bae1af15e2": {
@@ -3854,8 +4432,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "ddb9859fac6beddf": {
+  "id": "ddb9859fac6beddf",
+  "title": "Stagiaire Customer Success Engineer F/H",
+  "company": "ELVESYS",
+  "location": "Paris 11 - 75",
+  "url": "https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/179121960W",
+  "source": "APEC",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15T13:15:01.000+0000",
+  "sort_date": "2026-07-15T13:15:01+00:00",
+  "domains": [
+   "commerce_bizdev"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 0,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 4,
+   "rh": -5,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 0
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "e4e8243aff767211": {
@@ -3895,8 +4514,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "e5e79ceb856d58b4": {
@@ -3936,8 +4555,49 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": true
+ },
+ "eda89e4925969eaa": {
+  "id": "eda89e4925969eaa",
+  "title": "Stage Data Scientist – Modélisation des Risques Climatiques H/F",
+  "company": "Groupama Assurances Mutuelles",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4440205771",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-07-15T13:49:50.315334+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3,
+   "dev_web": -4,
+   "devops_cloud": -4,
+   "cybersecurite": 0,
+   "reseaux_systemes": -4,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 0,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": -4
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "eef435fc0770d499": {
@@ -3978,8 +4638,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "f0a9e99cff0d227d": {
   "id": "f0a9e99cff0d227d",
@@ -4019,7 +4679,48 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
+ },
+ "f4afb53bd6e6f57d": {
+  "id": "f4afb53bd6e6f57d",
+  "title": "stage ingénieur génie industriel / amélioration continue (h/f)",
+  "company": "Saint-Gobain",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=1d8ffbb2222e7b50",
+  "source": "Indeed",
+  "date": "2026-07-15",
+  "date_known": true,
+  "date_raw": "2026-07-15",
+  "sort_date": "2026-07-15T00:00:00+00:00",
+  "domains": [
+   "mecanique_industriel"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": -1,
+   "dev_web": 0,
+   "devops_cloud": 0,
+   "cybersecurite": 0,
+   "reseaux_systemes": 0,
+   "product_management": 0,
+   "compta_gestion": 0,
+   "finance": 0,
+   "audit": 0,
+   "supply_chain": 1,
+   "commerce_bizdev": 0,
+   "rh": 0,
+   "juridique": 0,
+   "electronique_embarque": 0,
+   "genie_civil_btp": 0,
+   "mecanique_industriel": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-07-15T13:52:11+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "f5d2a7f898d33946": {
@@ -4060,8 +4761,8 @@
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
   "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
-  "active": true
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
+  "active": false
  },
  "fb3b87f37ac555cc": {
   "id": "fb3b87f37ac555cc",
@@ -4100,8 +4801,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  },
  "fba68dc36c84e4a7": {
@@ -4141,8 +4842,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-07-15T11:23:32+00:00",
-  "last_seen_run": "2026-07-15T11:23:32+00:00",
-  "last_seen_success": "2026-07-15T11:23:32+00:00",
+  "last_seen_run": "2026-07-15T13:52:11+00:00",
+  "last_seen_success": "2026-07-15T13:52:11+00:00",
   "active": true
  }
 }
