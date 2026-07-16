@@ -52,5 +52,6 @@
     "missing_hours": 72,
     "successful_scans": 3
   },
-  "seen_retention_days": 45
+  "seen_retention_days": 45,
+  "unknown_date_visibility_hours": 72
 }

@@ -25,6 +25,8 @@ import requests
 
 DUCKDUCKGO_HTML_ENDPOINT = "https://html.duckduckgo.com/html/"
 DUCKDUCKGO_PROVIDER_NAME = "duckduckgo_html"
+DUCKDUCKGO_LITE_ENDPOINT = "https://lite.duckduckgo.com/lite/"
+DUCKDUCKGO_LITE_PROVIDER_NAME = "duckduckgo_lite"
 LINKEDIN_POST_HOSTS = ("linkedin.com", "fr.linkedin.com")
 
 _SPACE_RE = re.compile(r"\s+")
@@ -57,6 +59,24 @@ _BLOCK_MARKERS = (
 
 class XRayProviderError(RuntimeError):
     """Erreur distante non récupérable d'un provider X-ray."""
+
+
+class LinkedInDestinationError(RuntimeError):
+    """Tentative interdite de requête réseau directe vers LinkedIn.
+
+    Cette erreur signale un défaut de programmation, jamais un incident
+    distant : le module X-ray n'a le droit d'ouvrir aucune URL LinkedIn,
+    seulement de les afficher comme données.
+    """
+
+
+def assert_allowed_search_destination(url: str) -> None:
+    """Refuse toute destination réseau LinkedIn, avant chaque requête."""
+    hostname = (urlsplit(url).hostname or "").rstrip(".").lower()
+    if hostname == "linkedin.com" or hostname.endswith(".linkedin.com"):
+        raise LinkedInDestinationError(
+            "Requête réseau directe vers LinkedIn interdite (mode X-ray strict)"
+        )
 
 
 class XRayBlockedError(XRayProviderError):
@@ -428,6 +448,9 @@ class DuckDuckGoHtmlProvider:
             "Accept": "text/html,application/xhtml+xml",
             "User-Agent": "radar-stage-france-xray/1.0",
         }
+        # Ceinture et bretelles : même si l'endpoint a été validé à la
+        # construction, chaque requête revérifie qu'elle ne vise pas LinkedIn.
+        assert_allowed_search_destination(self.endpoint)
         try:
             response = self.session.get(
                 self.endpoint,
@@ -459,6 +482,110 @@ class DuckDuckGoHtmlProvider:
                 f"DuckDuckGo a répondu HTTP {status_code or '?'}"
             ) from exc
         return parse_duckduckgo_html(body, now)[:max_results]
+
+
+class DuckDuckGoLiteProvider(DuckDuckGoHtmlProvider):
+    """Provider de secours : interface Lite du même moteur DuckDuckGo.
+
+    Le parseur partagé comprend déjà les classes ``result-*`` de cette
+    variante. Le domaine reste strictement duckduckgo.com : aucune requête
+    LinkedIn n'est possible ici non plus.
+    """
+
+    name = DUCKDUCKGO_LITE_PROVIDER_NAME
+
+    def __init__(
+        self,
+        session=None,
+        *,
+        timeout: float = 8.0,
+        endpoint: str = DUCKDUCKGO_LITE_ENDPOINT,
+    ):
+        super().__init__(session, timeout=timeout, endpoint=endpoint)
+
+
+class FallbackXRayProvider:
+    """Chaîne un provider principal et un secours, sans jamais boucler.
+
+    Contrat :
+    - au plus une bascule par requête (deux providers maximum) ;
+    - circuit breaker par provider : après ``breaker_threshold`` échecs
+      consécutifs, le provider est ignoré jusqu'à son prochain succès ;
+    - chaque tentative est consignée dans ``last_attempts`` pour que
+      l'appelant comptabilise le volume réseau réel du fallback.
+    """
+
+    def __init__(self, primary, fallback, *, breaker_threshold: int = 2):
+        if breaker_threshold < 1:
+            raise ValueError("breaker_threshold doit être strictement positif")
+        self.providers = (primary, fallback)
+        self.breaker_threshold = breaker_threshold
+        self._consecutive_failures = {primary.name: 0, fallback.name: 0}
+        self.name = f"{primary.name}+{fallback.name}"
+        self.last_used_provider: str | None = None
+        self.last_attempts: list[dict] = []
+
+    def circuit_open(self, provider_name: str) -> bool:
+        return (
+            self._consecutive_failures.get(provider_name, 0)
+            >= self.breaker_threshold
+        )
+
+    def search(
+        self,
+        query: str,
+        freshness: str | None = None,
+        *,
+        page: int = 1,
+        max_results: int = 10,
+        now: datetime | None = None,
+    ) -> list[SearchResult]:
+        self.last_attempts = []
+        self.last_used_provider = None
+        last_error: Exception | None = None
+        for provider in self.providers:
+            if self.circuit_open(provider.name):
+                self.last_attempts.append(
+                    {"provider": provider.name, "outcome": "skipped_circuit_open"}
+                )
+                continue
+            try:
+                results = provider.search(
+                    query, freshness, page=page,
+                    max_results=max_results, now=now,
+                )
+            except XRayBlockedError as exc:
+                self._consecutive_failures[provider.name] += 1
+                self.last_attempts.append(
+                    {"provider": provider.name, "outcome": "blocked"}
+                )
+                last_error = exc
+                continue
+            except XRayTimeoutError as exc:
+                self._consecutive_failures[provider.name] += 1
+                self.last_attempts.append(
+                    {"provider": provider.name, "outcome": "timeout"}
+                )
+                last_error = exc
+                continue
+            except XRayProviderError as exc:
+                self._consecutive_failures[provider.name] += 1
+                self.last_attempts.append(
+                    {"provider": provider.name, "outcome": "error"}
+                )
+                last_error = exc
+                continue
+            self._consecutive_failures[provider.name] = 0
+            self.last_attempts.append(
+                {"provider": provider.name, "outcome": "success"}
+            )
+            self.last_used_provider = provider.name
+            return results
+        if last_error is not None:
+            raise last_error
+        raise XRayProviderError(
+            "Tous les providers X-ray sont indisponibles (circuit breaker ouvert)"
+        )
 
 
 def _strip_contract_words(query: str) -> str:
@@ -573,7 +700,11 @@ def build_xray_query_plan(
 
 __all__ = [
     "DUCKDUCKGO_HTML_ENDPOINT",
+    "DUCKDUCKGO_LITE_ENDPOINT",
     "DuckDuckGoHtmlProvider",
+    "DuckDuckGoLiteProvider",
+    "FallbackXRayProvider",
+    "LinkedInDestinationError",
     "SearchResult",
     "XRayBlockedError",
     "XRayProviderError",
@@ -581,6 +712,7 @@ __all__ = [
     "XRayRotationState",
     "XRaySearchProvider",
     "XRayTimeoutError",
+    "assert_allowed_search_destination",
     "build_xray_query_plan",
     "canonicalize_linkedin_post_url",
     "deduplicate_search_results",

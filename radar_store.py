@@ -400,6 +400,43 @@ def _merge_offer(existing_id: str, existing: Mapping[str, Any], incoming: Mappin
     result["discovered_at"] = discovered_at
     if primary_source:
         result["source"] = primary_source
+    # Une redécouverte sans date ne doit jamais rajeunir l'offre : la date de
+    # première découverte reste la référence de fraîcheur. Une vraie date de
+    # publication, elle, remplace toujours une inconnue.
+    incoming_date_known = bool(
+        incoming.get("date_known", bool(incoming.get("date")))
+    )
+    if not incoming_date_known:
+        for field in ("date", "date_known", "date_raw", "date_status",
+                      "sort_date"):
+            if field in existing:
+                result[field] = deepcopy(existing[field])
+    # Traçabilité X-ray des redécouvertes : first_discovered_at est immuable,
+    # last_discovered_at suit le run courant, et chaque run redécouvrant le
+    # post incrémente le compteur d'une seule unité.
+    if existing.get("first_discovered_at") or incoming.get("first_discovered_at"):
+        firsts = [value for value in (existing.get("first_discovered_at"),
+                                      incoming.get("first_discovered_at")) if value]
+        lasts = [value for value in (existing.get("last_discovered_at"),
+                                     incoming.get("last_discovered_at")) if value]
+        result["first_discovered_at"] = min(firsts)
+        result["last_discovered_at"] = max(lasts)
+        if existing.get("first_discovered_at") and incoming.get("first_discovered_at"):
+            result["discovery_count"] = (
+                int(existing.get("discovery_count") or 1)
+                + int(incoming.get("discovery_count") or 1)
+            )
+        else:
+            result["discovery_count"] = int(
+                existing.get("discovery_count")
+                or incoming.get("discovery_count") or 1
+            )
+    merged_queries = _merge_unique(
+        existing.get("queries_that_found_it"),
+        incoming.get("queries_that_found_it"),
+    )
+    if merged_queries:
+        result["queries_that_found_it"] = merged_queries
     incoming_id = str(incoming.get("id") or "")
     result["legacy_ids"] = _merge_unique(
         existing.get("legacy_ids"),
@@ -535,6 +572,36 @@ def reconcile_offer_store(
         # section dédiée au lieu de les supprimer.
         entry["active"] = bool(entry.get("active", True))
     return merged
+
+
+DEFAULT_UNKNOWN_DATE_VISIBILITY_HOURS = 72
+
+
+def unknown_date_is_stale(
+    offer: Mapping[str, Any],
+    *,
+    now: datetime | None = None,
+    visibility_hours: int = DEFAULT_UNKNOWN_DATE_VISIBILITY_HOURS,
+) -> bool:
+    """Vrai quand un post sans date ne doit plus passer pour récent.
+
+    La référence est la première découverte, jamais la dernière : une
+    redécouverte ne remet pas le compteur à zéro. Sans aucune référence
+    exploitable, l'offre est considérée ancienne par prudence.
+    """
+    if visibility_hours <= 0:
+        raise ValueError("visibility_hours doit être strictement positif")
+    if bool(offer.get("date_known", bool(offer.get("date")))):
+        return False
+    checked_at = _utc(now)
+    reference = None
+    for field in ("first_discovered_at", "discovered_at", "first_seen"):
+        reference = parse_store_datetime(offer.get(field))
+        if reference is not None:
+            break
+    if reference is None:
+        return True
+    return checked_at - reference >= timedelta(hours=visibility_hours)
 
 
 def active_dashboard_offers(store: Mapping[str, Mapping[str, Any]]) -> list[dict[str, Any]]:
@@ -714,6 +781,7 @@ def seen_offer_ids(payload: Any, *, run_at: datetime | None = None) -> set[str]:
 __all__ = [
     "DEFAULT_EXPIRATION_HOURS",
     "DEFAULT_OFFER_RETENTION_DAYS",
+    "DEFAULT_UNKNOWN_DATE_VISIBILITY_HOURS",
     "DEFAULT_SEEN_RETENTION_DAYS",
     "DEFAULT_SUCCESSFUL_ABSENCES",
     "OFFER_STORE_SCHEMA_VERSION",
@@ -735,5 +803,6 @@ __all__ = [
     "purge_seen_memory",
     "reconcile_offer_store",
     "seen_offer_ids",
+    "unknown_date_is_stale",
     "update_seen_memory",
 ]

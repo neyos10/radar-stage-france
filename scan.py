@@ -40,6 +40,7 @@ import smtplib
 import sys
 import time
 import unicodedata
+import uuid
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
@@ -53,7 +54,9 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import requests
 
+import radar_metrics
 import radar_store
+from budget import billable_minutes
 from radar_io import atomic_write_json, atomic_write_text
 from radar_profiles import (
     DEFAULT_PROFILE_ID,
@@ -65,6 +68,8 @@ from radar_profiles import (
 )
 from radar_xray import (
     DuckDuckGoHtmlProvider,
+    DuckDuckGoLiteProvider,
+    FallbackXRayProvider,
     SearchResult,
     XRayBlockedError,
     XRayProviderError,
@@ -90,6 +95,8 @@ PROFILE_STATUS_FILES = {
     "full_general": Path("data/source_status_full_general.json"),
 }
 METRICS_FILE = Path("data/scan_metrics.json")
+METRICS_HISTORY_LIMIT = 100
+BENCHMARKS_DIR = Path("data/benchmarks")
 XRAY_STATE_FILE = Path("data/xray_state.json")
 OFFERS_FILE = Path("data/offers.json")
 DOCS_INDEX = Path("docs/index.html")
@@ -144,6 +151,12 @@ def load_config(path: Path = CONFIG_FILE) -> dict:
     if (isinstance(seen_retention, bool) or not isinstance(seen_retention, int)
             or seen_retention <= 0):
         raise ValueError("seen_retention_days doit être un entier positif")
+    unknown_visibility = config.get("unknown_date_visibility_hours", 72)
+    if (isinstance(unknown_visibility, bool)
+            or not isinstance(unknown_visibility, int) or unknown_visibility <= 0):
+        raise ValueError(
+            "unknown_date_visibility_hours doit être un entier positif"
+        )
     return config
 
 
@@ -256,6 +269,11 @@ EXPIRATION_SUCCESSFUL_SCANS = int(
     APP_CONFIG.get("expiration", {}).get("successful_scans", 3)
 )
 SEEN_RETENTION_DAYS = int(APP_CONFIG.get("seen_retention_days", 45))
+# Un post sans date de publication reste visible comme « récent » pendant
+# cette fenêtre après sa première découverte, puis est marqué ancien.
+UNKNOWN_DATE_VISIBILITY_HOURS = int(
+    APP_CONFIG.get("unknown_date_visibility_hours", 72)
+)
 RETIRED_SOURCES = {"Glassdoor"}
 
 
@@ -329,6 +347,10 @@ class SourceStatus:
     status: str = "empty"
     raw_count: int = 0
     accepted_count: int = 0
+    # Nouveautés réelles vis-à-vis du store/mémoire, calculées en fin de run :
+    # accepté ≠ nouveau, une offre déjà connue reste un « known ».
+    new_count: int = 0
+    known_count: int = 0
     rejected_count: int = 0
     reject_reasons: dict = field(default_factory=dict)
     unknown_date_count: int = 0
@@ -466,6 +488,26 @@ def register_offer(status: SourceStatus, offers: dict,
                 status.unknown_date_count += 1
     if metrics:
         metrics.add("deduplication_s", time.perf_counter() - started)
+
+
+def assign_novelty_counts(statuses: list[SourceStatus],
+                          offers: dict[str, dict],
+                          new_ids: set[str]) -> None:
+    """Distribue les nouveautés réelles du run sur chaque statut de source.
+
+    ``new_ids`` provient du diff de la mémoire des offres vues : c'est la
+    définition de « réellement nouveau dans le store », pas simplement
+    « accepté pendant le run ». Une offre multi-sources crédite chacune des
+    sources qui l'ont trouvée ce run.
+    """
+    for st in statuses:
+        found = [
+            offer for offer in offers.values()
+            if st.source in (offer.get("sources") or [offer.get("source")])
+            and (not offer.get("regions") or st.region_id in offer["regions"])
+        ]
+        st.new_count = sum(1 for offer in found if offer.get("id") in new_ids)
+        st.known_count = max(0, len(found) - st.new_count)
 
 
 def log_collection_summary(status: SourceStatus) -> None:
@@ -850,6 +892,25 @@ def merge_offer_metadata(existing: dict, incoming: dict) -> None:
     existing["contact_direct"] = bool(
         existing.get("contact_direct") or incoming.get("contact_direct")
     )
+    # Traçabilité des redécouvertes X-ray : plusieurs requêtes du même run
+    # trouvant le même post ne comptent qu'une découverte, mais chaque
+    # requête est mémorisée.
+    if existing.get("queries_that_found_it") or incoming.get("queries_that_found_it"):
+        existing["queries_that_found_it"] = list(dict.fromkeys(
+            (existing.get("queries_that_found_it") or [])
+            + (incoming.get("queries_that_found_it") or [])
+        ))
+    if existing.get("first_discovered_at") or incoming.get("first_discovered_at"):
+        candidates = [value for value in (existing.get("first_discovered_at"),
+                                          incoming.get("first_discovered_at")) if value]
+        existing["first_discovered_at"] = min(candidates)
+        last_candidates = [value for value in (existing.get("last_discovered_at"),
+                                               incoming.get("last_discovered_at")) if value]
+        existing["last_discovered_at"] = max(last_candidates)
+        existing["discovery_count"] = max(
+            int(existing.get("discovery_count") or 1),
+            int(incoming.get("discovery_count") or 1),
+        )
 
 
 def find_duplicate_offer_id(offers: dict[str, dict], incoming: dict) -> str | None:
@@ -2084,6 +2145,25 @@ def update_xray_state_catalog(catalog: dict, profile_id: str,
     return updated
 
 
+def _provider_network_attempts(provider) -> int:
+    """Nombre de requêtes réseau réellement émises par le dernier ``search``.
+
+    Un provider à fallback expose ``last_attempts`` ; sans lui, un appel vaut
+    exactement une requête. Le fallback n'est ainsi jamais gratuit dans les
+    métriques.
+    """
+    attempts = getattr(provider, "last_attempts", None)
+    if attempts:
+        return sum(1 for attempt in attempts
+                   if attempt.get("outcome") != "skipped_circuit_open")
+    return 1
+
+
+def _provider_attempt_reports(provider) -> list[dict]:
+    attempts = getattr(provider, "last_attempts", None)
+    return [dict(attempt) for attempt in attempts] if attempts else []
+
+
 def fetch_linkedin_posts(
         *,
         context: ScanContext,
@@ -2094,17 +2174,20 @@ def fetch_linkedin_posts(
         provider=None,
         rotation_state: XRayRotationState | dict | None = None,
         metrics: RunMetrics | None = None,
+        known_identity_index: dict[str, dict] | None = None,
 ) -> tuple[list[dict], SourceStatus, XRayRotationState]:
     """Collecte best-effort de posts indexés, sans jamais ouvrir LinkedIn."""
     domains = domains or DOMAINS
     regions = regions or REGIONS
     active_ids = active_ids or list(context.profile.domains)
+    known_identity_index = known_identity_index or {}
     status = source_status(
         "LinkedIn Posts", region_id, regions, context=context
     )
     started = time.monotonic()
-    provider = provider or DuckDuckGoHtmlProvider(
-        timeout=context.profile.request_timeout_s
+    provider = provider or FallbackXRayProvider(
+        DuckDuckGoHtmlProvider(timeout=context.profile.request_timeout_s),
+        DuckDuckGoLiteProvider(timeout=context.profile.request_timeout_s),
     )
     budget = context.profile.query_budgets.get("LinkedIn Posts", 0)
     plan, next_state = build_xray_query_plan(
@@ -2142,6 +2225,9 @@ def fetch_linkedin_posts(
             break
         query_started = time.monotonic()
         query_raw = query_accepted = query_rejected = query_duplicates = 0
+        query_parsed = query_new = query_known = 0
+        query_unknown_dates = query_authors = query_contact_direct = 0
+        query_error = ""
         query_reasons: dict[str, int] = defaultdict(int)
         status.attempted_queries += 1
         query_failed = False
@@ -2149,7 +2235,6 @@ def fetch_linkedin_posts(
         query_seen: set[str] = set()
         for page in range(1, max_pages + 1):
             try:
-                status.network_request_count += 1
                 status.pages_fetched += 1
                 results = provider.search(
                     item.query,
@@ -2163,9 +2248,11 @@ def fetch_linkedin_posts(
                 failed_queries += 1
                 status.failed_queries += 1
                 status.blocked_count += 1
+                status.network_request_count += _provider_network_attempts(provider)
                 status.coverage_complete = False
                 code = getattr(exc, "status_code", None)
                 status.http_error = f"HTTP {code}" if code else "moteur bloqué"
+                query_error = status.http_error
                 consecutive_blocks += 1
                 break
             except XRayTimeoutError as exc:
@@ -2173,8 +2260,10 @@ def fetch_linkedin_posts(
                 failed_queries += 1
                 status.failed_queries += 1
                 status.timeout_count += 1
+                status.network_request_count += _provider_network_attempts(provider)
                 status.coverage_complete = False
                 status.http_error = str(exc)[:200]
+                query_error = status.http_error
                 consecutive_blocks = 0
                 break
             except (XRayProviderError, Exception) as exc:
@@ -2183,14 +2272,22 @@ def fetch_linkedin_posts(
                 query_failed = True
                 failed_queries += 1
                 status.failed_queries += 1
+                status.network_request_count += _provider_network_attempts(provider)
                 status.coverage_complete = False
                 status.http_error = f"{type(exc).__name__}: {str(exc)[:160]}"
+                query_error = status.http_error
                 consecutive_blocks = 0
                 break
 
             consecutive_blocks = 0
+            status.network_request_count += _provider_network_attempts(provider)
             status.raw_count += len(results)
             query_raw += len(results)
+            query_parsed += len(results)
+            query_unknown_dates += sum(
+                1 for result in results if result.published_at is None
+            )
+            query_authors += sum(1 for result in results if result.author)
             if not results:
                 query_complete = True
                 break
@@ -2229,12 +2326,28 @@ def fetch_linkedin_posts(
                     contact_direct=True,
                     metrics=metrics,
                 )
+                if offer is not None:
+                    run_iso = context.run_at.isoformat(timespec="seconds")
+                    offer["queries_that_found_it"] = [item.query]
+                    offer["first_discovered_at"] = run_iso
+                    offer["last_discovered_at"] = run_iso
+                    offer["discovery_count"] = 1
                 register_offer(status, offers, offer, reason, metrics)
                 if status.duplicate_count > before_duplicates:
                     query_duplicates += 1
                     query_reasons[REASON_DUPLICATE] += 1
                 elif status.accepted_count > before_accepted:
                     query_accepted += 1
+                    if offer is not None and offer.get("contact_direct"):
+                        query_contact_direct += 1
+                    already_known = offer is not None and any(
+                        key in known_identity_index
+                        for key in offer.get("identity_keys", [])
+                    )
+                    if already_known:
+                        query_known += 1
+                    else:
+                        query_new += 1
                 else:
                     query_rejected += 1
                     query_reasons[reason or "raison inconnue"] += 1
@@ -2249,16 +2362,31 @@ def fetch_linkedin_posts(
             status.completed_queries += 1
         if not query_complete and not query_failed:
             status.coverage_complete = False
+        used_provider = (
+            getattr(provider, "last_used_provider", None)
+            or getattr(provider, "name", type(provider).__name__)
+        )
         status.query_reports.append({
             "query": item.query,
             "domain_id": item.domain_id,
-            "provider": getattr(provider, "name", type(provider).__name__),
+            "host": item.host,
+            "profile_id": context.profile.id,
+            "provider": used_provider,
+            "provider_attempts": _provider_attempt_reports(provider),
             "duration_s": round(time.monotonic() - query_started, 3),
             "raw_count": query_raw,
+            "parsed_count": query_parsed,
             "accepted_count": query_accepted,
+            "new_count": query_new,
+            "known_count": query_known,
             "rejected_count": query_rejected,
             "duplicate_count": query_duplicates,
+            "unknown_date_count": query_unknown_dates,
+            "known_date_count": max(0, query_parsed - query_unknown_dates),
+            "author_detected_count": query_authors,
+            "contact_direct_count": query_contact_direct,
             "reject_reasons": dict(query_reasons),
+            "error": query_error,
             "status": "error" if query_failed else "success",
         })
 
@@ -2393,16 +2521,29 @@ def run_all_sources(domains: dict | None = None,
         if name == "LinkedIn Posts":
             region_id = (DEFAULT_REGION_ID if DEFAULT_REGION_ID in selected_regions
                          else next(iter(selected_regions)))
-            offers, status, next_state = fetch_linkedin_posts(
-                context=context,
-                domains=domains,
-                active_ids=active_domain_ids,
-                regions=regions,
-                region_id=region_id,
-                provider=xray_provider,
-                rotation_state=xray_rotation_state,
-                metrics=metrics,
-            )
+            try:
+                offers, status, next_state = fetch_linkedin_posts(
+                    context=context,
+                    domains=domains,
+                    active_ids=active_domain_ids,
+                    regions=regions,
+                    region_id=region_id,
+                    provider=xray_provider,
+                    rotation_state=xray_rotation_state,
+                    metrics=metrics,
+                    known_identity_index=known_identity_index,
+                )
+            except Exception as exc:
+                # Aucune panne de LinkedIn Posts ne doit faire échouer le
+                # FAST ou le FULL : la source passe en erreur diagnostiquée.
+                safe_error = f"{type(exc).__name__}: {str(exc)[:160]}"
+                print(f"[ERREUR] LinkedIn Posts : {safe_error}", file=sys.stderr)
+                status = source_status(
+                    name, region_id, selected_regions, status="error",
+                    http_error=safe_error, coverage_complete=False,
+                    context=context,
+                )
+                return [], [status]
             next_xray_state = next_state
             return offers, [status]
         return run_source_across_regions(
@@ -2522,9 +2663,16 @@ def build_metrics_record(
         seen_size_bytes: int = 0,
         benchmark: bool = False,
 ) -> dict:
+    duration_s = round(run_metrics.total_s, 3)
+    finished_at = context.run_at + timedelta(seconds=duration_s)
     return {
+        "run_id": str(uuid.uuid4()),
         "profile_id": context.profile.id,
         "run_at": context.run_at.isoformat(timespec="seconds"),
+        "started_at": context.run_at.isoformat(timespec="seconds"),
+        "finished_at": finished_at.isoformat(timespec="seconds"),
+        "duration_s": duration_s,
+        "billable_minutes_estimate": billable_minutes(duration_s),
         "benchmark": benchmark,
         "window_hours": context.profile.window_hours,
         "new_offer_count": new_offer_count,
@@ -2537,6 +2685,8 @@ def build_metrics_record(
             "pages_fetched": sum(st.pages_fetched for st in statuses),
             "raw_count": sum(st.raw_count for st in statuses),
             "accepted_count": sum(st.accepted_count for st in statuses),
+            "new_count": sum(st.new_count for st in statuses),
+            "known_count": sum(st.known_count for st in statuses),
             "rejected_count": sum(st.rejected_count for st in statuses),
             "duplicate_count": sum(st.duplicate_count for st in statuses),
             "timeout_count": sum(st.timeout_count for st in statuses),
@@ -2548,7 +2698,7 @@ def build_metrics_record(
 
 
 def save_metrics_record(record: dict, path: Path = METRICS_FILE,
-                        history_limit: int = 50) -> dict:
+                        history_limit: int = METRICS_HISTORY_LIMIT) -> dict:
     try:
         current = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     except (OSError, json.JSONDecodeError):
@@ -2760,6 +2910,90 @@ STATUS_CSS = {
 }
 
 
+def _format_seconds(value: float | None) -> str:
+    return "—" if value is None else human_duration(float(value))
+
+
+def _format_rate(value: float | None) -> str:
+    return "—" if value is None else f"{float(value):.0%}"
+
+
+def radar_performance_section(metrics_document: dict | None = None) -> str:
+    """Zone technique repliée : durées mesurées, rendement et recommandation.
+
+    Elle n'affiche que des agrégats déjà persistés dans les métriques ; la vue
+    principale des offres reste inchangée.
+    """
+    document = metrics_document or radar_metrics.load_metrics_document(METRICS_FILE)
+    profile_blocks: list[str] = []
+    for profile_id, label in (("fast_data_ia", "FAST Data/IA"),
+                              ("full_general", "FULL général")):
+        runs = radar_metrics.profile_runs(document, profile_id)
+        summary = radar_metrics.summarize_profile(runs)
+        rows = [
+            ("Runs mesurés", str(summary["run_count"])),
+            ("Dernier run", html.escape(str(summary["last_run_at"] or "jamais"))),
+            ("Durée du dernier run", _format_seconds(summary["last_duration_s"])),
+            ("p95 des derniers runs", _format_seconds(summary["duration"]["p95_s"])),
+            ("Nouvelles offres", str(summary["new_offer_count"])),
+            ("Coût moyen par nouvelle offre",
+             html.escape(radar_metrics.format_cost(summary["cost_per_new_offer_min"]))),
+        ]
+        cells = "".join(
+            f"<div class='perf-stat'><span>{name}</span><strong>{value}</strong></div>"
+            for name, value in rows
+        )
+        profile_blocks.append(
+            f"<article class='perf-card'><h3>{html.escape(label)}</h3>"
+            f"<div class='perf-grid'>{cells}</div></article>"
+        )
+
+    all_runs = radar_metrics.profile_runs(document)
+    posts = radar_metrics.summarize_linkedin_posts(all_runs)
+    verdict = radar_metrics.classify_linkedin_posts(posts)
+    last_queries = posts["query_rows"][-3:]
+    query_items = "".join(
+        "<li><code>" + html.escape(str(row.get("query", ""))) + "</code> · "
+        + html.escape(str(row.get("provider", "?"))) + " · "
+        + html.escape(str(row.get("status", "?"))) + " · bruts "
+        + str(int(row.get("raw_count") or 0)) + " · nouveaux "
+        + str(int(row.get("new_count") or 0)) + "</li>"
+        for row in last_queries
+    ) or "<li>Aucune requête enregistrée pour l'instant.</li>"
+    posts_rows = [
+        ("Providers", html.escape(", ".join(posts["providers"]) or "—")),
+        ("Runs mesurés", str(posts["run_count"])),
+        ("Requêtes exécutées", str(posts["executed_query_count"])),
+        ("Résultats bruts", str(posts["raw_count"])),
+        ("Nouvelles publications", str(posts["new_count"])),
+        ("Taux de doublons", _format_rate(posts["duplicate_rate"])),
+        ("Taux de dates inconnues", _format_rate(posts["unknown_date_rate"])),
+        ("Taux de blocage", _format_rate(posts["block_rate"])),
+        ("Coût par nouvelle publication",
+         html.escape(radar_metrics.format_cost(posts["cost_per_new_offer_min"]))),
+    ]
+    posts_cells = "".join(
+        f"<div class='perf-stat'><span>{name}</span><strong>{value}</strong></div>"
+        for name, value in posts_rows
+    )
+    posts_block = (
+        "<article class='perf-card'><h3>LinkedIn Posts (X-ray)</h3>"
+        f"<div class='perf-grid'>{posts_cells}</div>"
+        f"<p class='perf-recommendation'><strong>Fréquence recommandée :</strong> "
+        f"{html.escape(verdict['label'])} <em>(confiance {html.escape(verdict['confidence'])})</em><br>"
+        f"{html.escape(verdict['recommendation'])}</p>"
+        f"<ul class='perf-queries'>{query_items}</ul></article>"
+    )
+    return (
+        "<details class='radar-performance'>"
+        "<summary><span class='source-health-title'>Performance du radar</span>"
+        "<span class='source-health-copy'>durées mesurées, rendement des sources "
+        "et recommandation LinkedIn Posts</span></summary>"
+        f"<div class='perf-panel' translate='no'>{''.join(profile_blocks)}{posts_block}</div>"
+        "</details>"
+    )
+
+
 def render_dashboard(offers: list[dict], new_ids: set,
                      statuses: list[SourceStatus] | None = None,
                      scan_duration_s: float = 0.0,
@@ -2771,6 +3005,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
                      expired_offers: list[dict] | None = None,
                      profile_status_payloads: dict[str, dict] | None = None,
                      context: ScanContext | None = None,
+                     metrics_document: dict | None = None,
                      output_path: Path | None = None) -> None:
     domains = domains or DOMAINS
     config = config or APP_CONFIG
@@ -2806,9 +3041,21 @@ def render_dashboard(offers: list[dict], new_ids: set,
     def render_card(o: dict, *, likely_expired: bool = False) -> str:
         is_new = o["id"] in new_ids
         date_known = o.get("date_known", bool(o.get("date")))
+        stale_unknown = not date_known and radar_store.unknown_date_is_stale(
+            o, now=generated_at,
+            visibility_hours=UNKNOWN_DATE_VISIBILITY_HOURS,
+        )
+        # Une découverte ancienne sans date ne doit jamais repasser pour une
+        # nouvelle publication récente, même après purge de la mémoire.
+        is_new = is_new and not stale_unknown
         if date_known and o.get("date"):
             published = datetime.fromisoformat(o["date"]).strftime("%d/%m/%Y")
             published_line = f"Publiée {publication_age(o['date'])} · {published}"
+        elif stale_unknown:
+            published_line = (
+                "Date inconnue ancienne · découverte il y a plus de "
+                f"{UNKNOWN_DATE_VISIBILITY_HOURS} h"
+            )
         else:
             published_line = "Date de publication inconnue · conservée par précaution"
         oid = html.escape(str(o["id"]), quote=True)
@@ -2888,7 +3135,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
         <button class="apply-btn" type="button" data-offer-id="{oid}">✓ Marquer comme postulé</button></div>
         <div class="tags" translate="no">{'<span class="tag new">NOUVEAU</span>' if is_new else ''}
           {f'<span class="tag highlight">✓ {html.escape(config["highlight_label"])}</span>' if highlighted else ''}
-          {'<span class="tag date-unknown">date inconnue</span>' if not date_known else ''}
+          {('<span class="tag date-unknown stale">date inconnue ancienne</span>' if stale_unknown else '<span class="tag date-unknown">date inconnue</span>') if not date_known else ''}
           {contact_tag}{expired_tag}{domain_tags}{region_tags}{source_tags}</div>
       </article>"""
 
@@ -3068,6 +3315,8 @@ def render_dashboard(offers: list[dict], new_ids: set,
   <div class="sources-panel" translate="no">{status_rows}</div>
 </details>
 
+{radar_performance_section(metrics_document)}
+
 <section class="workspace" aria-labelledby="offersTitle">
 <div class="workspace-head">
   <div><p class="eyebrow">Candidatures</p><h2 id="offersTitle" class="section-title">Explorer les offres</h2></div>
@@ -3133,6 +3382,9 @@ def build_cli_parser() -> argparse.ArgumentParser:
     parser.add_argument("--domains", help="Surcharge CSV de RADAR_DOMAINS")
     parser.add_argument("--regions", help="Surcharge CSV de RADAR_REGIONS")
     parser.add_argument("--sources", help="Surcharge CSV de RADAR_SOURCES")
+    parser.add_argument("--source", choices=("all", *SOURCE_NAMES), default=None,
+                        help="Diagnostic mono-source (équivaut à --sources NOM ; "
+                             "'all' conserve toutes les sources du profil)")
     parser.add_argument("--window-hours", type=int,
                         help="Surcharge de RADAR_WINDOW_HOURS")
     parser.add_argument("--benchmark", action="store_true",
@@ -3157,13 +3409,18 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--benchmark-output exige --benchmark")
     if args.benchmark_output and not benchmark_output_is_safe(args.benchmark_output):
         raise SystemExit("Le rapport benchmark doit être distinct des fichiers de production")
+    if args.source and args.sources:
+        raise SystemExit("--source et --sources sont mutuellement exclusifs")
+    cli_sources = args.sources
+    if args.source and args.source != "all":
+        cli_sources = args.source
 
     profile = resolve_profile(
         PROFILES,
         profile_id=args.profile,
         cli_domains=args.domains,
         cli_regions=args.regions,
-        cli_sources=args.sources,
+        cli_sources=cli_sources,
         cli_window_hours=args.window_hours,
         domains=DOMAINS,
         regions=REGIONS,
@@ -3225,6 +3482,24 @@ def main(argv: list[str] | None = None) -> int:
     )
     new_offers = [offer for offer_id_value, offer in all_offers.items()
                   if offer_id_value in new_ids]
+    assign_novelty_counts(statuses, all_offers, new_ids)
+
+    # Diagnostic technique LinkedIn Posts : ne jamais alerter sur un simple
+    # zéro résultat, mais tracer les vraies anomalies dans les logs, le
+    # statut, les métriques et le dashboard.
+    metrics_history = radar_metrics.profile_runs(
+        radar_metrics.load_metrics_document(METRICS_FILE), profile.id
+    )
+    for st in statuses:
+        if st.source != "LinkedIn Posts":
+            continue
+        anomalies = radar_metrics.detect_linkedin_posts_anomalies(
+            metrics_history, current_status=asdict(st)
+        )
+        if anomalies:
+            st.note = " · ".join(filter(None, [st.note, *anomalies]))
+            for anomaly in anomalies:
+                print(f"[ANOMALIE] {anomaly}", file=sys.stderr)
 
     if args.benchmark:
         run_metrics.total_s = time.perf_counter() - total_started
@@ -3240,9 +3515,12 @@ def main(argv: list[str] | None = None) -> int:
         )
         report["production_mutated"] = False
         report["new_offers_suppressed"] = len(new_ids)
-        if args.benchmark_output:
-            atomic_write_json(args.benchmark_output, report)
-            print(f"Rapport benchmark : {args.benchmark_output}")
+        benchmark_output = args.benchmark_output or (
+            BENCHMARKS_DIR / f"{profile.id}-"
+            f"{context.run_at.strftime('%Y%m%dT%H%M%SZ')}.json"
+        )
+        atomic_write_json(benchmark_output, report)
+        print(f"Rapport benchmark : {benchmark_output}")
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
 
@@ -3324,6 +3602,18 @@ def main(argv: list[str] | None = None) -> int:
     run_metrics.store_s += time.perf_counter() - store_write_started
 
     dashboard_started = time.perf_counter()
+    # La zone technique affiche l'historique persisté plus le run courant,
+    # dont le record définitif n'est écrit qu'après le rendu.
+    run_metrics.total_s = time.perf_counter() - total_started
+    display_metrics_document = radar_metrics.load_metrics_document(METRICS_FILE)
+    display_histories = display_metrics_document.setdefault("profiles", {})
+    display_histories.setdefault(profile.id, []).append(build_metrics_record(
+        context,
+        statuses,
+        run_metrics,
+        new_offer_count=len(new_offers),
+        offer_count=len(all_offers),
+    ))
     # Le dashboard reste général même lorsque le dernier run est FAST.
     render_dashboard(
         dashboard_offers,
@@ -3338,6 +3628,7 @@ def main(argv: list[str] | None = None) -> int:
         expired_offers=expired_offers,
         profile_status_payloads=load_profile_status_payloads(),
         context=context,
+        metrics_document=display_metrics_document,
     )
     run_metrics.dashboard_s = time.perf_counter() - dashboard_started
     run_metrics.total_s = time.perf_counter() - total_started

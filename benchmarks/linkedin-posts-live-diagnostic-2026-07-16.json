@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "measurement_type": "live_network_benchmark",
+  "measured_at": "2026-07-16T13:54:10Z",
+  "command": "python radar.py --profile fast_data_ia --benchmark --source \"LinkedIn Posts\"",
+  "production_mutated": false,
+  "rotation_cursor_mutated": false,
+  "duration_total_s": 1.655,
+  "billable_minutes_estimate": 1,
+  "linkedin_posts": {
+    "status": "blocked",
+    "planned_queries": 3,
+    "executed_queries": 2,
+    "skipped_by_circuit_breaker": 1,
+    "network_requests": 4,
+    "raw_results": 0,
+    "provider_attempts_per_query": [
+      ["blocked", "blocked"],
+      ["blocked", "blocked"]
+    ],
+    "providers": {
+      "duckduckgo_html": {"result": "blocked", "http_status": 202},
+      "duckduckgo_lite": {"result": "blocked", "http_status": 202}
+    },
+    "anomalies_detected": [
+      "taux de blocage important (2/4 requêtes)",
+      "provider principal et fallback tous deux indisponibles sur le dernier run"
+    ]
+  },
+  "safety": {
+    "direct_linkedin_requests": 0,
+    "authenticated_browser": false,
+    "cookies_or_tokens": false
+  },
+  "notes": "Diagnostic local : l'environnement de développement est challengé (HTTP 202) par les deux interfaces DuckDuckGo, comme lors de l'évaluation du 2026-07-16. Le circuit breaker borne le coût à 4 requêtes et le run reste sous 2 s. Les mesures de rendement réelles doivent être accumulées par les runs GitHub Actions."
+}

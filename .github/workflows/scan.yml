@@ -15,6 +15,28 @@ on:
         options:
           - fast_data_ia
           - full_general
+      mode:
+        description: production commite les résultats, benchmark n'écrit qu'un rapport isolé
+        required: true
+        default: production
+        type: choice
+        options:
+          - production
+          - benchmark
+      source:
+        description: Diagnostic mono-source (all = toutes les sources du profil)
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - LinkedIn Posts
+          - LinkedIn
+          - Indeed
+          - APEC
+          - Adzuna
+          - France Travail
+          - Google Jobs
 
 permissions:
   contents: write
@@ -28,9 +50,14 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    # Garde-fou quota : aucun run ne doit pouvoir consommer plus que cette
+    # borne, même si une source distante ne répond plus.
+    timeout-minutes: 30
     env:
-      # Planifié = FULL rétrocompatible ; manuel = choix explicite de l'entrée.
+      # Planifié = FULL rétrocompatible ; manuel = choix explicite des entrées.
       RADAR_PROFILE: ${{ github.event_name == 'workflow_dispatch' && inputs.profile || 'full_general' }}
+      RADAR_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'production' }}
+      RADAR_SOURCE: ${{ github.event_name == 'workflow_dispatch' && inputs.source || 'all' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -45,7 +72,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Vérification syntaxe
-        run: python -m py_compile radar.py scan.py radar_io.py radar_profiles.py radar_store.py radar_xray.py budget.py
+        run: python -m py_compile radar.py scan.py radar_io.py radar_profiles.py radar_store.py radar_xray.py radar_metrics.py budget.py scripts/analyze_scan_metrics.py
 
       - name: Tests
         run: python -m unittest discover -s tests -v
@@ -63,9 +90,19 @@ jobs:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           # — lien public du dashboard GitHub Pages (mis dans l'email)
           DASHBOARD_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-        run: python radar.py --profile "$RADAR_PROFILE"
+        run: |
+          args=(--profile "$RADAR_PROFILE")
+          if [ "$RADAR_MODE" = "benchmark" ]; then
+            args+=(--benchmark)
+          fi
+          if [ -n "$RADAR_SOURCE" ] && [ "$RADAR_SOURCE" != "all" ]; then
+            args+=(--source "$RADAR_SOURCE")
+          fi
+          python radar.py "${args[@]}"
 
       - name: Commit résultats (mémoire + dashboard + statut)
+        # Un benchmark n'écrit qu'un rapport isolé : rien à committer, jamais.
+        if: env.RADAR_MODE != 'benchmark'
         run: |
           if [ "$GITHUB_REF_NAME" != "main" ]; then
             echo "Branche $GITHUB_REF_NAME : scan validé, résultats non persistés avant fusion."

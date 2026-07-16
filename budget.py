@@ -124,6 +124,179 @@ def calculate_actions_budget(
     )
 
 
+@dataclass(frozen=True)
+class ScenarioProjection:
+    """Projection mensuelle d'un scénario de fréquence, sans choisir le cron."""
+
+    scenario_id: str
+    label: str
+    description: str
+    fast_runs: int
+    full_runs: int
+    fast_runs_with_linkedin_posts: int
+    fast_minutes: int
+    linkedin_posts_extra_minutes: int
+    full_minutes: int
+    other_workflows_minutes: int
+    planned_total_minutes: int
+    plannable_minutes: int
+    margin_after_reserve_minutes: int
+    overrun_minutes: int
+    within_plannable_budget: bool
+
+
+def project_scenario(
+    *,
+    scenario_id: str,
+    label: str,
+    description: str,
+    fast_base_p95_seconds: float,
+    linkedin_posts_p95_seconds: float,
+    full_p95_seconds: float,
+    fast_runs_per_workday: int,
+    fast_runs_per_weekend_day: int,
+    full_runs_per_month: int,
+    linkedin_posts_share: float,
+    workdays_per_month: int = 22,
+    weekend_days_per_month: int = 8,
+    other_workflows_minutes: int = 0,
+    quota_minutes: int = DEFAULT_QUOTA_MINUTES,
+    reserve_minutes: int = DEFAULT_RESERVE_MINUTES,
+) -> ScenarioProjection:
+    """Projette un scénario en isolant le surcoût LinkedIn Posts.
+
+    ``fast_base_p95_seconds`` est la durée p95 d'un FAST *sans* LinkedIn
+    Posts ; le surcoût X-ray n'est facturé que sur la part de runs qui
+    l'exécutent (``linkedin_posts_share``). Chaque run est arrondi à la
+    minute supérieure, comme GitHub Actions le facture.
+    """
+
+    if not 0.0 <= linkedin_posts_share <= 1.0:
+        raise ValueError("linkedin_posts_share doit être entre 0 et 1")
+    fast_base = _non_negative_number(fast_base_p95_seconds, "fast_base_p95_seconds")
+    posts_extra = _non_negative_number(
+        linkedin_posts_p95_seconds, "linkedin_posts_p95_seconds"
+    )
+    workdays = _non_negative_integer(workdays_per_month, "workdays_per_month")
+    weekend_days = _non_negative_integer(
+        weekend_days_per_month, "weekend_days_per_month"
+    )
+    fast_runs = (
+        _non_negative_integer(fast_runs_per_workday, "fast_runs_per_workday")
+        * workdays
+        + _non_negative_integer(
+            fast_runs_per_weekend_day, "fast_runs_per_weekend_day"
+        )
+        * weekend_days
+    )
+    runs_with_posts = round(fast_runs * linkedin_posts_share)
+    runs_without_posts = fast_runs - runs_with_posts
+    fast_minutes_without = billable_minutes(fast_base) * runs_without_posts
+    per_run_with_posts = billable_minutes(fast_base + posts_extra)
+    posts_extra_minutes = (
+        per_run_with_posts - billable_minutes(fast_base)
+    ) * runs_with_posts
+    fast_minutes = fast_minutes_without + billable_minutes(fast_base) * runs_with_posts
+
+    base = calculate_actions_budget(
+        fast_p95_seconds=0.0,
+        fast_runs=0,
+        full_p95_seconds=full_p95_seconds,
+        full_runs=full_runs_per_month,
+        other_workflows_minutes=other_workflows_minutes,
+        quota_minutes=quota_minutes,
+        reserve_minutes=reserve_minutes,
+    )
+    total = fast_minutes + posts_extra_minutes + base.full_minutes + base.other_workflows_minutes
+    margin = base.plannable_minutes - total
+    return ScenarioProjection(
+        scenario_id=scenario_id,
+        label=label,
+        description=description,
+        fast_runs=fast_runs,
+        full_runs=base.full_runs,
+        fast_runs_with_linkedin_posts=runs_with_posts,
+        fast_minutes=fast_minutes,
+        linkedin_posts_extra_minutes=posts_extra_minutes,
+        full_minutes=base.full_minutes,
+        other_workflows_minutes=base.other_workflows_minutes,
+        planned_total_minutes=total,
+        plannable_minutes=base.plannable_minutes,
+        margin_after_reserve_minutes=margin,
+        overrun_minutes=max(0, -margin),
+        within_plannable_budget=margin >= 0,
+    )
+
+
+def plan_monthly_scenarios(
+    *,
+    fast_base_p95_seconds: float,
+    linkedin_posts_p95_seconds: float,
+    full_p95_seconds: float,
+    workdays_per_month: int = 22,
+    weekend_days_per_month: int = 8,
+    other_workflows_minutes: int = 0,
+    quota_minutes: int = DEFAULT_QUOTA_MINUTES,
+    reserve_minutes: int = DEFAULT_RESERVE_MINUTES,
+) -> list[ScenarioProjection]:
+    """Trois scénarios comparables, tous contraints par 3000/2950/50 minutes."""
+
+    shared = dict(
+        fast_base_p95_seconds=fast_base_p95_seconds,
+        linkedin_posts_p95_seconds=linkedin_posts_p95_seconds,
+        full_p95_seconds=full_p95_seconds,
+        workdays_per_month=workdays_per_month,
+        weekend_days_per_month=weekend_days_per_month,
+        other_workflows_minutes=other_workflows_minutes,
+        quota_minutes=quota_minutes,
+        reserve_minutes=reserve_minutes,
+    )
+    return [
+        project_scenario(
+            scenario_id="A",
+            label="Couverture maximale",
+            description=(
+                "FAST chaque heure sur une large plage (14/jour ouvré), "
+                "4 FAST par jour de week-end, FULL quotidien, "
+                "LinkedIn Posts à chaque FAST."
+            ),
+            fast_runs_per_workday=14,
+            fast_runs_per_weekend_day=4,
+            full_runs_per_month=workdays_per_month + weekend_days_per_month,
+            linkedin_posts_share=1.0,
+            **shared,
+        ),
+        project_scenario(
+            scenario_id="B",
+            label="Équilibré",
+            description=(
+                "FAST horaire en heures utiles (10/jour ouvré), "
+                "2 FAST par jour de week-end, FULL quotidien ouvré, "
+                "LinkedIn Posts toutes les 2 heures (1 FAST sur 2)."
+            ),
+            fast_runs_per_workday=10,
+            fast_runs_per_weekend_day=2,
+            full_runs_per_month=workdays_per_month,
+            linkedin_posts_share=0.5,
+            **shared,
+        ),
+        project_scenario(
+            scenario_id="C",
+            label="Économique",
+            description=(
+                "FAST horaire réduit (6/jour ouvré), 1 FAST par jour de "
+                "week-end, FULL cinq fois par semaine, LinkedIn Posts "
+                "uniquement dans un FAST sur trois."
+            ),
+            fast_runs_per_workday=6,
+            fast_runs_per_weekend_day=1,
+            full_runs_per_month=20,
+            linkedin_posts_share=1 / 3,
+            **shared,
+        ),
+    ]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Projette le budget mensuel GitHub Actions du radar."

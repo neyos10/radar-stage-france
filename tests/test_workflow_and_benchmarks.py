@@ -32,7 +32,23 @@ class TestWorkflowArchitecture(unittest.TestCase):
         self.assertIn("default: full_general", self.workflow)
         self.assertIn("- fast_data_ia", self.workflow)
         self.assertIn("- full_general", self.workflow)
-        self.assertIn('python radar.py --profile "$RADAR_PROFILE"', self.workflow)
+        self.assertIn('args=(--profile "$RADAR_PROFILE")', self.workflow)
+        self.assertIn('python radar.py "${args[@]}"', self.workflow)
+
+    def test_dispatch_supports_benchmark_mode_and_single_source(self):
+        self.assertIn("- production", self.workflow)
+        self.assertIn("- benchmark", self.workflow)
+        for source in ("all", "LinkedIn Posts", "LinkedIn", "Indeed", "APEC",
+                       "Adzuna", "France Travail", "Google Jobs"):
+            self.assertIn(f"- {source}\n", self.workflow)
+        self.assertIn('args+=(--benchmark)', self.workflow)
+        self.assertIn('args+=(--source "$RADAR_SOURCE")', self.workflow)
+
+    def test_benchmark_mode_never_commits_and_job_is_bounded(self):
+        self.assertIn("if: env.RADAR_MODE != 'benchmark'", self.workflow)
+        self.assertIn("timeout-minutes: 30", self.workflow)
+        self.assertEqual(self.workflow.count("runs-on:"), 1)
+        self.assertNotIn("sleep 60", self.workflow)
 
     def test_only_historical_schedule_remains(self):
         self.assertEqual(self.workflow.count("cron:"), 1)
