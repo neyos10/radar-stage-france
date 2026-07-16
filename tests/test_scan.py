@@ -903,7 +903,9 @@ class TestMissingCredentials(unittest.TestCase):
 
 
 class TestOfferStore(unittest.TestCase):
-    RUN_N = datetime(2026, 7, 15, 10, 0, tzinfo=timezone.utc)
+    # Horloge fraîche à chaque exécution : ces tests ne doivent jamais expirer
+    # simplement parce que le calendrier réel a avancé.
+    RUN_N = datetime.now(timezone.utc).replace(microsecond=0)
 
     @staticmethod
     def source_state(status="success"):
@@ -913,7 +915,9 @@ class TestOfferStore(unittest.TestCase):
         )]
 
     def candidate(self):
-        candidate, reason = offer(date="2026-07-15")
+        candidate, reason = offer(
+            date=self.RUN_N.isoformat(), now=self.RUN_N,
+        )
         self.assertIsNone(reason)
         return candidate
 
@@ -952,9 +956,9 @@ class TestOfferStore(unittest.TestCase):
         )
 
     def test_native_freshness_verification_expires_after_24_hours(self):
-        checked_at = datetime(2026, 7, 15, 10, 0, tzinfo=timezone.utc)
+        checked_at = self.RUN_N
         candidate, reason = offer(
-            date="2026-07-15", now=checked_at, freshness_verified=True,
+            date=checked_at.isoformat(), now=checked_at, freshness_verified=True,
             url="https://e.com/native-window",
         )
         self.assertIsNone(reason)
