@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .DS_Store
+# Rapports benchmark transitoires ; les baselines curées vivent dans benchmarks/
+data/benchmarks/

@@ -211,9 +211,11 @@ concurrency:
   cancel-in-progress: false
 ```
 
-Le bouton **Run workflow** permet de choisir `fast_data_ia` ou `full_general`.
-Le cron historique unique est conservé temporairement avec `full_general` par
-défaut pour la rétrocompatibilité. **Aucune cadence finale FAST/FULL n'est
+Le bouton **Run workflow** permet de choisir `fast_data_ia` ou `full_general`,
+le mode (`production` ou `benchmark`, ce dernier ne committe jamais rien) et
+une source unique de diagnostic (`all` par défaut). Le cron historique unique
+est conservé temporairement avec `full_general` par défaut pour la
+rétrocompatibilité. **Aucune cadence finale FAST/FULL n'est
 encore définie** : elle sera décidée après plusieurs mesures p95 et projection
 du budget. Le commit automatique inclut tous les stores, statuts, métriques et
 le dashboard générés, avec rebase et trois tentatives sans force-push.
@@ -225,11 +227,14 @@ marque aucune offre comme nouvelle et ne modifie ni store, ni mémoire, ni
 dashboard :
 
 ```bash
-python radar.py --profile fast_data_ia --benchmark \
-  --benchmark-output /tmp/fast.json
-python radar.py --profile full_general --benchmark \
-  --benchmark-output /tmp/full.json
+python radar.py --profile fast_data_ia --benchmark
+python radar.py --profile full_general --benchmark
+# diagnostic mono-source, sans lancer les autres connecteurs :
+python radar.py --profile fast_data_ia --benchmark --source "LinkedIn Posts"
 ```
+
+Sans `--benchmark-output`, le rapport est écrit dans `data/benchmarks/`
+(non versionné) ; le curseur de rotation X-ray n'est jamais modifié.
 
 Pour enchaîner les deux profils :
 
@@ -265,10 +270,40 @@ Les valeurs sont des entrées de scénario, pas des fréquences recommandées. L
 horaires définitifs ne doivent être choisis qu'avec des p95 mesurés sur
 plusieurs runs réels.
 
+## Observabilité et rendement des sources
+
+Chaque run (FAST ou FULL) ajoute un enregistrement horodaté et borné
+(100 runs par profil) dans `data/scan_metrics.json` : durée, estimation de
+minutes facturables, compteurs par source (dont `new_count`, les offres
+réellement nouvelles dans le store) et rapports détaillés par requête X-ray
+LinkedIn Posts (provider, tentatives de fallback, dates inconnues, auteurs,
+doublons).
+
+L'analyse est entièrement hors ligne :
+
+```bash
+python scripts/analyze_scan_metrics.py
+python scripts/analyze_scan_metrics.py --profile fast_data_ia --last 20
+python scripts/analyze_scan_metrics.py --source "LinkedIn Posts" --format markdown
+python scripts/analyze_scan_metrics.py --format json --scenarios
+```
+
+Après 10 runs (indication) puis 20 runs (recommandation fiable), l'analyseur
+classe LinkedIn Posts — très utile, secondaire, faible rendement ou instable —
+et recommande une fréquence sans jamais modifier le cron. `--scenarios`
+projette trois plannings mensuels (couverture maximale, équilibré, économique)
+sous la contrainte 3 000 / 2 950 / 50 minutes. Le dashboard expose ces
+agrégats dans la section repliée « Performance du radar ».
+
+Le module LinkedIn Posts reste strictement X-ray : une garde testable refuse
+toute requête réseau vers `linkedin.com`, et un provider de secours
+(DuckDuckGo Lite) avec circuit breaker limite chaque requête à une seule
+bascule, comptabilisée dans les métriques.
+
 ## Vérification locale
 
 ```bash
-python -m py_compile radar.py scan.py radar_io.py radar_profiles.py radar_store.py radar_xray.py budget.py
+python -m py_compile radar.py scan.py radar_io.py radar_profiles.py radar_store.py radar_xray.py radar_metrics.py budget.py
 python -m unittest discover -s tests -v
 ```
 
