@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "evaluated_at": "2026-07-16",
+  "selected_provider": "duckduckgo_html",
+  "providers": [
+    {
+      "provider": "duckduckgo_html",
+      "availability": "available_via_requests",
+      "network_test": "executed",
+      "result": "blocked",
+      "http_status": 202,
+      "requests_before_circuit_breaker": 2,
+      "reason_selected": "Aucune dépendance supplémentaire, transport injectable, erreurs typées et remplacement possible par l'interface XRaySearchProvider."
+    },
+    {
+      "provider": "ddgs",
+      "availability": "not_installed",
+      "network_test": "not_executed",
+      "result": "not_measured",
+      "reason_not_selected": "Le paquet ddgs et son prédécesseur duckduckgo_search sont absents du projet et de l'environnement validé ; aucune réussite réseau n'est affirmée."
+    }
+  ],
+  "safety": {
+    "direct_linkedin_requests": 0,
+    "authenticated_browser": false,
+    "cookies_or_tokens": false
+  }
+}

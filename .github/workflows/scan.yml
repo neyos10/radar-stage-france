@@ -3,7 +3,18 @@ name: Radar Stage France
 on:
   schedule:
     - cron: "0 * * * *"      # toutes les heures, à l'heure pile
-  workflow_dispatch: {}       # bouton "Run workflow" pour lancer à la main
+  # Le cron historique reste volontairement unique. Les fréquences définitives
+  # FAST/FULL seront choisies après mesure des p95 et calcul du budget mensuel.
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Profil de scan à exécuter
+        required: true
+        default: full_general
+        type: choice
+        options:
+          - fast_data_ia
+          - full_general
 
 permissions:
   contents: write
@@ -11,12 +22,15 @@ permissions:
 # Jamais deux scans simultanés : le suivant attend la fin du précédent
 # (cancel-in-progress: false pour ne pas interrompre un scan en cours).
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: radar-stage-store
   cancel-in-progress: false
 
 jobs:
   scan:
     runs-on: ubuntu-latest
+    env:
+      # Planifié = FULL rétrocompatible ; manuel = choix explicite de l'entrée.
+      RADAR_PROFILE: ${{ github.event_name == 'workflow_dispatch' && inputs.profile || 'full_general' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -31,7 +45,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Vérification syntaxe
-        run: python -m py_compile scan.py
+        run: python -m py_compile radar.py scan.py radar_io.py radar_profiles.py radar_store.py radar_xray.py budget.py
 
       - name: Tests
         run: python -m unittest discover -s tests -v
@@ -49,7 +63,7 @@ jobs:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           # — lien public du dashboard GitHub Pages (mis dans l'email)
           DASHBOARD_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-        run: python scan.py
+        run: python radar.py --profile "$RADAR_PROFILE"
 
       - name: Commit résultats (mémoire + dashboard + statut)
         run: |
@@ -59,12 +73,26 @@ jobs:
           fi
           git config user.name "radar-stage-bot"
           git config user.email "actions@github.com"
-          git add data/seen_offers.json data/offers.json data/source_status.json docs/index.html
+          generated_files=(
+            data/seen_offers.json
+            data/offers.json
+            data/source_status.json
+            data/source_status_fast_data_ia.json
+            data/source_status_full_general.json
+            data/scan_metrics.json
+            data/xray_state.json
+            docs/index.html
+          )
+          for generated_file in "${generated_files[@]}"; do
+            if [ -e "$generated_file" ]; then
+              git add -- "$generated_file"
+            fi
+          done
           if git diff --quiet --cached; then
             echo "Aucun changement à committer — rien à pousser."
             exit 0
           fi
-          git commit -m "Scan $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git commit -m "Scan ${RADAR_PROFILE:-full_general} $(date -u +'%Y-%m-%d %H:%M UTC')"
           # Push avec rebase + retry borné (jamais de force push) : évite les
           # échecs "fetch first" si main a avancé pendant le scan. data/ et
           # docs/ étant régénérés intégralement à chaque scan, un conflit sur
@@ -74,7 +102,7 @@ jobs:
             if ! git rebase origin/main; then
               conflicted=$(git diff --name-only --diff-filter=U)
               echo "Conflit de rebase sur : $conflicted"
-              if [ -z "$conflicted" ] || echo "$conflicted" | grep -qvE '^(data/|docs/)'; then
+              if [ -z "$conflicted" ] || echo "$conflicted" | grep -qvE '^(data/(offers|seen_offers|source_status(_fast_data_ia|_full_general)?|scan_metrics|xray_state)\.json|docs/index\.html)$'; then
                 git rebase --abort
                 echo "Conflit hors fichiers générés — abandon sans force push."
                 exit 1

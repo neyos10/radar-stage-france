@@ -47,5 +47,10 @@
     "leyton"
   ],
   "highlight_label": "Visa-friendly probable",
-  "days_window": 7
+  "days_window": 7,
+  "expiration": {
+    "missing_hours": 72,
+    "successful_scans": 3
+  },
+  "seen_retention_days": 45
 }

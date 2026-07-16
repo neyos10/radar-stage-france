@@ -11,7 +11,10 @@ import os
 import re
 import sys
 import tempfile
+import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest import mock
@@ -63,12 +66,19 @@ class TestDomainCatalogAndScoring(unittest.TestCase):
             self.assertLessEqual(len(domain["positive"]), 20)
             self.assertEqual(domain["priority"], 3 if domain_id == "data_ia" else 1)
 
-    def test_linkedin_plan_covers_every_active_query(self):
+    def test_full_linkedin_plan_respects_budget_and_covers_every_domain(self):
         plan = scan.linkedin_queries()
-        self.assertEqual(set(plan), set(scan.active_queries()))
-        self.assertEqual(len(plan), len(scan.active_queries()))
+        configured_budget = scan.PROFILES[scan.DEFAULT_PROFILE_ID].query_budgets[
+            "LinkedIn"
+        ]
+        self.assertEqual(len(plan), configured_budget)
+        self.assertEqual(len(plan), len(set(plan)))
         for domain in scan.DOMAINS.values():
-            self.assertTrue(set(domain["queries"]).issubset(plan))
+            self.assertTrue(set(domain["queries"]) & set(plan))
+
+        exhaustive = scan.linkedin_queries(limit=10_000)
+        self.assertEqual(set(exhaustive), set(scan.active_queries()))
+        self.assertEqual(len(exhaustive), len(scan.active_queries()))
 
     def test_single_data_domain_has_nominal_budget_and_all_linkedin_queries(self):
         with mock.patch.dict(os.environ, {"RADAR_DOMAINS": "data_ia"}):
@@ -193,6 +203,29 @@ class TestRegions(unittest.TestCase):
         self.assertEqual(offers[0]["regions"], ["belgique"])
         self.assertEqual(status.region_id, "belgique")
 
+    def test_jobspy_missing_city_uses_current_region_label(self):
+        import pandas as pd
+
+        frame = pd.DataFrame([{
+            "title": "Stage Data Engineer", "company": "ACME",
+            "city": "", "state": "", "job_url": "https://e.com/be-fallback",
+            "date_posted": TODAY, "description": "ETL et data warehouse",
+        }])
+        calls = 0
+
+        def fake_scrape(**_kwargs):
+            nonlocal calls
+            calls += 1
+            return frame if calls == 1 else frame.iloc[0:0]
+
+        offers, _ = scan.fetch_jobspy_site(
+            "indeed", "Indeed", scrape_fn=fake_scrape,
+            region_id="belgique", region_config=scan.REGIONS["belgique"],
+            domains={"data_ia": scan.DOMAINS["data_ia"]},
+            active_ids=["data_ia"],
+        )
+        self.assertEqual(offers[0]["location"], "Belgique")
+
     def test_linkedin_and_google_use_region_native_locations(self):
         import pandas as pd
 
@@ -219,7 +252,9 @@ class TestRegions(unittest.TestCase):
         )
         self.assertEqual(calls[0]["location"], "Morocco")
         self.assertEqual(calls[0]["country_indeed"], "Morocco")
-        self.assertTrue(calls[0]["google_search_term"].endswith(" Morocco"))
+        self.assertTrue(calls[0]["google_search_term"].endswith(
+            " Morocco since:yesterday"
+        ))
 
     def test_french_only_sources_are_not_called_abroad(self):
         with mock.patch.object(scan.requests, "post") as post:
@@ -236,15 +271,20 @@ class TestRegions(unittest.TestCase):
         token.assert_not_called()
         get.assert_not_called()
 
-    def test_glassdoor_is_not_called_where_jobspy_does_not_support_it(self):
-        scrape = mock.Mock()
-        offers, status = scan.fetch_jobspy_site(
-            "glassdoor", "Glassdoor", scrape_fn=scrape,
-            region_id="maroc", region_config=scan.REGIONS["maroc"],
-        )
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "id",
+                                          "ADZUNA_APP_KEY": "key"}), \
+             mock.patch.object(scan.requests, "get") as adzuna_get:
+            offers, adzuna = scan.fetch_adzuna_all("belgique")
         self.assertEqual(offers, [])
-        self.assertEqual(status.status, "not_applicable_region")
-        scrape.assert_not_called()
+        self.assertEqual(adzuna.status, "not_applicable_region")
+        adzuna_get.assert_not_called()
+
+    def test_retired_glassdoor_is_absent_from_active_sources(self):
+        self.assertNotIn("Glassdoor", scan.SOURCE_NAMES)
+        self.assertTrue(all(
+            "Glassdoor" not in profile.sources
+            for profile in scan.PROFILES.values()
+        ))
 
     def test_duplicate_remote_offer_merges_regions(self):
         selected = {key: scan.REGIONS[key] for key in ("france", "belgique")}
@@ -283,6 +323,7 @@ class TestParseOfferDate(unittest.TestCase):
 
     def test_invalid(self):
         self.assertIsNone(scan.parse_offer_date("pas une date"))
+        self.assertIsNone(scan.parse_offer_date("2026-07-16T99:99:99"))
         self.assertIsNone(scan.parse_offer_date(None))
         self.assertIsNone(scan.parse_offer_date("NaT"))
 
@@ -619,7 +660,7 @@ class TestCircuitBreaker(unittest.TestCase):
             calls.append(kwargs["search_term"])
             raise Exception("bad response status code: 403")
 
-        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        offers, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(len(calls), scan.MAX_CONSECUTIVE_BLOCKS)
         self.assertEqual(st.status, "blocked")
         self.assertEqual(st.http_error, "HTTP 403")
@@ -630,7 +671,7 @@ class TestCircuitBreaker(unittest.TestCase):
         def fake_scrape(**kwargs):
             raise Exception("429 Response - Blocked for too many requests")
 
-        _, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        _, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(st.status, "blocked")
         self.assertEqual(st.http_error, "HTTP 429")
 
@@ -648,11 +689,11 @@ class TestCircuitBreaker(unittest.TestCase):
         def fake_scrape(**_kwargs):
             nonlocal calls
             calls += 1
-            logging.getLogger("JobSpy:Glassdoor").error(
-                "Glassdoor: response status code 403")
+            logging.getLogger("JobSpy:Indeed").error(
+                "Indeed: response status code 403")
             return pd.DataFrame()
 
-        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        offers, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(calls, scan.MAX_CONSECUTIVE_BLOCKS)
         self.assertEqual(st.status, "blocked")
         self.assertEqual(st.http_error, "HTTP 403")
@@ -662,14 +703,110 @@ class TestCircuitBreaker(unittest.TestCase):
         import pandas as pd
 
         def fake_scrape(**_kwargs):
-            logging.getLogger("JobSpy:Glassdoor").error(
-                "Glassdoor: Error encountered in API response")
+            logging.getLogger("JobSpy:Indeed").error(
+                "Indeed: Error encountered in API response")
             return pd.DataFrame()
 
-        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        offers, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(st.status, "error")
         self.assertIn("API response", st.http_error)
         self.assertEqual(offers, [])
+
+    def test_apec_403_stops_after_two_queries(self):
+        with mock.patch.object(
+                scan.requests, "post", side_effect=Exception("HTTP 403")) as post:
+            offers, status = scan.fetch_apec_all(
+                context=scan.ScanContext(
+                    scan.PROFILES["fast_data_ia"],
+                    datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc),
+                )
+            )
+        self.assertEqual(offers, [])
+        self.assertEqual(post.call_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertEqual(status.status, "blocked")
+        self.assertEqual(status.blocked_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertTrue(status.interrupted)
+
+    def test_apec_detail_403_has_its_own_breaker(self):
+        catalog = {
+            "data": {
+                "label": "Data", "group": "Test",
+                "queries": ["stage data"], "positive": ["data engineer"],
+                "negative": ["marketing"], "enabled": True,
+            }
+        }
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        results = [{
+            "numeroOffre": str(index), "intitule": "Stage Consultant",
+            "nomCommercial": "ACME", "lieuTexte": "Paris",
+            "datePublication": run_at.isoformat(), "texteOffre": "",
+        } for index in range(3)]
+        with mock.patch.object(
+                scan.requests, "post",
+                return_value=fake_response({"resultats": results})), \
+             mock.patch.object(
+                 scan, "fetch_apec_detail_description",
+                 side_effect=Exception("HTTP 403"),
+             ) as detail:
+            offers, status = scan.fetch_apec_all(
+                domains=catalog, active_ids=["data"],
+                context=scan.ScanContext(scan.PROFILES["fast_data_ia"], run_at),
+            )
+        self.assertEqual(offers, [])
+        self.assertEqual(detail.call_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertEqual(status.status, "blocked")
+        self.assertEqual(status.blocked_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertTrue(status.interrupted)
+
+    def test_parallel_regions_do_not_share_jobspy_log_records(self):
+        import pandas as pd
+        from threading import Event
+
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        profile = replace(
+            scan.PROFILES["full_general"],
+            query_budgets={
+                **scan.PROFILES["full_general"].query_budgets, "LinkedIn": 1
+            },
+        )
+        context = scan.ScanContext(profile, run_at)
+        france_started = Event()
+        release_france = Event()
+        frame = pd.DataFrame([{
+            "title": "Stage Data Engineer", "company": "ACME",
+            "city": "Paris", "state": "", "job_url": "https://e.com/fr",
+            "date_posted": run_at.isoformat(), "description": "data engineer",
+        }])
+
+        def fake_scrape(**kwargs):
+            if kwargs["location"] == "France":
+                france_started.set()
+                release_france.wait(timeout=1)
+                return frame
+            logging.getLogger("JobSpy:LinkedIn").error(
+                "LinkedIn: response status code 403"
+            )
+            return frame.iloc[0:0]
+
+        def fetch(region_id):
+            return scan.fetch_jobspy_site(
+                "linkedin", "LinkedIn", scrape_fn=fake_scrape,
+                region_id=region_id, region_config=scan.REGIONS[region_id],
+                domains={"data_ia": scan.DOMAINS["data_ia"]},
+                active_ids=["data_ia"], context=context,
+            )
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            france = pool.submit(fetch, "france")
+            self.assertTrue(france_started.wait(timeout=1))
+            belgium = pool.submit(fetch, "belgique")
+            time.sleep(0.05)
+            release_france.set()
+            france_offers, france_status = france.result(timeout=2)
+            _, belgium_status = belgium.result(timeout=2)
+        self.assertEqual(len(france_offers), 1)
+        self.assertEqual(france_status.status, "success")
+        self.assertEqual(belgium_status.status, "blocked")
 
 
 class TestJobspyAccounting(unittest.TestCase):
@@ -696,13 +833,13 @@ class TestJobspyAccounting(unittest.TestCase):
         offers, st = scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=fake_scrape)
         self.assertEqual(st.raw_count, 3)
         # JobSpy a déjà appliqué son filtre natif 24 h ; une date réduite au
-        # jour par la librairie n'est pas réinterprétée comme une heure exacte.
-        self.assertEqual(st.accepted_count, 2)
-        self.assertEqual(st.rejected_count, 1)
-        self.assertIsNone(st.reject_reasons.get(scan.REASON_TOO_OLD))
+        # jour n'est tolérée que si ce jour intersecte encore la fenêtre.
+        self.assertEqual(st.accepted_count, 1)
+        self.assertEqual(st.rejected_count, 2)
+        self.assertEqual(st.reject_reasons.get(scan.REASON_TOO_OLD), 1)
         self.assertEqual(st.reject_reasons.get(scan.REASON_NO_DOMAIN), 1)
         self.assertEqual(st.status, "success")
-        self.assertEqual(len(offers), 2)
+        self.assertEqual(len(offers), 1)
         self.assertGreaterEqual(st.pages_fetched, 1)
 
     def test_google_search_term_not_redundant(self):
@@ -716,7 +853,7 @@ class TestJobspyAccounting(unittest.TestCase):
         scan.fetch_jobspy_site("google", "Google Jobs", scrape_fn=fake_scrape)
         first = seen_kwargs[0]
         self.assertEqual(first["google_search_term"],
-                         f"{scan.active_queries()[0]} France")
+                         f"{scan.active_queries()[0]} France since:yesterday")
         self.assertNotIn("job_type", first)
         # jamais deux fois « stage » dans la requête Google
         self.assertEqual(first["google_search_term"].lower().count("stage"), 1)
@@ -763,6 +900,32 @@ class TestJobspyAccounting(unittest.TestCase):
         seen.clear()
         scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual([call["search_term"] for call in seen], scan.active_queries())
+
+    def test_missing_linkedin_description_makes_absence_coverage_partial(self):
+        import pandas as pd
+
+        profile = replace(
+            scan.PROFILES["fast_data_ia"],
+            query_budgets={
+                **scan.PROFILES["fast_data_ia"].query_budgets, "LinkedIn": 1
+            },
+        )
+        frame = pd.DataFrame([{
+            "title": "Stage Consultant", "company": "ACME", "city": "Paris",
+            "state": "", "job_url": "https://e.com/generic",
+            "date_posted": TODAY, "description": "",
+        }])
+        offers, status = scan.fetch_jobspy_site(
+            "linkedin", "LinkedIn", scrape_fn=lambda **_kwargs: frame,
+            domains={"data_ia": scan.DOMAINS["data_ia"]},
+            active_ids=["data_ia"],
+            context=scan.ScanContext(
+                profile, datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+            ),
+        )
+        self.assertEqual(offers, [])
+        self.assertFalse(status.coverage_complete)
+        self.assertIn("descriptions LinkedIn manquantes", status.note)
 
 
 class TestApecNativeFilters(unittest.TestCase):
@@ -813,6 +976,66 @@ class TestSourcePagination(unittest.TestCase):
             [0, 100],
         )
 
+    def test_apec_known_identity_skips_expensive_detail(self):
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        profile = replace(
+            scan.PROFILES["fast_data_ia"],
+            detail_budgets={
+                **scan.PROFILES["fast_data_ia"].detail_budgets, "APEC": 0
+            },
+        )
+        context = scan.ScanContext(profile, run_at)
+        known, reason = scan.make_offer(
+            "Stage Data Engineer", "ACME", "Paris",
+            "https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/known",
+            "APEC", run_at.isoformat(), confirmed_internship=True,
+            domains=self.CATALOG, active_ids=["data"], context=context,
+            external_id="known",
+        )
+        self.assertIsNone(reason)
+        raw = {
+            "numeroOffre": "known", "intitule": "Stage Consultant",
+            "nomCommercial": "ACME", "lieuTexte": "Paris",
+            "datePublication": run_at.isoformat(), "texteOffre": "",
+        }
+        with mock.patch.object(
+                scan.requests, "post",
+                return_value=fake_response({"resultats": [raw]})), \
+             mock.patch.object(scan, "fetch_apec_detail_description") as detail:
+            offers, status = scan.fetch_apec_all(
+                domains=self.CATALOG, active_ids=["data"], context=context,
+                known_identity_index={"native:apec:known": known},
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(status.detail_request_count, 0)
+        detail.assert_not_called()
+
+    def test_apec_exhausted_detail_budget_is_not_reliable_coverage(self):
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        profile = replace(
+            scan.PROFILES["fast_data_ia"],
+            detail_budgets={
+                **scan.PROFILES["fast_data_ia"].detail_budgets, "APEC": 0
+            },
+        )
+        raw = {
+            "numeroOffre": "generic", "intitule": "Stage Consultant",
+            "nomCommercial": "ACME", "lieuTexte": "Paris",
+            "datePublication": run_at.isoformat(), "texteOffre": "",
+        }
+        with mock.patch.object(
+                scan.requests, "post",
+                return_value=fake_response({"resultats": [raw]})), \
+             mock.patch.object(scan, "fetch_apec_detail_description") as detail:
+            offers, status = scan.fetch_apec_all(
+                domains=self.CATALOG, active_ids=["data"],
+                context=scan.ScanContext(profile, run_at),
+            )
+        self.assertEqual(offers, [])
+        self.assertFalse(status.coverage_complete)
+        self.assertIn("budget de lectures de détail épuisé", status.note)
+        detail.assert_not_called()
+
     def test_adzuna_paginates_and_uses_native_one_day_filter(self):
         def item(index):
             return {
@@ -837,6 +1060,73 @@ class TestSourcePagination(unittest.TestCase):
         self.assertEqual(status.pages_fetched, 2)
         self.assertEqual(get.call_args_list[0].kwargs["params"]["max_days_old"], 1)
         self.assertTrue(get.call_args_list[1].args[0].endswith("/2"))
+
+    def test_adzuna_repeated_pages_stop_and_deduplicate_native_ids(self):
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        profile = replace(
+            scan.PROFILES["fast_data_ia"],
+            max_pages={**scan.PROFILES["fast_data_ia"].max_pages, "Adzuna": 5},
+            query_budgets={
+                **scan.PROFILES["fast_data_ia"].query_budgets, "Adzuna": 1
+            },
+        )
+        context = scan.ScanContext(profile, run_at)
+
+        def item(index):
+            return {
+                "id": str(index), "title": "Stage Data Engineer",
+                "company": {"display_name": "ACME"},
+                "location": {"display_name": "Paris"},
+                "redirect_url": f"https://e.com/adzuna/{index}",
+                "created": (run_at - timedelta(hours=1)).isoformat(),
+                "description": "data engineer",
+            }
+
+        repeated = {"count": 999, "results": [item(i) for i in range(50)]}
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "id",
+                                          "ADZUNA_APP_KEY": "key"}), \
+             mock.patch.object(
+                 scan.requests, "get",
+                 side_effect=[fake_response(repeated) for _ in range(3)],
+             ) as get:
+            offers, status = scan.fetch_adzuna_all(
+                domains=self.CATALOG, active_ids=["data"], context=context,
+            )
+        self.assertEqual(get.call_count, 3)
+        self.assertEqual(len(offers), 50)
+        self.assertEqual(status.raw_count, 150)
+        self.assertEqual(status.duplicate_count, 100)
+        self.assertTrue(status.coverage_complete)
+
+    def test_adzuna_fast_applies_exact_two_hour_filter(self):
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        context = scan.ScanContext(scan.PROFILES["fast_data_ia"], run_at)
+
+        def item(item_id, age):
+            return {
+                "id": item_id, "title": "Stage Data Engineer",
+                "company": {"display_name": "ACME"},
+                "location": {"display_name": "Paris"},
+                "redirect_url": f"https://e.com/adzuna/{item_id}",
+                "created": (run_at - age).isoformat(),
+                "description": "data engineer",
+            }
+
+        payload = {"count": 2, "results": [
+            item("fresh", timedelta(hours=1, minutes=59)),
+            item("old", timedelta(hours=2, minutes=1)),
+        ]}
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "id",
+                                          "ADZUNA_APP_KEY": "key"}), \
+             mock.patch.object(
+                 scan.requests, "get", return_value=fake_response(payload)
+             ):
+            offers, status = scan.fetch_adzuna_all(
+                domains=self.CATALOG, active_ids=["data"], context=context,
+            )
+        self.assertEqual([offer["external_ids"]["Adzuna"] for offer in offers],
+                         ["fresh"])
+        self.assertEqual(status.too_old_count, 1)
 
     def test_france_travail_paginates_ranges_and_filters_one_day(self):
         def item(index):
@@ -872,6 +1162,50 @@ class TestSourcePagination(unittest.TestCase):
         )
         self.assertTrue(all(call.kwargs["params"]["publieeDepuis"] == 1
                             for call in get.call_args_list))
+        self.assertTrue(all(call.kwargs["params"]["natureContrat"] == "FS"
+                            for call in get.call_args_list))
+
+    def test_france_travail_native_id_deduplicates(self):
+        run_at = datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        context = scan.ScanContext(scan.PROFILES["fast_data_ia"], run_at)
+        item = {
+            "id": "FT-42", "intitule": "Stage Data Engineer",
+            "entreprise": {"nom": "ACME"},
+            "lieuTravail": {"libelle": "Paris"},
+            "dateCreation": (run_at - timedelta(hours=1)).isoformat(),
+            "description": "data engineer",
+        }
+        response = fake_response({"resultats": [item, dict(item)]})
+        with mock.patch.dict(os.environ, {"FT_CLIENT_ID": "id",
+                                          "FT_CLIENT_SECRET": "key"}), \
+             mock.patch.object(scan, "ft_token", return_value="token"), \
+             mock.patch.object(scan.requests, "get", return_value=response):
+            offers, status = scan.fetch_france_travail_all(
+                domains=self.CATALOG, active_ids=["data"], context=context,
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(offers[0]["external_ids"]["France Travail"], "FT-42")
+        self.assertEqual(status.duplicate_count, 1)
+
+    def test_france_travail_endpoint_429_uses_one_token_and_breaker(self):
+        context = scan.ScanContext(
+            scan.PROFILES["fast_data_ia"],
+            datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc),
+        )
+        with mock.patch.dict(os.environ, {"FT_CLIENT_ID": "id",
+                                          "FT_CLIENT_SECRET": "key"}), \
+             mock.patch.object(scan, "ft_token", return_value="token") as token, \
+             mock.patch.object(
+                 scan.requests, "get",
+                 side_effect=Exception("429 Too Many Requests"),
+             ) as get:
+            offers, status = scan.fetch_france_travail_all(context=context)
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "blocked")
+        self.assertEqual(status.http_error, "HTTP 429")
+        self.assertEqual(status.blocked_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertEqual(get.call_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        token.assert_called_once()
 
 
 class TestMissingCredentials(unittest.TestCase):
@@ -896,10 +1230,35 @@ class TestMissingCredentials(unittest.TestCase):
                                side_effect=Exception("403 Client Error")):
             offers, st = scan.fetch_france_travail_all()
         self.assertEqual(offers, [])
-        self.assertEqual(st.status, "error")
+        self.assertEqual(st.status, "blocked")
+        self.assertEqual(st.http_error, "HTTP 403")
         dump = str(st)
         self.assertNotIn("id-secret-xyz", dump)
         self.assertNotIn("pass-secret-xyz", dump)
+
+    def test_adzuna_http_failure_never_leaks_query_secret(self):
+        secret = "adzuna-super-secret"
+        profile = replace(
+            scan.PROFILES["fast_data_ia"],
+            query_budgets={
+                **scan.PROFILES["fast_data_ia"].query_budgets, "Adzuna": 1
+            },
+        )
+        context = scan.ScanContext(
+            profile, datetime(2026, 7, 16, 12, 0, tzinfo=timezone.utc)
+        )
+        leaking_exception = Exception(
+            "500 Server Error: https://api.adzuna.test/?app_key=" + secret
+        )
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "id",
+                                          "ADZUNA_APP_KEY": secret}), \
+             mock.patch.object(scan.requests, "get", side_effect=leaking_exception), \
+             mock.patch("sys.stderr", new_callable=io.StringIO) as stderr:
+            offers, status = scan.fetch_adzuna_all(context=context)
+        self.assertEqual(offers, [])
+        self.assertNotIn(secret, stderr.getvalue())
+        self.assertNotIn(secret, str(status))
+        self.assertEqual(status.http_error, "Exception")
 
 
 class TestOfferStore(unittest.TestCase):
@@ -921,7 +1280,7 @@ class TestOfferStore(unittest.TestCase):
         self.assertIsNone(reason)
         return candidate
 
-    def test_confirmed_absence_is_hidden_after_successful_run(self):
+    def test_one_confirmed_absence_does_not_hide_offer(self):
         candidate = self.candidate()
         store = scan.reconcile_offer_store(
             [candidate], self.source_state(), store={}, run_at=self.RUN_N
@@ -931,12 +1290,13 @@ class TestOfferStore(unittest.TestCase):
             [], self.source_state(), store=store, run_at=next_run
         )
 
-        self.assertFalse(store[candidate["id"]]["active"])
+        entry = store[candidate["id"]]
+        self.assertTrue(entry["active"])
+        self.assertFalse(entry["likely_expired"])
         self.assertEqual(
-            store[candidate["id"]]["last_seen_success"],
-            next_run.isoformat(timespec="seconds"),
+            entry["successful_absence_count_by_profile"]["full_general"], 1
         )
-        self.assertEqual(scan.dashboard_offers_from_store(store, next_run), [])
+        self.assertEqual(len(scan.dashboard_offers_from_store(store, next_run)), 1)
 
     def test_blocked_source_keeps_offer_visible_and_unchanged(self):
         candidate = self.candidate()
@@ -955,7 +1315,7 @@ class TestOfferStore(unittest.TestCase):
             [candidate["id"]],
         )
 
-    def test_native_freshness_verification_expires_after_24_hours(self):
+    def test_native_freshness_does_not_bypass_safe_expiration_policy(self):
         checked_at = self.RUN_N
         candidate, reason = offer(
             date=checked_at.isoformat(), now=checked_at, freshness_verified=True,
@@ -966,14 +1326,11 @@ class TestOfferStore(unittest.TestCase):
         candidate["first_seen"] = checked_at.isoformat()
         store = {candidate["id"]: candidate}
         self.assertEqual(len(scan.dashboard_offers_from_store(store, checked_at)), 1)
-        self.assertEqual(
-            scan.dashboard_offers_from_store(
-                store, checked_at + timedelta(hours=24, minutes=1)
-            ),
-            [],
-        )
+        self.assertEqual(len(scan.dashboard_offers_from_store(
+            store, checked_at + timedelta(hours=24, minutes=1)
+        )), 1)
 
-    def test_old_confirmed_absent_offer_is_purged(self):
+    def test_old_offer_is_not_purged_after_one_absence(self):
         candidate = self.candidate()
         old_run = self.RUN_N - timedelta(days=scan.OFFER_RETENTION_DAYS + 1)
         store = scan.reconcile_offer_store(
@@ -982,7 +1339,8 @@ class TestOfferStore(unittest.TestCase):
         store = scan.reconcile_offer_store(
             [], self.source_state(), store=store, run_at=self.RUN_N
         )
-        self.assertNotIn(candidate["id"], store)
+        self.assertIn(candidate["id"], store)
+        self.assertFalse(store[candidate["id"]]["likely_expired"])
 
     def test_missing_store_migrates_without_crash(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1060,7 +1418,7 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("Stage Atlas — Dashboard", page)
         self.assertIn("Stages multi-sources configurables", page)
         self.assertIn("Grand compte", page)
-        self.assertIn("sur les 5 derniers jours", page)
+        self.assertIn("FAST 2 h · FULL 24 h", page)
 
     def test_html_escaping_and_url_safety(self):
         evil, _ = offer(title='Stage ETL <script>alert(1)</script>',

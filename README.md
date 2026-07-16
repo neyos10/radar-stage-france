@@ -1,126 +1,278 @@
 # 🎯 Radar Stage France
 
-Pipeline autonome qui collecte toutes les heures des offres de stage dans
-les régions activées, les classe dans un ou plusieurs domaines, détecte les
-nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
-GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
-actifs par défaut.
+Radar autonome de stages récents, multi-sources, multi-domaines et
+multi-régions. Il collecte les offres publiques, normalise les dates en UTC,
+classe chaque offre dans un ou plusieurs domaines, déduplique les résultats,
+conserve un historique sûr, envoie éventuellement un email et régénère un
+dashboard GitHub Pages.
 
-Les sept sources sont LinkedIn, Indeed, Glassdoor et Google Jobs via JobSpy,
-APEC, Adzuna et France Travail. Chaque source est isolée : un blocage 403/429,
-un timeout ou l'absence d'une clé API n'arrête pas les autres connecteurs.
+La collecte possède désormais deux profils explicites. Ils utilisent le même
+store, mais leurs périmètres et leurs métriques restent séparés.
 
-## Configuration produit
+## Profils de scan
 
-Le code métier n'est pas personnalisé dans `scan.py` :
+| Profil | Domaine | Régions | Fenêtre glissante | Usage |
+|---|---|---|---:|---|
+| `fast_data_ia` | Data / IA | France | 2 heures | priorité personnelle, faible latence |
+| `full_general` | tous les domaines actifs | toutes les régions actives | 24 heures | couverture générale |
 
-- `data/domains.json` contient les 16 domaines actifs, leurs requêtes, leurs
-  vocabulaires positifs/négatifs et leur priorité de collecte optionnelle.
-- `data/regions.json` contient les paramètres natifs de localisation. Les quatre
-  régions sont actives ; passer `enabled` à `false` permet d'en retirer une sans
-  modifier le code.
-  Les valeurs `country_indeed` confirmées pour `python-jobspy==1.1.82` sont
-  exactement `France`, `Belgium`, `Luxembourg` et `Morocco` dans la
-  [documentation officielle JobSpy](https://pypi.org/project/python-jobspy/).
-- `data/config.json` contrôle le nom, la tagline, la fenêtre de fraîcheur et le
-  badge d'entreprises mises en avant.
-- les requêtes strictement identiques entre domaines actifs sont mutualisées ;
-  les domaines désactivés ne déclenchent aucun appel réseau.
+La fenêtre est recalculée à chaque exécution depuis une unique horloge UTC :
+aucune date n'est fixée en dur. La sélection du profil suit l'ordre
+`--profile` → `RADAR_PROFILE` → `full_general`, ce qui préserve le comportement
+des anciens appels sans argument.
 
-Le classifieur attribue par domaine +3 par terme positif dans le titre, +1 dans
-la description, -4 par terme négatif dans le titre et -1 dans la description.
-Une offre est retenue à partir du score 2 et peut porter plusieurs domaines.
-Le filtre de contrat reste indépendant et exige `stage`, `stagiaire`, `intern`,
-`internship`, `PFA` ou `PFE` dans le titre, sauf quand l'API certifie déjà le
-stage.
+```bash
+python radar.py --profile fast_data_ia
+python radar.py --profile full_general
+```
 
-Le dashboard responsive propose une vue synthétique du dernier scan, la santé
-des connecteurs, une recherche par poste/entreprise/ville et des filtres
-combinables par statut de candidature, source, domaine, région et entreprise
-mise en avant. La région par défaut est France. Le groupe Région est masqué
-lorsqu'une seule région est active et réapparaît automatiquement dès la
-seconde. Le statut « postulé » reste dans le `localStorage` du navigateur et
-n'est jamais envoyé à GitHub.
+`data/profiles.json` contient le périmètre métier et les garde-fous techniques
+de chaque profil : sources, fenêtre, pagination, requêtes, détails, timeout et
+parallélisme. Les surcharges temporaires restent disponibles sans modifier les
+catalogues versionnés :
 
-`data/offers.json` conserve le contenu complet des offres et leurs dates de
-première/dernière observation. Une offre ne disparaît pas si son connecteur est
-temporairement bloqué ; elle est masquée seulement après une absence confirmée
-par un run sain. Les entrées inactives sont purgées après 14 jours.
+Le FULL borne LinkedIn à 24 requêtes par run : les 16 domaines reçoivent
+d'abord chacun une requête, puis huit créneaux sont distribués selon les
+priorités du catalogue. Par rapport aux 82 requêtes LinkedIn du baseline, cela
+réduit de 70,7 % ce poste réseau dominant sans retirer aucun domaine. Comme la
+couverture des variantes n'est pas exhaustive, ce statut est marqué partiel et
+ne peut jamais servir de preuve d'absence dans le store. Les autres sources
+conservent l'ensemble de leurs requêtes dédupliquées.
+
+Le premier benchmark FAST réel a montré que l'enrichissement des descriptions
+LinkedIn dominait largement la durée, alors que ses six requêtes et les titres
+sont déjà explicitement Data/IA. FAST désactive donc cet enrichissement global
+coûteux (`detail_budgets.LinkedIn = 0`) sans modifier les poids, le seuil ni le
+catalogue de mots-clés du scoring ; FULL conserve trois requêtes enrichies pour
+la couverture généraliste.
+
+```bash
+RADAR_DOMAINS=data_ia RADAR_REGIONS=france \
+RADAR_SOURCES=LinkedIn,Indeed RADAR_WINDOW_HOURS=2 \
+python radar.py --profile full_general
+```
+
+## Sources
+
+| Source | FAST | FULL | Accès |
+|---|:---:|:---:|---|
+| LinkedIn Jobs | ✓ | ✓ | pages publiques via JobSpy |
+| Indeed | ✓ | ✓ | pages publiques via JobSpy |
+| Google Jobs | — | ✓ | agrégateur via JobSpy, notamment WTTJ/HelloWork |
+| APEC | ✓ | ✓ | recherche publique France |
+| Adzuna | ✓ | ✓ | API France, identifiants optionnels |
+| France Travail | ✓ | ✓ | API officielle, identifiants optionnels |
+| LinkedIn Posts | ✓ | ✓ | X-ray search best effort, sans appel direct à LinkedIn |
+
+Glassdoor est retiré des profils et n'est plus interrogé. Les anciennes offres
+de cette source restent migrables pour préserver leur identité, mais sont
+marquées comme issues d'une source retirée au lieu d'être supprimées
+brutalement.
+
+Chaque connecteur est isolé. Un timeout, une absence de secret ou un blocage
+403/429 n'arrête pas les autres sources. Le circuit breaker évite de marteler
+une plateforme bloquée. La source « LinkedIn Posts » n'ouvre jamais LinkedIn :
+elle interroge un moteur de recherche autorisé, valide uniquement des URLs de
+posts publics et se désactive proprement si le moteur présente un anti-bot.
+
+## Fonctionnement
+
+```text
+profil + catalogues
+        │
+        ▼
+collecteurs bornés ──► normalisation UTC ──► scoring multi-domaines
+        │                                      │
+        └──────── métriques par source         ▼
+                              déduplication exacte puis probable
+                                                │
+                                                ▼
+                 reconciliation consciente du profil + store atomique
+                                                │
+                     ┌──────────────────────────┼─────────────────────┐
+                     ▼                          ▼                     ▼
+                  email                    dashboard             diagnostics
+```
+
+Le classifieur conserve sa calibration : +3 par terme positif dans le titre,
++1 dans la description, −4 par terme négatif dans le titre et −1 dans la
+description. Le seuil reste 2. Une offre peut porter plusieurs domaines ; les
+mots-clés positifs réellement trouvés et le score sont conservés pour expliquer
+le classement.
+
+Le filtre de contrat exige `stage`, `stagiaire`, `intern`, `internship`, `PFA`
+ou `PFE` dans le titre, sauf si une API certifie déjà la nature stage. Les dates
+relatives sont converties vers UTC. Une date absente n'est jamais inventée :
+elle est signalée et suit la règle prudente historique.
+
+La déduplication utilise d'abord les identifiants externes et les URLs
+canoniques, puis une empreinte probable normalisée poste/entreprise/lieu. Une
+fusion enrichit les sources et métadonnées sans changer l'identifiant historique
+de l'offre.
+
+## Persistance sûre
+
+- `data/offers.json` : store partagé, identité, profil de dernière observation,
+  compteurs d'absence et état d'expiration probable ;
+- `data/seen_offers.json` : mémoire horodatée des offres déjà annoncées, migrée
+  automatiquement depuis l'ancien tableau d'identifiants et purgée après
+  45 jours ;
+- `data/source_status_fast_data_ia.json` et
+  `data/source_status_full_general.json` : diagnostics indépendants ;
+- `data/source_status.json` : alias rétrocompatible du dernier statut ;
+- `data/scan_metrics.json` : historique borné des 50 derniers runs par profil ;
+- `data/xray_state.json` : curseur de rotation X-ray séparé par profil ;
+- `docs/index.html` : dashboard GitHub Pages.
+
+Les écritures importantes passent par un fichier temporaire, sont synchronisées
+et remplacées atomiquement. Un scan partiel ne peut pas désactiver une offre
+hors de ses domaines, régions ou sources. Une offre n'est considérée comme
+probablement expirée qu'après au moins 72 heures et trois absences pertinentes
+confirmées par des runs sains ; une redécouverte réinitialise ces compteurs.
+
+## Dashboard
+
+Le dashboard reste statique et responsive. Il présente séparément le dernier
+FAST et le dernier FULL, la santé des connecteurs et les nouvelles offres de
+chaque profil. Les fonctions existantes sont conservées :
+
+- recherche poste / entreprise / ville ;
+- filtres par candidature, source, domaine, région et entreprise mise en avant ;
+- tri par date ou pertinence ;
+- mots-clés qui expliquent le classement ;
+- section séparée pour les offres probablement expirées ;
+- bouton « Marquer comme postulé » stocké uniquement dans le `localStorage` du
+  navigateur.
+
+Le navigateur n'envoie aucun statut de candidature au dépôt.
 
 ## Installation
 
-1. Publier le projet dans un dépôt GitHub public.
-2. Dans Settings → Pages, choisir `Deploy from a branch`, branche `main`,
+1. Publier le projet dans un dépôt GitHub.
+2. Dans **Settings → Pages**, choisir `Deploy from a branch`, branche `main`,
    dossier `/docs`.
-3. Ajouter dans Settings → Secrets and variables → Actions les secrets utiles :
+3. Dans **Settings → Secrets and variables → Actions**, créer les secrets
+   nécessaires.
 
 | Secret | Usage | Obligatoire |
 |---|---|---|
-| `SMTP_USER` | compte SMTP expéditeur | pour les emails |
-| `SMTP_PASS` | mot de passe d'application | pour les emails |
+| `FT_CLIENT_ID` | OAuth France Travail | seulement pour France Travail |
+| `FT_CLIENT_SECRET` | OAuth France Travail | seulement pour France Travail |
+| `ADZUNA_APP_ID` | API Adzuna France | seulement pour Adzuna |
+| `ADZUNA_APP_KEY` | API Adzuna France | seulement pour Adzuna |
+| `SMTP_USER` | compte SMTP expéditeur | seulement pour les emails |
+| `SMTP_PASS` | mot de passe d'application SMTP | seulement pour les emails |
 | `ALERT_TO` | destinataire, sinon `SMTP_USER` | non |
-| `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | API Adzuna | non |
-| `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | API Offres d'emploi v2 | non |
 
-Sans identifiants optionnels, leur source apparaît « non configurée » et le
-reste du scan continue normalement.
+Sans secrets optionnels, les connecteurs concernés apparaissent « non
+configurés » et le reste du scan continue. Aucun secret n'est écrit dans les
+JSON, le dashboard ou les logs.
 
-Le scan tourne automatiquement chaque heure. Pour un run immédiat, utiliser
-**Run workflow** dans l'onglet GitHub Actions du dépôt. Le bouton
-**Actualiser les offres** recharge uniquement le dernier dashboard publié ; le
-site ne demande et ne conserve aucun token GitHub.
+### Activer France Travail
 
-## Fraîcheur et robustesse
+1. Créer un compte sur le portail officiel
+   [francetravail.io](https://francetravail.io/inscription).
+2. Ouvrir le produit officiel
+   [API Offres d'emploi](https://francetravail.io/produits-partages/catalogue/offres-emploi),
+   choisir **Utiliser l'API**, puis créer une application et demander l'accès
+   au produit. Le portail fournit alors l'identifiant client et le secret
+   client de l'application. L'API annonce notamment la recherche paginée et
+   une limite de 10 appels par seconde ; le radar reste en dessous grâce à ses
+   budgets et timeouts.
+3. Dans le dépôt GitHub, ouvrir **Settings → Secrets and variables → Actions →
+   New repository secret**, puis créer exactement `FT_CLIENT_ID` et
+   `FT_CLIENT_SECRET` avec les deux valeurs fournies. Ne les placer dans aucun
+   fichier du dépôt.
 
-- JobSpy reçoit `hours_old` selon `days_window`. Les dates relatives courantes
-  sont normalisées ; une date inconnue est conservée et signalée, une date
-  réellement trop ancienne est rejetée et journalisée.
-- APEC utilise les filtres serveur stage (`typesContrat=597171`) et Bac+5
-  (`niveauEtude=20019`), puis un budget borné de lectures de détail.
-- France Travail utilise `natureContrat=FS` et la fenêtre configurée.
-- APEC et France Travail ne sont jamais appelés hors France ; le diagnostic
-  devient alors `not_applicable_region`. JobSpy 1.1.82 ne proposant Glassdoor
-  que pour France et Belgique parmi le catalogue, Luxembourg et Maroc sont
-  également ignorés proprement pour cette source.
-- un circuit breaker interrompt une source après deux blocages 403/429
-  consécutifs pendant le run, sans affecter les autres.
-- LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.
-  Chaque domaine reçoit d'abord un créneau lorsque le budget le permet, puis les
-  créneaux restants suivent une rotation pondérée. Les trois requêtes les plus
-  prioritaires récupèrent aussi la description complète pour améliorer le
-  scoring sans enrichir les six appels.
-- le budget est calculé par `domaines actifs × régions actives`. Au-delà de six
-  combinaisons, `results_wanted` est multiplié par `6 / combinaisons`, avec un
-  plancher de cinq résultats. L'estimation affichée utilise `45 s + 35 s ×`
-  le nombre de combinaisons effectives, plafonné à six (maximum indicatif :
-  4 min 15 s). Cette réduction reste uniforme : Indeed, Glassdoor et Google
-  exécutent toutes les requêtes actives, donc aucun domaine n'y perd de
-  créneau ; seule l'allocation LinkedIn, globalement plafonnée, doit être
-  pondérée par priorité.
-- le commit automatisé utilise un rebase et trois tentatives sans force-push.
+Le radar demande un jeton OAuth une seule fois par run France Travail, avec le
+scope `api_offresdemploiv2 o2dsoffre`, puis utilise le filtre stage
+`natureContrat=FS` et le filtre journalier natif avant son contrôle UTC exact.
 
-Pour un benchmark ponctuel sans modifier le catalogue, les environnements
-`RADAR_DOMAINS=data_ia,dev_web` et
-`RADAR_REGIONS=france,belgique,luxembourg,maroc` surchargent les sélections
-uniquement pour le processus courant.
+### Activer Adzuna
 
-Mesures réelles du 13 juillet 2026, sans écriture dans les données :
+1. S'inscrire sur le portail développeur officiel
+   [Adzuna API](https://developer.adzuna.com/signup) et décrire l'usage du
+   projet. L'inscription fournit un `app_id` et un `app_key`.
+2. Dans **Settings → Secrets and variables → Actions**, créer exactement
+   `ADZUNA_APP_ID` et `ADZUNA_APP_KEY`.
 
-- référence 16 domaines × France : 121,5 s, 129 offres uniques ; budget
-  appliqué `linkedin=9`, `indeed=11`, `glassdoor=6`, `google=11` ;
-- Data/IA × France/Belgique/Luxembourg/Maroc : 303,7 s, 38 offres uniques
-  (31/2/2/3 par région), sans réduction car quatre combinaisons restent sous
-  le seuil de six.
+Le connecteur utilise exclusivement l'index `/jobs/fr`, les paramètres
+officiels `app_id`/`app_key`, le tri par date et `max_days_old=1`, puis applique
+la fenêtre FAST 2 h ou FULL 24 h en UTC côté Python.
+
+## GitHub Actions
+
+Le workflow utilise un seul job Linux, sans matrice. FAST et FULL partagent le
+verrou :
+
+```yaml
+concurrency:
+  group: radar-stage-store
+  cancel-in-progress: false
+```
+
+Le bouton **Run workflow** permet de choisir `fast_data_ia` ou `full_general`.
+Le cron historique unique est conservé temporairement avec `full_general` par
+défaut pour la rétrocompatibilité. **Aucune cadence finale FAST/FULL n'est
+encore définie** : elle sera décidée après plusieurs mesures p95 et projection
+du budget. Le commit automatique inclut tous les stores, statuts, métriques et
+le dashboard générés, avec rebase et trois tentatives sans force-push.
+
+## Benchmark sans effet de bord
+
+Un benchmark collecte et produit des métriques, mais n'envoie pas d'email, ne
+marque aucune offre comme nouvelle et ne modifie ni store, ni mémoire, ni
+dashboard :
+
+```bash
+python radar.py --profile fast_data_ia --benchmark \
+  --benchmark-output /tmp/fast.json
+python radar.py --profile full_general --benchmark \
+  --benchmark-output /tmp/full.json
+```
+
+Pour enchaîner les deux profils :
+
+```bash
+python scripts/benchmark_profiles.py
+```
+
+La méthode et le baseline historique reconstitué sont documentés dans
+[`benchmarks/README.md`](benchmarks/README.md). Les rapports distinguent les
+mesures réelles des champs indisponibles ; un blocage réseau n'est jamais
+présenté comme une réussite.
+
+Pour JobSpy, `network_request_count` est une estimation prudente reconstruite
+depuis les pages et les logs exposés par la bibliothèque ; ses appels HTTP
+internes d'enrichissement LinkedIn ne sont pas tous observables. Les compteurs
+APEC, Adzuna, France Travail et X-ray sont, eux, incrémentés explicitement par
+le radar.
+
+## Budget GitHub Actions
+
+Le calculateur applique l'arrondi facturable prudent à la minute supérieure,
+un quota de 3 000 minutes et une réserve minimale de 50 minutes, soit au plus
+2 950 minutes planifiables :
+
+```bash
+python budget.py \
+  --fast-p95-seconds 120 --fast-runs 100 \
+  --full-p95-seconds 900 --full-runs 10 \
+  --other-workflows-minutes 100
+```
+
+Les valeurs sont des entrées de scénario, pas des fréquences recommandées. Les
+horaires définitifs ne doivent être choisis qu'avec des p95 mesurés sur
+plusieurs runs réels.
 
 ## Vérification locale
 
 ```bash
-python -m py_compile scan.py
+python -m py_compile radar.py scan.py radar_io.py radar_profiles.py radar_store.py radar_xray.py budget.py
 python -m unittest discover -s tests -v
 ```
 
-La suite contient plus de 70 tests sans accès réseau.
-
-Le pipeline ne se connecte à aucun compte des plateformes d'emploi. Il utilise
-les pages publiques et les API officielles ; il est recommandé de conserver la
-fréquence et les volumes raisonnables.
+La suite est sans appel réseau réel. Les collecteurs sont simulés avec des
+fixtures pour tester profils, fenêtres, pagination, déduplication,
+réconciliation, expiration, benchmark, écritures atomiques, workflow et
+calculateur de budget.

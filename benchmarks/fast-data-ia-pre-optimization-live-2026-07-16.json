@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "measurement_type": "live_network_benchmark",
+  "profile_id": "fast_data_ia",
+  "configuration_note": "Mesure avant passage de detail_budgets.LinkedIn de 2 à 0",
+  "run_at": "2026-07-16T10:40:55+00:00",
+  "window_hours": 2,
+  "duration_total_s": 142.287697,
+  "production_mutated": false,
+  "new_offers_suppressed": 6,
+  "totals": {
+    "network_request_count": 25,
+    "pages_fetched": 24,
+    "raw_count": 215,
+    "accepted_count": 6,
+    "rejected_count": 209,
+    "duplicate_count": 15,
+    "timeout_count": 0,
+    "blocked_count": 2,
+    "detail_request_count": 1
+  },
+  "sources": [
+    {
+      "source": "LinkedIn",
+      "status": "success",
+      "duration_s": 142.2,
+      "network_request_count": 10,
+      "pages_fetched": 10,
+      "raw_count": 172,
+      "accepted_count": 5,
+      "rejected_count": 167,
+      "duplicate_count": 8,
+      "timeout_count": 0,
+      "blocked_count": 0,
+      "detail_request_count": 0
+    },
+    {
+      "source": "Indeed",
+      "status": "empty",
+      "duration_s": 4.1,
+      "network_request_count": 6,
+      "pages_fetched": 6,
+      "raw_count": 8,
+      "accepted_count": 0,
+      "rejected_count": 8,
+      "duplicate_count": 0,
+      "timeout_count": 0,
+      "blocked_count": 0,
+      "detail_request_count": 0
+    },
+    {
+      "source": "APEC",
+      "status": "success",
+      "duration_s": 2.2,
+      "network_request_count": 7,
+      "pages_fetched": 6,
+      "raw_count": 35,
+      "accepted_count": 1,
+      "rejected_count": 34,
+      "duplicate_count": 7,
+      "timeout_count": 0,
+      "blocked_count": 0,
+      "detail_request_count": 1
+    },
+    {
+      "source": "Adzuna",
+      "status": "disabled_missing_credentials",
+      "duration_s": 0.0,
+      "network_request_count": 0,
+      "pages_fetched": 0,
+      "raw_count": 0,
+      "accepted_count": 0,
+      "rejected_count": 0,
+      "duplicate_count": 0,
+      "timeout_count": 0,
+      "blocked_count": 0,
+      "detail_request_count": 0
+    },
+    {
+      "source": "France Travail",
+      "status": "disabled_missing_credentials",
+      "duration_s": 0.0,
+      "network_request_count": 0,
+      "pages_fetched": 0,
+      "raw_count": 0,
+      "accepted_count": 0,
+      "rejected_count": 0,
+      "duplicate_count": 0,
+      "timeout_count": 0,
+      "blocked_count": 0,
+      "detail_request_count": 0
+    },
+    {
+      "source": "LinkedIn Posts",
+      "status": "blocked",
+      "duration_s": 0.7,
+      "network_request_count": 2,
+      "pages_fetched": 2,
+      "raw_count": 0,
+      "accepted_count": 0,
+      "rejected_count": 0,
+      "duplicate_count": 0,
+      "timeout_count": 0,
+      "blocked_count": 2,
+      "detail_request_count": 0,
+      "http_error": "HTTP 202"
+    }
+  ],
+  "artifacts_observed_without_mutation": {
+    "offers_json_bytes": 315336,
+    "seen_offers_json_bytes": 13610
+  },
+  "limitations": [
+    "Adzuna et France Travail n'ont pas été mesurés faute de secrets dans l'environnement.",
+    "DuckDuckGo HTML a réellement répondu par un challenge HTTP 202.",
+    "Le compteur JobSpy a été corrigé après le run à partir des 10 pages LinkedIn effectivement journalisées ; le total réseau corrigé vaut 25.",
+    "Une seconde mesure après optimisation a été refusée par le quota d'outil externe ; aucune durée post-optimisation n'est affirmée.",
+    "Le benchmark FULL réseau n'a pas été exécuté dans cet environnement et reste à mesurer après fusion."
+  ]
+}

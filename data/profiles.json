@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "default_profile": "full_general",
+  "profiles": {
+    "fast_data_ia": {
+      "domains": [
+        "data_ia"
+      ],
+      "regions": [
+        "france"
+      ],
+      "sources": [
+        "LinkedIn",
+        "Indeed",
+        "APEC",
+        "Adzuna",
+        "France Travail",
+        "LinkedIn Posts"
+      ],
+      "window_hours": 2,
+      "results_wanted": {
+        "linkedin": 100,
+        "indeed": 100
+      },
+      "max_pages": {
+        "LinkedIn": 4,
+        "Indeed": 4,
+        "APEC": 2,
+        "Adzuna": 2,
+        "France Travail": 2,
+        "LinkedIn Posts": 1
+      },
+      "query_budgets": {
+        "LinkedIn": 6,
+        "Indeed": 6,
+        "APEC": 6,
+        "Adzuna": 6,
+        "France Travail": 6,
+        "LinkedIn Posts": 3
+      },
+      "detail_budgets": {
+        "LinkedIn": 0,
+        "Indeed": 0,
+        "APEC": 12,
+        "Adzuna": 0,
+        "France Travail": 0,
+        "LinkedIn Posts": 0
+      },
+      "request_timeout_s": 12,
+      "max_stale_pages": 2,
+      "max_parallel_sources": 4,
+      "max_parallel_regions": 1
+    },
+    "full_general": {
+      "domains": "__enabled__",
+      "regions": "__enabled__",
+      "sources": [
+        "LinkedIn",
+        "Indeed",
+        "Google Jobs",
+        "APEC",
+        "Adzuna",
+        "France Travail",
+        "LinkedIn Posts"
+      ],
+      "window_hours": 24,
+      "results_wanted": {
+        "linkedin": 1000,
+        "indeed": 1000,
+        "google": 900
+      },
+      "max_pages": {
+        "LinkedIn": 40,
+        "Indeed": 20,
+        "Google Jobs": 30,
+        "APEC": 20,
+        "Adzuna": 20,
+        "France Travail": 20,
+        "LinkedIn Posts": 1
+      },
+      "query_budgets": {
+        "LinkedIn": 24,
+        "Indeed": 1000,
+        "Google Jobs": 1000,
+        "APEC": 1000,
+        "Adzuna": 1000,
+        "France Travail": 1000,
+        "LinkedIn Posts": 12
+      },
+      "detail_budgets": {
+        "LinkedIn": 3,
+        "Indeed": 0,
+        "Google Jobs": 0,
+        "APEC": 100,
+        "Adzuna": 0,
+        "France Travail": 0,
+        "LinkedIn Posts": 0
+      },
+      "request_timeout_s": 20,
+      "max_stale_pages": 2,
+      "max_parallel_sources": 3,
+      "max_parallel_regions": 2
+    }
+  }
+}
