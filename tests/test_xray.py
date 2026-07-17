@@ -321,6 +321,30 @@ class TestExaProviderRequest(unittest.TestCase):
         self.assertIn('"stage"', body["query"])
         self.assertEqual(body["type"], "fast")
 
+    def test_query_reformatted_as_quoted_terms_plus_region(self):
+        # Format mesuré comme le plus pertinent en conditions réelles :
+        # termes entre guillemets suivis du nom de la région en clair,
+        # jamais l'opérateur site: brut ni la requête DuckDuckGo telle quelle.
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("key", session=session, region_hint="France")
+        provider.search('site:linkedin.com/posts "stage" "data engineer"', now=NOW)
+        body = session.calls[0][1]["json"]
+        self.assertEqual(body["query"], '"stage" "data engineer" France')
+
+    def test_single_quoted_variant_still_gets_region_appended(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("key", session=session, region_hint="France")
+        provider.search('site:linkedin.com/posts "stage data scientist"', now=NOW)
+        body = session.calls[0][1]["json"]
+        self.assertEqual(body["query"], '"stage data scientist" France')
+
+    def test_region_hint_is_configurable_per_provider_instance(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("key", session=session, region_hint="Belgique")
+        provider.search('site:linkedin.com/posts "stage" "data"', now=NOW)
+        body = session.calls[0][1]["json"]
+        self.assertTrue(body["query"].endswith("Belgique"))
+
     def test_native_window_defaults_to_48h_around_now(self):
         session = FakePostSession(FakeJsonResponse(200, {"results": []}))
         provider = xray.ExaProvider("key", session=session)

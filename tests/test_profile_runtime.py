@@ -177,6 +177,30 @@ class TestLinkedInPostsProviderSelection(unittest.TestCase):
             provider = scan._build_linkedin_posts_provider(timeout=8.0)
         self.assertEqual(provider.providers[0].name, "duckduckgo_html")
 
+    def test_factory_passes_region_hint_to_exa_provider(self):
+        with mock.patch.dict(os.environ, {"EXA_API_KEY": "secret"}, clear=False):
+            provider = scan._build_linkedin_posts_provider(
+                timeout=8.0, region_hint="Belgique",
+            )
+        self.assertEqual(provider.providers[0].region_hint, "Belgique")
+
+    def test_fetch_linkedin_posts_derives_region_hint_from_region_label(self):
+        captured = {}
+
+        def fake_builder(timeout, region_hint="France"):
+            captured["region_hint"] = region_hint
+            return BlockedProvider()
+
+        context = ScanContext(scan.PROFILES["fast_data_ia"], NOW)
+        with mock.patch.object(
+            scan, "_build_linkedin_posts_provider", side_effect=fake_builder,
+        ):
+            scan.fetch_linkedin_posts(
+                context=context, region_id="france",
+                rotation_state=XRayRotationState(),
+            )
+        self.assertEqual(captured["region_hint"], "France")
+
 
 class TestDeduplicationAndDashboard(unittest.TestCase):
     def test_tracking_url_is_same_exact_identity(self):

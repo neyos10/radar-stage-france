@@ -520,6 +520,7 @@ class DuckDuckGoLiteProvider(DuckDuckGoHtmlProvider):
 
 
 _SITE_PREFIX_RE = re.compile(r"^site:\S+\s*", re.IGNORECASE)
+_QUOTED_TERM_RE = re.compile(r'"([^"]+)"')
 # Une expression relative (« il y a 3 heures », « 2 hours ago »), un jour
 # nommé ou une heure explicite HH:MM signale une date vérifiable à l'heure
 # près. Une simple date calendaire (YYYY-MM-DD) sans rien de tout cela est
@@ -532,9 +533,25 @@ _PRECISE_TIME_HINT_RE = re.compile(
 )
 
 
-def _adapt_query_for_exa(query: str) -> str:
-    """Retire l'opérateur ``site:`` : Exa restreint déjà via ``includeDomains``."""
-    return _SITE_PREFIX_RE.sub("", query).strip()
+def _adapt_query_for_exa(query: str, region_hint: str = "") -> str:
+    """Reconstruit la requête au format qu'Exa comprend le mieux.
+
+    Sans l'opérateur ``site:`` (Exa restreint déjà le domaine via
+    ``includeDomains``), une requête purement sémantique dérive facilement
+    vers des posts LinkedIn seulement adjacents au sujet. Mesuré en
+    conditions réelles : reformuler en termes entre guillemets suivis du
+    nom de la région en clair (ex. ``"stage" "data engineer" France``,
+    plutôt que la requête ``site:...`` brute) ramène des posts nettement
+    plus pertinents.
+    """
+    quoted_terms = _QUOTED_TERM_RE.findall(query)
+    base = (
+        " ".join(f'"{term}"' for term in quoted_terms) if quoted_terms
+        else _SITE_PREFIX_RE.sub("", query).strip()
+    )
+    if region_hint:
+        return f"{base} {region_hint}".strip()
+    return base
 
 
 def _exa_published_at(item: Mapping[str, Any], snippet: str,
@@ -609,6 +626,7 @@ class ExaProvider:
         timeout: float = 8.0,
         endpoint: str = EXA_SEARCH_ENDPOINT,
         native_window_hours: int = 48,
+        region_hint: str = "France",
     ):
         if not api_key or not api_key.strip():
             raise ValueError("ExaProvider requiert une clé API non vide")
@@ -620,6 +638,7 @@ class ExaProvider:
         self.timeout = timeout
         self.endpoint = endpoint
         self.native_window_hours = native_window_hours
+        self.region_hint = region_hint
 
     def search(
         self,
@@ -648,7 +667,7 @@ class ExaProvider:
             return value.strftime("%Y-%m-%dT%H:%M:%S.000Z")
 
         payload = {
-            "query": _adapt_query_for_exa(query),
+            "query": _adapt_query_for_exa(query, self.region_hint),
             "type": "fast",
             "numResults": min(max_results, 100),
             "includeDomains": list(LINKEDIN_POST_HOSTS),

@@ -118,6 +118,16 @@ serveur (`includeDomains=["linkedin.com", "fr.linkedin.com"]`) et une
 fenêtre native large (48 h par défaut) est demandée en complément — jamais
 en remplacement — du contrôle strict local.
 
+Format de requête : sans l'opérateur `site:` (Exa restreint déjà le domaine
+via `includeDomains`), une requête purement sémantique dérive facilement
+vers des posts LinkedIn seulement adjacents au sujet. Mesuré en conditions
+réelles (premier run live : 74 résultats bruts, 0 acceptés, tous rejetés
+« pas un stage »), reformuler en termes entre guillemets suivis du nom de
+la région en clair — par ex. `"stage" "data engineer" France` plutôt que
+`site:linkedin.com/posts "stage" "data engineer"` — ramène des posts
+nettement plus pertinents. `region_hint` est dérivé automatiquement de la
+région active (`regions[region_id]["label"]`).
+
 Point d'attention : le champ `publishedDate` d'Exa est documenté comme une
 **estimation au jour** (`YYYY-MM-DD`), sans heure. Une date qui n'apparaît
 qu'à ce niveau de précision (aucune heure explicite ni expression relative

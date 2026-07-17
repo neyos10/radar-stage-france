@@ -2209,7 +2209,7 @@ def _provider_attempt_reports(provider) -> list[dict]:
     return [dict(attempt) for attempt in attempts] if attempts else []
 
 
-def _build_linkedin_posts_provider(timeout: float):
+def _build_linkedin_posts_provider(timeout: float, region_hint: str = "France"):
     """Exa (API officielle) en priorité si ``EXA_API_KEY`` est fourni.
 
     DuckDuckGo reste le repli historique, mais mesuré en conditions réelles
@@ -2225,7 +2225,9 @@ def _build_linkedin_posts_provider(timeout: float):
     api_key = os.environ.get("EXA_API_KEY", "").strip()
     if not api_key:
         return ddg_stack
-    return FallbackXRayProvider(ExaProvider(api_key, timeout=timeout), ddg_stack)
+    return FallbackXRayProvider(
+        ExaProvider(api_key, timeout=timeout, region_hint=region_hint), ddg_stack
+    )
 
 
 def fetch_linkedin_posts(
@@ -2250,7 +2252,8 @@ def fetch_linkedin_posts(
     )
     started = time.monotonic()
     provider = provider or _build_linkedin_posts_provider(
-        context.profile.request_timeout_s
+        context.profile.request_timeout_s,
+        region_hint=regions[region_id]["label"],
     )
     budget = context.profile.query_budgets.get("LinkedIn Posts", 0)
     plan, next_state = build_xray_query_plan(
