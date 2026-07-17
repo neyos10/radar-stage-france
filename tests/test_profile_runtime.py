@@ -156,6 +156,52 @@ class TestLinkedInPostsRuntime(unittest.TestCase):
         self.assertEqual(len(status.query_reports), 3)
 
 
+class TestLinkedInPostsProviderSelection(unittest.TestCase):
+    """Exa (API officielle) prioritaire si EXA_API_KEY est fourni, sinon
+    repli sur la pile DuckDuckGo historique — jamais l'inverse."""
+
+    def test_exa_is_primary_when_api_key_is_present(self):
+        with mock.patch.dict(os.environ, {"EXA_API_KEY": "secret"}, clear=False):
+            provider = scan._build_linkedin_posts_provider(timeout=8.0)
+        self.assertEqual(provider.providers[0].name, "exa")
+        self.assertIsInstance(provider.providers[1], scan.FallbackXRayProvider)
+
+    def test_ddg_only_when_no_api_key(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            provider = scan._build_linkedin_posts_provider(timeout=8.0)
+        self.assertIsInstance(provider, scan.FallbackXRayProvider)
+        self.assertEqual(provider.providers[0].name, "duckduckgo_html")
+
+    def test_blank_api_key_falls_back_to_ddg(self):
+        with mock.patch.dict(os.environ, {"EXA_API_KEY": "   "}, clear=False):
+            provider = scan._build_linkedin_posts_provider(timeout=8.0)
+        self.assertEqual(provider.providers[0].name, "duckduckgo_html")
+
+    def test_factory_passes_region_hint_to_exa_provider(self):
+        with mock.patch.dict(os.environ, {"EXA_API_KEY": "secret"}, clear=False):
+            provider = scan._build_linkedin_posts_provider(
+                timeout=8.0, region_hint="Belgique",
+            )
+        self.assertEqual(provider.providers[0].region_hint, "Belgique")
+
+    def test_fetch_linkedin_posts_derives_region_hint_from_region_label(self):
+        captured = {}
+
+        def fake_builder(timeout, region_hint="France"):
+            captured["region_hint"] = region_hint
+            return BlockedProvider()
+
+        context = ScanContext(scan.PROFILES["fast_data_ia"], NOW)
+        with mock.patch.object(
+            scan, "_build_linkedin_posts_provider", side_effect=fake_builder,
+        ):
+            scan.fetch_linkedin_posts(
+                context=context, region_id="france",
+                rotation_state=XRayRotationState(),
+            )
+        self.assertEqual(captured["region_hint"], "France")
+
+
 class TestDeduplicationAndDashboard(unittest.TestCase):
     def test_tracking_url_is_same_exact_identity(self):
         first, _ = scan.make_offer(

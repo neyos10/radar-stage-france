@@ -75,6 +75,75 @@ une plateforme bloquée. La source « LinkedIn Posts » n'ouvre jamais LinkedIn 
 elle interroge un moteur de recherche autorisé, valide uniquement des URLs de
 posts publics et se désactive proprement si le moteur présente un anti-bot.
 
+### LinkedIn Posts — mode strict 24 h
+
+Indépendamment du profil FAST (2 h) ou FULL (24 h) qui déclenche le run,
+LinkedIn Posts applique toujours une fenêtre fixe de **24 heures strictes**
+(`LINKEDIN_POSTS_STRICT_WINDOW_HOURS`) :
+
+- une publication doit contenir une indication explicite de stage (stage,
+  stagiaire, internship, intern, PFE, PFA…) — un CDI, une alternance ou une
+  formation sans mention de stage est rejeté ;
+- une date absente, non parseable ou approximative au point d'être
+  invérifiable est **rejetée** (raison `date non vérifiable sur les
+  dernières 24 heures`), jamais conservée avec un badge « date inconnue » ;
+- la date de découverte n'est jamais confondue avec la date de publication :
+  une publication ancienne redécouverte aujourd'hui reste rejetée sur sa
+  vraie date, et ne devient jamais une « nouvelle » offre.
+
+Une publication peut appartenir à plusieurs domaines actifs (`domains.json`)
+si son score y atteint le seuil dans chacun ; elle n'est stockée qu'une seule
+fois, avec `domains`, `domain_scores` et `matched_keywords` par domaine.
+Le dashboard expose une section dédiée « Stages LinkedIn Posts vérifiés
+(24 h) », repliée par défaut, qui reclasse ces offres par domaine — un
+domaine sans résultat affiche simplement zéro, sans être considéré en
+erreur. Chaque run produit aussi `SourceStatus.domain_reports` : requêtes
+exécutées, bruts, stages détectés, rejets par catégorie, doublons, offres
+finales et durée, pour chaque domaine.
+
+#### Moteur de recherche : Exa en priorité, DuckDuckGo en repli
+
+Mesuré en conditions réelles — depuis un environnement de développement et
+depuis les runners GitHub Actions — DuckDuckGo soumet systématiquement ces
+requêtes à son défi anti-bot (HTTP 202, page « Unfortunately, bots use
+DuckDuckGo too », CAPTCHA visuel). Aucun contournement n'est implémenté ni
+envisagé : la garde `XRayBlockedError` détecte ce blocage et le reporte
+proprement.
+
+Si `EXA_API_KEY` est configuré, [Exa](https://exa.ai) devient le provider
+prioritaire (`FallbackXRayProvider(ExaProvider, <pile DuckDuckGo>)`) : une
+API officielle dont les conditions d'usage autorisent explicitement l'appel
+programmatique — sans quota à contourner. Le domaine est restreint côté
+serveur (`includeDomains=["linkedin.com", "fr.linkedin.com"]`) et une
+fenêtre native large (48 h par défaut) est demandée en complément — jamais
+en remplacement — du contrôle strict local.
+
+Format de requête : sans l'opérateur `site:` (Exa restreint déjà le domaine
+via `includeDomains`), une requête purement sémantique dérive facilement
+vers des posts LinkedIn seulement adjacents au sujet. Mesuré en conditions
+réelles (premier run live : 74 résultats bruts, 0 acceptés, tous rejetés
+« pas un stage »), reformuler en termes entre guillemets suivis du nom de
+la région en clair — par ex. `"stage" "data engineer" France` plutôt que
+`site:linkedin.com/posts "stage" "data engineer"` — ramène des posts
+nettement plus pertinents. `region_hint` est dérivé automatiquement de la
+région active (`regions[region_id]["label"]`).
+
+Point d'attention : le champ `publishedDate` d'Exa est documenté comme une
+**estimation au jour** (`YYYY-MM-DD`), sans heure. Une date qui n'apparaît
+qu'à ce niveau de précision (aucune heure explicite ni expression relative
+du type « il y a 3 heures » trouvée dans le texte retourné) est traitée
+comme **non vérifiable à l'heure près** et rejetée — jamais ramenée
+silencieusement à minuit. Ce choix peut réduire le rendement mesuré par
+rapport à une interprétation plus permissive de la date, mais reste
+cohérent avec le mode strict demandé.
+
+Limite connue, à mesurer en conditions réelles : Exa ne garantit pas une
+couverture exhaustive des publications LinkedIn (bonne couverture des
+profils et pages d'entreprise d'après leur documentation, sans promesse
+équivalente sur les posts). Sans `EXA_API_KEY`, le connecteur retombe sur
+la pile DuckDuckGo historique, avec le même risque de blocage documenté
+ci-dessus.
+
 ## Fonctionnement
 
 ```text
@@ -160,6 +229,7 @@ Le navigateur n'envoie aucun statut de candidature au dépôt.
 | `FT_CLIENT_SECRET` | OAuth France Travail | seulement pour France Travail |
 | `ADZUNA_APP_ID` | API Adzuna France | seulement pour Adzuna |
 | `ADZUNA_APP_KEY` | API Adzuna France | seulement pour Adzuna |
+| `EXA_API_KEY` | API Exa (LinkedIn Posts) | non — repli DuckDuckGo sans elle |
 | `SMTP_USER` | compte SMTP expéditeur | seulement pour les emails |
 | `SMTP_PASS` | mot de passe d'application SMTP | seulement pour les emails |
 | `ALERT_TO` | destinataire, sinon `SMTP_USER` | non |
