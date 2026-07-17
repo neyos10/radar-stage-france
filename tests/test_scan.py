@@ -748,7 +748,7 @@ class TestRetiredNoiseSources(unittest.TestCase):
         self.assertNotIn("Google Jobs", scan.SOURCE_NAMES)
         self.assertEqual(
             scan.SOURCE_NAMES,
-            ["LinkedIn", "Indeed", "APEC", "Adzuna", "France Travail"],
+            ["LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "France Travail"],
         )
 
     def test_run_all_sources_never_threads_glassdoor_or_google(self):
@@ -765,6 +765,8 @@ class TestRetiredNoiseSources(unittest.TestCase):
                                return_value=([], scan.SourceStatus(source="APEC"))), \
              mock.patch.object(scan, "fetch_adzuna_all",
                                return_value=([], scan.SourceStatus(source="Adzuna"))), \
+             mock.patch.object(scan, "fetch_jooble_all",
+                               return_value=([], scan.SourceStatus(source="Jooble"))), \
              mock.patch.object(scan, "fetch_france_travail_all",
                                return_value=([], scan.SourceStatus(source="France Travail"))):
             fetch_mock.return_value = ([], scan.SourceStatus(source="LinkedIn"))
@@ -906,6 +908,35 @@ class TestSourcePagination(unittest.TestCase):
         self.assertEqual(get.call_args_list[0].kwargs["params"]["max_days_old"], 1)
         self.assertTrue(get.call_args_list[1].args[0].endswith("/2"))
 
+    def test_jooble_paginates_and_uses_result_on_page(self):
+        def item(index):
+            return {
+                "id": index, "title": "Stage Data Engineer",
+                "company": "ACME", "location": "Paris",
+                "link": f"https://e.com/jooble/{index}",
+                "updated": RECENT_1H, "snippet": "data engineer",
+            }
+
+        responses = [
+            fake_response({"totalCount": 101,
+                           "jobs": [item(i) for i in range(100)]}),
+            fake_response({"totalCount": 101, "jobs": [item(100)]}),
+        ]
+        with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
+             mock.patch.object(scan.requests, "post",
+                               side_effect=responses) as post:
+            offers, status = scan.fetch_jooble_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 101)
+        self.assertEqual(status.pages_fetched, 2)
+        self.assertEqual(
+            post.call_args_list[0].kwargs["json"]["ResultOnPage"],
+            str(scan.JOOBLE_PAGE_SIZE),
+        )
+        self.assertTrue(post.call_args_list[0].args[0].endswith("/key"))
+        self.assertEqual(post.call_args_list[1].kwargs["json"]["page"], "2")
+
     def test_france_travail_paginates_ranges_and_filters_one_day(self):
         def item(index):
             return {
@@ -949,6 +980,21 @@ class TestMissingCredentials(unittest.TestCase):
         self.assertEqual(offers, [])
         self.assertEqual(st.status, "disabled_missing_credentials")
         self.assertIn("ADZUNA_APP_ID", st.note)
+
+    def test_jooble_disabled_without_secret(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            offers, st = scan.fetch_jooble_all()
+        self.assertEqual(offers, [])
+        self.assertEqual(st.status, "disabled_missing_credentials")
+        self.assertIn("JOOBLE_API_KEY", st.note)
+
+    def test_jooble_limited_to_france(self):
+        with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
+             mock.patch.object(scan.requests, "post") as post:
+            offers, st = scan.fetch_jooble_all(region_id="belgique")
+        self.assertEqual(offers, [])
+        self.assertEqual(st.status, "not_applicable_region")
+        post.assert_not_called()
 
     def test_france_travail_disabled_without_secrets(self):
         with mock.patch.dict(os.environ, {}, clear=True):

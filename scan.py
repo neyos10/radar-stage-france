@@ -6,8 +6,9 @@ Sources :
   1. LinkedIn (offres publiques, sans compte)   — via JobSpy
   2. Indeed (régions configurées)                — via JobSpy
   3. APEC France (recherche publique de stages)  — sans compte
-  4. Adzuna France (agrégateur officiel)         — si secrets fournis
-  5. France Travail (API officielle française)   — si secrets fournis
+  4. Adzuna France (agrégateur officiel)         — si secret fourni
+  5. Jooble (agrégateur généraliste européen)    — si secret fourni
+  6. France Travail (API officielle française)   — si secrets fournis
 
 Glassdoor et Google Jobs ont été retirés du code (pas seulement désactivés) :
 sur plusieurs runs de production consécutifs, ils ont renvoyé 0 résultat brut
@@ -135,7 +136,7 @@ REGIONS = load_regions()
 DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
-    "LinkedIn", "Indeed", "APEC", "Adzuna", "France Travail",
+    "LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "France Travail",
 ]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
@@ -185,6 +186,9 @@ MAX_SOURCE_PAGES = 100
 MAX_STALE_PAGES = 2
 APEC_PAGE_SIZE = 100
 ADZUNA_PAGE_SIZE = 50
+# Jooble retourne 20 résultats par défaut ; ResultOnPage demande explicitement
+# une page plus large pour réduire le nombre d'appels par requête.
+JOOBLE_PAGE_SIZE = 100
 FRANCE_TRAVAIL_PAGE_SIZE = 150
 
 # Une offre confirmée absente reste archivée brièvement avant purge. Cette
@@ -1180,6 +1184,121 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
 
 
 # ============================================================
+# SOURCE 6 : Jooble (agrégateur généraliste européen)
+# ============================================================
+
+def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
+                     region_config: dict | None = None,
+                     regions: dict | None = None,
+                     domains: dict | None = None,
+                     active_ids: list[str] | None = None) -> tuple[list[dict], SourceStatus]:
+    """Jooble : agrégateur généraliste, un seul point d'entrée européen.
+
+    Comme Adzuna, le connecteur reste limité à la France : Jooble n'expose
+    pas de scope pays natif distinct de ``location``, et rien ne garantit
+    qu'une requête localisée sur une autre région resterait fiable.
+    """
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status("Jooble", region_id, regions)
+    started = time.monotonic()
+    if region_id != DEFAULT_REGION_ID:
+        status.status = "not_applicable_region"
+        status.note = "connecteur Jooble actuel limité à la France"
+        log_collection_summary(status)
+        return [], status
+    api_key = os.environ.get("JOOBLE_API_KEY")
+    if not api_key:
+        status.status = "disabled_missing_credentials"
+        status.note = "secret JOOBLE_API_KEY absent"
+        log_collection_summary(status)
+        return [], status
+
+    offers: dict[str, dict] = {}
+    remote_seen: set[str] = set()
+    consecutive_blocks = attempted = failed = 0
+    for query in active_queries(domains, active_ids):
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            status.note = "circuit breaker : requêtes restantes ignorées"
+            break
+        attempted += 1
+        query_succeeded = False
+        stale_pages = 0
+        for page in range(1, MAX_SOURCE_PAGES + 1):
+            try:
+                resp = requests.post(
+                    f"https://jooble.org/api/{api_key}",
+                    json={
+                        "keywords": query, "location": region_config["label"],
+                        "page": str(page),
+                        "ResultOnPage": str(JOOBLE_PAGE_SIZE),
+                    },
+                    timeout=REQUEST_TIMEOUT,
+                )
+                resp.raise_for_status()
+                payload = resp.json()
+                results = payload.get("jobs", [])
+            except Exception as exc:
+                code = block_code(exc)
+                if code:
+                    consecutive_blocks += 1
+                    status.http_error = f"HTTP {code}"
+                else:
+                    status.http_error = status.http_error or str(exc)[:200]
+                print(f"[WARN] Jooble '{query}' page {page} a échoué : {exc}",
+                      file=sys.stderr)
+                break
+            query_succeeded = True
+            consecutive_blocks = 0
+            status.pages_fetched += 1
+            status.raw_count += len(results)
+            print(f"[INFO] Jooble '{query}' page {page} : "
+                  f"{len(results)} résultats bruts")
+            if not results:
+                break
+            page_keys = {
+                clean_text(str(r.get("id") or "") or r.get("link") or "")
+                for r in results
+            } - {""}
+            new_keys = page_keys - remote_seen
+            remote_seen.update(page_keys)
+            stale_pages = stale_pages + 1 if not new_keys else 0
+            for r in results:
+                offer, reason = make_offer(
+                    r.get("title"), r.get("company"), r.get("location"),
+                    r.get("link"), "Jooble", r.get("updated") or "",
+                    description=clean_text(r.get("snippet")),
+                    domains=domains, active_ids=active_ids,
+                    region_id=region_id, regions=regions,
+                )
+                register_offer(status, offers, offer, reason)
+            total = int(payload.get("totalCount") or 0)
+            if (len(results) < JOOBLE_PAGE_SIZE
+                    or (total and page * JOOBLE_PAGE_SIZE >= total)
+                    or stale_pages >= MAX_STALE_PAGES):
+                break
+            page_dates = [parse_offer_date(r.get("updated")) for r in results]
+            if (page_dates and all(page_dates)
+                    and min(page_dates) < datetime.now(timezone.utc)
+                    - timedelta(hours=OFFER_WINDOW_HOURS)):
+                break
+        if not query_succeeded:
+            failed += 1
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
+            attempted and failed == attempted and status.http_error.startswith("HTTP")):
+        status.status = "blocked"
+    elif attempted and failed == attempted:
+        status.status = "error"
+    else:
+        status.finalize()
+    log_collection_summary(status)
+    return list(offers.values()), status
+
+
+# ============================================================
 # SOURCE 7 : France Travail (API officielle Offres d'emploi v2)
 # ============================================================
 
@@ -1390,6 +1509,8 @@ def run_all_sources(domains: dict | None = None,
         "APEC": lambda region_id, region_config: fetch_apec_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "Adzuna": lambda region_id, region_config: fetch_adzuna_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "Jooble": lambda region_id, region_config: fetch_jooble_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "France Travail": lambda region_id, region_config: fetch_france_travail_all(
             region_id, region_config, regions, domains, active_domain_ids),

@@ -6,9 +6,9 @@ nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
 GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
 actifs par défaut.
 
-Les cinq sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna et
-France Travail. Chaque source est isolée : un blocage 403/429, un timeout ou
-l'absence d'une clé API n'arrête pas les autres connecteurs.
+Les six sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
+Jooble et France Travail. Chaque source est isolée : un blocage 403/429, un
+timeout ou l'absence d'une clé API n'arrête pas les autres connecteurs.
 
 Glassdoor et Google Jobs ont été retirés du code : sur plusieurs runs de
 production consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas
@@ -66,6 +66,7 @@ par un run sain. Les entrées inactives sont purgées après 14 jours.
 | `SMTP_PASS` | mot de passe d'application | pour les emails |
 | `ALERT_TO` | destinataire, sinon `SMTP_USER` | non |
 | `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | API Adzuna | non |
+| `JOOBLE_API_KEY` | API Jooble | non |
 | `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | API Offres d'emploi v2 | non |
 
 Sans identifiants optionnels, leur source apparaît « non configurée » et le
