@@ -53,15 +53,45 @@ class TestCleanText(unittest.TestCase):
 
 
 class TestDomainCatalogAndScoring(unittest.TestCase):
-    def test_catalog_has_sixteen_enabled_domains(self):
-        self.assertEqual(len(scan.DOMAINS), 16)
+    def test_catalog_has_seventeen_enabled_domains(self):
+        self.assertEqual(len(scan.DOMAINS), 17)
         self.assertEqual(scan.enabled_domain_ids(), list(scan.DOMAINS))
         for domain_id, domain in scan.DOMAINS.items():
             self.assertGreaterEqual(len(domain["queries"]), 4)
             self.assertLessEqual(len(domain["queries"]), 6)
             self.assertGreaterEqual(len(domain["positive"]), 12)
-            self.assertLessEqual(len(domain["positive"]), 20)
+            self.assertLessEqual(len(domain["positive"]), 21)
             self.assertEqual(domain["priority"], 3 if domain_id == "data_ia" else 1)
+
+    def test_marketing_communication_domain_catches_real_linkedin_maroc_titles(self):
+        """Titres réels échantillonnés le 17/07/2026 via JobSpy (LinkedIn, région
+        Maroc, hours_old=24) qui ressortaient en "aucun domaine" avant l'ajout
+        de ce domaine — aucun des 16 domaines précédents ne couvrait
+        marketing/communication, uniquement listé en négatif ailleurs."""
+        real_titles = [
+            "Stagiaire Activations & Marketing",
+            "Stagiaire en Marketing Digital",
+            "Digital Marketing Intern",
+        ]
+        for title in real_titles:
+            matched, scores = scan.score_offer_domains(title, "", scan.DOMAINS)
+            self.assertIn("marketing_communication", matched, title)
+
+    def test_data_analysis_and_business_developer_variants_are_covered(self):
+        """Autres lacunes de vocabulaire trouvées dans le même échantillon réel :
+        variantes de titres non couvertes par les mots-clés existants."""
+        matched, _ = scan.score_offer_domains(
+            "Stagiaire élève ingénieur Data analysis", "", scan.DOMAINS
+        )
+        self.assertIn("data_ia", matched)
+        matched, _ = scan.score_offer_domains(
+            "Stage Pré-Embauche - Business Developer", "", scan.DOMAINS
+        )
+        self.assertIn("commerce_bizdev", matched)
+        matched, _ = scan.score_offer_domains(
+            "Stagiaire People & Culture", "", scan.DOMAINS
+        )
+        self.assertIn("rh", matched)
 
     def test_linkedin_plan_covers_every_active_query(self):
         plan = scan.linkedin_queries()

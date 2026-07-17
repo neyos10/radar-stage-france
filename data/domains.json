@@ -20,6 +20,7 @@
       "deep learning",
       "data analyst",
       "data analyst finance",
+      "data analysis",
       "data analytics",
       "ia",
       "data pipeline",
@@ -466,6 +467,7 @@
     ],
     "positive": [
       "business development",
+      "business developer",
       "bizdev",
       "développement commercial",
       "commercial b2b",
@@ -492,6 +494,44 @@
       "finance de marché",
       "comptabilité",
       "juridique"
+    ],
+    "enabled": true
+  },
+  "marketing_communication": {
+    "label": "Marketing / Communication",
+    "group": "Business / Gestion",
+    "priority": 1,
+    "queries": [
+      "stage marketing digital",
+      "stage communication",
+      "stage marketing communication",
+      "stage social media",
+      "stage brand management"
+    ],
+    "positive": [
+      "marketing",
+      "marketing digital",
+      "digital marketing",
+      "marketing communication",
+      "social media",
+      "community management",
+      "content marketing",
+      "brand management",
+      "marketing produit",
+      "growth marketing",
+      "relations presse",
+      "évènementiel",
+      "campagnes publicitaires"
+    ],
+    "negative": [
+      "business development",
+      "data engineer",
+      "comptabilité",
+      "ressources humaines",
+      "supply chain",
+      "juridique",
+      "product manager",
+      "audit"
     ],
     "enabled": true
   },
@@ -523,7 +563,8 @@
       "relations sociales",
       "workforce planning",
       "hr analytics",
-      "droit social"
+      "droit social",
+      "people & culture"
     ],
     "negative": [
       "business development",
