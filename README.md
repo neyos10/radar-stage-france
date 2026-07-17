@@ -21,7 +21,7 @@ conserve l'implémentation si l'un des deux redevient fiable côté JobSpy.
 
 Le code métier n'est pas personnalisé dans `scan.py` :
 
-- `data/domains.json` contient les 16 domaines actifs, leurs requêtes, leurs
+- `data/domains.json` contient les 17 domaines actifs, leurs requêtes, leurs
   vocabulaires positifs/négatifs et leur priorité de collecte optionnelle.
 - `data/regions.json` contient les paramètres natifs de localisation. Les quatre
   régions sont actives ; passer `enabled` à `false` permet d'en retirer une sans
@@ -33,6 +33,19 @@ Le code métier n'est pas personnalisé dans `scan.py` :
   badge d'entreprises mises en avant.
 - les requêtes strictement identiques entre domaines actifs sont mutualisées ;
   les domaines désactivés ne déclenchent aucun appel réseau.
+
+Le domaine `marketing_communication` a été ajouté après un échantillonnage réel
+des offres LinkedIn Maroc classées « aucun domaine » (`REASON_NO_DOMAIN`) : sur
+9 intitulés de stage confirmés extraits en direct via JobSpy le 17 juillet
+2026, 6 ne matchaient aucun des 16 domaines précédents, dont 3 étaient des
+stages marketing/communication (« Stagiaire Activations & Marketing »,
+« Stagiaire en Marketing Digital », « Digital Marketing Intern ») — un
+vocabulaire absent du catalogue et même explicitement placé en négatif dans
+plusieurs domaines existants. Le même échantillon a aussi mis en évidence deux
+mots-clés manquants dans des domaines existants, corrigés dans le même
+correctif : « data analysis » (`data_ia`) et « business developer »
+(`commerce_bizdev`), ainsi qu'une variante RH moderne, « people & culture »
+(`rh`).
 
 Le classifieur attribue par domaine +3 par terme positif dans le titre, +1 dans
 la description, -4 par terme négatif dans le titre et -1 dans la description.
