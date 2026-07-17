@@ -137,7 +137,8 @@ REGIONS = load_regions()
 DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
-    "LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "France Travail",
+    "LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "The Muse",
+    "France Travail",
 ]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
@@ -1365,7 +1366,119 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
 
 
 # ============================================================
-# SOURCE 7 : France Travail (API officielle Offres d'emploi v2)
+# SOURCE 7 : The Muse (API officielle, filtre stage natif)
+# ============================================================
+
+THE_MUSE_ENDPOINT = "https://www.themuse.com/api/public/jobs"
+
+
+def fetch_the_muse_all(region_id: str = DEFAULT_REGION_ID,
+                       region_config: dict | None = None,
+                       regions: dict | None = None,
+                       domains: dict | None = None,
+                       active_ids: list[str] | None = None) -> tuple[list[dict], SourceStatus]:
+    """The Muse : API officielle avec filtre serveur natif ``level=Internship``.
+
+    Contrairement aux autres sources, aucune requête par mot-clé n'est
+    nécessaire : le filtre ``level=Internship`` cible déjà exactement les
+    stages (confirmation équivalente au filtre stage natif d'APEC), et
+    chaque page couvre l'ensemble du catalogue pour la région — le scoring
+    par domaine s'applique ensuite localement, comme pour APEC. Aucune clé
+    n'est requise (500 requêtes/heure) ; ``THEMUSE_API_KEY`` est optionnel
+    et relève seulement la limite à 3600/heure.
+    """
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status("The Muse", region_id, regions)
+    started = time.monotonic()
+    if region_id != DEFAULT_REGION_ID:
+        status.status = "not_applicable_region"
+        status.note = "connecteur The Muse actuel limité à la France"
+        log_collection_summary(status)
+        return [], status
+
+    api_key = os.environ.get("THEMUSE_API_KEY", "").strip()
+    offers: dict[str, dict] = {}
+    seen_ids: set[str] = set()
+    consecutive_blocks = 0
+    attempted_pages = failed_pages = 0
+    stale_pages = 0
+    page = 0
+    while page < MAX_SOURCE_PAGES:
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            status.note = "circuit breaker : pages restantes ignorées"
+            break
+        attempted_pages += 1
+        params: dict[str, str | int] = {
+            "page": page, "location": region_config["label"],
+            "level": "Internship",
+        }
+        if api_key:
+            params["api_key"] = api_key
+        try:
+            resp = requests.get(
+                THE_MUSE_ENDPOINT, params=params, timeout=REQUEST_TIMEOUT,
+            )
+            resp.raise_for_status()
+            payload = resp.json()
+            results = payload.get("results", [])
+        except Exception as exc:
+            failed_pages += 1
+            code = block_code(exc)
+            if code:
+                consecutive_blocks += 1
+                status.http_error = f"HTTP {code}"
+            else:
+                consecutive_blocks = 0
+                status.http_error = status.http_error or str(exc)[:200]
+            print(f"[WARN] The Muse page {page} a échoué : {exc}", file=sys.stderr)
+            break
+
+        consecutive_blocks = 0
+        status.pages_fetched += 1
+        status.raw_count += len(results)
+        print(f"[INFO] The Muse page {page} : {len(results)} résultats bruts")
+        if not results:
+            break
+        page_ids = {str(item.get("id") or "") for item in results} - {""}
+        new_ids = page_ids - seen_ids
+        seen_ids.update(page_ids)
+        stale_pages = stale_pages + 1 if not new_ids else 0
+        for item in results:
+            company = clean_text((item.get("company") or {}).get("name"))
+            location_entries = item.get("locations") or []
+            location = clean_text(
+                location_entries[0].get("name") if location_entries else ""
+            ) or region_config["label"]
+            url = clean_text((item.get("refs") or {}).get("landing_page"))
+            offer, reason = make_offer(
+                item.get("name"), company, location, url, "The Muse",
+                item.get("publication_date") or "",
+                confirmed_internship=True,
+                description=clean_text(item.get("contents")),
+                domains=domains, active_ids=active_ids,
+                region_id=region_id, regions=regions,
+            )
+            register_offer(status, offers, offer, reason)
+        page_count = int(payload.get("page_count") or 0)
+        page += 1
+        if (page_count and page >= page_count) or stale_pages >= MAX_STALE_PAGES:
+            break
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if attempted_pages and failed_pages == attempted_pages and status.http_error.startswith("HTTP"):
+        status.status = "blocked"
+    elif attempted_pages and failed_pages == attempted_pages:
+        status.status = "error"
+    else:
+        status.finalize()
+    log_collection_summary(status)
+    return list(offers.values()), status
+
+
+# ============================================================
+# SOURCE 8 : France Travail (API officielle Offres d'emploi v2)
 # ============================================================
 
 def ft_token(client_id: str, client_secret: str) -> str | None:
@@ -1577,6 +1690,8 @@ def run_all_sources(domains: dict | None = None,
         "Adzuna": lambda region_id, region_config: fetch_adzuna_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "Jooble": lambda region_id, region_config: fetch_jooble_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "The Muse": lambda region_id, region_config: fetch_the_muse_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "France Travail": lambda region_id, region_config: fetch_france_travail_all(
             region_id, region_config, regions, domains, active_domain_ids),
