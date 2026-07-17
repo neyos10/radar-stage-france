@@ -69,6 +69,7 @@ from radar_profiles import (
 from radar_xray import (
     DuckDuckGoHtmlProvider,
     DuckDuckGoLiteProvider,
+    ExaProvider,
     FallbackXRayProvider,
     SearchResult,
     XRayBlockedError,
@@ -2208,6 +2209,25 @@ def _provider_attempt_reports(provider) -> list[dict]:
     return [dict(attempt) for attempt in attempts] if attempts else []
 
 
+def _build_linkedin_posts_provider(timeout: float):
+    """Exa (API officielle) en priorité si ``EXA_API_KEY`` est fourni.
+
+    DuckDuckGo reste le repli historique, mais mesuré en conditions réelles
+    (environnement de développement et runners GitHub Actions), il soumet
+    systématiquement ces requêtes à son défi anti-bot (HTTP 202,
+    « anomaly-modal ») : Exa est donc le choix prioritaire dès qu'une clé est
+    disponible, sans jamais tenter de contourner ce défi.
+    """
+    ddg_stack = FallbackXRayProvider(
+        DuckDuckGoHtmlProvider(timeout=timeout),
+        DuckDuckGoLiteProvider(timeout=timeout),
+    )
+    api_key = os.environ.get("EXA_API_KEY", "").strip()
+    if not api_key:
+        return ddg_stack
+    return FallbackXRayProvider(ExaProvider(api_key, timeout=timeout), ddg_stack)
+
+
 def fetch_linkedin_posts(
         *,
         context: ScanContext,
@@ -2229,9 +2249,8 @@ def fetch_linkedin_posts(
         "LinkedIn Posts", region_id, regions, context=context
     )
     started = time.monotonic()
-    provider = provider or FallbackXRayProvider(
-        DuckDuckGoHtmlProvider(timeout=context.profile.request_timeout_s),
-        DuckDuckGoLiteProvider(timeout=context.profile.request_timeout_s),
+    provider = provider or _build_linkedin_posts_provider(
+        context.profile.request_timeout_s
     )
     budget = context.profile.query_budgets.get("LinkedIn Posts", 0)
     plan, next_state = build_xray_query_plan(

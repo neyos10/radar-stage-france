@@ -1,8 +1,21 @@
-"""Recherche X-ray de posts LinkedIn publics via DuckDuckGo HTML.
+"""Recherche X-ray de posts LinkedIn publics via un moteur de recherche public.
 
-Ce module ne contacte jamais LinkedIn. Il interroge uniquement l'interface
-HTML de DuckDuckGo, puis exploite le titre, le snippet et l'URL déjà présents
-dans les résultats du moteur. Le transport est injectable pour rendre tous les
+Ce module ne contacte jamais LinkedIn. Deux familles de providers sont
+disponibles :
+
+- ``ExaProvider`` : API officielle Exa (https://exa.ai), qui autorise
+  explicitement l'usage programmatique — aucune notion de contournement.
+  Provider recommandé et prioritaire si ``EXA_API_KEY`` est fourni.
+- ``DuckDuckGoHtmlProvider``/``DuckDuckGoLiteProvider`` : scraping best-effort
+  de l'interface HTML DuckDuckGo, conservés en repli historique. Mesuré en
+  conditions réelles (environnement de développement et runners GitHub
+  Actions), ce moteur soumet systématiquement ces requêtes à son défi
+  anti-bot (« Unfortunately, bots use DuckDuckGo too », CAPTCHA visuel) : la
+  garde ``XRayBlockedError`` détecte ce blocage et ne tente jamais de le
+  contourner (aucun CAPTCHA n'est résolu par ce module).
+
+Dans tous les cas, seuls le titre, le texte et l'URL déjà exposés par le
+moteur sont exploités. Le transport est injectable pour rendre tous les
 comportements testables sans réseau.
 
 La construction du plan de requêtes est volontairement pure : elle retourne
@@ -17,7 +30,7 @@ import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
-from typing import Mapping, Protocol, Sequence
+from typing import Any, Mapping, Protocol, Sequence
 from urllib.parse import parse_qs, quote, unquote, urljoin, urlsplit, urlunsplit
 
 import requests
@@ -27,6 +40,8 @@ DUCKDUCKGO_HTML_ENDPOINT = "https://html.duckduckgo.com/html/"
 DUCKDUCKGO_PROVIDER_NAME = "duckduckgo_html"
 DUCKDUCKGO_LITE_ENDPOINT = "https://lite.duckduckgo.com/lite/"
 DUCKDUCKGO_LITE_PROVIDER_NAME = "duckduckgo_lite"
+EXA_SEARCH_ENDPOINT = "https://api.exa.ai/search"
+EXA_PROVIDER_NAME = "exa"
 LINKEDIN_POST_HOSTS = ("linkedin.com", "fr.linkedin.com")
 
 _SPACE_RE = re.compile(r"\s+")
@@ -504,6 +519,179 @@ class DuckDuckGoLiteProvider(DuckDuckGoHtmlProvider):
         super().__init__(session, timeout=timeout, endpoint=endpoint)
 
 
+_SITE_PREFIX_RE = re.compile(r"^site:\S+\s*", re.IGNORECASE)
+# Une expression relative (« il y a 3 heures », « 2 hours ago »), un jour
+# nommé ou une heure explicite HH:MM signale une date vérifiable à l'heure
+# près. Une simple date calendaire (YYYY-MM-DD) sans rien de tout cela est
+# une estimation, pas une preuve : voir ``_exa_published_at``.
+_PRECISE_TIME_HINT_RE = re.compile(
+    r"\b\d+\s*(?:min|minutes?|h|heures?|hours?|jours?|days?)\b|"
+    r"\b(?:aujourd'hui|hier|today|yesterday)\b|"
+    r"\d{2}:\d{2}",
+    re.IGNORECASE,
+)
+
+
+def _adapt_query_for_exa(query: str) -> str:
+    """Retire l'opérateur ``site:`` : Exa restreint déjà via ``includeDomains``."""
+    return _SITE_PREFIX_RE.sub("", query).strip()
+
+
+def _exa_published_at(item: Mapping[str, Any], snippet: str,
+                      now: datetime) -> datetime | None:
+    """Date de publication Exa, seulement si vérifiable à l'heure près.
+
+    Le champ ``publishedDate`` d'Exa est documenté comme une estimation au
+    jour (``YYYY-MM-DD``), sans heure — insuffisant pour le mode strict 24 h
+    de LinkedIn Posts. On n'accepte une date que si le texte source (extrait
+    ou champ de date) porte une heure explicite ou une expression relative
+    précise ; une simple date calendaire est traitée comme non vérifiable
+    plutôt que silencieusement ramenée à minuit.
+    """
+    candidates = (snippet, str(item.get("publishedDate") or ""))
+    for candidate in candidates:
+        cleaned = _clean_text(candidate)
+        if not cleaned or not _PRECISE_TIME_HINT_RE.search(cleaned.lower()):
+            continue
+        parsed = parse_engine_date(cleaned, now)
+        if parsed is not None:
+            return parsed
+    return None
+
+
+def _parse_exa_result(item: Any, now: datetime) -> SearchResult | None:
+    if not isinstance(item, Mapping):
+        return None
+    canonical = canonicalize_linkedin_post_url(str(item.get("url") or ""))
+    if canonical is None:
+        return None
+    title = _clean_text(str(item.get("title") or ""))
+    if not title:
+        return None
+    highlights = item.get("highlights")
+    highlight_text = (
+        " ".join(str(part) for part in highlights)
+        if isinstance(highlights, list) and highlights else ""
+    )
+    snippet = _clean_text(highlight_text or str(item.get("text") or ""))
+    author = extract_linkedin_author(title)
+    if author is None:
+        raw_author = _clean_text(str(item.get("author") or ""))
+        author = raw_author if raw_author and len(raw_author) <= 120 else None
+    return SearchResult(
+        title=title,
+        snippet=snippet,
+        url=canonical,
+        author=author,
+        published_at=_exa_published_at(item, snippet, now),
+        provider=EXA_PROVIDER_NAME,
+    )
+
+
+class ExaProvider:
+    """Provider basé sur l'API officielle Exa (https://exa.ai).
+
+    Contrairement au scraping DuckDuckGo, Exa est un produit d'API dont les
+    conditions d'usage autorisent explicitement l'appel programmatique :
+    aucune notion de contournement d'anti-bot ici. Le domaine est restreint
+    côté serveur (``includeDomains``) et une fenêtre de fraîcheur large est
+    demandée nativement (``startPublishedDate``/``endPublishedDate``) en
+    complément — jamais en remplacement — du contrôle strict local.
+    """
+
+    name = EXA_PROVIDER_NAME
+
+    def __init__(
+        self,
+        api_key: str,
+        session=None,
+        *,
+        timeout: float = 8.0,
+        endpoint: str = EXA_SEARCH_ENDPOINT,
+        native_window_hours: int = 48,
+    ):
+        if not api_key or not api_key.strip():
+            raise ValueError("ExaProvider requiert une clé API non vide")
+        hostname = (urlsplit(endpoint).hostname or "").lower()
+        if hostname != "api.exa.ai":
+            raise ValueError("Le provider Exa doit cibler api.exa.ai")
+        self.api_key = api_key
+        self.session = session or requests.Session()
+        self.timeout = timeout
+        self.endpoint = endpoint
+        self.native_window_hours = native_window_hours
+
+    def search(
+        self,
+        query: str,
+        freshness: str | None = None,
+        *,
+        page: int = 1,
+        max_results: int = 10,
+        now: datetime | None = None,
+    ) -> list[SearchResult]:
+        if not _clean_text(query):
+            raise ValueError("La requête X-ray ne peut pas être vide")
+        if page < 1 or max_results < 1:
+            raise ValueError("page et max_results doivent être strictement positifs")
+        now = now or datetime.now(timezone.utc)
+        if now.tzinfo is None:
+            now = now.replace(tzinfo=timezone.utc)
+        now = now.astimezone(timezone.utc)
+        if page > 1:
+            # Exa ne documente pas de pagination par décalage : tout le
+            # budget est demandé en un seul appel, les pages suivantes
+            # n'ont rien de plus à offrir.
+            return []
+
+        def iso(value: datetime) -> str:
+            return value.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+
+        payload = {
+            "query": _adapt_query_for_exa(query),
+            "type": "fast",
+            "numResults": min(max_results, 100),
+            "includeDomains": list(LINKEDIN_POST_HOSTS),
+            "startPublishedDate": iso(now - timedelta(hours=self.native_window_hours)),
+            "endPublishedDate": iso(now),
+            "contents": {"text": {"maxCharacters": 500}, "highlights": True},
+        }
+        headers = {"x-api-key": self.api_key, "Content-Type": "application/json"}
+        try:
+            response = self.session.post(
+                self.endpoint, json=payload, headers=headers, timeout=self.timeout,
+            )
+        except requests.Timeout as exc:
+            raise XRayTimeoutError("Timeout Exa") from exc
+        except requests.RequestException as exc:
+            raise XRayProviderError(
+                f"Erreur réseau Exa: {type(exc).__name__}"
+            ) from exc
+
+        status_code = int(getattr(response, "status_code", 0) or 0)
+        if status_code in {401, 403, 429}:
+            raise XRayBlockedError(
+                f"Exa a refusé la requête (HTTP {status_code})",
+                status_code=status_code,
+            )
+        try:
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            raise XRayProviderError(
+                f"Exa a répondu HTTP {status_code or '?'}"
+            ) from exc
+        try:
+            body = response.json()
+        except ValueError as exc:
+            raise XRayProviderError("Réponse Exa invalide (JSON)") from exc
+
+        raw_results = body.get("results") if isinstance(body, Mapping) else None
+        if not isinstance(raw_results, list):
+            return []
+        parsed = [_parse_exa_result(item, now) for item in raw_results]
+        return [result for result in parsed if result is not None][:max_results]
+
+
 class FallbackXRayProvider:
     """Chaîne un provider principal et un secours, sans jamais boucler.
 
@@ -701,8 +889,10 @@ def build_xray_query_plan(
 __all__ = [
     "DUCKDUCKGO_HTML_ENDPOINT",
     "DUCKDUCKGO_LITE_ENDPOINT",
+    "EXA_SEARCH_ENDPOINT",
     "DuckDuckGoHtmlProvider",
     "DuckDuckGoLiteProvider",
+    "ExaProvider",
     "FallbackXRayProvider",
     "LinkedInDestinationError",
     "SearchResult",

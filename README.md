@@ -101,6 +101,39 @@ erreur. Chaque run produit aussi `SourceStatus.domain_reports` : requêtes
 exécutées, bruts, stages détectés, rejets par catégorie, doublons, offres
 finales et durée, pour chaque domaine.
 
+#### Moteur de recherche : Exa en priorité, DuckDuckGo en repli
+
+Mesuré en conditions réelles — depuis un environnement de développement et
+depuis les runners GitHub Actions — DuckDuckGo soumet systématiquement ces
+requêtes à son défi anti-bot (HTTP 202, page « Unfortunately, bots use
+DuckDuckGo too », CAPTCHA visuel). Aucun contournement n'est implémenté ni
+envisagé : la garde `XRayBlockedError` détecte ce blocage et le reporte
+proprement.
+
+Si `EXA_API_KEY` est configuré, [Exa](https://exa.ai) devient le provider
+prioritaire (`FallbackXRayProvider(ExaProvider, <pile DuckDuckGo>)`) : une
+API officielle dont les conditions d'usage autorisent explicitement l'appel
+programmatique — sans quota à contourner. Le domaine est restreint côté
+serveur (`includeDomains=["linkedin.com", "fr.linkedin.com"]`) et une
+fenêtre native large (48 h par défaut) est demandée en complément — jamais
+en remplacement — du contrôle strict local.
+
+Point d'attention : le champ `publishedDate` d'Exa est documenté comme une
+**estimation au jour** (`YYYY-MM-DD`), sans heure. Une date qui n'apparaît
+qu'à ce niveau de précision (aucune heure explicite ni expression relative
+du type « il y a 3 heures » trouvée dans le texte retourné) est traitée
+comme **non vérifiable à l'heure près** et rejetée — jamais ramenée
+silencieusement à minuit. Ce choix peut réduire le rendement mesuré par
+rapport à une interprétation plus permissive de la date, mais reste
+cohérent avec le mode strict demandé.
+
+Limite connue, à mesurer en conditions réelles : Exa ne garantit pas une
+couverture exhaustive des publications LinkedIn (bonne couverture des
+profils et pages d'entreprise d'après leur documentation, sans promesse
+équivalente sur les posts). Sans `EXA_API_KEY`, le connecteur retombe sur
+la pile DuckDuckGo historique, avec le même risque de blocage documenté
+ci-dessus.
+
 ## Fonctionnement
 
 ```text
@@ -186,6 +219,7 @@ Le navigateur n'envoie aucun statut de candidature au dépôt.
 | `FT_CLIENT_SECRET` | OAuth France Travail | seulement pour France Travail |
 | `ADZUNA_APP_ID` | API Adzuna France | seulement pour Adzuna |
 | `ADZUNA_APP_KEY` | API Adzuna France | seulement pour Adzuna |
+| `EXA_API_KEY` | API Exa (LinkedIn Posts) | non — repli DuckDuckGo sans elle |
 | `SMTP_USER` | compte SMTP expéditeur | seulement pour les emails |
 | `SMTP_PASS` | mot de passe d'application SMTP | seulement pour les emails |
 | `ALERT_TO` | destinataire, sinon `SMTP_USER` | non |

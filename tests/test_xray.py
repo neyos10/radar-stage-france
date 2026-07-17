@@ -259,5 +259,178 @@ class TestXRayQueryPlan(unittest.TestCase):
             )
 
 
+class FakeJsonResponse:
+    def __init__(self, status_code=200, payload=None):
+        self.status_code = status_code
+        self._payload = payload if payload is not None else {}
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise requests.HTTPError(f"HTTP {self.status_code}")
+
+    def json(self):
+        return self._payload
+
+
+class FakePostSession:
+    def __init__(self, response=None, error=None):
+        self.response = response or FakeJsonResponse()
+        self.error = error
+        self.calls = []
+
+    def post(self, url, **kwargs):
+        self.calls.append((url, kwargs))
+        if self.error:
+            raise self.error
+        return self.response
+
+
+def exa_item(url="https://www.linkedin.com/posts/acme_stage-activity-7351000000000000001",
+            title="Alice Martin sur LinkedIn : Stage Data Engineer",
+            published_date="2026-07-16", author="Alice Martin",
+            text="Nous recherchons un stagiaire data engineer.", highlights=None):
+    item = {"url": url, "title": title, "publishedDate": published_date,
+            "author": author, "text": text}
+    if highlights is not None:
+        item["highlights"] = highlights
+    return item
+
+
+class TestExaProviderConstruction(unittest.TestCase):
+    def test_rejects_empty_api_key(self):
+        with self.assertRaises(ValueError):
+            xray.ExaProvider("")
+
+    def test_rejects_non_exa_endpoint(self):
+        with self.assertRaises(ValueError):
+            xray.ExaProvider("key", endpoint="https://evil.example.com/search")
+
+
+class TestExaProviderRequest(unittest.TestCase):
+    def test_request_targets_exa_with_api_key_header_and_domain_filter(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("secret-key", session=session)
+        provider.search('site:linkedin.com/posts "stage" "data"', now=NOW)
+        url, kwargs = session.calls[0]
+        self.assertEqual(url, xray.EXA_SEARCH_ENDPOINT)
+        self.assertEqual(kwargs["headers"]["x-api-key"], "secret-key")
+        body = kwargs["json"]
+        self.assertEqual(body["includeDomains"], list(xray.LINKEDIN_POST_HOSTS))
+        # L'opérateur site: est retiré : Exa restreint déjà via includeDomains.
+        self.assertNotIn("site:", body["query"])
+        self.assertIn('"stage"', body["query"])
+        self.assertEqual(body["type"], "fast")
+
+    def test_native_window_defaults_to_48h_around_now(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("key", session=session)
+        provider.search("stage data", now=NOW)
+        body = session.calls[0][1]["json"]
+        start = datetime.fromisoformat(body["startPublishedDate"].replace("Z", "+00:00"))
+        end = datetime.fromisoformat(body["endPublishedDate"].replace("Z", "+00:00"))
+        self.assertEqual(end, NOW)
+        self.assertEqual(NOW - start, timedelta(hours=48))
+
+    def test_second_page_returns_empty_without_network_call(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("key", session=session)
+        results = provider.search("stage data", page=2, now=NOW)
+        self.assertEqual(results, [])
+        self.assertEqual(session.calls, [])
+
+    def test_numresults_clamped_to_hundred(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.ExaProvider("key", session=session)
+        provider.search("stage data", max_results=500, now=NOW)
+        self.assertEqual(session.calls[0][1]["json"]["numResults"], 100)
+
+
+class TestExaProviderResponseParsing(unittest.TestCase):
+    def test_parses_title_url_author_snippet(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            exa_item(highlights=["Nous recherchons un stagiaire data engineer."]),
+        ]}))
+        provider = xray.ExaProvider("key", session=session)
+        results = provider.search("stage data", now=NOW)
+        self.assertEqual(len(results), 1)
+        result = results[0]
+        self.assertEqual(result.provider, "exa")
+        self.assertIn("Stage Data Engineer", result.title)
+        self.assertIn("stagiaire", result.snippet)
+        self.assertTrue(result.url.startswith("https://www.linkedin.com/posts/"))
+
+    def test_non_linkedin_result_is_discarded(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            exa_item(url="https://example.com/not-linkedin"),
+        ]}))
+        provider = xray.ExaProvider("key", session=session)
+        self.assertEqual(provider.search("stage data", now=NOW), [])
+
+    def test_day_only_published_date_without_time_hint_is_unverifiable(self):
+        # publishedDate = simple date calendaire, aucune heure dans le texte :
+        # non vérifiable à l'heure près, jamais ramené silencieusement à minuit.
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            exa_item(published_date="2026-07-16",
+                     text="Nous recherchons un stagiaire data engineer."),
+        ]}))
+        provider = xray.ExaProvider("key", session=session)
+        result = provider.search("stage data", now=NOW)[0]
+        self.assertIsNone(result.published_at)
+
+    def test_relative_time_in_text_is_resolved_precisely(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            exa_item(text="Nous recherchons un stagiaire. Publié il y a 3 heures."),
+        ]}))
+        provider = xray.ExaProvider("key", session=session)
+        result = provider.search("stage data", now=NOW)[0]
+        self.assertIsNotNone(result.published_at)
+        self.assertEqual(result.published_at, NOW - timedelta(hours=3))
+
+    def test_published_date_with_explicit_time_is_resolved_precisely(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            exa_item(published_date="2026-07-16T09:30:00.000Z",
+                     text="Nous recherchons un stagiaire data engineer."),
+        ]}))
+        provider = xray.ExaProvider("key", session=session)
+        result = provider.search("stage data", now=NOW)[0]
+        self.assertEqual(
+            result.published_at,
+            datetime(2026, 7, 16, 9, 30, tzinfo=timezone.utc),
+        )
+
+    def test_malformed_results_are_skipped_not_fatal(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            "not-a-dict", {"url": ""}, exa_item(),
+        ]}))
+        provider = xray.ExaProvider("key", session=session)
+        self.assertEqual(len(provider.search("stage data", now=NOW)), 1)
+
+
+class TestExaProviderErrors(unittest.TestCase):
+    def test_401_is_blocked_not_silently_empty(self):
+        session = FakePostSession(FakeJsonResponse(401, {}))
+        provider = xray.ExaProvider("bad-key", session=session)
+        with self.assertRaises(xray.XRayBlockedError):
+            provider.search("stage data", now=NOW)
+
+    def test_429_is_blocked(self):
+        session = FakePostSession(FakeJsonResponse(429, {}))
+        provider = xray.ExaProvider("key", session=session)
+        with self.assertRaises(xray.XRayBlockedError):
+            provider.search("stage data", now=NOW)
+
+    def test_timeout_is_typed(self):
+        session = FakePostSession(error=requests.Timeout("slow"))
+        provider = xray.ExaProvider("key", session=session)
+        with self.assertRaises(xray.XRayTimeoutError):
+            provider.search("stage data", now=NOW)
+
+    def test_other_http_error_is_provider_error(self):
+        session = FakePostSession(FakeJsonResponse(500, {}))
+        provider = xray.ExaProvider("key", session=session)
+        with self.assertRaises(xray.XRayProviderError):
+            provider.search("stage data", now=NOW)
+
+
 if __name__ == "__main__":
     unittest.main()
