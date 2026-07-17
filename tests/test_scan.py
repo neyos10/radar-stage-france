@@ -922,12 +922,15 @@ class TestSourcePagination(unittest.TestCase):
                            "jobs": [item(i) for i in range(100)]}),
             fake_response({"totalCount": 101, "jobs": [item(100)]}),
         ]
-        with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
-             mock.patch.object(scan.requests, "post",
-                               side_effect=responses) as post:
-            offers, status = scan.fetch_jooble_all(
-                domains=self.CATALOG, active_ids=["data"]
-            )
+        with tempfile.TemporaryDirectory() as tmp:
+            rotation_path = Path(tmp) / "jooble_rotation.json"
+            with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
+                 mock.patch.object(scan.requests, "post",
+                                   side_effect=responses) as post:
+                offers, status = scan.fetch_jooble_all(
+                    domains=self.CATALOG, active_ids=["data"],
+                    rotation_path=rotation_path,
+                )
         self.assertEqual(len(offers), 101)
         self.assertEqual(status.pages_fetched, 2)
         self.assertEqual(
@@ -971,6 +974,85 @@ class TestSourcePagination(unittest.TestCase):
         )
         self.assertTrue(all(call.kwargs["params"]["publieeDepuis"] == 1
                             for call in get.call_args_list))
+
+
+class TestJoobleQueryRotation(unittest.TestCase):
+    """Budget prudent (10 requêtes/run) tant que la politique de quota
+    Jooble (500 requêtes, périodicité non documentée) n'est pas confirmée."""
+
+    CATALOG = {
+        f"domain_{i}": {
+            "label": f"D{i}", "group": "Test",
+            "queries": [f"stage query {i}"],
+            "positive": ["query"], "negative": [], "enabled": True,
+        }
+        for i in range(25)
+    }
+
+    def test_plan_is_bounded_by_budget(self):
+        plan, next_index = scan.jooble_query_plan(
+            self.CATALOG, list(self.CATALOG), start_index=0, budget=10,
+        )
+        self.assertEqual(len(plan), 10)
+        self.assertEqual(next_index, 10)
+
+    def test_plan_wraps_around_the_catalog(self):
+        plan, next_index = scan.jooble_query_plan(
+            self.CATALOG, list(self.CATALOG), start_index=20, budget=10,
+        )
+        self.assertEqual(len(plan), 10)
+        self.assertEqual(next_index, 5)
+        full_catalog = scan.active_queries(self.CATALOG, list(self.CATALOG))
+        self.assertEqual(plan, full_catalog[20:25] + full_catalog[0:5])
+
+    def test_budget_larger_than_catalog_returns_whole_catalog_once(self):
+        small = {"data": self.CATALOG["domain_0"]}
+        plan, next_index = scan.jooble_query_plan(
+            small, ["data"], start_index=0, budget=10,
+        )
+        self.assertEqual(plan, ["stage query 0"])
+        self.assertEqual(next_index, 0)
+
+    def test_rotation_cursor_persists_and_advances_across_runs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            rotation_path = Path(tmp) / "jooble_rotation.json"
+
+            def fake_scrape(**_kwargs):
+                return fake_response({"totalCount": 0, "jobs": []})
+
+            with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
+                 mock.patch.object(scan.requests, "post",
+                                   side_effect=lambda *a, **k: fake_scrape()) as post:
+                scan.fetch_jooble_all(
+                    domains=self.CATALOG, active_ids=list(self.CATALOG),
+                    rotation_path=rotation_path,
+                )
+                first_run_queries = {
+                    call.kwargs["json"]["keywords"] for call in post.call_args_list
+                }
+                post.reset_mock()
+                scan.fetch_jooble_all(
+                    domains=self.CATALOG, active_ids=list(self.CATALOG),
+                    rotation_path=rotation_path,
+                )
+                second_run_queries = {
+                    call.kwargs["json"]["keywords"] for call in post.call_args_list
+                }
+            self.assertEqual(len(first_run_queries), scan.JOOBLE_QUERY_BUDGET)
+            self.assertEqual(len(second_run_queries), scan.JOOBLE_QUERY_BUDGET)
+            # Le deuxième run ne répète jamais le tout premier sous-ensemble :
+            # la rotation avance bien d'un run à l'autre.
+            self.assertNotEqual(first_run_queries, second_run_queries)
+            saved = json.loads(rotation_path.read_text(encoding="utf-8"))
+            self.assertEqual(saved["next_index"], 2 * scan.JOOBLE_QUERY_BUDGET)
+
+    def test_missing_or_corrupt_rotation_file_restarts_at_zero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "absent.json"
+            self.assertEqual(scan.load_jooble_rotation_index(missing), 0)
+            corrupt = Path(tmp) / "corrupt.json"
+            corrupt.write_text("{not json", encoding="utf-8")
+            self.assertEqual(scan.load_jooble_rotation_index(corrupt), 0)
 
 
 class TestMissingCredentials(unittest.TestCase):

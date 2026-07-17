@@ -61,6 +61,11 @@ jobs:
           git config user.name "radar-stage-bot"
           git config user.email "actions@github.com"
           git add data/seen_offers.json data/offers.json data/source_status.json docs/index.html
+          # jooble_rotation.json n'existe que si Jooble a réellement tourné
+          # (secret présent et région France) : ajout défensif, jamais requis.
+          if [ -e data/jooble_rotation.json ]; then
+            git add data/jooble_rotation.json
+          fi
           if git diff --quiet --cached; then
             echo "Aucun changement à committer — rien à pousser."
             exit 0

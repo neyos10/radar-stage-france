@@ -65,6 +65,7 @@ SEEN_FILE = Path("data/seen_offers.json")
 STATUS_FILE = Path("data/source_status.json")
 OFFERS_FILE = Path("data/offers.json")
 DOCS_INDEX = Path("docs/index.html")
+JOOBLE_ROTATION_FILE = Path("data/jooble_rotation.json")
 
 
 def load_json(path: Path) -> dict:
@@ -189,6 +190,12 @@ ADZUNA_PAGE_SIZE = 50
 # Jooble retourne 20 résultats par défaut ; ResultOnPage demande explicitement
 # une page plus large pour réduire le nombre d'appels par requête.
 JOOBLE_PAGE_SIZE = 100
+# Quota de démarrage Jooble : 500 requêtes dont la nature (unique ou
+# récurrente) n'est pas documentée publiquement. Ce budget prudent par run
+# fait durer un total unique de 500 sur ~50 runs (~2 jours en cadence
+# horaire) plutôt que de l'épuiser en une poignée d'heures ; à ajuster une
+# fois la politique de quota confirmée auprès de Jooble.
+JOOBLE_QUERY_BUDGET = 10
 FRANCE_TRAVAIL_PAGE_SIZE = 150
 
 # Une offre confirmée absente reste archivée brièvement avant purge. Cette
@@ -1183,6 +1190,50 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
     return list(offers.values()), status
 
 
+def load_jooble_rotation_index(path: Path = JOOBLE_ROTATION_FILE) -> int:
+    """Curseur de rotation Jooble ; absent ou corrompu = repart à zéro."""
+    if not path.exists():
+        return 0
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return 0
+    if not isinstance(payload, dict):
+        return 0
+    try:
+        return max(0, int(payload.get("next_index", 0)))
+    except (TypeError, ValueError):
+        return 0
+
+
+def save_jooble_rotation_index(index: int, path: Path = JOOBLE_ROTATION_FILE) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps({"next_index": max(0, int(index))}, ensure_ascii=False, indent=1),
+        encoding="utf-8",
+    )
+
+
+def jooble_query_plan(
+        domains: dict | None = None, active_ids: list[str] | None = None,
+        *, start_index: int = 0,
+        budget: int = JOOBLE_QUERY_BUDGET) -> tuple[list[str], int]:
+    """Sous-ensemble rotatif et déterministe du catalogue, sans écriture.
+
+    Chaque run avance le curseur d'exactement ``budget`` positions dans le
+    catalogue complet (avec retour au début), garantissant qu'à terme tous
+    les domaines sont couverts sans jamais dépasser le budget par run.
+    """
+    queries = active_queries(domains, active_ids)
+    if not queries or budget <= 0:
+        return [], start_index
+    count = min(budget, len(queries))
+    start_index = start_index % len(queries)
+    plan = [queries[(start_index + i) % len(queries)] for i in range(count)]
+    next_index = (start_index + count) % len(queries)
+    return plan, next_index
+
+
 # ============================================================
 # SOURCE 6 : Jooble (agrégateur généraliste européen)
 # ============================================================
@@ -1191,12 +1242,18 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
                      region_config: dict | None = None,
                      regions: dict | None = None,
                      domains: dict | None = None,
-                     active_ids: list[str] | None = None) -> tuple[list[dict], SourceStatus]:
+                     active_ids: list[str] | None = None,
+                     rotation_path: Path = JOOBLE_ROTATION_FILE) -> tuple[list[dict], SourceStatus]:
     """Jooble : agrégateur généraliste, un seul point d'entrée européen.
 
     Comme Adzuna, le connecteur reste limité à la France : Jooble n'expose
     pas de scope pays natif distinct de ``location``, et rien ne garantit
     qu'une requête localisée sur une autre région resterait fiable.
+
+    Le quota de démarrage (500 requêtes, nature journalière/mensuelle/unique
+    non documentée) impose un budget prudent par run : seul un sous-ensemble
+    rotatif du catalogue est interrogé à chaque run (``JOOBLE_QUERY_BUDGET``),
+    avec un curseur persisté pour couvrir tous les domaines au fil du temps.
     """
     regions = regions or REGIONS
     domains = domains or DOMAINS
@@ -1215,10 +1272,18 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
         log_collection_summary(status)
         return [], status
 
+    start_index = load_jooble_rotation_index(rotation_path)
+    plan, next_index = jooble_query_plan(
+        domains, active_ids, start_index=start_index,
+    )
+    print(f"[INFO] Jooble : rotation {len(plan)}/"
+          f"{len(active_queries(domains, active_ids))} requêtes "
+          f"(curseur {start_index} → {next_index})")
+
     offers: dict[str, dict] = {}
     remote_seen: set[str] = set()
     consecutive_blocks = attempted = failed = 0
-    for query in active_queries(domains, active_ids):
+    for query in plan:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.note = "circuit breaker : requêtes restantes ignorées"
             break
@@ -1295,6 +1360,7 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
     else:
         status.finalize()
     log_collection_summary(status)
+    save_jooble_rotation_index(next_index, rotation_path)
     return list(offers.values()), status
 
 
