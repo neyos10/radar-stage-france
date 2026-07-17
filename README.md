@@ -87,8 +87,15 @@ site ne demande et ne conserve aucun token GitHub.
   endpoint détail bloque en 403/429, un circuit breaker dédié arrête les
   lectures restantes du run au lieu de répéter des échecs identiques.
 - France Travail utilise `natureContrat=FS` et la fenêtre configurée.
-- APEC et France Travail ne sont jamais appelés hors France ; le diagnostic
-  devient alors `not_applicable_region`.
+- APEC, Adzuna, Jooble et France Travail ne sont jamais appelés hors France
+  (limite du connecteur actuel, pas de la région) ; le diagnostic devient
+  alors `not_applicable_region`.
+- Jooble démarre avec un quota gratuit de 500 requêtes dont la périodicité
+  (unique, journalière, mensuelle) n'est pas documentée publiquement. Par
+  prudence, seul un sous-ensemble rotatif de `JOOBLE_QUERY_BUDGET` (10)
+  requêtes est interrogé par run ; un curseur persisté dans
+  `data/jooble_rotation.json` garantit que tous les domaines finissent par
+  être couverts au fil des runs, sans jamais dépasser le budget.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
 - LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.
