@@ -748,7 +748,8 @@ class TestRetiredNoiseSources(unittest.TestCase):
         self.assertNotIn("Google Jobs", scan.SOURCE_NAMES)
         self.assertEqual(
             scan.SOURCE_NAMES,
-            ["LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "France Travail"],
+            ["LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "The Muse",
+             "France Travail"],
         )
 
     def test_run_all_sources_never_threads_glassdoor_or_google(self):
@@ -939,6 +940,87 @@ class TestSourcePagination(unittest.TestCase):
         )
         self.assertTrue(post.call_args_list[0].args[0].endswith("/key"))
         self.assertEqual(post.call_args_list[1].kwargs["json"]["page"], "2")
+
+    def test_the_muse_paginates_using_page_count_and_applies_internship_filter(self):
+        def item(job_id, name="Stage Data Engineer"):
+            return {
+                "id": job_id, "name": name,
+                "company": {"name": "ACME"},
+                "locations": [{"name": "Paris, France"}],
+                "levels": [{"name": "Internship"}],
+                "publication_date": RECENT_1H,
+                "contents": "<p>data engineer</p>",
+                "refs": {"landing_page": f"https://www.themuse.com/jobs/acme/{job_id}"},
+            }
+
+        responses = [
+            fake_response({"page_count": 2, "page": 0,
+                           "results": [item(f"job-{i}") for i in range(20)]}),
+            fake_response({"page_count": 2, "page": 1,
+                           "results": [item("job-20")]}),
+        ]
+        with mock.patch.object(scan.requests, "get",
+                               side_effect=responses) as get:
+            offers, status = scan.fetch_the_muse_all(
+                domains=self.CATALOG, active_ids=["data"],
+            )
+        self.assertEqual(len(offers), 21)
+        self.assertEqual(status.pages_fetched, 2)
+        self.assertEqual(get.call_args_list[0].kwargs["params"]["level"],
+                         "Internship")
+        self.assertEqual(get.call_args_list[0].kwargs["params"]["location"],
+                         "France")
+        self.assertEqual(get.call_args_list[0].kwargs["params"]["page"], 0)
+        self.assertEqual(get.call_args_list[1].kwargs["params"]["page"], 1)
+        self.assertNotIn("api_key", get.call_args_list[0].kwargs["params"])
+
+    def test_the_muse_stops_when_page_count_reached(self):
+        response = fake_response({
+            "page_count": 1, "page": 0,
+            "results": [{
+                "id": "solo", "name": "Stage Data Engineer",
+                "company": {"name": "ACME"},
+                "locations": [{"name": "Paris, France"}],
+                "levels": [{"name": "Internship"}],
+                "publication_date": RECENT_1H,
+                "contents": "data engineer",
+                "refs": {"landing_page": "https://www.themuse.com/jobs/acme/solo"},
+            }],
+        })
+        with mock.patch.object(scan.requests, "get",
+                               return_value=response) as get:
+            offers, status = scan.fetch_the_muse_all(
+                domains=self.CATALOG, active_ids=["data"],
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(get.call_count, 1)
+        self.assertEqual(status.status, "success")
+
+    def test_the_muse_uses_optional_api_key_when_present(self):
+        response = fake_response({"page_count": 1, "page": 0, "results": []})
+        with mock.patch.dict(os.environ, {"THEMUSE_API_KEY": "muse-key"}), \
+             mock.patch.object(scan.requests, "get",
+                               return_value=response) as get:
+            scan.fetch_the_muse_all(domains=self.CATALOG, active_ids=["data"])
+        self.assertEqual(get.call_args.kwargs["params"]["api_key"], "muse-key")
+
+    def test_the_muse_limited_to_france(self):
+        with mock.patch.object(scan.requests, "get") as get:
+            offers, status = scan.fetch_the_muse_all(region_id="belgique")
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "not_applicable_region")
+        get.assert_not_called()
+
+    def test_the_muse_http_error_reports_blocked(self):
+        with mock.patch.object(
+            scan.requests, "get",
+            side_effect=Exception("403 Client Error: Forbidden"),
+        ):
+            offers, status = scan.fetch_the_muse_all(
+                domains=self.CATALOG, active_ids=["data"],
+            )
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "blocked")
 
     def test_france_travail_paginates_ranges_and_filters_one_day(self):
         def item(index):

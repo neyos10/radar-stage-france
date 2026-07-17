@@ -6,9 +6,10 @@ nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
 GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
 actifs par défaut.
 
-Les six sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
-Jooble et France Travail. Chaque source est isolée : un blocage 403/429, un
-timeout ou l'absence d'une clé API n'arrête pas les autres connecteurs.
+Les sept sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
+Jooble, The Muse et France Travail. Chaque source est isolée : un blocage
+403/429, un timeout ou l'absence d'une clé API n'arrête pas les autres
+connecteurs.
 
 Glassdoor et Google Jobs ont été retirés du code : sur plusieurs runs de
 production consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas
@@ -67,10 +68,12 @@ par un run sain. Les entrées inactives sont purgées après 14 jours.
 | `ALERT_TO` | destinataire, sinon `SMTP_USER` | non |
 | `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | API Adzuna | non |
 | `JOOBLE_API_KEY` | API Jooble | non |
+| `THEMUSE_API_KEY` | API The Muse (relève la limite à 3600 req/h) | non — 500 req/h sans elle |
 | `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | API Offres d'emploi v2 | non |
 
 Sans identifiants optionnels, leur source apparaît « non configurée » et le
-reste du scan continue normalement.
+reste du scan continue normalement. The Muse fonctionne même sans clé
+(500 requêtes/heure, largement suffisant pour un run).
 
 Le scan tourne automatiquement chaque heure. Pour un run immédiat, utiliser
 **Run workflow** dans l'onglet GitHub Actions du dépôt. Le bouton
@@ -87,9 +90,13 @@ site ne demande et ne conserve aucun token GitHub.
   endpoint détail bloque en 403/429, un circuit breaker dédié arrête les
   lectures restantes du run au lieu de répéter des échecs identiques.
 - France Travail utilise `natureContrat=FS` et la fenêtre configurée.
-- APEC, Adzuna, Jooble et France Travail ne sont jamais appelés hors France
-  (limite du connecteur actuel, pas de la région) ; le diagnostic devient
-  alors `not_applicable_region`.
+- The Muse utilise le filtre serveur natif `level=Internship` (confirmation
+  équivalente au filtre stage d'APEC) : aucune requête par mot-clé n'est
+  nécessaire, une seule pagination par run couvre tout le catalogue pour la
+  région, puis le scoring par domaine s'applique localement comme pour APEC.
+- APEC, Adzuna, Jooble, The Muse et France Travail ne sont jamais appelés
+  hors France (limite du connecteur actuel, pas de la région) ; le
+  diagnostic devient alors `not_applicable_region`.
 - Jooble démarre avec un quota gratuit de 500 requêtes dont la périodicité
   (unique, journalière, mensuelle) n'est pas documentée publiquement. Par
   prudence, seul un sous-ensemble rotatif de `JOOBLE_QUERY_BUDGET` (10)
