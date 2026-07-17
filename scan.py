@@ -5,11 +5,16 @@ Radar Stage France — agrégateur multi-sources, multi-domaines et multi-régio
 Sources :
   1. LinkedIn (offres publiques, sans compte)   — via JobSpy
   2. Indeed (régions configurées)                — via JobSpy
-  3. Glassdoor (pays supportés par JobSpy)       — via JobSpy
-  4. Google Jobs (agrège WTTJ, HelloWork…)       — via JobSpy
-  5. APEC France (recherche publique de stages)  — sans compte
-  6. Adzuna France (agrégateur officiel)         — si secrets fournis
-  7. France Travail (API officielle française)   — si secrets fournis
+  3. APEC France (recherche publique de stages)  — sans compte
+  4. Adzuna France (agrégateur officiel)         — si secrets fournis
+  5. France Travail (API officielle française)   — si secrets fournis
+
+Glassdoor et Google Jobs restent implémentés dans ``fetch_jobspy_site`` mais
+ne sont plus interrogés par défaut : sur plusieurs runs de production
+consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas (Glassdoor
+bloqué en 403 par son anti-bot, Google Jobs répondant vide sans erreur) tout
+en consommant du temps de scan. Les réactiver ne demande qu'un ajout dans
+``SOURCE_NAMES`` et le dict ``fetchers`` si JobSpy les corrige un jour.
 
 Chaque source est optionnelle et tolérante aux pannes : si un site bloque
 (403/429) ou si une clé manque, on continue avec les autres. Un circuit
@@ -132,8 +137,7 @@ REGIONS = load_regions()
 DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
-    "LinkedIn", "Indeed", "Glassdoor", "Google Jobs", "APEC",
-    "Adzuna", "France Travail",
+    "LinkedIn", "Indeed", "APEC", "Adzuna", "France Travail",
 ]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
@@ -948,9 +952,14 @@ def apec_search_payload(query: str, start_index: int = 0,
     }
 
 
-def fetch_apec_detail_description(number: str) -> str:
+def fetch_apec_detail_description(number: str) -> tuple[str, bool]:
     """Texte complet d'une offre APEC (le snippet de recherche est
-    tronqué vers 280 caractères, souvent avant les missions)."""
+    tronqué vers 280 caractères, souvent avant les missions).
+
+    Retourne ``(texte, blocked)`` : ``blocked`` distingue un blocage 403/429
+    d'une autre erreur, pour permettre un circuit breaker côté appelant sans
+    répéter des appels voués à échouer identiquement.
+    """
     try:
         resp = requests.get(
             "https://www.apec.fr/cms/webservices/offre/public",
@@ -962,10 +971,10 @@ def fetch_apec_detail_description(number: str) -> str:
         blocks = [data.get("texteHtml"), data.get("texteHtmlProfil"),
                   data.get("texteHtmlEntreprise")]
         text = " ".join(str(b) for b in blocks if b)
-        return re.sub(r"<[^>]+>", " ", text)
+        return re.sub(r"<[^>]+>", " ", text), False
     except Exception as exc:
         print(f"[WARN] APEC détail {number} a échoué : {exc}", file=sys.stderr)
-        return ""
+        return "", bool(block_code(exc))
 
 
 def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
@@ -1042,6 +1051,7 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
 
     offers: dict[str, dict] = {}
     detail_budget = APEC_DETAIL_MAX_CALLS
+    detail_blocked = False
     for number, r in raw_by_number.items():
         url = f"https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/{number}"
         args = (r.get("intitule"), r.get("nomCommercial"), r.get("lieuTexte"),
@@ -1050,19 +1060,27 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
                                    description=clean_text(r.get("texteOffre")),
                                    domains=domains, active_ids=active_ids,
                                    region_id=region_id, regions=regions)
-        if offer is None and reason == REASON_NO_DOMAIN and detail_budget > 0:
+        if (offer is None and reason == REASON_NO_DOMAIN
+                and detail_budget > 0 and not detail_blocked):
             # Titre insuffisant et snippet tronqué : lire le texte complet
             # avant de rejeter : un titre générique peut cacher des missions
             # spécifiques à l'un des domaines actifs.
             detail_budget -= 1
-            full_text = fetch_apec_detail_description(number)
+            full_text, blocked = fetch_apec_detail_description(number)
+            if blocked:
+                # L'endpoint détail bloque de façon systématique (403/429) :
+                # les appels suivants échoueraient identiquement, autant ne
+                # pas les tenter et garder le budget informatif exact.
+                detail_blocked = True
             if full_text:
                 offer, reason = make_offer(*args, confirmed_internship=True,
                                            description=full_text,
                                            domains=domains, active_ids=active_ids,
                                            region_id=region_id, regions=regions)
         register_offer(status, offers, offer, reason)
-    if detail_budget == 0:
+    if detail_blocked:
+        status.note = "lectures de détail APEC bloquées (403/429)"
+    elif detail_budget == 0:
         status.note = f"budget de {APEC_DETAIL_MAX_CALLS} lectures de détail épuisé"
 
     status.duration_s = round(time.monotonic() - started, 1)
@@ -1397,8 +1415,6 @@ def run_all_sources(domains: dict | None = None,
     fetchers = {
         "LinkedIn": jobspy_fetcher("linkedin", "LinkedIn"),
         "Indeed": jobspy_fetcher("indeed", "Indeed"),
-        "Glassdoor": jobspy_fetcher("glassdoor", "Glassdoor"),
-        "Google Jobs": jobspy_fetcher("google", "Google Jobs"),
         "APEC": lambda region_id, region_config: fetch_apec_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "Adzuna": lambda region_id, region_config: fetch_adzuna_all(

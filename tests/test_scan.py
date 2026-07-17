@@ -765,6 +765,47 @@ class TestJobspyAccounting(unittest.TestCase):
         self.assertEqual([call["search_term"] for call in seen], scan.active_queries())
 
 
+class TestRetiredNoiseSources(unittest.TestCase):
+    """Glassdoor et Google Jobs ont renvoyé 0 résultat sur plusieurs runs de
+    production consécutifs (bloqué 403 / réponse vide) : ils restent
+    implémentés dans fetch_jobspy_site mais ne doivent plus être appelés."""
+
+    def test_source_names_no_longer_include_noisy_zero_yield_sources(self):
+        self.assertNotIn("Glassdoor", scan.SOURCE_NAMES)
+        self.assertNotIn("Google Jobs", scan.SOURCE_NAMES)
+        self.assertEqual(
+            scan.SOURCE_NAMES,
+            ["LinkedIn", "Indeed", "APEC", "Adzuna", "France Travail"],
+        )
+
+    def test_run_all_sources_never_threads_glassdoor_or_google(self):
+        catalog = {
+            "data": {
+                "label": "Data", "group": "Test",
+                "queries": ["stage data engineer"],
+                "positive": ["data engineer"], "negative": [],
+                "enabled": True,
+            }
+        }
+        with mock.patch("scan.fetch_jobspy_site") as fetch_mock, \
+             mock.patch.object(scan, "fetch_apec_all",
+                               return_value=([], scan.SourceStatus(source="APEC"))), \
+             mock.patch.object(scan, "fetch_adzuna_all",
+                               return_value=([], scan.SourceStatus(source="Adzuna"))), \
+             mock.patch.object(scan, "fetch_france_travail_all",
+                               return_value=([], scan.SourceStatus(source="France Travail"))):
+            fetch_mock.return_value = ([], scan.SourceStatus(source="LinkedIn"))
+            scan.run_all_sources(
+                domains=catalog, active_domain_ids=["data"],
+                regions={"france": scan.REGIONS["france"]},
+                active_region_ids=["france"],
+            )
+            sites_called = {call.args[0] for call in fetch_mock.call_args_list}
+        self.assertEqual(sites_called, {"linkedin", "indeed"})
+        self.assertNotIn("glassdoor", sites_called)
+        self.assertNotIn("google", sites_called)
+
+
 class TestApecNativeFilters(unittest.TestCase):
     def test_payload_has_native_filters(self):
         p = scan.apec_search_payload("data")
@@ -794,6 +835,60 @@ class TestSourcePagination(unittest.TestCase):
             "nomCommercial": "ACME", "lieuTexte": "Paris",
             "datePublication": RECENT_1H, "texteOffre": "data engineer",
         }
+
+    def apec_generic_item(self, index):
+        # Titre générique et snippet hors domaine actif : déclenche le
+        # fallback vers la lecture de détail.
+        return {
+            "numeroOffre": str(index), "intitule": "Stage polyvalent",
+            "nomCommercial": "ACME", "lieuTexte": "Paris",
+            "datePublication": RECENT_1H, "texteOffre": "mission générale",
+        }
+
+    def test_apec_detail_circuit_breaker_stops_after_first_403(self):
+        forbidden = mock.Mock(status_code=403)
+        forbidden.raise_for_status.side_effect = Exception("403 Client Error: Forbidden")
+        search_response = fake_response(
+            {"resultats": [self.apec_generic_item(i) for i in range(5)]}
+        )
+        with mock.patch.object(scan.requests, "post", return_value=search_response), \
+             mock.patch.object(scan.requests, "get", return_value=forbidden) as get:
+            offers, status = scan.fetch_apec_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        # Un seul appel de détail est tenté : le circuit breaker évite les
+        # quatre échecs identiques restants.
+        self.assertEqual(get.call_count, 1)
+        self.assertEqual(offers, [])
+        self.assertIn("bloquées", status.note)
+
+    def test_apec_detail_success_is_not_affected_by_breaker(self):
+        # Deux mots-clés positifs distincts sont nécessaires : le score
+        # description (poids 1 chacun) doit atteindre le seuil 2.
+        catalog = {
+            "data": {
+                "label": "Data", "group": "Test",
+                "queries": ["stage data engineer"],
+                "positive": ["data engineer", "pipelines"], "negative": [],
+                "enabled": True,
+            }
+        }
+        search_response = fake_response(
+            {"resultats": [self.apec_generic_item(0)]}
+        )
+        detail_response = mock.Mock(status_code=200)
+        detail_response.raise_for_status.return_value = None
+        detail_response.json.return_value = {
+            "texteHtml": "<p>stage data engineer sur des pipelines</p>",
+        }
+        with mock.patch.object(scan.requests, "post", return_value=search_response), \
+             mock.patch.object(scan.requests, "get", return_value=detail_response) as get:
+            offers, status = scan.fetch_apec_all(
+                domains=catalog, active_ids=["data"]
+            )
+        self.assertEqual(get.call_count, 1)
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(status.note, "")
 
     def test_apec_paginates_until_short_page(self):
         responses = [
@@ -1077,7 +1172,7 @@ class TestDashboard(unittest.TestCase):
         statuses = [scan.SourceStatus(source=n) for n in scan.SOURCE_NAMES]
         statuses[2].status = "blocked"
         statuses[2].http_error = "HTTP 403"
-        statuses[5].status = "disabled_missing_credentials"
+        statuses[4].status = "disabled_missing_credentials"
         page = self.render([o], statuses)
         javascript = self.dashboard_javascript()
         self.assertIn('rel="noopener noreferrer"', page)

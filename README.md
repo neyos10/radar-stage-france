@@ -6,9 +6,17 @@ nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
 GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
 actifs par défaut.
 
-Les sept sources sont LinkedIn, Indeed, Glassdoor et Google Jobs via JobSpy,
-APEC, Adzuna et France Travail. Chaque source est isolée : un blocage 403/429,
-un timeout ou l'absence d'une clé API n'arrête pas les autres connecteurs.
+Les cinq sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna et
+France Travail. Chaque source est isolée : un blocage 403/429, un timeout ou
+l'absence d'une clé API n'arrête pas les autres connecteurs.
+
+Glassdoor et Google Jobs restent implémentés (`fetch_jobspy_site` reste
+générique) mais ne sont plus interrogés par défaut : sur plusieurs runs de
+production consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas
+(Glassdoor bloqué par son anti-bot, Google Jobs répondant vide sans erreur)
+tout en consommant environ 2 minutes de scan pour rien. Les réactiver ne
+demande qu'un ajout dans `SOURCE_NAMES` et le dict `fetchers` de
+`run_all_sources` si JobSpy les corrige.
 
 ## Configuration produit
 
@@ -76,12 +84,12 @@ site ne demande et ne conserve aucun token GitHub.
   sont normalisées ; une date inconnue est conservée et signalée, une date
   réellement trop ancienne est rejetée et journalisée.
 - APEC utilise les filtres serveur stage (`typesContrat=597171`) et Bac+5
-  (`niveauEtude=20019`), puis un budget borné de lectures de détail.
+  (`niveauEtude=20019`), puis un budget borné de lectures de détail. Si cet
+  endpoint détail bloque en 403/429, un circuit breaker dédié arrête les
+  lectures restantes du run au lieu de répéter des échecs identiques.
 - France Travail utilise `natureContrat=FS` et la fenêtre configurée.
 - APEC et France Travail ne sont jamais appelés hors France ; le diagnostic
-  devient alors `not_applicable_region`. JobSpy 1.1.82 ne proposant Glassdoor
-  que pour France et Belgique parmi le catalogue, Luxembourg et Maroc sont
-  également ignorés proprement pour cette source.
+  devient alors `not_applicable_region`.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
 - LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.
@@ -93,10 +101,10 @@ site ne demande et ne conserve aucun token GitHub.
   combinaisons, `results_wanted` est multiplié par `6 / combinaisons`, avec un
   plancher de cinq résultats. L'estimation affichée utilise `45 s + 35 s ×`
   le nombre de combinaisons effectives, plafonné à six (maximum indicatif :
-  4 min 15 s). Cette réduction reste uniforme : Indeed, Glassdoor et Google
-  exécutent toutes les requêtes actives, donc aucun domaine n'y perd de
-  créneau ; seule l'allocation LinkedIn, globalement plafonnée, doit être
-  pondérée par priorité.
+  4 min 15 s). Cette réduction reste uniforme : Indeed exécute toutes les
+  requêtes actives, donc aucun domaine n'y perd de créneau ; seule
+  l'allocation LinkedIn, globalement plafonnée, doit être pondérée par
+  priorité.
 - le commit automatisé utilise un rebase et trois tentatives sans force-push.
 
 Pour un benchmark ponctuel sans modifier le catalogue, les environnements
