@@ -9,12 +9,11 @@ Sources :
   4. Adzuna France (agrégateur officiel)         — si secrets fournis
   5. France Travail (API officielle française)   — si secrets fournis
 
-Glassdoor et Google Jobs restent implémentés dans ``fetch_jobspy_site`` mais
-ne sont plus interrogés par défaut : sur plusieurs runs de production
-consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas (Glassdoor
-bloqué en 403 par son anti-bot, Google Jobs répondant vide sans erreur) tout
-en consommant du temps de scan. Les réactiver ne demande qu'un ajout dans
-``SOURCE_NAMES`` et le dict ``fetchers`` si JobSpy les corrige un jour.
+Glassdoor et Google Jobs ont été retirés du code (pas seulement désactivés) :
+sur plusieurs runs de production consécutifs, ils ont renvoyé 0 résultat brut
+dans 100 % des cas (Glassdoor bloqué en 403 par son anti-bot, Google Jobs
+répondant vide sans erreur) tout en consommant du temps de scan. Voir
+l'historique Git si l'un des deux redevient fiable un jour côté JobSpy.
 
 Chaque source est optionnelle et tolérante aux pannes : si un site bloque
 (403/429) ou si une clé manque, on continue avec les autres. Un circuit
@@ -112,15 +111,14 @@ def load_regions(path: Path = REGIONS_FILE) -> dict:
     """Catalogue géographique et paramètres natifs de chaque connecteur."""
     regions = load_json(path)
     required = {
-        "label", "linkedin_location", "google_location", "country_indeed",
+        "label", "linkedin_location", "country_indeed",
         "apec_available", "france_travail_available", "enabled",
     }
     for region_id, region in regions.items():
         missing = required - set(region)
         if missing:
             raise ValueError(f"Région {region_id}: champs manquants {sorted(missing)}")
-        for field_name in ("label", "linkedin_location", "google_location",
-                           "country_indeed"):
+        for field_name in ("label", "linkedin_location", "country_indeed"):
             if not isinstance(region[field_name], str) or not region[field_name].strip():
                 raise ValueError(f"Région {region_id}: {field_name} invalide")
         for field_name in ("apec_available", "france_travail_available", "enabled"):
@@ -168,17 +166,10 @@ MAX_LINKEDIN_QUERIES = 1000   # plafond anti-boucle ; couvre le catalogue entier
 MAX_LINKEDIN_DESCRIPTION_QUERIES = 3  # descriptions des requêtes prioritaires
 
 # Plafonds purement techniques de JobSpy. Ils déclenchent sa pagination interne
-# jusqu'à la fin réelle des résultats ; Google et Glassdoor plafonnent eux-mêmes
-# à 900, LinkedIn à 1000. Ces valeurs ne sont jamais réduites par le nombre de
-# domaines ou de régions.
-JOBSPY_RESULTS_WANTED = {
-    "linkedin": 1000, "indeed": 1000, "glassdoor": 900, "google": 900,
-}
-JOBSPY_PAGE_SIZES = {"linkedin": 25, "indeed": 100, "glassdoor": 30, "google": 10}
-# Dans la table officielle JobSpy 1.1.82, seules France et Belgium portent le
-# marqueur Glassdoor parmi les quatre pays du catalogue. Indeed accepte les
-# quatre valeurs, mais Glassdoor ne doit pas être appelé pour LU/MA.
-GLASSDOOR_SUPPORTED_REGION_COUNTRIES = {"France", "Belgium"}
+# jusqu'à la fin réelle des résultats ; LinkedIn plafonne lui-même à 1000. Ces
+# valeurs ne sont jamais réduites par le nombre de domaines ou de régions.
+JOBSPY_RESULTS_WANTED = {"linkedin": 1000, "indeed": 1000}
+JOBSPY_PAGE_SIZES = {"linkedin": 25, "indeed": 100}
 
 # Le garde-fou combinatoire reste uniquement informatif : il ne réduit plus le
 # volume. Les limites effectives sont celles des connecteurs et les plafonds de
@@ -741,7 +732,7 @@ def human_duration(seconds: float) -> str:
 
 
 # ============================================================
-# SOURCES 1-4 : JobSpy (LinkedIn / Indeed / Glassdoor / Google)
+# SOURCES 1-2 : JobSpy (LinkedIn / Indeed)
 # ============================================================
 
 def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
@@ -753,7 +744,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
                       results_wanted: int | None = None) -> tuple[list[dict], SourceStatus]:
     """Interroge un seul site JobSpy pour toutes les requêtes.
 
-    Chaque site est isolé : une panne Glassdoor n'influence jamais Indeed.
+    Chaque site est isolé : une panne Indeed n'influence jamais LinkedIn.
     Un circuit breaker arrête la source après MAX_CONSECUTIVE_BLOCKS
     blocages 403/429 consécutifs (elle sera retentée au prochain cron).
     """
@@ -762,14 +753,6 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
     region_config = region_config or regions[region_id]
     status = source_status(label, region_id, regions)
     started = time.monotonic()
-    if (site == "glassdoor"
-            and region_config["country_indeed"] not in GLASSDOOR_SUPPORTED_REGION_COUNTRIES):
-        status.status = "not_applicable_region"
-        status.note = "Glassdoor non supporté par JobSpy 1.1.82 pour ce pays"
-        status.duration_s = round(time.monotonic() - started, 1)
-        print(f"[INFO] Glassdoor · {status.region_label} : non applicable à cette région")
-        log_collection_summary(status)
-        return [], status
     if scrape_fn is None:
         try:
             from jobspy import scrape_jobs as scrape_fn
@@ -783,8 +766,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
     site_queries = source_queries(site, domains, active_ids)
-    logger_name = {"linkedin": "LinkedIn", "indeed": "Indeed",
-                   "glassdoor": "Glassdoor", "google": "Google"}[site]
+    logger_name = {"linkedin": "LinkedIn", "indeed": "Indeed"}[site]
 
     class CaptureHandler(logging.Handler):
         def __init__(self):
@@ -797,8 +779,7 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
     def pages_in_records(records: list[tuple[int, str]], raw_count: int) -> int:
         logged = sum("search page:" in message for _, message in records)
         fallback = max(1, math.ceil(raw_count / JOBSPY_PAGE_SIZES[site]))
-        # Google journalise seulement les pages suivant sa page initiale.
-        return max(fallback, logged + (1 if site == "google" else 0))
+        return max(fallback, logged)
 
     for query in site_queries:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
@@ -809,12 +790,8 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
         # hours_old borne la fraîcheur au plus près de la source. Le filtre
         # titre local reste l'autorité sur le type de contrat, car les sites
         # étiquettent parfois mal leurs offres.
-        if site == "linkedin":
-            native_location = region_config["linkedin_location"]
-        elif site == "google":
-            native_location = region_config["google_location"]
-        else:
-            native_location = region_config["country_indeed"]
+        native_location = (region_config["linkedin_location"] if site == "linkedin"
+                           else region_config["country_indeed"])
         kwargs = dict(
             site_name=[site],
             search_term=query,
@@ -832,11 +809,6 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             kwargs["linkedin_fetch_description"] = (
                 site_queries.index(query) < MAX_LINKEDIN_DESCRIPTION_QUERIES
             )
-        if site == "google":
-            # google_search_term remplace toute la requête côté JobSpy : on
-            # évite la redondance « stage … stage » et on garde une syntaxe
-            # Google propre (la requête contient déjà « stage »).
-            kwargs["google_search_term"] = f"{query} {region_config['google_location']}"
         capture = CaptureHandler()
         jobspy_logger = logging.getLogger(f"JobSpy:{logger_name}")
         jobspy_logger.addHandler(capture)
@@ -863,8 +835,8 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
         status.pages_fetched += pages_in_records(capture.records, raw)
 
         # JobSpy journalise parfois un 403/429 puis retourne un DataFrame vide
-        # sans lever d'exception (cas Glassdoor). On transforme ce signal en
-        # vrai statut blocked pour le dashboard et le circuit breaker.
+        # sans lever d'exception. On transforme ce signal en vrai statut
+        # blocked pour le dashboard et le circuit breaker.
         captured_code = next(
             (block_code(Exception(message)) for _, message in capture.records
              if block_code(Exception(message))),
@@ -884,9 +856,9 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             "",
         )
         if captured_error and len(df) == 0:
-            # Certains connecteurs (notamment Glassdoor) avalent l'exception,
-            # loggent une erreur puis renvoient un DataFrame vide. Sans ce
-            # contrôle le dashboard affichait à tort « 0 offre ».
+            # Certains connecteurs avalent l'exception, loggent une erreur
+            # puis renvoient un DataFrame vide. Sans ce contrôle le dashboard
+            # affichait à tort « 0 offre ».
             failed += 1
             status.http_error = status.http_error or captured_error[:200]
             print(f"[WARN] {label} '{query}' a échoué : {captured_error}", file=sys.stderr)

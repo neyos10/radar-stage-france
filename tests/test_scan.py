@@ -193,7 +193,7 @@ class TestRegions(unittest.TestCase):
         self.assertEqual(offers[0]["regions"], ["belgique"])
         self.assertEqual(status.region_id, "belgique")
 
-    def test_linkedin_and_google_use_region_native_locations(self):
+    def test_linkedin_and_indeed_use_region_native_locations(self):
         import pandas as pd
 
         calls = []
@@ -213,13 +213,12 @@ class TestRegions(unittest.TestCase):
 
         calls.clear()
         scan.fetch_jobspy_site(
-            "google", "Google Jobs", scrape_fn=fake_scrape,
+            "indeed", "Indeed", scrape_fn=fake_scrape,
             region_id="maroc", region_config=scan.REGIONS["maroc"],
             domains=data_domain, active_ids=["data_ia"],
         )
         self.assertEqual(calls[0]["location"], "Morocco")
         self.assertEqual(calls[0]["country_indeed"], "Morocco")
-        self.assertTrue(calls[0]["google_search_term"].endswith(" Morocco"))
 
     def test_french_only_sources_are_not_called_abroad(self):
         with mock.patch.object(scan.requests, "post") as post:
@@ -235,16 +234,6 @@ class TestRegions(unittest.TestCase):
         self.assertEqual(ft.status, "not_applicable_region")
         token.assert_not_called()
         get.assert_not_called()
-
-    def test_glassdoor_is_not_called_where_jobspy_does_not_support_it(self):
-        scrape = mock.Mock()
-        offers, status = scan.fetch_jobspy_site(
-            "glassdoor", "Glassdoor", scrape_fn=scrape,
-            region_id="maroc", region_config=scan.REGIONS["maroc"],
-        )
-        self.assertEqual(offers, [])
-        self.assertEqual(status.status, "not_applicable_region")
-        scrape.assert_not_called()
 
     def test_duplicate_remote_offer_merges_regions(self):
         selected = {key: scan.REGIONS[key] for key in ("france", "belgique")}
@@ -619,7 +608,7 @@ class TestCircuitBreaker(unittest.TestCase):
             calls.append(kwargs["search_term"])
             raise Exception("bad response status code: 403")
 
-        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        offers, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(len(calls), scan.MAX_CONSECUTIVE_BLOCKS)
         self.assertEqual(st.status, "blocked")
         self.assertEqual(st.http_error, "HTTP 403")
@@ -630,7 +619,7 @@ class TestCircuitBreaker(unittest.TestCase):
         def fake_scrape(**kwargs):
             raise Exception("429 Response - Blocked for too many requests")
 
-        _, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        _, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(st.status, "blocked")
         self.assertEqual(st.http_error, "HTTP 429")
 
@@ -648,11 +637,11 @@ class TestCircuitBreaker(unittest.TestCase):
         def fake_scrape(**_kwargs):
             nonlocal calls
             calls += 1
-            logging.getLogger("JobSpy:Glassdoor").error(
-                "Glassdoor: response status code 403")
+            logging.getLogger("JobSpy:Indeed").error(
+                "Indeed: response status code 403")
             return pd.DataFrame()
 
-        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        offers, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(calls, scan.MAX_CONSECUTIVE_BLOCKS)
         self.assertEqual(st.status, "blocked")
         self.assertEqual(st.http_error, "HTTP 403")
@@ -662,11 +651,11 @@ class TestCircuitBreaker(unittest.TestCase):
         import pandas as pd
 
         def fake_scrape(**_kwargs):
-            logging.getLogger("JobSpy:Glassdoor").error(
-                "Glassdoor: Error encountered in API response")
+            logging.getLogger("JobSpy:Indeed").error(
+                "Indeed: Error encountered in API response")
             return pd.DataFrame()
 
-        offers, st = scan.fetch_jobspy_site("glassdoor", "Glassdoor", scrape_fn=fake_scrape)
+        offers, st = scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape)
         self.assertEqual(st.status, "error")
         self.assertIn("API response", st.http_error)
         self.assertEqual(offers, [])
@@ -704,22 +693,6 @@ class TestJobspyAccounting(unittest.TestCase):
         self.assertEqual(st.status, "success")
         self.assertEqual(len(offers), 2)
         self.assertGreaterEqual(st.pages_fetched, 1)
-
-    def test_google_search_term_not_redundant(self):
-        import pandas as pd
-        seen_kwargs = []
-
-        def fake_scrape(**kwargs):
-            seen_kwargs.append(kwargs)
-            return pd.DataFrame()
-
-        scan.fetch_jobspy_site("google", "Google Jobs", scrape_fn=fake_scrape)
-        first = seen_kwargs[0]
-        self.assertEqual(first["google_search_term"],
-                         f"{scan.active_queries()[0]} France")
-        self.assertNotIn("job_type", first)
-        # jamais deux fois « stage » dans la requête Google
-        self.assertEqual(first["google_search_term"].lower().count("stage"), 1)
 
     def test_results_wanted_per_site(self):
         import pandas as pd
@@ -767,8 +740,8 @@ class TestJobspyAccounting(unittest.TestCase):
 
 class TestRetiredNoiseSources(unittest.TestCase):
     """Glassdoor et Google Jobs ont renvoyé 0 résultat sur plusieurs runs de
-    production consécutifs (bloqué 403 / réponse vide) : ils restent
-    implémentés dans fetch_jobspy_site mais ne doivent plus être appelés."""
+    production consécutifs (bloqué 403 / réponse vide) : leur code a été
+    retiré entièrement (voir l'historique Git), pas seulement désactivé."""
 
     def test_source_names_no_longer_include_noisy_zero_yield_sources(self):
         self.assertNotIn("Glassdoor", scan.SOURCE_NAMES)
@@ -1103,10 +1076,10 @@ class TestStatusLabel(unittest.TestCase):
         )
         self.assertEqual(scan.status_label(unavailable), "Non applicable à Belgique")
 
-        blocked = scan.SourceStatus(source="Glassdoor", status="blocked", http_error="HTTP 403")
+        blocked = scan.SourceStatus(source="Indeed", status="blocked", http_error="HTTP 403")
         self.assertEqual(scan.status_label(blocked), "Bloqué temporairement — HTTP 403")
 
-        empty = scan.SourceStatus(source="Google Jobs", status="empty", raw_count=12)
+        empty = scan.SourceStatus(source="France Travail", status="empty", raw_count=12)
         self.assertEqual(scan.status_label(empty), "0 accepté / 12 reçus")
 
         ok = scan.SourceStatus(source="LinkedIn", status="success", accepted_count=11)

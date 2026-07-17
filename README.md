@@ -10,13 +10,11 @@ Les cinq sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna et
 France Travail. Chaque source est isolée : un blocage 403/429, un timeout ou
 l'absence d'une clé API n'arrête pas les autres connecteurs.
 
-Glassdoor et Google Jobs restent implémentés (`fetch_jobspy_site` reste
-générique) mais ne sont plus interrogés par défaut : sur plusieurs runs de
+Glassdoor et Google Jobs ont été retirés du code : sur plusieurs runs de
 production consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas
 (Glassdoor bloqué par son anti-bot, Google Jobs répondant vide sans erreur)
-tout en consommant environ 2 minutes de scan pour rien. Les réactiver ne
-demande qu'un ajout dans `SOURCE_NAMES` et le dict `fetchers` de
-`run_all_sources` si JobSpy les corrige.
+tout en consommant environ 2 minutes de scan pour rien. L'historique Git
+conserve l'implémentation si l'un des deux redevient fiable côté JobSpy.
 
 ## Configuration produit
 
