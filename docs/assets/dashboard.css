@@ -476,6 +476,78 @@ h1 {
   border-style: dashed;
 }
 
+/* Section dédiée LinkedIn Posts : mêmes codes visuels que la zone
+   technique, groupée par domaine et repliée par défaut. */
+.linkedin-posts-section {
+  margin-bottom: 18px;
+}
+
+.linkedin-posts-section summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.linkedin-posts-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.linkedin-posts-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 18px 16px;
+}
+
+.linkedin-posts-domain {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(124, 108, 255, 0.03);
+}
+
+.linkedin-posts-domain summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+  list-style: none;
+}
+
+.linkedin-posts-domain summary::-webkit-details-marker {
+  display: none;
+}
+
+.linkedin-posts-domain-count {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.linkedin-posts-domain-jobs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 14px 14px;
+}
+
+.linkedin-posts-domain-jobs .empty {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.linkedin-post-job {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+
 .source-health summary {
   display: flex;
   align-items: center;

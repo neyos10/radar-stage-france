@@ -42,7 +42,7 @@ class TwoPostsProvider:
         return [
             post_result("7351000000000000001"),
             post_result("7351000000000000002", author="Paul Durand",
-                        published_at=None),
+                        published_at=NOW - timedelta(hours=2)),
         ]
 
 
@@ -51,10 +51,11 @@ class TestLinkedInPostsQueryReports(unittest.TestCase):
         self.context = ScanContext(scan.PROFILES["fast_data_ia"], NOW)
 
     def test_per_query_report_details_and_discovery_fields(self):
-        known = post_result("7351000000000000002")
+        known = post_result("7351000000000000002",
+                            published_at=NOW - timedelta(hours=2))
         known_offer, _ = scan.make_offer(
             known.title, "Paul Durand", "France", known.url, "LinkedIn Posts",
-            NOW.isoformat(), confirmed_internship=True,
+            known.published_at.isoformat(), confirmed_internship=True,
             active_ids=["data_ia"], context=self.context,
             external_id=known.external_id,
         )
@@ -73,8 +74,8 @@ class TestLinkedInPostsQueryReports(unittest.TestCase):
         self.assertEqual(report["accepted_count"], 2)
         self.assertEqual(report["new_count"], 1)
         self.assertEqual(report["known_count"], 1)
-        self.assertEqual(report["unknown_date_count"], 1)
-        self.assertEqual(report["known_date_count"], 1)
+        self.assertEqual(report["unknown_date_count"], 0)
+        self.assertEqual(report["known_date_count"], 2)
         self.assertEqual(report["author_detected_count"], 2)
         self.assertEqual(report["contact_direct_count"], 2)
         self.assertEqual(report["profile_id"], "fast_data_ia")

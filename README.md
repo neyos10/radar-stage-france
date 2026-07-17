@@ -75,6 +75,32 @@ une plateforme bloquée. La source « LinkedIn Posts » n'ouvre jamais LinkedIn 
 elle interroge un moteur de recherche autorisé, valide uniquement des URLs de
 posts publics et se désactive proprement si le moteur présente un anti-bot.
 
+### LinkedIn Posts — mode strict 24 h
+
+Indépendamment du profil FAST (2 h) ou FULL (24 h) qui déclenche le run,
+LinkedIn Posts applique toujours une fenêtre fixe de **24 heures strictes**
+(`LINKEDIN_POSTS_STRICT_WINDOW_HOURS`) :
+
+- une publication doit contenir une indication explicite de stage (stage,
+  stagiaire, internship, intern, PFE, PFA…) — un CDI, une alternance ou une
+  formation sans mention de stage est rejeté ;
+- une date absente, non parseable ou approximative au point d'être
+  invérifiable est **rejetée** (raison `date non vérifiable sur les
+  dernières 24 heures`), jamais conservée avec un badge « date inconnue » ;
+- la date de découverte n'est jamais confondue avec la date de publication :
+  une publication ancienne redécouverte aujourd'hui reste rejetée sur sa
+  vraie date, et ne devient jamais une « nouvelle » offre.
+
+Une publication peut appartenir à plusieurs domaines actifs (`domains.json`)
+si son score y atteint le seuil dans chacun ; elle n'est stockée qu'une seule
+fois, avec `domains`, `domain_scores` et `matched_keywords` par domaine.
+Le dashboard expose une section dédiée « Stages LinkedIn Posts vérifiés
+(24 h) », repliée par défaut, qui reclasse ces offres par domaine — un
+domaine sans résultat affiche simplement zéro, sans être considéré en
+erreur. Chaque run produit aussi `SourceStatus.domain_reports` : requêtes
+exécutées, bruts, stages détectés, rejets par catégorie, doublons, offres
+finales et durée, pour chaque domaine.
+
 ## Fonctionnement
 
 ```text

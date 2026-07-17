@@ -313,12 +313,21 @@ REASON_NOT_INTERNSHIP = "pas un stage"
 REASON_TOO_OLD = f"plus de {OFFER_WINDOW_HOURS} heures"
 REASON_NO_DOMAIN = "aucun domaine"
 REASON_DUPLICATE = "doublon"
+REASON_UNVERIFIABLE_RECENT_DATE = "date non vérifiable sur les dernières 24 heures"
+
+# Exigence produit : LinkedIn Posts applique toujours une fenêtre de 24 h
+# strictes, indépendamment du profil FAST (2 h) ou FULL (24 h) qui déclenche
+# le run. Une date absente, non parseable ou trop approximative pour être
+# vérifiée est rejetée plutôt que conservée avec un badge « date inconnue ».
+LINKEDIN_POSTS_STRICT_WINDOW_HOURS = 24
 
 
 def too_old_reason(context: ScanContext | None = None,
-                   window_hours: int | None = None) -> str:
-    hours = (context.profile.window_hours if context else
-             (window_hours if window_hours is not None else OFFER_WINDOW_HOURS))
+                   window_hours: int | None = None,
+                   *, strict_window_hours: int | None = None) -> str:
+    hours = (strict_window_hours if strict_window_hours is not None else
+             (context.profile.window_hours if context else
+              (window_hours if window_hours is not None else OFFER_WINDOW_HOURS)))
     return f"plus de {hours} heures"
 
 
@@ -368,6 +377,10 @@ class SourceStatus:
     failed_queries: int = 0
     interrupted: bool = False
     query_reports: list[dict] = field(default_factory=list)
+    # Diagnostics agrégés par domaine, réservés à LinkedIn Posts (mode strict
+    # 24 h) : requêtes exécutées, bruts, stages détectés, rejets par
+    # catégorie, doublons, offres finales, durée.
+    domain_reports: dict[str, dict] = field(default_factory=dict)
     duration_s: float = 0.0
     http_error: str = ""
     note: str = ""
@@ -1074,8 +1087,18 @@ def make_offer(title, company, location, url, source, date="",
                external_id: str = "",
                contract_type: str = "internship",
                contact_direct: bool = False,
-               metrics: RunMetrics | None = None) -> tuple[dict | None, str | None]:
-    """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
+               metrics: RunMetrics | None = None,
+               strict_window_hours: int | None = None,
+               reject_missing_date: bool = False) -> tuple[dict | None, str | None]:
+    """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet).
+
+    ``strict_window_hours`` et ``reject_missing_date`` sont réservés au mode
+    strict de LinkedIn Posts : ils imposent une fenêtre fixe indépendante du
+    profil et rejettent toute date absente ou non vérifiable, plutôt que de
+    la conserver avec un badge « date inconnue ». Par défaut (``None``/
+    ``False``), le comportement historique de toutes les autres sources est
+    inchangé.
+    """
     normalization_started = time.perf_counter()
     regions = regions or REGIONS
     if region_id not in regions:
@@ -1090,8 +1113,11 @@ def make_offer(title, company, location, url, source, date="",
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
     now = now.astimezone(timezone.utc)
-    effective_window = (context.profile.window_hours if context else
-                        (window_hours if window_hours is not None else OFFER_WINDOW_HOURS))
+    effective_window = (
+        strict_window_hours if strict_window_hours is not None else
+        (context.profile.window_hours if context else
+         (window_hours if window_hours is not None else OFFER_WINDOW_HOURS))
+    )
     published_at = parse_offer_date(date, now)
     raw_date = clean_text(date)
     date_only = bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw_date))
@@ -1103,15 +1129,21 @@ def make_offer(title, company, location, url, source, date="",
         freshness_verified and date_only and published_at
         and published_at.date() >= cutoff.date()
     )
+    if published_at is None and reject_missing_date:
+        if metrics:
+            metrics.add("normalization_s", time.perf_counter() - normalization_started)
+        return None, REASON_UNVERIFIABLE_RECENT_DATE
     if (published_at and published_at < cutoff
             and not native_date_only_in_window):
         _log_old_date_rejection(
             source, title, date, published_at,
-            too_old_reason(context, effective_window),
+            too_old_reason(context, effective_window,
+                           strict_window_hours=strict_window_hours),
         )
         if metrics:
             metrics.add("normalization_s", time.perf_counter() - normalization_started)
-        return None, too_old_reason(context, effective_window)
+        return None, too_old_reason(context, effective_window,
+                                    strict_window_hours=strict_window_hours)
     if published_at is None:
         safe_title = re.sub(r"[\r\n\t]+", " ", title)[:100]
         raw = re.sub(r"[\r\n\t]+", " ", clean_text(date))[:100]
@@ -1192,6 +1224,18 @@ def publication_age(date_value: str) -> str:
     if days == 1:
         return "hier"
     return f"il y a {days} jours"
+
+
+def _recent_publication_age(published_at: datetime, now: datetime) -> str:
+    """Âge fin (minutes/heures) pour un post garanti à l'intérieur de 24 h."""
+    seconds = max(0, int((now - published_at).total_seconds()))
+    if seconds < 60:
+        return "à l'instant"
+    minutes = seconds // 60
+    if minutes < 60:
+        return f"il y a {minutes} min"
+    hours = minutes // 60
+    return f"il y a {hours} h"
 
 
 def human_duration(seconds: float) -> str:
@@ -2216,6 +2260,22 @@ def fetch_linkedin_posts(
     failed_queries = 0
     consecutive_blocks = 0
     max_pages = context.profile.max_pages.get("LinkedIn Posts", 1)
+    # Diagnostics par domaine (mode strict 24 h) : un domaine sans requête ce
+    # run reste présent avec des compteurs à zéro, jamais considéré en erreur.
+    domain_stats: dict[str, dict] = {
+        domain_id: {
+            "queries_executed": 0,
+            "raw_count": 0,
+            "stage_detected_count": 0,
+            "rejected_not_internship_count": 0,
+            "rejected_too_old_count": 0,
+            "rejected_unknown_date_count": 0,
+            "duplicate_count": 0,
+            "final_offers_count": 0,
+            "duration_s": 0.0,
+        }
+        for domain_id in active_ids
+    }
     for item in plan:
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
             status.interrupted = True
@@ -2223,6 +2283,13 @@ def fetch_linkedin_posts(
             status.note = (status.note + " · " if status.note else "") + \
                 "circuit breaker X-ray : budget restant ignoré"
             break
+        domain_bucket = domain_stats.setdefault(item.domain_id, {
+            "queries_executed": 0, "raw_count": 0, "stage_detected_count": 0,
+            "rejected_not_internship_count": 0, "rejected_too_old_count": 0,
+            "rejected_unknown_date_count": 0, "duplicate_count": 0,
+            "final_offers_count": 0, "duration_s": 0.0,
+        })
+        domain_bucket["queries_executed"] += 1
         query_started = time.monotonic()
         query_raw = query_accepted = query_rejected = query_duplicates = 0
         query_parsed = query_new = query_known = 0
@@ -2284,6 +2351,7 @@ def fetch_linkedin_posts(
             status.raw_count += len(results)
             query_raw += len(results)
             query_parsed += len(results)
+            domain_bucket["raw_count"] += len(results)
             query_unknown_dates += sum(
                 1 for result in results if result.published_at is None
             )
@@ -2301,7 +2369,9 @@ def fetch_linkedin_posts(
                     status.add_reject(REASON_NOT_INTERNSHIP)
                     query_rejected += 1
                     query_reasons[REASON_NOT_INTERNSHIP] += 1
+                    domain_bucket["rejected_not_internship_count"] += 1
                     continue
+                domain_bucket["stage_detected_count"] += 1
                 before_duplicates = status.duplicate_count
                 before_accepted = status.accepted_count
                 date_value = (
@@ -2325,6 +2395,8 @@ def fetch_linkedin_posts(
                     external_id=result.external_id,
                     contact_direct=True,
                     metrics=metrics,
+                    strict_window_hours=LINKEDIN_POSTS_STRICT_WINDOW_HOURS,
+                    reject_missing_date=True,
                 )
                 if offer is not None:
                     run_iso = context.run_at.isoformat(timespec="seconds")
@@ -2336,6 +2408,7 @@ def fetch_linkedin_posts(
                 if status.duplicate_count > before_duplicates:
                     query_duplicates += 1
                     query_reasons[REASON_DUPLICATE] += 1
+                    domain_bucket["duplicate_count"] += 1
                 elif status.accepted_count > before_accepted:
                     query_accepted += 1
                     if offer is not None and offer.get("contact_direct"):
@@ -2351,6 +2424,10 @@ def fetch_linkedin_posts(
                 else:
                     query_rejected += 1
                     query_reasons[reason or "raison inconnue"] += 1
+                    if reason == REASON_UNVERIFIABLE_RECENT_DATE:
+                        domain_bucket["rejected_unknown_date_count"] += 1
+                    elif reason and reason.startswith("plus de "):
+                        domain_bucket["rejected_too_old_count"] += 1
             if len(results) < 30:
                 query_complete = True
                 break
@@ -2362,6 +2439,9 @@ def fetch_linkedin_posts(
             status.completed_queries += 1
         if not query_complete and not query_failed:
             status.coverage_complete = False
+        domain_bucket["duration_s"] = round(
+            domain_bucket["duration_s"] + (time.monotonic() - query_started), 3
+        )
         used_provider = (
             getattr(provider, "last_used_provider", None)
             or getattr(provider, "name", type(provider).__name__)
@@ -2389,6 +2469,15 @@ def fetch_linkedin_posts(
             "error": query_error,
             "status": "error" if query_failed else "success",
         })
+
+    # Une offre peut appartenir à plusieurs domaines : chacun d'eux comptabilise
+    # la même offre finale, sans jamais dupliquer l'entrée dans le store.
+    for offer in offers.values():
+        for domain_id in offer.get("domains", []):
+            bucket = domain_stats.get(domain_id)
+            if bucket is not None:
+                bucket["final_offers_count"] += 1
+    status.domain_reports = domain_stats
 
     status.duration_s = round(time.monotonic() - started, 1)
     if status.completed_queries == 0 and (failed_queries or status.interrupted):
@@ -3143,6 +3232,101 @@ def render_dashboard(offers: list[dict], new_ids: set,
     expired_cards = [render_card(offer, likely_expired=True)
                      for offer in sort_offers(expired_offers)]
 
+    def render_linkedin_post_card(o: dict, published_at: datetime) -> str:
+        oid = html.escape(str(o["id"]), quote=True)
+        title = html.escape(o["title"])
+        company = html.escape(o["company"])
+        url = safe_url(o["url"])
+        link = (f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+                if url else title)
+        published_line = (
+            f"Publiée le {published_at.strftime('%d/%m/%Y à %H:%M UTC')} · "
+            f"{_recent_publication_age(published_at, generated_at)}"
+        )
+        offer_domains = [domain_id for domain_id in o.get("domains", [])
+                         if domain_id in active_ids]
+        domain_tags = "".join(
+            f'<span class="tag domain">{html.escape(domains[domain_id]["label"])}</span>'
+            for domain_id in offer_domains
+        )
+        keywords: list[str] = []
+        for domain_id in offer_domains:
+            for keyword in o.get("matched_keywords", {}).get(domain_id, []):
+                if keyword not in keywords:
+                    keywords.append(keyword)
+                if len(keywords) == 5:
+                    break
+            if len(keywords) == 5:
+                break
+        keyword_line = (
+            '<div class="matched-keywords"><span class="matched-keywords-label">match :</span> '
+            + html.escape(" · ".join(keywords)) + "</div>"
+            if keywords else ""
+        )
+        contact_tag = ('<span class="tag contact-direct">contact direct</span>'
+                       if o.get("contact_direct") else "")
+        return f"""
+      <article class="job linkedin-post-job" data-id="{oid}">
+        <div class="job-top"><div class="job-content">
+          <h3>{link}</h3>
+          <div class="meta">{company}</div>
+          <div class="published">{published_line}</div>
+          {keyword_line}
+        </div></div>
+        <div class="tags" translate="no">{domain_tags}{contact_tag}</div>
+      </article>"""
+
+    def linkedin_post_published_at(o: dict) -> datetime | None:
+        try:
+            return datetime.fromisoformat(str(o.get("sort_date") or ""))
+        except ValueError:
+            return None
+
+    # Section dédiée : uniquement les stages LinkedIn Posts dont la
+    # publication reste, au moment du rendu, à l'intérieur de la fenêtre
+    # stricte de 24 h — pas seulement acceptés à leur découverte.
+    linkedin_posts_by_domain: dict[str, list[tuple[dict, datetime]]] = {
+        domain_id: [] for domain_id in active_ids
+    }
+    linkedin_strict_cutoff = generated_at - timedelta(
+        hours=LINKEDIN_POSTS_STRICT_WINDOW_HOURS
+    )
+    for offer in offers:
+        if "LinkedIn Posts" not in (offer.get("sources") or [offer.get("source")]):
+            continue
+        published_at = linkedin_post_published_at(offer)
+        if published_at is None or published_at < linkedin_strict_cutoff:
+            continue
+        for domain_id in offer.get("domains", []):
+            if domain_id in linkedin_posts_by_domain:
+                linkedin_posts_by_domain[domain_id].append((offer, published_at))
+
+    linkedin_posts_total = 0
+    linkedin_posts_domain_blocks: list[str] = []
+    for domain_id in active_ids:
+        entries = sorted(
+            linkedin_posts_by_domain[domain_id],
+            key=lambda pair: pair[1], reverse=True,
+        )
+        linkedin_posts_total += len(entries)
+        domain_cards = "".join(
+            render_linkedin_post_card(offer, published_at)
+            for offer, published_at in entries
+        )
+        linkedin_posts_domain_blocks.append(f"""
+    <details class="linkedin-posts-domain">
+      <summary>{html.escape(domains[domain_id]["label"])} <span class="linkedin-posts-domain-count">({len(entries)})</span></summary>
+      <div class="linkedin-posts-domain-jobs">{domain_cards or '<p class="empty">Aucun stage vérifié sur les dernières 24 h pour ce domaine.</p>'}</div>
+    </details>""")
+    linkedin_posts_section = f"""
+<details class="linkedin-posts-section">
+  <summary>
+    <span class="source-health-title">Stages LinkedIn Posts vérifiés (24 h)</span>
+    <span class="source-health-copy">{linkedin_posts_total} stage{'s' if linkedin_posts_total != 1 else ''} · classés par domaine</span>
+  </summary>
+  <div class="linkedin-posts-panel">{"".join(linkedin_posts_domain_blocks)}</div>
+</details>"""
+
     multiple_regions = len(active_region_ids) > 1
     status_rows = "".join(
         f'<span class="src-stat st-{STATUS_CSS.get(st.status, "warn")}">'
@@ -3316,6 +3500,8 @@ def render_dashboard(offers: list[dict], new_ids: set,
 </details>
 
 {radar_performance_section(metrics_document)}
+
+{linkedin_posts_section}
 
 <section class="workspace" aria-labelledby="offersTitle">
 <div class="workspace-head">
