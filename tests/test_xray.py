@@ -80,6 +80,45 @@ class TestDuckDuckGoHtmlParsing(unittest.TestCase):
         )
         self.assertFalse(xray.is_relevant_internship_post(result))
 
+    def test_candidate_open_to_work_post_is_rejected(self):
+        # Faux positif réel de production : post « Open to Work » d'une
+        # candidate — le vocabulaire de recherche est présent mais l'auteure
+        # cherche un poste, elle n'en propose pas.
+        result = xray.SearchResult(
+            title=("Open to Work | Ingénieure Méthodes • Industrialisation • "
+                   "Conception Mécanique Je suis aujourd'hui à la recherche "
+                   "d'une nouvelle opportunité"),
+            snippet="Je recherche un stage en industrialisation. Voici mon CV.",
+            url="https://linkedin.com/posts/k_opentowork-activity-12345678902",
+        )
+        self.assertFalse(xray.is_relevant_internship_post(result))
+
+    def test_candidate_seeking_variants_are_rejected_but_employers_pass(self):
+        candidate_texts = [
+            "#OpenToWork disponible dès maintenant",
+            "Je suis actuellement à la recherche d'un stage PFE",
+            "Je cherche un stage en data science, voici mon cv",
+            "I am currently looking for an internship in finance",
+        ]
+        for snippet in candidate_texts:
+            result = xray.SearchResult(
+                title="Stage data", snippet=snippet,
+                url="https://linkedin.com/posts/c_stage-activity-12345678903",
+            )
+            self.assertFalse(xray.is_relevant_internship_post(result), snippet)
+
+        employers = [
+            "Nous recherchons un stagiaire data engineer. Envoyez votre CV !",
+            "Stage de 6 mois à pourvoir dès septembre, postulez ici.",
+            "Notre équipe recrute un stagiaire en mécanique. Candidature ouverte.",
+        ]
+        for snippet in employers:
+            result = xray.SearchResult(
+                title="Offre de stage", snippet=snippet,
+                url="https://linkedin.com/posts/e_stage-activity-12345678904",
+            )
+            self.assertTrue(xray.is_relevant_internship_post(result), snippet)
+
 
 class TestCanonicalization(unittest.TestCase):
     def test_tracking_fragment_host_and_slashes_are_normalized(self):
