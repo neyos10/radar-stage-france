@@ -51,6 +51,21 @@ _RECRUITING_INTENT_RE = re.compile(
     r"hiring|looking\s+for|apply)\b",
     re.IGNORECASE,
 )
+# Posts côté candidat (« open to work », « je suis à la recherche… ») : le
+# vocabulaire de recherche y est présent mais l'auteur cherche un poste, il
+# n'en propose pas. Constaté en production : un post « Open to Work |
+# Ingénieure Méthodes… je suis à la recherche d'une nouvelle opportunité »
+# passait le filtre d'intention et polluait le dashboard.
+_CANDIDATE_POST_RE = re.compile(
+    r"open\s*to\s*work|#?opentowork|"
+    r"\bje\s+(?:suis\s+(?:actuellement\s+)?(?:à|a)\s+la\s+recherche|"
+    r"recherche\s+(?:un|une)\b|cherche\s+(?:un|une)\b)|"
+    r"(?:à|a)\s+la\s+recherche\s+d['e]\s*(?:un\s+stage|une\s+(?:nouvelle\s+)?"
+    r"opportunit)|"
+    r"\bi\s+am\s+(?:currently\s+)?looking\s+for\b|\bseeking\s+an?\s+internship\b|"
+    r"\bmon\s+cv\b|\bmy\s+resume\b",
+    re.IGNORECASE,
+)
 _AUTHOR_RE = re.compile(
     r"^\s*(?P<author>.+?)\s+(?:on|sur)\s+LinkedIn\s*[:|\-]",
     re.IGNORECASE,
@@ -361,6 +376,8 @@ def parse_duckduckgo_html(
 def is_relevant_internship_post(result: SearchResult) -> bool:
     """Filtre anti-bruit minimal avant le scoring multi-domaines existant."""
     text = f"{result.title} {result.snippet}"
+    if _CANDIDATE_POST_RE.search(text):
+        return False
     return bool(_CONTRACT_WORD_RE.search(text) and _RECRUITING_INTENT_RE.search(text))
 
 
