@@ -103,6 +103,10 @@ site ne demande et ne conserve aucun token GitHub.
   (`niveauEtude=20019`), puis un budget borné de lectures de détail. Si cet
   endpoint détail bloque en 403/429, un circuit breaker dédié arrête les
   lectures restantes du run au lieu de répéter des échecs identiques.
+  Comme The Muse et Jooble, la recherche APEC ne liste que des offres
+  actuellement ouvertes : leur fraîcheur est considérée vérifiée côté source
+  (`freshness_verified`), une date de publication ancienne ne vaut jamais
+  rejet « plus de 24 heures ».
 - France Travail utilise `natureContrat=FS` et la fenêtre configurée.
 - The Muse utilise le filtre serveur natif `level=Internship` (confirmation
   équivalente au filtre stage d'APEC) : aucune requête par mot-clé n'est

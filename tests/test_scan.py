@@ -930,6 +930,36 @@ class TestSourcePagination(unittest.TestCase):
             [0, 100],
         )
 
+    def test_apec_old_publication_date_is_still_accepted(self):
+        # La recherche APEC ne renvoie que des offres ouvertes (filtre stage
+        # serveur) : une datePublication ancienne ne doit jamais valoir rejet
+        # "plus de 24 heures" (régression réelle : 181/645 rejetées ainsi à
+        # chaque run, puis considérées absentes par le store).
+        item = dict(self.apec_item(0), datePublication=TOO_OLD)
+        response = fake_response({"resultats": [item]})
+        with mock.patch.object(scan.requests, "post", return_value=response):
+            offers, status = scan.fetch_apec_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
+
+    def test_jooble_old_updated_date_is_still_accepted(self):
+        response = fake_response({"totalCount": 1, "jobs": [{
+            "id": "1", "title": "Stage Data Engineer", "company": "ACME",
+            "location": "Paris", "link": "https://jooble.org/j/1",
+            "updated": TOO_OLD, "snippet": "data engineer",
+        }]})
+        with tempfile.TemporaryDirectory() as tmp, \
+             mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
+             mock.patch.object(scan.requests, "post", return_value=response):
+            offers, status = scan.fetch_jooble_all(
+                domains=self.CATALOG, active_ids=["data"],
+                rotation_path=Path(tmp) / "rotation.json",
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
+
     def test_adzuna_paginates_and_uses_native_one_day_filter(self):
         def item(index):
             return {
