@@ -108,6 +108,10 @@ site ne demande et ne conserve aucun token GitHub.
   équivalente au filtre stage d'APEC) : aucune requête par mot-clé n'est
   nécessaire, une seule pagination par run couvre tout le catalogue pour la
   région, puis le scoring par domaine s'applique localement comme pour APEC.
+  L'API ne propose aucun paramètre `hours_old` : la fraîcheur n'est donc pas
+  revérifiée localement (`freshness_verified`, même mécanique que JobSpy) —
+  une offre "Internship" toujours listée par l'API est traitée comme
+  toujours active, indépendamment de sa date de publication d'origine.
 - APEC, Adzuna, Jooble, The Muse et France Travail ne sont jamais appelés
   hors France (limite du connecteur actuel, pas de la région) ; le
   diagnostic devient alors `not_applicable_region`.

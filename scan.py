@@ -1486,6 +1486,14 @@ def fetch_the_muse_all(region_id: str = DEFAULT_REGION_ID,
                 description=clean_text(item.get("contents")),
                 domains=domains, active_ids=active_ids,
                 region_id=region_id, regions=regions,
+                # The Muse n'a pas de paramètre hours_old : chaque run relit
+                # tout le catalogue courant des offres "Internship" encore
+                # ouvertes, quelle que soit leur date de publication d'origine
+                # (souvent bien antérieure à 24h). Sans cet indicateur, 100 %
+                # des résultats étaient rejetés "plus de 24 heures" alors que
+                # l'API confirme qu'ils sont toujours actifs à l'instant du
+                # run — même logique que JobSpy (LinkedIn/Indeed) ci-dessus.
+                freshness_verified=True,
             )
             register_offer(status, offers, offer, reason)
         page_count = int(payload.get("page_count") or 0)
