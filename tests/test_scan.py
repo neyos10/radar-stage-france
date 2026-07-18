@@ -19,6 +19,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import scan
+import radar_xray as xray
 
 TODAY = datetime.now(timezone.utc).date().isoformat()
 YESTERDAY = (datetime.now(timezone.utc) - timedelta(days=1)).date().isoformat()
@@ -371,6 +372,17 @@ class TestMakeOffer(unittest.TestCase):
             self.assertFalse(o["date_known"])
             self.assertEqual(o["date"], "")
             self.assertIn("DATE_INCONNUE", stderr.getvalue())
+
+    def test_reject_missing_date_rejects_instead_of_keeping(self):
+        for date in (None, "", "à confirmer"):
+            o, reason = offer(date=date, reject_missing_date=True,
+                              url=f"https://example.com/reject/{date!r}")
+            self.assertIsNone(o)
+            self.assertEqual(reason, scan.REASON_UNVERIFIABLE_RECENT_DATE)
+        # Comportement par défaut inchangé pour toutes les autres sources.
+        o, reason = offer(date=None, url="https://example.com/default")
+        self.assertIsNone(reason)
+        self.assertFalse(o["date_known"])
 
     def test_fresh_relative_date_is_accepted(self):
         o, reason = offer(date="à l'instant")
@@ -779,7 +791,7 @@ class TestRetiredNoiseSources(unittest.TestCase):
         self.assertEqual(
             scan.SOURCE_NAMES,
             ["LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "The Muse",
-             "France Travail"],
+             "France Travail", "LinkedIn Posts"],
         )
 
     def test_run_all_sources_never_threads_glassdoor_or_google(self):
@@ -798,6 +810,10 @@ class TestRetiredNoiseSources(unittest.TestCase):
                                return_value=([], scan.SourceStatus(source="Adzuna"))), \
              mock.patch.object(scan, "fetch_jooble_all",
                                return_value=([], scan.SourceStatus(source="Jooble"))), \
+             mock.patch.object(scan, "fetch_the_muse_all",
+                               return_value=([], scan.SourceStatus(source="The Muse"))), \
+             mock.patch.object(scan, "fetch_linkedin_posts_all",
+                               return_value=([], scan.SourceStatus(source="LinkedIn Posts"))), \
              mock.patch.object(scan, "fetch_france_travail_all",
                                return_value=([], scan.SourceStatus(source="France Travail"))):
             fetch_mock.return_value = ([], scan.SourceStatus(source="LinkedIn"))
@@ -1161,10 +1177,141 @@ class TestJoobleQueryRotation(unittest.TestCase):
     def test_missing_or_corrupt_rotation_file_restarts_at_zero(self):
         with tempfile.TemporaryDirectory() as tmp:
             missing = Path(tmp) / "absent.json"
-            self.assertEqual(scan.load_jooble_rotation_index(missing), 0)
+            self.assertEqual(scan.load_rotation_index(missing), 0)
             corrupt = Path(tmp) / "corrupt.json"
             corrupt.write_text("{not json", encoding="utf-8")
-            self.assertEqual(scan.load_jooble_rotation_index(corrupt), 0)
+            self.assertEqual(scan.load_rotation_index(corrupt), 0)
+
+
+def xray_result(title="Alice Martin sur LinkedIn : Stage Data Engineer",
+                snippet="Nous recherchons un stagiaire data engineer. Postulez !",
+                url="https://www.linkedin.com/posts/alice_stage-activity-7351000000000000001",
+                author="Alice Martin", published_at=None):
+    return xray.SearchResult(title=title, snippet=snippet, url=url,
+                             author=author, published_at=published_at)
+
+
+class FakeXRayProvider:
+    """Double de provider X-ray : une liste de réponses/erreurs par appel."""
+
+    def __init__(self, responses):
+        self.responses = list(responses)
+        self.calls = []
+
+    def search(self, query, freshness=None, *, page=1, max_results=10, now=None):
+        self.calls.append(query)
+        if not self.responses:
+            return []
+        outcome = self.responses.pop(0)
+        if isinstance(outcome, Exception):
+            raise outcome
+        return outcome
+
+
+class TestLinkedInPostsSource(unittest.TestCase):
+    """Source X-ray : jamais linkedin.com directement (voir radar_xray.py)."""
+
+    CATALOG = {
+        f"domain_{i}": {
+            "label": f"D{i}", "group": "Test",
+            "queries": [f"stage query {i}"],
+            "positive": ["query"], "negative": [], "enabled": True,
+        }
+        for i in range(12)
+    }
+
+    def test_query_plan_is_bounded_and_wraps(self):
+        plan, next_index = scan.linkedin_posts_query_plan(
+            self.CATALOG, list(self.CATALOG), start_index=10, budget=3,
+        )
+        self.assertEqual(len(plan), 3)
+        self.assertEqual(next_index, 1)
+
+    def test_provider_selection_prefers_exa_when_key_present(self):
+        with mock.patch.dict(os.environ, {"EXA_API_KEY": "secret"}):
+            provider = scan._build_linkedin_posts_provider(5.0)
+        self.assertIn("exa", provider.name)
+
+    def test_provider_selection_falls_back_to_duckduckgo_without_key(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            provider = scan._build_linkedin_posts_provider(5.0)
+        self.assertNotIn("exa", provider.name)
+
+    DATA_CATALOG = {
+        "data_ia": {
+            "label": "Data / IA", "group": "Tech",
+            "queries": ["stage data engineer"],
+            "positive": ["data engineer"], "negative": [], "enabled": True,
+        },
+    }
+
+    def test_relevant_post_with_verified_date_is_accepted(self):
+        now = datetime.now(timezone.utc)
+        provider = FakeXRayProvider([[xray_result(published_at=now - timedelta(hours=1))]])
+        offers, status = scan.fetch_linkedin_posts_all(
+            domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
+            provider=provider,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+        )
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(offers[0]["source"], "LinkedIn Posts")
+        self.assertEqual(status.accepted_count, 1)
+
+    def test_post_without_recruiting_intent_is_rejected(self):
+        provider = FakeXRayProvider([[xray_result(
+            title="Alice sur LinkedIn : conférence data",
+            snippet="Retour sur notre conférence annuelle, merci à tous.",
+        )]])
+        offers, status = scan.fetch_linkedin_posts_all(
+            domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
+            provider=provider,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+        )
+        self.assertEqual(offers, [])
+        self.assertEqual(status.reject_reasons.get(scan.REASON_NOT_INTERNSHIP), 1)
+
+    def test_post_without_verifiable_date_is_rejected_not_kept(self):
+        provider = FakeXRayProvider([[xray_result(published_at=None)]])
+        offers, status = scan.fetch_linkedin_posts_all(
+            domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
+            provider=provider,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+        )
+        self.assertEqual(offers, [])
+        self.assertEqual(
+            status.reject_reasons.get(scan.REASON_UNVERIFIABLE_RECENT_DATE), 1
+        )
+
+    def test_blocked_provider_trips_circuit_breaker(self):
+        provider = FakeXRayProvider([
+            xray.XRayBlockedError("bloqué", status_code=202),
+            xray.XRayBlockedError("bloqué", status_code=202),
+        ])
+        offers, status = scan.fetch_linkedin_posts_all(
+            domains=self.CATALOG, active_ids=list(self.CATALOG),
+            provider=provider,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+        )
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "blocked")
+        # Le budget restant est ignoré après deux blocages consécutifs :
+        # jamais un troisième appel.
+        self.assertEqual(len(provider.calls), 2)
+
+    def test_rotation_cursor_persists_and_advances_across_runs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            rotation_path = Path(tmp) / "linkedin_posts_rotation.json"
+            scan.fetch_linkedin_posts_all(
+                domains=self.CATALOG, active_ids=list(self.CATALOG),
+                provider=FakeXRayProvider([]), rotation_path=rotation_path,
+            )
+            first_index = json.loads(rotation_path.read_text())["next_index"]
+            scan.fetch_linkedin_posts_all(
+                domains=self.CATALOG, active_ids=list(self.CATALOG),
+                provider=FakeXRayProvider([]), rotation_path=rotation_path,
+            )
+            second_index = json.loads(rotation_path.read_text())["next_index"]
+            self.assertNotEqual(first_index, second_index)
 
 
 class TestMissingCredentials(unittest.TestCase):

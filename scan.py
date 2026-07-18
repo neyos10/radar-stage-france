@@ -54,6 +54,18 @@ from pathlib import Path
 
 import requests
 
+from radar_xray import (
+    DuckDuckGoHtmlProvider,
+    DuckDuckGoLiteProvider,
+    ExaProvider,
+    FallbackXRayProvider,
+    LINKEDIN_POST_HOSTS,
+    XRayBlockedError,
+    XRayProviderError,
+    XRayTimeoutError,
+    is_relevant_internship_post,
+)
+
 # ============================================================
 # CONFIG
 # ============================================================
@@ -66,6 +78,7 @@ STATUS_FILE = Path("data/source_status.json")
 OFFERS_FILE = Path("data/offers.json")
 DOCS_INDEX = Path("docs/index.html")
 JOOBLE_ROTATION_FILE = Path("data/jooble_rotation.json")
+LINKEDIN_POSTS_ROTATION_FILE = Path("data/linkedin_posts_rotation.json")
 
 
 def load_json(path: Path) -> dict:
@@ -138,7 +151,7 @@ DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
     "LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "The Muse",
-    "France Travail",
+    "France Travail", "LinkedIn Posts",
 ]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
@@ -198,6 +211,12 @@ JOOBLE_PAGE_SIZE = 100
 # fois la politique de quota confirmée auprès de Jooble.
 JOOBLE_QUERY_BUDGET = 10
 FRANCE_TRAVAIL_PAGE_SIZE = 150
+# LinkedIn Posts (X-ray) : un moteur de recherche public, jamais LinkedIn
+# directement. Budget prudent par run (rotation persistée, comme Jooble) et
+# pagination limitée : le moteur de repli DuckDuckGo est souvent bloqué par
+# son anti-bot, et l'API Exa ne pagine pas au-delà d'une page.
+LINKEDIN_POSTS_QUERY_BUDGET = 8
+LINKEDIN_POSTS_MAX_PAGES = 2
 
 # Une offre confirmée absente reste archivée brièvement avant purge. Cette
 # marge protège l'historique pendant un blocage prolongé tout en gardant le
@@ -240,6 +259,7 @@ REASON_NOT_INTERNSHIP = "pas un stage"
 REASON_TOO_OLD = f"plus de {OFFER_WINDOW_HOURS} heures"
 REASON_NO_DOMAIN = "aucun domaine"
 REASON_DUPLICATE = "doublon"
+REASON_UNVERIFIABLE_RECENT_DATE = "date non vérifiable sur les dernières 24 heures"
 
 # ============================================================
 # STATUT PAR SOURCE
@@ -661,7 +681,8 @@ def make_offer(title, company, location, url, source, date="",
                region_id: str = DEFAULT_REGION_ID,
                regions: dict | None = None,
                now: datetime | None = None,
-               freshness_verified: bool = False) -> tuple[dict | None, str | None]:
+               freshness_verified: bool = False,
+               reject_missing_date: bool = False) -> tuple[dict | None, str | None]:
     """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
     regions = regions or REGIONS
     if region_id not in regions:
@@ -681,6 +702,11 @@ def make_offer(title, company, location, url, source, date="",
             and published_at < now - timedelta(hours=OFFER_WINDOW_HOURS)):
         _log_old_date_rejection(source, title, date, published_at)
         return None, REASON_TOO_OLD
+    if published_at is None and reject_missing_date:
+        # Une source X-ray n'a que des indices approximatifs de date : sans
+        # preuve vérifiable de fraîcheur, l'offre est rejetée plutôt que
+        # conservée par précaution (contrairement au comportement par défaut).
+        return None, REASON_UNVERIFIABLE_RECENT_DATE
     if published_at is None:
         safe_title = re.sub(r"[\r\n\t]+", " ", title)[:100]
         raw = re.sub(r"[\r\n\t]+", " ", clean_text(date))[:100]
@@ -1191,8 +1217,9 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
     return list(offers.values()), status
 
 
-def load_jooble_rotation_index(path: Path = JOOBLE_ROTATION_FILE) -> int:
-    """Curseur de rotation Jooble ; absent ou corrompu = repart à zéro."""
+def load_rotation_index(path: Path = JOOBLE_ROTATION_FILE) -> int:
+    """Curseur de rotation générique (Jooble, LinkedIn Posts) ; absent ou
+    corrompu = repart à zéro."""
     if not path.exists():
         return 0
     try:
@@ -1207,7 +1234,7 @@ def load_jooble_rotation_index(path: Path = JOOBLE_ROTATION_FILE) -> int:
         return 0
 
 
-def save_jooble_rotation_index(index: int, path: Path = JOOBLE_ROTATION_FILE) -> None:
+def save_rotation_index(index: int, path: Path = JOOBLE_ROTATION_FILE) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps({"next_index": max(0, int(index))}, ensure_ascii=False, indent=1),
@@ -1273,7 +1300,7 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
         log_collection_summary(status)
         return [], status
 
-    start_index = load_jooble_rotation_index(rotation_path)
+    start_index = load_rotation_index(rotation_path)
     plan, next_index = jooble_query_plan(
         domains, active_ids, start_index=start_index,
     )
@@ -1361,7 +1388,7 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
     else:
         status.finalize()
     log_collection_summary(status)
-    save_jooble_rotation_index(next_index, rotation_path)
+    save_rotation_index(next_index, rotation_path)
     return list(offers.values()), status
 
 
@@ -1628,6 +1655,158 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
 
 
 # ============================================================
+# SOURCE 9 : LinkedIn Posts (X-ray public, jamais LinkedIn directement)
+# ============================================================
+
+def linkedin_posts_query_plan(
+        domains: dict | None = None, active_ids: list[str] | None = None,
+        *, start_index: int = 0,
+        budget: int = LINKEDIN_POSTS_QUERY_BUDGET) -> tuple[list[str], int]:
+    """Sous-ensemble rotatif du catalogue, même mécanique que Jooble."""
+    queries = active_queries(domains, active_ids)
+    if not queries or budget <= 0:
+        return [], start_index
+    count = min(budget, len(queries))
+    start_index = start_index % len(queries)
+    plan = [queries[(start_index + i) % len(queries)] for i in range(count)]
+    next_index = (start_index + count) % len(queries)
+    return plan, next_index
+
+
+def _build_linkedin_posts_provider(timeout: float, region_hint: str = "France"):
+    """Exa (API officielle) en priorité si ``EXA_API_KEY`` est fourni.
+
+    DuckDuckGo reste le repli historique, mais mesuré en conditions réelles
+    (environnement de développement et runners GitHub Actions), il soumet
+    systématiquement ces requêtes à son défi anti-bot (HTTP 202,
+    « anomaly-modal ») : Exa est donc le choix prioritaire dès qu'une clé est
+    disponible, sans jamais tenter de contourner ce défi.
+    """
+    ddg_stack = FallbackXRayProvider(
+        DuckDuckGoHtmlProvider(timeout=timeout),
+        DuckDuckGoLiteProvider(timeout=timeout),
+    )
+    api_key = os.environ.get("EXA_API_KEY", "").strip()
+    if not api_key:
+        return ddg_stack
+    return FallbackXRayProvider(
+        ExaProvider(api_key, timeout=timeout, region_hint=region_hint), ddg_stack
+    )
+
+
+def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
+                             region_config: dict | None = None,
+                             regions: dict | None = None,
+                             domains: dict | None = None,
+                             active_ids: list[str] | None = None,
+                             provider=None,
+                             rotation_path: Path = LINKEDIN_POSTS_ROTATION_FILE
+                             ) -> tuple[list[dict], SourceStatus]:
+    """Posts LinkedIn publics indexés par un moteur de recherche — jamais LinkedIn.
+
+    Ce connecteur n'ouvre jamais linkedin.com : il lit uniquement ce qu'un
+    moteur de recherche public (Exa, ou DuckDuckGo en repli) expose déjà sur
+    les URLs de posts publics. Le budget par run reste prudent et rotatif
+    (même mécanique que Jooble), et la fraîcheur d'un post trouvé via un
+    moteur n'est jamais garantie : toute offre sans date vérifiable dans la
+    fenêtre de 24 h est rejetée plutôt que conservée par précaution.
+    """
+    regions = regions or REGIONS
+    domains = domains or DOMAINS
+    region_config = region_config or regions[region_id]
+    status = source_status("LinkedIn Posts", region_id, regions)
+    started = time.monotonic()
+
+    start_index = load_rotation_index(rotation_path)
+    plan, next_index = linkedin_posts_query_plan(
+        domains, active_ids, start_index=start_index,
+    )
+    print(f"[INFO] LinkedIn Posts : rotation {len(plan)}/"
+          f"{len(active_queries(domains, active_ids))} requêtes "
+          f"(curseur {start_index} → {next_index})")
+    if not plan:
+        status.finalize()
+        log_collection_summary(status)
+        save_rotation_index(next_index, rotation_path)
+        return [], status
+
+    provider = provider or _build_linkedin_posts_provider(
+        REQUEST_TIMEOUT, region_hint=region_config["label"],
+    )
+
+    offers: dict[str, dict] = {}
+    consecutive_blocks = 0
+    for index, raw_query in enumerate(plan):
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            status.note = "circuit breaker : requêtes restantes ignorées"
+            break
+        term = source_keywords(raw_query)
+        host = LINKEDIN_POST_HOSTS[index % len(LINKEDIN_POST_HOSTS)]
+        query = f'site:{host}/posts "stage" "{term}"'
+        query_seen: set[str] = set()
+        for page in range(1, LINKEDIN_POSTS_MAX_PAGES + 1):
+            try:
+                results = provider.search(query, freshness="d", page=page, max_results=30)
+            except XRayBlockedError as exc:
+                consecutive_blocks += 1
+                code = getattr(exc, "status_code", None)
+                status.http_error = f"HTTP {code}" if code else "moteur bloqué"
+                print(f"[WARN] LinkedIn Posts '{query}' page {page} bloquée : {exc}",
+                      file=sys.stderr)
+                break
+            except XRayTimeoutError as exc:
+                status.http_error = str(exc)[:200]
+                print(f"[WARN] LinkedIn Posts '{query}' page {page} timeout : {exc}",
+                      file=sys.stderr)
+                break
+            except XRayProviderError as exc:
+                status.http_error = status.http_error or str(exc)[:200]
+                print(f"[WARN] LinkedIn Posts '{query}' page {page} a échoué : {exc}",
+                      file=sys.stderr)
+                break
+
+            consecutive_blocks = 0
+            status.pages_fetched += 1
+            status.raw_count += len(results)
+            print(f"[INFO] LinkedIn Posts '{query}' page {page} : "
+                  f"{len(results)} résultats bruts")
+            if not results:
+                break
+            page_ids = {result.external_id for result in results}
+            if page_ids and page_ids.issubset(query_seen):
+                break
+            query_seen.update(page_ids)
+            for result in results:
+                if not is_relevant_internship_post(result):
+                    status.add_reject(REASON_NOT_INTERNSHIP)
+                    continue
+                date_value = (
+                    result.published_at.isoformat()
+                    if result.published_at is not None else ""
+                )
+                offer, reason = make_offer(
+                    result.title, result.author or "Post LinkedIn",
+                    region_config["label"], result.url, "LinkedIn Posts",
+                    date_value, confirmed_internship=True,
+                    description=result.snippet, domains=domains,
+                    active_ids=active_ids, region_id=region_id, regions=regions,
+                    reject_missing_date=True,
+                )
+                register_offer(status, offers, offer, reason)
+            if len(results) < 30:
+                break
+
+    status.duration_s = round(time.monotonic() - started, 1)
+    if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+        status.status = "blocked"
+    else:
+        status.finalize()
+    log_collection_summary(status)
+    save_rotation_index(next_index, rotation_path)
+    return list(offers.values()), status
+
+
+# ============================================================
 # ORCHESTRATION
 # ============================================================
 
@@ -1694,6 +1873,8 @@ def run_all_sources(domains: dict | None = None,
         "The Muse": lambda region_id, region_config: fetch_the_muse_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "France Travail": lambda region_id, region_config: fetch_france_travail_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "LinkedIn Posts": lambda region_id, region_config: fetch_linkedin_posts_all(
             region_id, region_config, regions, domains, active_domain_ids),
     }
     results: dict[str, tuple[list[dict], list[SourceStatus]]] = {}
