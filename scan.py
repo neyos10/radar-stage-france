@@ -2281,7 +2281,13 @@ def render_dashboard(offers: list[dict], new_ids: set,
         related = [st for st in statuses if st.source == source_name]
         if not related:
             related = [source_status(source_name, active_region_ids[0], regions)]
-        representative = min(related, key=lambda st: status_priority.get(st.status, 9))
+        # Une source nationale (APEC, France Travail…) est not_applicable
+        # hors France : ce non-statut ne doit jamais masquer le résultat réel
+        # de la région où elle a tourné (« non applicable » affiché alors que
+        # la source était en succès en France, constaté en production).
+        applicable = [st for st in related if st.status != "not_applicable_region"]
+        representative = min(applicable or related,
+                             key=lambda st: status_priority.get(st.status, 9))
         name = html.escape(source_name, quote=True)
         count = final_counts.get(source_name, 0)
         hint = html.escape(chip_hint(representative, count))

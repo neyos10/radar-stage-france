@@ -1601,6 +1601,25 @@ class TestDashboard(unittest.TestCase):
             encoding="utf-8"
         )
 
+    def test_national_source_chip_shows_france_result_not_non_applicable(self):
+        # Constaté en production : France Travail en succès en France (71
+        # reçus) mais chip « non applicable » — le non-statut des trois autres
+        # régions écrasait le résultat réel de la seule région où la source
+        # tourne.
+        statuses = [
+            scan.SourceStatus(source="France Travail", region_id="france",
+                              region_label="France", status="empty",
+                              raw_count=71),
+        ] + [
+            scan.SourceStatus(source="France Travail", region_id=r,
+                              region_label=r.title(),
+                              status="not_applicable_region")
+            for r in ("belgique", "luxembourg", "maroc")
+        ]
+        page = self.render([], statuses)
+        self.assertIn("France Travail <b>0 accepté / 71 reçus</b>", page)
+        self.assertNotIn("France Travail <b>non applicable</b>", page)
+
     def test_product_config_controls_dashboard(self):
         candidate, _ = offer()
         candidate["highlighted"] = True
