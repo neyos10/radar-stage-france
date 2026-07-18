@@ -1042,6 +1042,32 @@ class TestSourcePagination(unittest.TestCase):
         self.assertEqual(get.call_count, 1)
         self.assertEqual(status.status, "success")
 
+    def test_the_muse_old_publication_date_is_still_accepted(self):
+        # The Muse ne propose pas de hours_old : son catalogue "Internship"
+        # reflète des offres toujours ouvertes indépendamment de leur date de
+        # publication d'origine. Une offre à ce jour ne doit jamais être
+        # rejetée "plus de 24 heures" (régression réelle constatée en
+        # production : 100 % des offres étaient rejetées ainsi).
+        response = fake_response({
+            "page_count": 1, "page": 0,
+            "results": [{
+                "id": "old", "name": "Stage Data Engineer",
+                "company": {"name": "ACME"},
+                "locations": [{"name": "Paris, France"}],
+                "levels": [{"name": "Internship"}],
+                "publication_date": TOO_OLD,
+                "contents": "data engineer",
+                "refs": {"landing_page": "https://www.themuse.com/jobs/acme/old"},
+            }],
+        })
+        with mock.patch.object(scan.requests, "get", return_value=response):
+            offers, status = scan.fetch_the_muse_all(
+                domains=self.CATALOG, active_ids=["data"],
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(status.accepted_count, 1)
+        self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
+
     def test_the_muse_uses_optional_api_key_when_present(self):
         response = fake_response({"page_count": 1, "page": 0, "results": []})
         with mock.patch.dict(os.environ, {"THEMUSE_API_KEY": "muse-key"}), \
