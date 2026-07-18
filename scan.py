@@ -2003,7 +2003,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
                 region_counts[region_id] += 1
 
     cards = []
-    for o in sort_offers(offers)[:150]:
+    for o in sort_offers(offers):
         is_new = o["id"] in new_ids
         date_known = o.get("date_known", bool(o.get("date")))
         if date_known and o.get("date"):
