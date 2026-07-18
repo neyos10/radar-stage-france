@@ -1492,6 +1492,18 @@ class TestDashboard(unittest.TestCase):
         self.assertEqual(self.dashboard_config(page)["defaultRegion"], "france")
         self.assertNotIn('data-region="belgique"', page)
 
+    def test_every_active_offer_is_rendered_as_a_card_beyond_150(self):
+        """Régression : les chips source/domaine/région comptaient le total
+        de `offers`, mais seules les 150 premières cartes étaient rendues —
+        une source classée au-delà de ce rang affichait un chip non-nul sans
+        aucune carte filtrable, menant à "0 offre" quel que soit le filtre."""
+        many = [offer(url=f"https://example.com/o/{i}", date=TODAY)[0]
+                for i in range(160)]
+        page = self.render(many)
+        self.assertEqual(page.count('<article class="job'), 160)
+        self.assertIn('data-src="LinkedIn" aria-pressed="false">LinkedIn <b>(160)</b>',
+                      page)
+
 
 if __name__ == "__main__":
     unittest.main()
