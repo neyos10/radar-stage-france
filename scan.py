@@ -1190,6 +1190,11 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
             remote_seen.update(page_keys)
             stale_pages = stale_pages + 1 if not new_keys else 0
             for r in results:
+                # max_days_old=1 filtre déjà la fraîcheur côté serveur (en
+                # jours calendaires) : re-rejeter localement à 24 h glissantes
+                # écartait des offres limites pourtant garanties récentes par
+                # la source (85 rejets constatés sur un run sain) — même
+                # logique que le hours_old de JobSpy.
                 offer, reason = make_offer(
                     r.get("title"), (r.get("company") or {}).get("display_name"),
                     (r.get("location") or {}).get("display_name"),
@@ -1197,6 +1202,7 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
                     description=clean_text(r.get("description")),
                     domains=domains, active_ids=active_ids,
                     region_id=region_id, regions=regions,
+                    freshness_verified=True,
                 )
                 register_offer(status, offers, offer, reason)
             total = int(payload.get("count") or 0)
@@ -1636,6 +1642,10 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
             for r in results:
                 url = (r.get("origineOffre") or {}).get("urlOrigine") or \
                       f"https://candidat.francetravail.fr/offres/recherche/detail/{r.get('id')}"
+                # Comme APEC/Jooble/The Muse : l'API ne renvoie que des offres
+                # publiées et ouvertes ; dateCreation ancienne ne vaut jamais
+                # rejet (68/71 offres rejetées "plus de 24 heures" sur un run
+                # sain avant ce correctif).
                 offer, reason = make_offer(
                     r.get("intitule"), (r.get("entreprise") or {}).get("nom"),
                     (r.get("lieuTravail") or {}).get("libelle"),
@@ -1644,6 +1654,7 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
                     description=clean_text(r.get("description")),
                     domains=domains, active_ids=active_ids,
                     region_id=region_id, regions=regions,
+                    freshness_verified=True,
                 )
                 register_offer(status, offers, offer, reason)
             content_range = resp.headers.get("Content-Range", "")
