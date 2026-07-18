@@ -1066,10 +1066,16 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
         url = f"https://www.apec.fr/candidat/recherche-stage.html/stage/detail-offre/{number}"
         args = (r.get("intitule"), r.get("nomCommercial"), r.get("lieuTexte"),
                 url, "APEC", r.get("datePublication"))
+        # La recherche APEC ne renvoie que des offres actuellement ouvertes
+        # (filtre stage serveur) : une datePublication ancienne ne signifie
+        # pas une offre expirée. Sans cet indicateur, toute offre publiée il
+        # y a plus de 24h était rejetée à chaque run puis considérée absente
+        # par le store — d'où un compteur APEC qui fondait à vue d'œil.
         offer, reason = make_offer(*args, confirmed_internship=True,
                                    description=clean_text(r.get("texteOffre")),
                                    domains=domains, active_ids=active_ids,
-                                   region_id=region_id, regions=regions)
+                                   region_id=region_id, regions=regions,
+                                   freshness_verified=True)
         if (offer is None and reason == REASON_NO_DOMAIN
                 and detail_budget > 0 and not detail_blocked):
             # Titre insuffisant et snippet tronqué : lire le texte complet
@@ -1086,7 +1092,8 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
                 offer, reason = make_offer(*args, confirmed_internship=True,
                                            description=full_text,
                                            domains=domains, active_ids=active_ids,
-                                           region_id=region_id, regions=regions)
+                                           region_id=region_id, regions=regions,
+                                           freshness_verified=True)
         register_offer(status, offers, offer, reason)
     if detail_blocked:
         status.note = "lectures de détail APEC bloquées (403/429)"
@@ -1358,12 +1365,16 @@ def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
             remote_seen.update(page_keys)
             stale_pages = stale_pages + 1 if not new_keys else 0
             for r in results:
+                # Comme APEC et The Muse : Jooble ne liste que des offres
+                # encore ouvertes, sa date "updated" ancienne ne prouve pas
+                # une expiration.
                 offer, reason = make_offer(
                     r.get("title"), r.get("company"), r.get("location"),
                     r.get("link"), "Jooble", r.get("updated") or "",
                     description=clean_text(r.get("snippet")),
                     domains=domains, active_ids=active_ids,
                     region_id=region_id, regions=regions,
+                    freshness_verified=True,
                 )
                 register_offer(status, offers, offer, reason)
             total = int(payload.get("totalCount") or 0)
