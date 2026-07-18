@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-18T00:51:27+00:00",
- "scan_duration_s": 3326.4,
+ "generated_at": "2026-07-18T03:50:14+00:00",
+ "scan_duration_s": 3512.0,
  "active_domains": [
   "data_ia",
   "dev_web",
@@ -38,41 +38,41 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 2185,
-   "accepted_count": 190,
-   "rejected_count": 1995,
+   "raw_count": 1575,
+   "accepted_count": 178,
+   "rejected_count": 1397,
    "reject_reasons": {
-    "pas un stage": 1501,
-    "aucun domaine": 368,
-    "doublon": 126
+    "pas un stage": 1004,
+    "aucun domaine": 288,
+    "doublon": 105
    },
-   "unknown_date_count": 189,
+   "unknown_date_count": 178,
    "too_old_count": 0,
-   "duplicate_count": 126,
-   "pages_fetched": 136,
-   "duration_s": 1537.4,
+   "duplicate_count": 105,
+   "pages_fetched": 111,
+   "duration_s": 1622.2,
    "http_error": "",
    "note": "",
-   "label": "190 offres"
+   "label": "178 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "belgique",
    "region_label": "Belgique",
    "status": "success",
-   "raw_count": 982,
+   "raw_count": 658,
    "accepted_count": 15,
-   "rejected_count": 967,
+   "rejected_count": 643,
    "reject_reasons": {
-    "pas un stage": 842,
-    "aucun domaine": 82,
-    "doublon": 43
+    "pas un stage": 556,
+    "doublon": 41,
+    "aucun domaine": 46
    },
    "unknown_date_count": 15,
    "too_old_count": 0,
-   "duplicate_count": 43,
-   "pages_fetched": 95,
-   "duration_s": 730.6,
+   "duplicate_count": 41,
+   "pages_fetched": 87,
+   "duration_s": 751.1,
    "http_error": "",
    "note": "",
    "label": "15 offres"
@@ -82,19 +82,19 @@
    "region_id": "luxembourg",
    "region_label": "Luxembourg",
    "status": "success",
-   "raw_count": 794,
+   "raw_count": 463,
    "accepted_count": 4,
-   "rejected_count": 790,
+   "rejected_count": 459,
    "reject_reasons": {
-    "pas un stage": 622,
-    "aucun domaine": 125,
-    "doublon": 43
+    "pas un stage": 364,
+    "aucun domaine": 64,
+    "doublon": 31
    },
    "unknown_date_count": 4,
    "too_old_count": 0,
-   "duplicate_count": 43,
-   "pages_fetched": 96,
-   "duration_s": 564.0,
+   "duplicate_count": 31,
+   "pages_fetched": 87,
+   "duration_s": 613.8,
    "http_error": "",
    "note": "",
    "label": "4 offres"
@@ -104,19 +104,19 @@
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "success",
-   "raw_count": 650,
+   "raw_count": 449,
    "accepted_count": 5,
-   "rejected_count": 645,
+   "rejected_count": 444,
    "reject_reasons": {
-    "pas un stage": 589,
-    "doublon": 44,
-    "aucun domaine": 12
+    "pas un stage": 410,
+    "doublon": 27,
+    "aucun domaine": 7
    },
    "unknown_date_count": 5,
    "too_old_count": 0,
-   "duplicate_count": 44,
-   "pages_fetched": 94,
-   "duration_s": 494.3,
+   "duplicate_count": 27,
+   "pages_fetched": 87,
+   "duration_s": 524.8,
    "http_error": "",
    "note": "",
    "label": "5 offres"
@@ -126,33 +126,33 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 1764,
-   "accepted_count": 97,
-   "rejected_count": 1667,
+   "raw_count": 1791,
+   "accepted_count": 100,
+   "rejected_count": 1691,
    "reject_reasons": {
-    "pas un stage": 1101,
-    "aucun domaine": 286,
-    "doublon": 280
+    "pas un stage": 1128,
+    "aucun domaine": 285,
+    "doublon": 278
    },
    "unknown_date_count": 0,
    "too_old_count": 0,
-   "duplicate_count": 280,
-   "pages_fetched": 94,
-   "duration_s": 184.0,
+   "duplicate_count": 278,
+   "pages_fetched": 95,
+   "duration_s": 169.7,
    "http_error": "",
    "note": "",
-   "label": "97 offres"
+   "label": "100 offres"
   },
   {
    "source": "Indeed",
    "region_id": "belgique",
    "region_label": "Belgique",
    "status": "success",
-   "raw_count": 55,
+   "raw_count": 53,
    "accepted_count": 4,
-   "rejected_count": 51,
+   "rejected_count": 49,
    "reject_reasons": {
-    "pas un stage": 43,
+    "pas un stage": 41,
     "doublon": 6,
     "aucun domaine": 2
    },
@@ -160,7 +160,7 @@
    "too_old_count": 0,
    "duplicate_count": 6,
    "pages_fetched": 87,
-   "duration_s": 25.5,
+   "duration_s": 15.1,
    "http_error": "",
    "note": "",
    "label": "4 offres"
@@ -182,7 +182,7 @@
    "too_old_count": 0,
    "duplicate_count": 1,
    "pages_fetched": 87,
-   "duration_s": 18.6,
+   "duration_s": 10.7,
    "http_error": "",
    "note": "",
    "label": "1 offre"
@@ -204,7 +204,7 @@
    "too_old_count": 0,
    "duplicate_count": 14,
    "pages_fetched": 87,
-   "duration_s": 26.6,
+   "duration_s": 14.7,
    "http_error": "",
    "note": "",
    "label": "11 offres"
@@ -214,22 +214,22 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 650,
-   "accepted_count": 9,
-   "rejected_count": 641,
+   "raw_count": 645,
+   "accepted_count": 7,
+   "rejected_count": 638,
    "reject_reasons": {
-    "doublon": 465,
-    "plus de 24 heures": 166,
-    "aucun domaine": 10
+    "doublon": 462,
+    "plus de 24 heures": 170,
+    "aucun domaine": 6
    },
    "unknown_date_count": 0,
-   "too_old_count": 166,
-   "duplicate_count": 465,
+   "too_old_count": 170,
+   "duplicate_count": 462,
    "pages_fetched": 87,
-   "duration_s": 62.1,
+   "duration_s": 52.0,
    "http_error": "",
    "note": "lectures de détail APEC bloquées (403/429)",
-   "label": "9 offres"
+   "label": "7 offres"
   },
   {
    "source": "APEC",
@@ -290,23 +290,23 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 1702,
-   "accepted_count": 118,
-   "rejected_count": 1584,
+   "raw_count": 1509,
+   "accepted_count": 115,
+   "rejected_count": 1394,
    "reject_reasons": {
-    "aucun domaine": 164,
-    "plus de 24 heures": 88,
-    "pas un stage": 1277,
-    "doublon": 55
+    "aucun domaine": 143,
+    "plus de 24 heures": 22,
+    "pas un stage": 1183,
+    "doublon": 46
    },
    "unknown_date_count": 0,
-   "too_old_count": 88,
-   "duplicate_count": 55,
-   "pages_fetched": 115,
-   "duration_s": 68.6,
+   "too_old_count": 22,
+   "duplicate_count": 46,
+   "pages_fetched": 114,
+   "duration_s": 87.0,
    "http_error": "",
    "note": "",
-   "label": "118 offres"
+   "label": "115 offres"
   },
   {
    "source": "Adzuna",
@@ -367,21 +367,21 @@
    "region_id": "france",
    "region_label": "France",
    "status": "empty",
-   "raw_count": 107,
+   "raw_count": 83,
    "accepted_count": 0,
-   "rejected_count": 107,
+   "rejected_count": 83,
    "reject_reasons": {
-    "pas un stage": 103,
+    "pas un stage": 79,
     "plus de 24 heures": 4
    },
    "unknown_date_count": 0,
    "too_old_count": 4,
    "duplicate_count": 0,
    "pages_fetched": 10,
-   "duration_s": 3.6,
+   "duration_s": 3.2,
    "http_error": "",
    "note": "",
-   "label": "0 accepté / 107 reçus"
+   "label": "0 accepté / 83 reçus"
   },
   {
    "source": "Jooble",
@@ -452,7 +452,7 @@
    "too_old_count": 60,
    "duplicate_count": 0,
    "pages_fetched": 3,
-   "duration_s": 1.7,
+   "duration_s": 1.1,
    "http_error": "",
    "note": "",
    "label": "0 accepté / 60 reçus"
@@ -527,7 +527,7 @@
    "too_old_count": 0,
    "duplicate_count": 10,
    "pages_fetched": 87,
-   "duration_s": 61.5,
+   "duration_s": 52.4,
    "http_error": "",
    "note": "",
    "label": "44 offres"
