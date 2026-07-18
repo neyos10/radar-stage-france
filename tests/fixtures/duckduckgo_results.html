@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+  <body>
+    <div class="result results_links results_links_deep web-result">
+      <h2 class="result__title">
+        <a class="result__a" href="//duckduckgo.com/l/?uddg=https%3A%2F%2Ffr.linkedin.com%2Fposts%2Falice-martin_stage-data-engineer-activity-7351000000000000000%3Futm_source%3Dshare%26trk%3Dpublic_post%23tracking&amp;rut=fake">
+          Alice Martin on LinkedIn: &quot;Nous recherchons un stagiaire Data Engineer&quot;
+        </a>
+      </h2>
+      <a class="result__snippet">
+        2 hours ago — Stage Data Engineer à pourvoir. Envoyez votre CV à notre équipe.
+      </a>
+    </div>
+
+    <!-- Même post, URL/host/tracking différents : une seule identité. -->
+    <div class="result web-result">
+      <h2><a class="result__a" href="https://www.linkedin.com/posts/alice-martin_stage-data-engineer-activity-7351000000000000000/?trackingId=abc&amp;utm_medium=social">
+        Copie du même post
+      </a></h2>
+      <div class="result__snippet">Nous recrutons un stagiaire Data.</div>
+    </div>
+
+    <!-- Résultat moteur hors LinkedIn : il doit être ignoré. -->
+    <div class="result web-result">
+      <h2><a class="result__a" href="https://example.org/posts/stage-data">
+        Stage Data sur un autre site
+      </a></h2>
+      <div class="result__snippet">Nous recherchons un stagiaire.</div>
+    </div>
+
+    <!-- Page LinkedIn qui n'est pas un post : elle doit être ignorée. -->
+    <div class="result web-result">
+      <h2><a class="result__a" href="https://www.linkedin.com/jobs/view/123456/">
+        Offre LinkedIn classique
+      </a></h2>
+      <div class="result__snippet">Stage Data Engineer.</div>
+    </div>
+  </body>
+</html>

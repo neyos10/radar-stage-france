@@ -6,10 +6,10 @@ nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
 GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
 actifs par défaut.
 
-Les sept sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
-Jooble, The Muse et France Travail. Chaque source est isolée : un blocage
-403/429, un timeout ou l'absence d'une clé API n'arrête pas les autres
-connecteurs.
+Les huit sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
+Jooble, The Muse, France Travail et LinkedIn Posts. Chaque source est isolée :
+un blocage 403/429, un timeout ou l'absence d'une clé API n'arrête pas les
+autres connecteurs.
 
 Glassdoor et Google Jobs ont été retirés du code : sur plusieurs runs de
 production consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas
@@ -83,6 +83,7 @@ par un run sain. Les entrées inactives sont purgées après 14 jours.
 | `JOOBLE_API_KEY` | API Jooble | non |
 | `THEMUSE_API_KEY` | API The Muse (relève la limite à 3600 req/h) | non — 500 req/h sans elle |
 | `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | API Offres d'emploi v2 | non |
+| `EXA_API_KEY` | API Exa pour LinkedIn Posts (repli DuckDuckGo sinon) | non |
 
 Sans identifiants optionnels, leur source apparaît « non configurée » et le
 reste du scan continue normalement. The Muse fonctionne même sans clé
@@ -116,6 +117,21 @@ site ne demande et ne conserve aucun token GitHub.
   requêtes est interrogé par run ; un curseur persisté dans
   `data/jooble_rotation.json` garantit que tous les domaines finissent par
   être couverts au fil des runs, sans jamais dépasser le budget.
+- **LinkedIn Posts** est une source *X-ray* : elle n'ouvre jamais linkedin.com,
+  ne se connecte à aucun compte et ne contourne aucun CAPTCHA. Elle lit
+  uniquement ce qu'un moteur de recherche public expose déjà sur les URLs
+  `linkedin.com/posts/...` — titre, extrait, URL. Exa (API officielle, dont
+  les conditions d'usage autorisent explicitement l'appel programmatique) est
+  utilisé en priorité si `EXA_API_KEY` est fourni ; DuckDuckGo sert de repli
+  historique, mais son défi anti-bot (« bots use DuckDuckGo too ») le bloque
+  systématiquement en usage automatisé, aussi bien en local que sur les
+  runners GitHub Actions — la garde `XRayBlockedError` détecte ce blocage et
+  ne tente jamais de le lever. Comme Jooble, un budget prudent et rotatif
+  (`LINKEDIN_POSTS_QUERY_BUDGET`, 8 requêtes/run) est interrogé, avec un
+  curseur persisté dans `data/linkedin_posts_rotation.json`. Un post sans
+  date de publication vérifiable dans les dernières 24 heures est rejeté —
+  jamais conservé par précaution comme pour les autres sources — car un
+  moteur de recherche ne garantit pas la fraîcheur d'un résultat.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
 - LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.
