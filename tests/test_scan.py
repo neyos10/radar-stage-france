@@ -1159,6 +1159,50 @@ class TestSourcePagination(unittest.TestCase):
         self.assertTrue(all(call.kwargs["params"]["publieeDepuis"] == 1
                             for call in get.call_args_list))
 
+    def test_france_travail_old_creation_date_is_still_accepted(self):
+        # 68/71 offres rejetées "plus de 24 heures" sur un run sain avant le
+        # correctif : l'API ne renvoie que des offres publiées et ouvertes,
+        # dateCreation ancienne ne vaut jamais rejet.
+        response = fake_response(
+            {"resultats": [{
+                "id": "old", "intitule": "Stage Data Engineer",
+                "entreprise": {"nom": "ACME"},
+                "lieuTravail": {"libelle": "Paris"},
+                "dateCreation": TOO_OLD, "description": "data engineer",
+            }]},
+            headers={"Content-Range": "offres 0-0/1"},
+        )
+        with mock.patch.dict(os.environ, {"FT_CLIENT_ID": "id",
+                                          "FT_CLIENT_SECRET": "key"}), \
+             mock.patch.object(scan, "ft_token", return_value="token"), \
+             mock.patch.object(scan.requests, "get", return_value=response):
+            offers, status = scan.fetch_france_travail_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
+
+    def test_adzuna_boundary_date_is_still_accepted(self):
+        # max_days_old=1 filtre déjà côté serveur en jours calendaires : une
+        # offre limite (36 h) reste garantie récente par la source et ne doit
+        # pas être re-rejetée localement (85 rejets constatés sur un run sain).
+        boundary = (datetime.now(timezone.utc) - timedelta(hours=36)).isoformat()
+        response = fake_response({"count": 1, "results": [{
+            "id": "b", "title": "Stage Data Engineer",
+            "company": {"display_name": "ACME"},
+            "location": {"display_name": "Paris"},
+            "redirect_url": "https://e.com/adzuna/b",
+            "created": boundary, "description": "data engineer",
+        }]})
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "id",
+                                          "ADZUNA_APP_KEY": "key"}), \
+             mock.patch.object(scan.requests, "get", return_value=response):
+            offers, status = scan.fetch_adzuna_all(
+                domains=self.CATALOG, active_ids=["data"]
+            )
+        self.assertEqual(len(offers), 1)
+        self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
+
 
 class TestJoobleQueryRotation(unittest.TestCase):
     """Budget prudent (10 requêtes/run) tant que la politique de quota
