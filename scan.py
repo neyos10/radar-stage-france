@@ -7,14 +7,17 @@ Sources :
   2. Indeed (régions configurées)                — via JobSpy
   3. APEC France (recherche publique de stages)  — sans compte
   4. Adzuna France (agrégateur officiel)         — si secret fourni
-  5. Jooble (agrégateur généraliste européen)    — si secret fourni
+  5. The Muse (API officielle, filtre stage)     — clé optionnelle
   6. France Travail (API officielle française)   — si secrets fournis
+  7. LinkedIn Posts (X-ray via moteur public)    — jamais LinkedIn direct
 
-Glassdoor et Google Jobs ont été retirés du code (pas seulement désactivés) :
-sur plusieurs runs de production consécutifs, ils ont renvoyé 0 résultat brut
-dans 100 % des cas (Glassdoor bloqué en 403 par son anti-bot, Google Jobs
-répondant vide sans erreur) tout en consommant du temps de scan. Voir
-l'historique Git si l'un des deux redevient fiable un jour côté JobSpy.
+Glassdoor, Google Jobs et Jooble ont été retirés du code (pas seulement
+désactivés) : sur plusieurs runs de production consécutifs, ils ont produit
+0 offre acceptée dans 100 % des cas (Glassdoor bloqué en 403 par son
+anti-bot, Google Jobs répondant vide sans erreur, Jooble sans aucun filtre
+de type de contrat — 137/139 de ses résultats n'étaient réellement pas des
+stages) tout en consommant du temps de scan. Voir l'historique Git si l'un
+d'eux redevient exploitable un jour.
 
 Chaque source est optionnelle et tolérante aux pannes : si un site bloque
 (403/429) ou si une clé manque, on continue avec les autres. Un circuit
@@ -77,7 +80,6 @@ SEEN_FILE = Path("data/seen_offers.json")
 STATUS_FILE = Path("data/source_status.json")
 OFFERS_FILE = Path("data/offers.json")
 DOCS_INDEX = Path("docs/index.html")
-JOOBLE_ROTATION_FILE = Path("data/jooble_rotation.json")
 LINKEDIN_POSTS_ROTATION_FILE = Path("data/linkedin_posts_rotation.json")
 
 
@@ -150,7 +152,7 @@ REGIONS = load_regions()
 DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
-    "LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "The Muse",
+    "LinkedIn", "Indeed", "APEC", "Adzuna", "The Muse",
     "France Travail", "LinkedIn Posts",
 ]
 
@@ -201,20 +203,11 @@ MAX_SOURCE_PAGES = 100
 MAX_STALE_PAGES = 2
 APEC_PAGE_SIZE = 100
 ADZUNA_PAGE_SIZE = 50
-# Jooble retourne 20 résultats par défaut ; ResultOnPage demande explicitement
-# une page plus large pour réduire le nombre d'appels par requête.
-JOOBLE_PAGE_SIZE = 100
-# Quota de démarrage Jooble : 500 requêtes dont la nature (unique ou
-# récurrente) n'est pas documentée publiquement. Ce budget prudent par run
-# fait durer un total unique de 500 sur ~50 runs (~2 jours en cadence
-# horaire) plutôt que de l'épuiser en une poignée d'heures ; à ajuster une
-# fois la politique de quota confirmée auprès de Jooble.
-JOOBLE_QUERY_BUDGET = 10
 FRANCE_TRAVAIL_PAGE_SIZE = 150
 # LinkedIn Posts (X-ray) : un moteur de recherche public, jamais LinkedIn
-# directement. Budget prudent par run (rotation persistée, comme Jooble) et
-# pagination limitée : le moteur de repli DuckDuckGo est souvent bloqué par
-# son anti-bot, et l'API Exa ne pagine pas au-delà d'une page.
+# directement. Budget prudent par run (rotation persistée) et pagination
+# limitée : le moteur de repli DuckDuckGo est souvent bloqué par son
+# anti-bot, et l'API Exa ne pagine pas au-delà d'une page.
 LINKEDIN_POSTS_QUERY_BUDGET = 8
 LINKEDIN_POSTS_MAX_PAGES = 2
 
@@ -1230,9 +1223,8 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
     return list(offers.values()), status
 
 
-def load_rotation_index(path: Path = JOOBLE_ROTATION_FILE) -> int:
-    """Curseur de rotation générique (Jooble, LinkedIn Posts) ; absent ou
-    corrompu = repart à zéro."""
+def load_rotation_index(path: Path = LINKEDIN_POSTS_ROTATION_FILE) -> int:
+    """Curseur de rotation générique ; absent ou corrompu = repart à zéro."""
     if not path.exists():
         return 0
     try:
@@ -1247,7 +1239,7 @@ def load_rotation_index(path: Path = JOOBLE_ROTATION_FILE) -> int:
         return 0
 
 
-def save_rotation_index(index: int, path: Path = JOOBLE_ROTATION_FILE) -> None:
+def save_rotation_index(index: int, path: Path = LINKEDIN_POSTS_ROTATION_FILE) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps({"next_index": max(0, int(index))}, ensure_ascii=False, indent=1),
@@ -1255,162 +1247,8 @@ def save_rotation_index(index: int, path: Path = JOOBLE_ROTATION_FILE) -> None:
     )
 
 
-def jooble_query_plan(
-        domains: dict | None = None, active_ids: list[str] | None = None,
-        *, start_index: int = 0,
-        budget: int = JOOBLE_QUERY_BUDGET) -> tuple[list[str], int]:
-    """Sous-ensemble rotatif et déterministe du catalogue, sans écriture.
-
-    Chaque run avance le curseur d'exactement ``budget`` positions dans le
-    catalogue complet (avec retour au début), garantissant qu'à terme tous
-    les domaines sont couverts sans jamais dépasser le budget par run.
-    """
-    queries = active_queries(domains, active_ids)
-    if not queries or budget <= 0:
-        return [], start_index
-    count = min(budget, len(queries))
-    start_index = start_index % len(queries)
-    plan = [queries[(start_index + i) % len(queries)] for i in range(count)]
-    next_index = (start_index + count) % len(queries)
-    return plan, next_index
-
-
 # ============================================================
-# SOURCE 6 : Jooble (agrégateur généraliste européen)
-# ============================================================
-
-def fetch_jooble_all(region_id: str = DEFAULT_REGION_ID,
-                     region_config: dict | None = None,
-                     regions: dict | None = None,
-                     domains: dict | None = None,
-                     active_ids: list[str] | None = None,
-                     rotation_path: Path = JOOBLE_ROTATION_FILE) -> tuple[list[dict], SourceStatus]:
-    """Jooble : agrégateur généraliste, un seul point d'entrée européen.
-
-    Comme Adzuna, le connecteur reste limité à la France : Jooble n'expose
-    pas de scope pays natif distinct de ``location``, et rien ne garantit
-    qu'une requête localisée sur une autre région resterait fiable.
-
-    Le quota de démarrage (500 requêtes, nature journalière/mensuelle/unique
-    non documentée) impose un budget prudent par run : seul un sous-ensemble
-    rotatif du catalogue est interrogé à chaque run (``JOOBLE_QUERY_BUDGET``),
-    avec un curseur persisté pour couvrir tous les domaines au fil du temps.
-    """
-    regions = regions or REGIONS
-    domains = domains or DOMAINS
-    region_config = region_config or regions[region_id]
-    status = source_status("Jooble", region_id, regions)
-    started = time.monotonic()
-    if region_id != DEFAULT_REGION_ID:
-        status.status = "not_applicable_region"
-        status.note = "connecteur Jooble actuel limité à la France"
-        log_collection_summary(status)
-        return [], status
-    api_key = os.environ.get("JOOBLE_API_KEY")
-    if not api_key:
-        status.status = "disabled_missing_credentials"
-        status.note = "secret JOOBLE_API_KEY absent"
-        log_collection_summary(status)
-        return [], status
-
-    start_index = load_rotation_index(rotation_path)
-    plan, next_index = jooble_query_plan(
-        domains, active_ids, start_index=start_index,
-    )
-    print(f"[INFO] Jooble : rotation {len(plan)}/"
-          f"{len(active_queries(domains, active_ids))} requêtes "
-          f"(curseur {start_index} → {next_index})")
-
-    offers: dict[str, dict] = {}
-    remote_seen: set[str] = set()
-    consecutive_blocks = attempted = failed = 0
-    for query in plan:
-        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
-            status.note = "circuit breaker : requêtes restantes ignorées"
-            break
-        attempted += 1
-        query_succeeded = False
-        stale_pages = 0
-        for page in range(1, MAX_SOURCE_PAGES + 1):
-            try:
-                resp = requests.post(
-                    f"https://jooble.org/api/{api_key}",
-                    json={
-                        "keywords": query, "location": region_config["label"],
-                        "page": str(page),
-                        "ResultOnPage": str(JOOBLE_PAGE_SIZE),
-                    },
-                    timeout=REQUEST_TIMEOUT,
-                )
-                resp.raise_for_status()
-                payload = resp.json()
-                results = payload.get("jobs", [])
-            except Exception as exc:
-                code = block_code(exc)
-                if code:
-                    consecutive_blocks += 1
-                    status.http_error = f"HTTP {code}"
-                else:
-                    status.http_error = status.http_error or str(exc)[:200]
-                print(f"[WARN] Jooble '{query}' page {page} a échoué : {exc}",
-                      file=sys.stderr)
-                break
-            query_succeeded = True
-            consecutive_blocks = 0
-            status.pages_fetched += 1
-            status.raw_count += len(results)
-            print(f"[INFO] Jooble '{query}' page {page} : "
-                  f"{len(results)} résultats bruts")
-            if not results:
-                break
-            page_keys = {
-                clean_text(str(r.get("id") or "") or r.get("link") or "")
-                for r in results
-            } - {""}
-            new_keys = page_keys - remote_seen
-            remote_seen.update(page_keys)
-            stale_pages = stale_pages + 1 if not new_keys else 0
-            for r in results:
-                # Comme APEC et The Muse : Jooble ne liste que des offres
-                # encore ouvertes, sa date "updated" ancienne ne prouve pas
-                # une expiration.
-                offer, reason = make_offer(
-                    r.get("title"), r.get("company"), r.get("location"),
-                    r.get("link"), "Jooble", r.get("updated") or "",
-                    description=clean_text(r.get("snippet")),
-                    domains=domains, active_ids=active_ids,
-                    region_id=region_id, regions=regions,
-                    freshness_verified=True,
-                )
-                register_offer(status, offers, offer, reason)
-            total = int(payload.get("totalCount") or 0)
-            if (len(results) < JOOBLE_PAGE_SIZE
-                    or (total and page * JOOBLE_PAGE_SIZE >= total)
-                    or stale_pages >= MAX_STALE_PAGES):
-                break
-            page_dates = [parse_offer_date(r.get("updated")) for r in results]
-            if (page_dates and all(page_dates)
-                    and min(page_dates) < datetime.now(timezone.utc)
-                    - timedelta(hours=OFFER_WINDOW_HOURS)):
-                break
-        if not query_succeeded:
-            failed += 1
-
-    status.duration_s = round(time.monotonic() - started, 1)
-    if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
-            attempted and failed == attempted and status.http_error.startswith("HTTP")):
-        status.status = "blocked"
-    elif attempted and failed == attempted:
-        status.status = "error"
-    else:
-        status.finalize()
-    log_collection_summary(status)
-    save_rotation_index(next_index, rotation_path)
-    return list(offers.values()), status
-
-
-# ============================================================
-# SOURCE 7 : The Muse (API officielle, filtre stage natif)
+# SOURCE 6 : The Muse (API officielle, filtre stage natif)
 # ============================================================
 
 THE_MUSE_ENDPOINT = "https://www.themuse.com/api/public/jobs"
@@ -1642,7 +1480,7 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
             for r in results:
                 url = (r.get("origineOffre") or {}).get("urlOrigine") or \
                       f"https://candidat.francetravail.fr/offres/recherche/detail/{r.get('id')}"
-                # Comme APEC/Jooble/The Muse : l'API ne renvoie que des offres
+                # Comme APEC/The Muse : l'API ne renvoie que des offres
                 # publiées et ouvertes ; dateCreation ancienne ne vaut jamais
                 # rejet (68/71 offres rejetées "plus de 24 heures" sur un run
                 # sain avant ce correctif).
@@ -1692,7 +1530,7 @@ def linkedin_posts_query_plan(
         domains: dict | None = None, active_ids: list[str] | None = None,
         *, start_index: int = 0,
         budget: int = LINKEDIN_POSTS_QUERY_BUDGET) -> tuple[list[str], int]:
-    """Sous-ensemble rotatif du catalogue, même mécanique que Jooble."""
+    """Sous-ensemble rotatif et déterministe du catalogue, sans écriture."""
     queries = active_queries(domains, active_ids)
     if not queries or budget <= 0:
         return [], start_index
@@ -1737,7 +1575,7 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
     Ce connecteur n'ouvre jamais linkedin.com : il lit uniquement ce qu'un
     moteur de recherche public (Exa, ou DuckDuckGo en repli) expose déjà sur
     les URLs de posts publics. Le budget par run reste prudent et rotatif
-    (même mécanique que Jooble), et la fraîcheur d'un post trouvé via un
+    (rotation persistée), et la fraîcheur d'un post trouvé via un
     moteur n'est jamais garantie : toute offre sans date vérifiable dans la
     fenêtre de 24 h est rejetée plutôt que conservée par précaution.
     """
@@ -1897,8 +1735,6 @@ def run_all_sources(domains: dict | None = None,
         "APEC": lambda region_id, region_config: fetch_apec_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "Adzuna": lambda region_id, region_config: fetch_adzuna_all(
-            region_id, region_config, regions, domains, active_domain_ids),
-        "Jooble": lambda region_id, region_config: fetch_jooble_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "The Muse": lambda region_id, region_config: fetch_the_muse_all(
             region_id, region_config, regions, domains, active_domain_ids),

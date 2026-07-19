@@ -6,16 +6,18 @@ nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
 GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
 actifs par défaut.
 
-Les huit sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
-Jooble, The Muse, France Travail et LinkedIn Posts. Chaque source est isolée :
+Les sept sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
+The Muse, France Travail et LinkedIn Posts. Chaque source est isolée :
 un blocage 403/429, un timeout ou l'absence d'une clé API n'arrête pas les
 autres connecteurs.
 
-Glassdoor et Google Jobs ont été retirés du code : sur plusieurs runs de
-production consécutifs, ils ont renvoyé 0 résultat brut dans 100 % des cas
-(Glassdoor bloqué par son anti-bot, Google Jobs répondant vide sans erreur)
-tout en consommant environ 2 minutes de scan pour rien. L'historique Git
-conserve l'implémentation si l'un des deux redevient fiable côté JobSpy.
+Glassdoor, Google Jobs et Jooble ont été retirés du code : sur plusieurs
+runs de production consécutifs, ils ont produit 0 offre acceptée dans 100 %
+des cas (Glassdoor bloqué par son anti-bot, Google Jobs répondant vide sans
+erreur, Jooble sans aucun filtre de type de contrat — 137/139 de ses
+résultats n'étaient réellement pas des stages) tout en consommant du temps
+de scan. L'historique Git conserve les implémentations si l'un d'eux
+redevient exploitable un jour.
 
 ## Configuration produit
 
@@ -80,7 +82,6 @@ par un run sain. Les entrées inactives sont purgées après 14 jours.
 | `SMTP_PASS` | mot de passe d'application | pour les emails |
 | `ALERT_TO` | destinataire, sinon `SMTP_USER` | non |
 | `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | API Adzuna | non |
-| `JOOBLE_API_KEY` | API Jooble | non |
 | `THEMUSE_API_KEY` | API The Muse (relève la limite à 3600 req/h) | non — 500 req/h sans elle |
 | `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | API Offres d'emploi v2 | non |
 | `EXA_API_KEY` | API Exa pour LinkedIn Posts (repli DuckDuckGo sinon) | non |
@@ -103,7 +104,7 @@ site ne demande et ne conserve aucun token GitHub.
   (`niveauEtude=20019`), puis un budget borné de lectures de détail. Si cet
   endpoint détail bloque en 403/429, un circuit breaker dédié arrête les
   lectures restantes du run au lieu de répéter des échecs identiques.
-  Comme The Muse et Jooble, la recherche APEC ne liste que des offres
+  Comme The Muse, la recherche APEC ne liste que des offres
   actuellement ouvertes : leur fraîcheur est considérée vérifiée côté source
   (`freshness_verified`), une date de publication ancienne ne vaut jamais
   rejet « plus de 24 heures ».
@@ -116,15 +117,9 @@ site ne demande et ne conserve aucun token GitHub.
   revérifiée localement (`freshness_verified`, même mécanique que JobSpy) —
   une offre "Internship" toujours listée par l'API est traitée comme
   toujours active, indépendamment de sa date de publication d'origine.
-- APEC, Adzuna, Jooble, The Muse et France Travail ne sont jamais appelés
+- APEC, Adzuna, The Muse et France Travail ne sont jamais appelés
   hors France (limite du connecteur actuel, pas de la région) ; le
   diagnostic devient alors `not_applicable_region`.
-- Jooble démarre avec un quota gratuit de 500 requêtes dont la périodicité
-  (unique, journalière, mensuelle) n'est pas documentée publiquement. Par
-  prudence, seul un sous-ensemble rotatif de `JOOBLE_QUERY_BUDGET` (10)
-  requêtes est interrogé par run ; un curseur persisté dans
-  `data/jooble_rotation.json` garantit que tous les domaines finissent par
-  être couverts au fil des runs, sans jamais dépasser le budget.
 - **LinkedIn Posts** est une source *X-ray* : elle n'ouvre jamais linkedin.com,
   ne se connecte à aucun compte et ne contourne aucun CAPTCHA. Elle lit
   uniquement ce qu'un moteur de recherche public expose déjà sur les URLs
@@ -134,7 +129,7 @@ site ne demande et ne conserve aucun token GitHub.
   historique, mais son défi anti-bot (« bots use DuckDuckGo too ») le bloque
   systématiquement en usage automatisé, aussi bien en local que sur les
   runners GitHub Actions — la garde `XRayBlockedError` détecte ce blocage et
-  ne tente jamais de le lever. Comme Jooble, un budget prudent et rotatif
+  ne tente jamais de le lever. Un budget prudent et rotatif
   (`LINKEDIN_POSTS_QUERY_BUDGET`, 8 requêtes/run) est interrogé, avec un
   curseur persisté dans `data/linkedin_posts_rotation.json`. Un post sans
   date de publication vérifiable dans les dernières 24 heures est rejeté —

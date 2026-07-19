@@ -788,9 +788,10 @@ class TestRetiredNoiseSources(unittest.TestCase):
     def test_source_names_no_longer_include_noisy_zero_yield_sources(self):
         self.assertNotIn("Glassdoor", scan.SOURCE_NAMES)
         self.assertNotIn("Google Jobs", scan.SOURCE_NAMES)
+        self.assertNotIn("Jooble", scan.SOURCE_NAMES)
         self.assertEqual(
             scan.SOURCE_NAMES,
-            ["LinkedIn", "Indeed", "APEC", "Adzuna", "Jooble", "The Muse",
+            ["LinkedIn", "Indeed", "APEC", "Adzuna", "The Muse",
              "France Travail", "LinkedIn Posts"],
         )
 
@@ -808,8 +809,6 @@ class TestRetiredNoiseSources(unittest.TestCase):
                                return_value=([], scan.SourceStatus(source="APEC"))), \
              mock.patch.object(scan, "fetch_adzuna_all",
                                return_value=([], scan.SourceStatus(source="Adzuna"))), \
-             mock.patch.object(scan, "fetch_jooble_all",
-                               return_value=([], scan.SourceStatus(source="Jooble"))), \
              mock.patch.object(scan, "fetch_the_muse_all",
                                return_value=([], scan.SourceStatus(source="The Muse"))), \
              mock.patch.object(scan, "fetch_linkedin_posts_all",
@@ -944,22 +943,6 @@ class TestSourcePagination(unittest.TestCase):
         self.assertEqual(len(offers), 1)
         self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
 
-    def test_jooble_old_updated_date_is_still_accepted(self):
-        response = fake_response({"totalCount": 1, "jobs": [{
-            "id": "1", "title": "Stage Data Engineer", "company": "ACME",
-            "location": "Paris", "link": "https://jooble.org/j/1",
-            "updated": TOO_OLD, "snippet": "data engineer",
-        }]})
-        with tempfile.TemporaryDirectory() as tmp, \
-             mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
-             mock.patch.object(scan.requests, "post", return_value=response):
-            offers, status = scan.fetch_jooble_all(
-                domains=self.CATALOG, active_ids=["data"],
-                rotation_path=Path(tmp) / "rotation.json",
-            )
-        self.assertEqual(len(offers), 1)
-        self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
-
     def test_adzuna_paginates_and_uses_native_one_day_filter(self):
         def item(index):
             return {
@@ -984,38 +967,6 @@ class TestSourcePagination(unittest.TestCase):
         self.assertEqual(status.pages_fetched, 2)
         self.assertEqual(get.call_args_list[0].kwargs["params"]["max_days_old"], 1)
         self.assertTrue(get.call_args_list[1].args[0].endswith("/2"))
-
-    def test_jooble_paginates_and_uses_result_on_page(self):
-        def item(index):
-            return {
-                "id": index, "title": "Stage Data Engineer",
-                "company": "ACME", "location": "Paris",
-                "link": f"https://e.com/jooble/{index}",
-                "updated": RECENT_1H, "snippet": "data engineer",
-            }
-
-        responses = [
-            fake_response({"totalCount": 101,
-                           "jobs": [item(i) for i in range(100)]}),
-            fake_response({"totalCount": 101, "jobs": [item(100)]}),
-        ]
-        with tempfile.TemporaryDirectory() as tmp:
-            rotation_path = Path(tmp) / "jooble_rotation.json"
-            with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
-                 mock.patch.object(scan.requests, "post",
-                                   side_effect=responses) as post:
-                offers, status = scan.fetch_jooble_all(
-                    domains=self.CATALOG, active_ids=["data"],
-                    rotation_path=rotation_path,
-                )
-        self.assertEqual(len(offers), 101)
-        self.assertEqual(status.pages_fetched, 2)
-        self.assertEqual(
-            post.call_args_list[0].kwargs["json"]["ResultOnPage"],
-            str(scan.JOOBLE_PAGE_SIZE),
-        )
-        self.assertTrue(post.call_args_list[0].args[0].endswith("/key"))
-        self.assertEqual(post.call_args_list[1].kwargs["json"]["page"], "2")
 
     def test_the_muse_paginates_using_page_count_and_applies_internship_filter(self):
         def item(job_id, name="Stage Data Engineer"):
@@ -1204,9 +1155,8 @@ class TestSourcePagination(unittest.TestCase):
         self.assertNotIn(scan.REASON_TOO_OLD, status.reject_reasons)
 
 
-class TestJoobleQueryRotation(unittest.TestCase):
-    """Budget prudent (10 requêtes/run) tant que la politique de quota
-    Jooble (500 requêtes, périodicité non documentée) n'est pas confirmée."""
+class TestQueryRotation(unittest.TestCase):
+    """Rotation générique du catalogue, utilisée par LinkedIn Posts."""
 
     CATALOG = {
         f"domain_{i}": {
@@ -1218,14 +1168,14 @@ class TestJoobleQueryRotation(unittest.TestCase):
     }
 
     def test_plan_is_bounded_by_budget(self):
-        plan, next_index = scan.jooble_query_plan(
+        plan, next_index = scan.linkedin_posts_query_plan(
             self.CATALOG, list(self.CATALOG), start_index=0, budget=10,
         )
         self.assertEqual(len(plan), 10)
         self.assertEqual(next_index, 10)
 
     def test_plan_wraps_around_the_catalog(self):
-        plan, next_index = scan.jooble_query_plan(
+        plan, next_index = scan.linkedin_posts_query_plan(
             self.CATALOG, list(self.CATALOG), start_index=20, budget=10,
         )
         self.assertEqual(len(plan), 10)
@@ -1235,44 +1185,11 @@ class TestJoobleQueryRotation(unittest.TestCase):
 
     def test_budget_larger_than_catalog_returns_whole_catalog_once(self):
         small = {"data": self.CATALOG["domain_0"]}
-        plan, next_index = scan.jooble_query_plan(
+        plan, next_index = scan.linkedin_posts_query_plan(
             small, ["data"], start_index=0, budget=10,
         )
         self.assertEqual(plan, ["stage query 0"])
         self.assertEqual(next_index, 0)
-
-    def test_rotation_cursor_persists_and_advances_across_runs(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            rotation_path = Path(tmp) / "jooble_rotation.json"
-
-            def fake_scrape(**_kwargs):
-                return fake_response({"totalCount": 0, "jobs": []})
-
-            with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
-                 mock.patch.object(scan.requests, "post",
-                                   side_effect=lambda *a, **k: fake_scrape()) as post:
-                scan.fetch_jooble_all(
-                    domains=self.CATALOG, active_ids=list(self.CATALOG),
-                    rotation_path=rotation_path,
-                )
-                first_run_queries = {
-                    call.kwargs["json"]["keywords"] for call in post.call_args_list
-                }
-                post.reset_mock()
-                scan.fetch_jooble_all(
-                    domains=self.CATALOG, active_ids=list(self.CATALOG),
-                    rotation_path=rotation_path,
-                )
-                second_run_queries = {
-                    call.kwargs["json"]["keywords"] for call in post.call_args_list
-                }
-            self.assertEqual(len(first_run_queries), scan.JOOBLE_QUERY_BUDGET)
-            self.assertEqual(len(second_run_queries), scan.JOOBLE_QUERY_BUDGET)
-            # Le deuxième run ne répète jamais le tout premier sous-ensemble :
-            # la rotation avance bien d'un run à l'autre.
-            self.assertNotEqual(first_run_queries, second_run_queries)
-            saved = json.loads(rotation_path.read_text(encoding="utf-8"))
-            self.assertEqual(saved["next_index"], 2 * scan.JOOBLE_QUERY_BUDGET)
 
     def test_missing_or_corrupt_rotation_file_restarts_at_zero(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1421,21 +1338,6 @@ class TestMissingCredentials(unittest.TestCase):
         self.assertEqual(offers, [])
         self.assertEqual(st.status, "disabled_missing_credentials")
         self.assertIn("ADZUNA_APP_ID", st.note)
-
-    def test_jooble_disabled_without_secret(self):
-        with mock.patch.dict(os.environ, {}, clear=True):
-            offers, st = scan.fetch_jooble_all()
-        self.assertEqual(offers, [])
-        self.assertEqual(st.status, "disabled_missing_credentials")
-        self.assertIn("JOOBLE_API_KEY", st.note)
-
-    def test_jooble_limited_to_france(self):
-        with mock.patch.dict(os.environ, {"JOOBLE_API_KEY": "key"}), \
-             mock.patch.object(scan.requests, "post") as post:
-            offers, st = scan.fetch_jooble_all(region_id="belgique")
-        self.assertEqual(offers, [])
-        self.assertEqual(st.status, "not_applicable_region")
-        post.assert_not_called()
 
     def test_france_travail_disabled_without_secrets(self):
         with mock.patch.dict(os.environ, {}, clear=True):
