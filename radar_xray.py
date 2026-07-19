@@ -656,6 +656,14 @@ class ExaProvider:
             ) from exc
 
         status_code = int(getattr(response, "status_code", 0) or 0)
+        if status_code == 402:
+            # NO_MORE_CREDITS : constaté en production après ~19 runs
+            # horaires. Message explicite pour que le dashboard dise quoi
+            # faire au lieu d'un « bloqué 202 » hérité du repli DuckDuckGo.
+            raise XRayBlockedError(
+                "crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai",
+                status_code=status_code,
+            )
         if status_code in {401, 403, 429}:
             raise XRayBlockedError(
                 f"Exa a refusé la requête (HTTP {status_code})",
@@ -732,21 +740,24 @@ class FallbackXRayProvider:
             except XRayBlockedError as exc:
                 self._consecutive_failures[provider.name] += 1
                 self.last_attempts.append(
-                    {"provider": provider.name, "outcome": "blocked"}
+                    {"provider": provider.name, "outcome": "blocked",
+                     "error": str(exc)[:160]}
                 )
                 last_error = exc
                 continue
             except XRayTimeoutError as exc:
                 self._consecutive_failures[provider.name] += 1
                 self.last_attempts.append(
-                    {"provider": provider.name, "outcome": "timeout"}
+                    {"provider": provider.name, "outcome": "timeout",
+                     "error": str(exc)[:160]}
                 )
                 last_error = exc
                 continue
             except XRayProviderError as exc:
                 self._consecutive_failures[provider.name] += 1
                 self.last_attempts.append(
-                    {"provider": provider.name, "outcome": "error"}
+                    {"provider": provider.name, "outcome": "error",
+                     "error": str(exc)[:160]}
                 )
                 last_error = exc
                 continue

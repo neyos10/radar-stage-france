@@ -315,7 +315,8 @@ def status_label(st: SourceStatus, final_count: int | None = None) -> str:
     if st.status == "not_applicable_region":
         return f"Non applicable à {st.region_label}"
     if st.status == "blocked":
-        return f"Bloqué temporairement — {st.http_error or 'HTTP 403/429'}"
+        detail = st.note or st.http_error or "HTTP 403/429"
+        return f"Bloqué temporairement — {detail[:160]}"
     if st.status == "error":
         return f"Erreur — {(st.note or st.http_error or 'voir logs')[:90]}"
     if count == 0:
@@ -1606,7 +1607,10 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
     consecutive_blocks = 0
     for index, raw_query in enumerate(plan):
         if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
-            status.note = "circuit breaker : requêtes restantes ignorées"
+            # Conserver le détail des échecs providers déjà collecté : c'est
+            # lui qui porte la cause primaire (ex. crédits Exa épuisés).
+            breaker = "circuit breaker : requêtes restantes ignorées"
+            status.note = f"{status.note} · {breaker}"[:220] if status.note else breaker
             break
         term = source_keywords(raw_query)
         host = LINKEDIN_POST_HOSTS[index % len(LINKEDIN_POST_HOSTS)]
@@ -1619,6 +1623,18 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
                 consecutive_blocks += 1
                 code = getattr(exc, "status_code", None)
                 status.http_error = f"HTTP {code}" if code else "moteur bloqué"
+                # L'exception levée par la chaîne de providers est celle du
+                # DERNIER repli (souvent le 202 DuckDuckGo) : détailler chaque
+                # tentative pour que le dashboard montre la cause primaire
+                # (ex. crédits Exa épuisés), pas seulement l'échec du repli.
+                attempts = getattr(provider, "last_attempts", None)
+                if attempts:
+                    failures = [
+                        f"{a['provider']}: {a.get('error', a.get('outcome', '?'))}"
+                        for a in attempts if a.get("outcome") != "success"
+                    ]
+                    if failures:
+                        status.note = " · ".join(failures)[:220]
                 print(f"[WARN] LinkedIn Posts '{query}' page {page} bloquée : {exc}",
                       file=sys.stderr)
                 break

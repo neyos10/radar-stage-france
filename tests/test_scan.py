@@ -1315,6 +1315,37 @@ class TestLinkedInPostsSource(unittest.TestCase):
         # jamais un troisième appel.
         self.assertEqual(len(provider.calls), 2)
 
+    def test_blocked_status_surfaces_primary_provider_error_not_fallback(self):
+        # Constaté en production : Exa 402 (crédits épuisés) suivi du repli
+        # DuckDuckGo 202 → dashboard « bloqué 202 », cause réelle invisible.
+        class FailingProvider:
+            name = "fake"
+
+            def search(self, *args, **kwargs):
+                raise xray.XRayBlockedError("bloqué", status_code=202)
+
+        chain = xray.FallbackXRayProvider(
+            xray.ExaProvider(
+                "key",
+                session=type("S", (), {
+                    "post": lambda self, url, **kw: type("R", (), {
+                        "status_code": 402,
+                        "raise_for_status": lambda self: None,
+                        "json": lambda self: {},
+                    })()
+                })(),
+            ),
+            FailingProvider(),
+        )
+        offers, status = scan.fetch_linkedin_posts_all(
+            domains=self.CATALOG, active_ids=list(self.CATALOG),
+            provider=chain,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+        )
+        self.assertEqual(status.status, "blocked")
+        self.assertIn("crédits Exa épuisés", status.note)
+        self.assertIn("crédits Exa épuisés", scan.status_label(status))
+
     def test_rotation_cursor_persists_and_advances_across_runs(self):
         with tempfile.TemporaryDirectory() as tmp:
             rotation_path = Path(tmp) / "linkedin_posts_rotation.json"
