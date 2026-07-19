@@ -43,7 +43,6 @@ jobs:
           FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
-          JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
           THEMUSE_API_KEY: ${{ secrets.THEMUSE_API_KEY }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           # — email
@@ -63,12 +62,8 @@ jobs:
           git config user.name "radar-stage-bot"
           git config user.email "actions@github.com"
           git add data/seen_offers.json data/offers.json data/source_status.json docs/index.html
-          # jooble_rotation.json et linkedin_posts_rotation.json n'existent
-          # que si la source correspondante a réellement tourné : ajout
-          # défensif, jamais requis.
-          if [ -e data/jooble_rotation.json ]; then
-            git add data/jooble_rotation.json
-          fi
+          # linkedin_posts_rotation.json n'existe que si la source a
+          # réellement tourné : ajout défensif, jamais requis.
           if [ -e data/linkedin_posts_rotation.json ]; then
             git add data/linkedin_posts_rotation.json
           fi

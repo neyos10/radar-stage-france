@@ -376,6 +376,34 @@ class TestExaProviderErrors(unittest.TestCase):
         with self.assertRaises(xray.XRayBlockedError):
             provider.search("stage data", now=NOW)
 
+    def test_402_no_more_credits_has_actionable_message(self):
+        # Constaté en production : crédits Exa épuisés après ~19 runs
+        # horaires. Le message doit dire quoi faire, pas juste un code.
+        session = FakePostSession(FakeJsonResponse(402, {}))
+        provider = xray.ExaProvider("key", session=session)
+        with self.assertRaises(xray.XRayBlockedError) as caught:
+            provider.search("stage data", now=NOW)
+        self.assertEqual(caught.exception.status_code, 402)
+        self.assertIn("crédits Exa épuisés", str(caught.exception))
+        self.assertIn("dashboard.exa.ai", str(caught.exception))
+
+    def test_fallback_attempts_record_each_provider_error(self):
+        # La chaîne relance l'erreur du DERNIER repli : les messages de
+        # chaque tentative doivent rester consultables pour le diagnostic.
+        exa = xray.ExaProvider("key", session=FakePostSession(FakeJsonResponse(402, {})))
+        ddg = xray.DuckDuckGoHtmlProvider(
+            session=FakeSession(FakeResponse(202, "challenge-form"))
+        )
+        chain = xray.FallbackXRayProvider(exa, ddg)
+        with self.assertRaises(xray.XRayBlockedError) as caught:
+            chain.search("stage data", now=NOW)
+        # L'exception propagée est celle du repli (202)…
+        self.assertEqual(caught.exception.status_code, 202)
+        # …mais la cause primaire (Exa 402) reste dans les tentatives.
+        self.assertEqual(len(chain.last_attempts), 2)
+        self.assertIn("crédits Exa épuisés", chain.last_attempts[0]["error"])
+        self.assertIn("DuckDuckGo", chain.last_attempts[1]["error"])
+
     def test_429_is_blocked(self):
         session = FakePostSession(FakeJsonResponse(429, {}))
         provider = xray.ExaProvider("key", session=session)
