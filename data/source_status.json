@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-07-19T15:00:28+00:00",
- "scan_duration_s": 2929.5,
+ "generated_at": "2026-07-19T15:45:59+00:00",
+ "scan_duration_s": 2702.5,
  "active_domains": [
   "data_ia",
   "dev_web",
@@ -38,85 +38,85 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 825,
-   "accepted_count": 29,
-   "rejected_count": 796,
+   "raw_count": 808,
+   "accepted_count": 32,
+   "rejected_count": 776,
    "reject_reasons": {
-    "pas un stage": 668,
-    "aucun domaine": 89,
-    "doublon": 39
+    "pas un stage": 647,
+    "aucun domaine": 83,
+    "doublon": 46
    },
-   "unknown_date_count": 29,
+   "unknown_date_count": 32,
    "too_old_count": 0,
-   "duplicate_count": 39,
-   "pages_fetched": 88,
-   "duration_s": 1152.9,
+   "duplicate_count": 46,
+   "pages_fetched": 87,
+   "duration_s": 929.5,
    "http_error": "",
    "note": "",
-   "label": "29 offres"
+   "label": "32 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "belgique",
    "region_label": "Belgique",
    "status": "success",
-   "raw_count": 657,
-   "accepted_count": 2,
-   "rejected_count": 655,
+   "raw_count": 599,
+   "accepted_count": 3,
+   "rejected_count": 596,
    "reject_reasons": {
-    "pas un stage": 557,
-    "aucun domaine": 76,
-    "doublon": 22
+    "pas un stage": 478,
+    "aucun domaine": 91,
+    "doublon": 27
    },
-   "unknown_date_count": 2,
+   "unknown_date_count": 3,
    "too_old_count": 0,
-   "duplicate_count": 22,
+   "duplicate_count": 27,
    "pages_fetched": 87,
-   "duration_s": 676.6,
+   "duration_s": 644.6,
    "http_error": "",
    "note": "",
-   "label": "2 offres"
+   "label": "3 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "luxembourg",
    "region_label": "Luxembourg",
    "status": "success",
-   "raw_count": 452,
-   "accepted_count": 1,
-   "rejected_count": 451,
+   "raw_count": 423,
+   "accepted_count": 3,
+   "rejected_count": 420,
    "reject_reasons": {
-    "pas un stage": 329,
-    "aucun domaine": 90,
-    "doublon": 32
+    "pas un stage": 306,
+    "aucun domaine": 95,
+    "doublon": 19
    },
-   "unknown_date_count": 1,
+   "unknown_date_count": 3,
    "too_old_count": 0,
-   "duplicate_count": 32,
+   "duplicate_count": 19,
    "pages_fetched": 87,
-   "duration_s": 584.6,
+   "duration_s": 604.8,
    "http_error": "",
    "note": "",
-   "label": "1 offre"
+   "label": "3 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "success",
-   "raw_count": 380,
+   "raw_count": 451,
    "accepted_count": 3,
-   "rejected_count": 377,
+   "rejected_count": 448,
    "reject_reasons": {
-    "aucun domaine": 78,
-    "pas un stage": 231,
+    "aucun domaine": 95,
+    "pas un stage": 285,
     "doublon": 68
    },
    "unknown_date_count": 3,
    "too_old_count": 0,
    "duplicate_count": 68,
    "pages_fetched": 87,
-   "duration_s": 515.4,
+   "duration_s": 523.6,
    "http_error": "",
    "note": "",
    "label": "3 offres"
@@ -126,11 +126,11 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 97,
+   "raw_count": 99,
    "accepted_count": 7,
-   "rejected_count": 90,
+   "rejected_count": 92,
    "reject_reasons": {
-    "pas un stage": 45,
+    "pas un stage": 47,
     "doublon": 21,
     "aucun domaine": 24
    },
@@ -138,7 +138,7 @@
    "too_old_count": 0,
    "duplicate_count": 21,
    "pages_fetched": 87,
-   "duration_s": 26.0,
+   "duration_s": 35.3,
    "http_error": "",
    "note": "",
    "label": "7 offres"
@@ -156,7 +156,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 87,
-   "duration_s": 10.9,
+   "duration_s": 14.6,
    "http_error": "",
    "note": "",
    "label": "1 offre"
@@ -176,7 +176,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 87,
-   "duration_s": 9.4,
+   "duration_s": 14.4,
    "http_error": "",
    "note": "",
    "label": "0 accepté / 3 reçus"
@@ -198,7 +198,7 @@
    "too_old_count": 0,
    "duplicate_count": 4,
    "pages_fetched": 87,
-   "duration_s": 21.6,
+   "duration_s": 24.0,
    "http_error": "",
    "note": "",
    "label": "2 offres"
@@ -219,7 +219,7 @@
    "too_old_count": 0,
    "duplicate_count": 453,
    "pages_fetched": 87,
-   "duration_s": 50.4,
+   "duration_s": 68.1,
    "http_error": "",
    "note": "lectures de détail APEC bloquées (403/429)",
    "label": "70 offres"
@@ -295,7 +295,7 @@
    "too_old_count": 0,
    "duplicate_count": 15,
    "pages_fetched": 97,
-   "duration_s": 50.9,
+   "duration_s": 93.9,
    "http_error": "",
    "note": "",
    "label": "69 offres"
@@ -369,7 +369,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 3,
-   "duration_s": 16.8,
+   "duration_s": 17.1,
    "http_error": "",
    "note": "",
    "label": "19 offres"
@@ -444,7 +444,7 @@
    "too_old_count": 0,
    "duplicate_count": 5,
    "pages_fetched": 87,
-   "duration_s": 58.8,
+   "duration_s": 67.9,
    "http_error": "",
    "note": "",
    "label": "167 offres"
@@ -534,7 +534,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 0,
-   "duration_s": 0.5,
+   "duration_s": 0.6,
    "http_error": "HTTP 202",
    "note": "exa: crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai · duckduckgo_html+duckduckgo_lite: DuckDuckGo a bloqué la recherche (HTTP 202) · circuit breaker : requêtes restantes ignorées",
    "label": "Bloqué temporairement — exa: crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai · duckduckgo_html+duckduckgo_lite: DuckDuckGo a bloqué la recherche (HTTP 202) · circuit br"
@@ -552,7 +552,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 0,
-   "duration_s": 0.4,
+   "duration_s": 0.5,
    "http_error": "HTTP 202",
    "note": "exa: crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai · duckduckgo_html+duckduckgo_lite: DuckDuckGo a bloqué la recherche (HTTP 202) · circuit breaker : requêtes restantes ignorées",
    "label": "Bloqué temporairement — exa: crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai · duckduckgo_html+duckduckgo_lite: DuckDuckGo a bloqué la recherche (HTTP 202) · circuit br"
@@ -570,7 +570,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 0,
-   "duration_s": 0.4,
+   "duration_s": 0.6,
    "http_error": "HTTP 202",
    "note": "exa: crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai · duckduckgo_html+duckduckgo_lite: DuckDuckGo a bloqué la recherche (HTTP 202) · circuit breaker : requêtes restantes ignorées",
    "label": "Bloqué temporairement — exa: crédits Exa épuisés (HTTP 402) — recharger sur dashboard.exa.ai · duckduckgo_html+duckduckgo_lite: DuckDuckGo a bloqué la recherche (HTTP 202) · circuit br"
