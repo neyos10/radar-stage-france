@@ -1,8 +1,12 @@
 name: Radar Stage France
 
 on:
-  schedule:
-    - cron: "0 * * * *"      # toutes les heures, à l'heure pile
+  # Cron suspendu le 20/07/2026 : les runs programmés échouent depuis
+  # 19:19 UTC le 19/07 avec « recent account payments have failed or your
+  # spending limit needs to be increased » (billing GitHub, pas un bug du
+  # workflow — vérifier Settings → Billing & plans avant de réactiver).
+  # schedule:
+  #   - cron: "0 * * * *"    # toutes les heures, à l'heure pile
   workflow_dispatch: {}       # bouton "Run workflow" pour lancer à la main
 
 permissions:
@@ -45,6 +49,7 @@ jobs:
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           THEMUSE_API_KEY: ${{ secrets.THEMUSE_API_KEY }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           # — email
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}

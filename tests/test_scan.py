@@ -1200,6 +1200,11 @@ class TestQueryRotation(unittest.TestCase):
             self.assertEqual(scan.load_rotation_index(corrupt), 0)
 
 
+SCHEDULED_XRAY_HOUR = datetime.now(timezone.utc).replace(
+    hour=scan.LINKEDIN_POSTS_RUN_HOURS_UTC[0], minute=5, second=0, microsecond=0,
+)
+
+
 def xray_result(title="Alice Martin sur LinkedIn : Stage Data Engineer",
                 snippet="Nous recherchons un stagiaire data engineer. Postulez !",
                 url="https://www.linkedin.com/posts/alice_stage-activity-7351000000000000001",
@@ -1269,6 +1274,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+            now=SCHEDULED_XRAY_HOUR,
         )
         self.assertEqual(len(offers), 1)
         self.assertEqual(offers[0]["source"], "LinkedIn Posts")
@@ -1283,6 +1289,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+            now=SCHEDULED_XRAY_HOUR,
         )
         self.assertEqual(offers, [])
         self.assertEqual(status.reject_reasons.get(scan.REASON_NOT_INTERNSHIP), 1)
@@ -1293,6 +1300,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+            now=SCHEDULED_XRAY_HOUR,
         )
         self.assertEqual(offers, [])
         self.assertEqual(
@@ -1308,6 +1316,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             domains=self.CATALOG, active_ids=list(self.CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+            now=SCHEDULED_XRAY_HOUR,
         )
         self.assertEqual(offers, [])
         self.assertEqual(status.status, "blocked")
@@ -1341,10 +1350,69 @@ class TestLinkedInPostsSource(unittest.TestCase):
             domains=self.CATALOG, active_ids=list(self.CATALOG),
             provider=chain,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+            now=SCHEDULED_XRAY_HOUR,
         )
         self.assertEqual(status.status, "blocked")
         self.assertIn("crédits Exa épuisés", status.note)
         self.assertIn("crédits Exa épuisés", scan.status_label(status))
+
+    def test_off_schedule_run_is_deferred_without_any_network_call(self):
+        # 1000 crédits Tavily/mois : hors créneau, aucune requête, rotation
+        # intacte, et le statut "deferred" ne confirme jamais une absence.
+        provider = FakeXRayProvider([[xray_result()]])
+        off_schedule = SCHEDULED_XRAY_HOUR.replace(hour=12)
+        self.assertNotIn(12, scan.LINKEDIN_POSTS_RUN_HOURS_UTC)
+        with tempfile.TemporaryDirectory() as tmp:
+            rotation_path = Path(tmp) / "rotation.json"
+            offers, status = scan.fetch_linkedin_posts_all(
+                domains=self.CATALOG, active_ids=list(self.CATALOG),
+                provider=provider, rotation_path=rotation_path,
+                now=off_schedule,
+            )
+            self.assertEqual(offers, [])
+            self.assertEqual(status.status, "deferred")
+            self.assertEqual(provider.calls, [])
+            self.assertFalse(rotation_path.exists())
+        self.assertIn("créneaux", status.note)
+        self.assertIn("différé", scan.chip_hint(status, 0))
+
+    def test_source_fresh_result_without_date_is_accepted_not_rejected(self):
+        # Tavily applique time_range=day côté serveur : la fenêtre est
+        # garantie par le moteur, même sans date précise dans l'extrait —
+        # même logique que hours_old de JobSpy.
+        fresh = xray.SearchResult(
+            title="Post de Alice Martin | Stage Data Engineer",
+            snippet="Nous recherchons un stagiaire data engineer. Postulez !",
+            url="https://www.linkedin.com/posts/alice_stage-activity-7351000000000000042",
+            author="Alice Martin", published_at=None, source_fresh=True,
+        )
+        provider = FakeXRayProvider([[fresh]])
+        offers, status = scan.fetch_linkedin_posts_all(
+            domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
+            provider=provider,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
+            now=SCHEDULED_XRAY_HOUR,
+        )
+        self.assertEqual(len(offers), 1)
+        self.assertFalse(offers[0]["date_known"])
+        self.assertTrue(offers[0]["freshness_verified_at"])
+
+    def test_rotating_source_never_confirms_absence(self):
+        offer_entry = {"source": "LinkedIn Posts", "regions": ["france"]}
+        healthy = [scan.SourceStatus(source="LinkedIn Posts", region_id="france",
+                                     status="success")]
+        self.assertFalse(scan.source_succeeded_for_offer(offer_entry, healthy))
+
+    def test_unknown_date_offer_expires_24h_after_last_verification(self):
+        now = datetime.now(timezone.utc)
+        fresh = {"id": "a", "active": True, "date_known": False, "date": "",
+                 "freshness_verified_at": (now - timedelta(hours=2)).isoformat(),
+                 "first_seen": (now - timedelta(days=3)).isoformat()}
+        stale = {"id": "b", "active": True, "date_known": False, "date": "",
+                 "freshness_verified_at": (now - timedelta(hours=25)).isoformat(),
+                 "first_seen": (now - timedelta(hours=25)).isoformat()}
+        visible = scan.dashboard_offers_from_store({"a": fresh, "b": stale}, now=now)
+        self.assertEqual([o["id"] for o in visible], ["a"])
 
     def test_rotation_cursor_persists_and_advances_across_runs(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1352,11 +1420,13 @@ class TestLinkedInPostsSource(unittest.TestCase):
             scan.fetch_linkedin_posts_all(
                 domains=self.CATALOG, active_ids=list(self.CATALOG),
                 provider=FakeXRayProvider([]), rotation_path=rotation_path,
+                now=SCHEDULED_XRAY_HOUR,
             )
             first_index = json.loads(rotation_path.read_text())["next_index"]
             scan.fetch_linkedin_posts_all(
                 domains=self.CATALOG, active_ids=list(self.CATALOG),
                 provider=FakeXRayProvider([]), rotation_path=rotation_path,
+                now=SCHEDULED_XRAY_HOUR,
             )
             second_index = json.loads(rotation_path.read_text())["next_index"]
             self.assertNotEqual(first_index, second_index)
