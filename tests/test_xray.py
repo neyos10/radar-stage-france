@@ -369,6 +369,105 @@ class TestExaProviderResponseParsing(unittest.TestCase):
         self.assertEqual(len(provider.search("stage data", now=NOW)), 1)
 
 
+def tavily_item(url="https://fr.linkedin.com/posts/alice_recrutement-stage-activity-7475000000000000001",
+                title="Post de Alice Martin",
+                content="Nous recherchons un stagiaire data engineer. Postulez !"):
+    return {"url": url, "title": title, "content": content, "score": 0.8}
+
+
+class TestTavilyProviderConstruction(unittest.TestCase):
+    def test_rejects_empty_api_key(self):
+        with self.assertRaises(ValueError):
+            xray.TavilyProvider("")
+
+    def test_rejects_non_tavily_endpoint(self):
+        with self.assertRaises(ValueError):
+            xray.TavilyProvider("key", endpoint="https://evil.example.com/search")
+
+
+class TestTavilyProviderRequest(unittest.TestCase):
+    def test_request_shape_bearer_domains_and_day_window(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.TavilyProvider("tvly-key", session=session)
+        provider.search('site:linkedin.com/posts "stage" "data engineer"', now=NOW)
+        url, kwargs = session.calls[0]
+        self.assertEqual(url, xray.TAVILY_SEARCH_ENDPOINT)
+        self.assertEqual(kwargs["headers"]["Authorization"], "Bearer tvly-key")
+        body = kwargs["json"]
+        self.assertEqual(body["include_domains"], list(xray.LINKEDIN_POST_HOSTS))
+        self.assertEqual(body["time_range"], "day")
+        self.assertEqual(body["search_depth"], "basic")
+        # Format mesuré en conditions réelles : « post » + termes cités +
+        # « recrutement » + région, jamais l'opérateur site: brut.
+        self.assertNotIn("site:", body["query"])
+        self.assertEqual(body["query"],
+                         'post "stage" "data engineer" recrutement France')
+
+    def test_second_page_returns_empty_without_spending_a_credit(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": []}))
+        provider = xray.TavilyProvider("key", session=session)
+        self.assertEqual(provider.search("stage data", page=2, now=NOW), [])
+        self.assertEqual(session.calls, [])
+
+
+class TestTavilyProviderResponseParsing(unittest.TestCase):
+    def test_post_parsed_with_source_fresh_and_french_author(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [tavily_item()]}))
+        provider = xray.TavilyProvider("key", session=session)
+        results = provider.search("stage data", now=NOW)
+        self.assertEqual(len(results), 1)
+        result = results[0]
+        self.assertEqual(result.provider, "tavily")
+        self.assertEqual(result.author, "Alice Martin")
+        self.assertTrue(result.source_fresh)
+        self.assertIsNone(result.published_at)
+        self.assertTrue(result.url.startswith("https://www.linkedin.com/posts/"))
+
+    def test_non_post_linkedin_urls_are_discarded(self):
+        # Constaté en conditions réelles : Tavily renvoie surtout des pages
+        # /jobs/ (déjà couvertes par JobSpy) et du bruit SEO — seuls les
+        # /posts/ sont conservés.
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            tavily_item(url="https://fr.linkedin.com/jobs/view/stagiaire-at-acme-4441448547"),
+            tavily_item(url="https://www.linkedin.com/in/alice-martin"),
+            tavily_item(),
+        ]}))
+        provider = xray.TavilyProvider("key", session=session)
+        self.assertEqual(len(provider.search("stage data", now=NOW)), 1)
+
+    def test_precise_relative_date_in_content_is_parsed(self):
+        session = FakePostSession(FakeJsonResponse(200, {"results": [
+            tavily_item(content="Il y a 3 heures — nous recrutons un stagiaire."),
+        ]}))
+        provider = xray.TavilyProvider("key", session=session)
+        result = provider.search("stage data", now=NOW)[0]
+        self.assertEqual(result.published_at, NOW - timedelta(hours=3))
+
+
+class TestTavilyProviderErrors(unittest.TestCase):
+    def test_432_plan_limit_has_actionable_message(self):
+        session = FakePostSession(FakeJsonResponse(432, {}))
+        provider = xray.TavilyProvider("key", session=session)
+        with self.assertRaises(xray.XRayBlockedError) as caught:
+            provider.search("stage data", now=NOW)
+        self.assertIn("crédits Tavily épuisés", str(caught.exception))
+
+    def test_401_and_429_are_blocked(self):
+        for code in (401, 429):
+            provider = xray.TavilyProvider(
+                "key", session=FakePostSession(FakeJsonResponse(code, {}))
+            )
+            with self.assertRaises(xray.XRayBlockedError):
+                provider.search("stage data", now=NOW)
+
+    def test_timeout_is_typed(self):
+        provider = xray.TavilyProvider(
+            "key", session=FakePostSession(error=requests.Timeout("slow"))
+        )
+        with self.assertRaises(xray.XRayTimeoutError):
+            provider.search("stage data", now=NOW)
+
+
 class TestExaProviderErrors(unittest.TestCase):
     def test_401_is_blocked_not_silently_empty(self):
         session = FakePostSession(FakeJsonResponse(401, {}))

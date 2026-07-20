@@ -84,7 +84,8 @@ par un run sain. Les entrées inactives sont purgées après 14 jours.
 | `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` | API Adzuna | non |
 | `THEMUSE_API_KEY` | API The Muse (relève la limite à 3600 req/h) | non — 500 req/h sans elle |
 | `FT_CLIENT_ID` / `FT_CLIENT_SECRET` | API Offres d'emploi v2 | non |
-| `EXA_API_KEY` | API Exa pour LinkedIn Posts (repli DuckDuckGo sinon) | non |
+| `TAVILY_API_KEY` | API Tavily pour LinkedIn Posts (1000 recherches/mois gratuites) | non |
+| `EXA_API_KEY` | API Exa pour LinkedIn Posts (repli si Tavily absent/épuisé) | non |
 
 Sans identifiants optionnels, leur source apparaît « non configurée » et le
 reste du scan continue normalement. The Muse fonctionne même sans clé
@@ -123,18 +124,35 @@ site ne demande et ne conserve aucun token GitHub.
 - **LinkedIn Posts** est une source *X-ray* : elle n'ouvre jamais linkedin.com,
   ne se connecte à aucun compte et ne contourne aucun CAPTCHA. Elle lit
   uniquement ce qu'un moteur de recherche public expose déjà sur les URLs
-  `linkedin.com/posts/...` — titre, extrait, URL. Exa (API officielle, dont
-  les conditions d'usage autorisent explicitement l'appel programmatique) est
-  utilisé en priorité si `EXA_API_KEY` est fourni ; DuckDuckGo sert de repli
-  historique, mais son défi anti-bot (« bots use DuckDuckGo too ») le bloque
-  systématiquement en usage automatisé, aussi bien en local que sur les
-  runners GitHub Actions — la garde `XRayBlockedError` détecte ce blocage et
-  ne tente jamais de le lever. Un budget prudent et rotatif
-  (`LINKEDIN_POSTS_QUERY_BUDGET`, 8 requêtes/run) est interrogé, avec un
-  curseur persisté dans `data/linkedin_posts_rotation.json`. Un post sans
-  date de publication vérifiable dans les dernières 24 heures est rejeté —
-  jamais conservé par précaution comme pour les autres sources — car un
-  moteur de recherche ne garantit pas la fraîcheur d'un résultat.
+  `linkedin.com/posts/...` — titre, extrait, URL. Trois providers en chaîne,
+  du plus prioritaire au repli final : **Tavily** (API officielle, quota
+  gratuit de 1000 recherches/mois renouvelé chaque mois), **Exa** (API
+  officielle elle aussi, mais crédits d'essai à usage unique — épuisés en
+  production après ~19 runs) puis **DuckDuckGo** en dernier repli. DuckDuckGo
+  soumet systématiquement ces requêtes à son défi anti-bot (« bots use
+  DuckDuckGo too »), aussi bien en local que sur les runners GitHub Actions —
+  la garde `XRayBlockedError` détecte ce blocage et ne tente jamais de le
+  lever. Quand un provider échoue, la cause de **chaque** tentative de la
+  chaîne (pas seulement la dernière) reste consultable dans le statut de la
+  source, pour ne jamais confondre un blocage DuckDuckGo avec des crédits
+  Exa/Tavily épuisés.
+
+  Pour préserver le quota gratuit Tavily, la source ne tourne que sur deux
+  créneaux par jour (`LINKEDIN_POSTS_RUN_HOURS_UTC`, 6h et 18h UTC) ; hors
+  créneau le statut est `deferred` et n'affecte aucune offre déjà collectée.
+  Budget par créneau : `LINKEDIN_POSTS_QUERY_BUDGET` (4 requêtes) × 4
+  régions ≈ 32 crédits/jour, soit ~960/mois sur les 1000 gratuits. Curseur de
+  rotation persisté dans `data/linkedin_posts_rotation.json`.
+
+  Contrairement aux autres sources, LinkedIn Posts n'interroge qu'un
+  sous-ensemble rotatif du catalogue par run : ne pas retrouver une offre à
+  un run donné ne prouve jamais sa disparition (la requête qui l'avait
+  trouvée n'a simplement pas été rejouée). Ses offres expirent donc par
+  fraîcheur (24 h après leur dernière vérification), jamais par
+  non-réobservation. Un post accepté a soit une date précise extraite de son
+  contenu, soit une fraîcheur garantie nativement par le moteur (`time_range`
+  Tavily) — jamais aucune des deux, rejeté plutôt que conservé par
+  précaution.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
 - LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.

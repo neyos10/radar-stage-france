@@ -63,6 +63,7 @@ from radar_xray import (
     ExaProvider,
     FallbackXRayProvider,
     LINKEDIN_POST_HOSTS,
+    TavilyProvider,
     XRayBlockedError,
     XRayProviderError,
     XRayTimeoutError,
@@ -205,11 +206,21 @@ APEC_PAGE_SIZE = 100
 ADZUNA_PAGE_SIZE = 50
 FRANCE_TRAVAIL_PAGE_SIZE = 150
 # LinkedIn Posts (X-ray) : un moteur de recherche public, jamais LinkedIn
-# directement. Budget prudent par run (rotation persistée) et pagination
-# limitée : le moteur de repli DuckDuckGo est souvent bloqué par son
-# anti-bot, et l'API Exa ne pagine pas au-delà d'une page.
-LINKEDIN_POSTS_QUERY_BUDGET = 8
-LINKEDIN_POSTS_MAX_PAGES = 2
+# directement. Budget calibré sur le quota gratuit Tavily (1000 crédits/mois,
+# 1 crédit par recherche) : 2 créneaux/jour × 4 requêtes × 4 régions
+# = 32 crédits/jour ≈ 960/mois. Hors créneau, la source est simplement
+# différée — jamais un crédit dépensé. Pagination limitée : ni Tavily ni
+# Exa ne paginent au-delà d'une page.
+LINKEDIN_POSTS_QUERY_BUDGET = 4
+LINKEDIN_POSTS_MAX_PAGES = 1
+LINKEDIN_POSTS_RUN_HOURS_UTC = (6, 18)
+
+# Une source à couverture rotative n'interroge qu'un sous-ensemble du
+# catalogue par run : l'absence d'une offre au run suivant ne prouve jamais
+# sa disparition (la requête qui l'avait trouvée n'a pas été rejouée). Ces
+# sources ne confirment donc jamais une absence ; leurs offres expirent par
+# la fenêtre de fraîcheur, pas par non-réobservation.
+ROTATING_COVERAGE_SOURCES = {"LinkedIn Posts"}
 
 # Une offre confirmée absente reste archivée brièvement avant purge. Cette
 # marge protège l'historique pendant un blocage prolongé tout en gardant le
@@ -263,7 +274,7 @@ class SourceStatus:
     """Diagnostic d'une source pour un run.
 
     status : success | empty | blocked | error | disabled_missing_credentials |
-             not_applicable_region
+             not_applicable_region | deferred
     """
     source: str
     region_id: str = DEFAULT_REGION_ID
@@ -292,7 +303,7 @@ class SourceStatus:
 
     def finalize(self) -> None:
         if self.status in ("blocked", "error", "disabled_missing_credentials",
-                           "not_applicable_region"):
+                           "not_applicable_region", "deferred"):
             return
         self.status = "success" if self.accepted_count else "empty"
 
@@ -314,6 +325,8 @@ def status_label(st: SourceStatus, final_count: int | None = None) -> str:
         return "Non configuré — identifiants manquants"
     if st.status == "not_applicable_region":
         return f"Non applicable à {st.region_label}"
+    if st.status == "deferred":
+        return f"Différé — {st.note or 'prochain créneau planifié'}"
     if st.status == "blocked":
         detail = st.note or st.http_error or "HTTP 403/429"
         return f"Bloqué temporairement — {detail[:160]}"
@@ -337,6 +350,8 @@ def chip_hint(st: SourceStatus, final_count: int) -> str:
     if st.status == "blocked":
         code = st.http_error.replace("HTTP ", "") if st.http_error else "403/429"
         return f"bloqué {code}"
+    if st.status == "deferred":
+        return "différé"
     if st.status == "error":
         return "erreur"
     if st.raw_count:
@@ -1543,24 +1558,32 @@ def linkedin_posts_query_plan(
 
 
 def _build_linkedin_posts_provider(timeout: float, region_hint: str = "France"):
-    """Exa (API officielle) en priorité si ``EXA_API_KEY`` est fourni.
+    """Tavily puis Exa (API officielles) selon les clés fournies.
 
-    DuckDuckGo reste le repli historique, mais mesuré en conditions réelles
-    (environnement de développement et runners GitHub Actions), il soumet
+    Tavily est prioritaire : son plan gratuit se renouvelle chaque mois
+    (1000 crédits), là où les crédits d'essai Exa sont à usage unique
+    (épuisement constaté en production, HTTP 402). DuckDuckGo reste le
+    repli final, mais mesuré en conditions réelles il soumet
     systématiquement ces requêtes à son défi anti-bot (HTTP 202,
-    « anomaly-modal ») : Exa est donc le choix prioritaire dès qu'une clé est
-    disponible, sans jamais tenter de contourner ce défi.
+    « anomaly-modal ») — jamais contourné, seulement détecté.
     """
-    ddg_stack = FallbackXRayProvider(
+    provider = FallbackXRayProvider(
         DuckDuckGoHtmlProvider(timeout=timeout),
         DuckDuckGoLiteProvider(timeout=timeout),
     )
-    api_key = os.environ.get("EXA_API_KEY", "").strip()
-    if not api_key:
-        return ddg_stack
-    return FallbackXRayProvider(
-        ExaProvider(api_key, timeout=timeout, region_hint=region_hint), ddg_stack
-    )
+    exa_key = os.environ.get("EXA_API_KEY", "").strip()
+    if exa_key:
+        provider = FallbackXRayProvider(
+            ExaProvider(exa_key, timeout=timeout, region_hint=region_hint),
+            provider,
+        )
+    tavily_key = os.environ.get("TAVILY_API_KEY", "").strip()
+    if tavily_key:
+        provider = FallbackXRayProvider(
+            TavilyProvider(tavily_key, timeout=timeout, region_hint=region_hint),
+            provider,
+        )
+    return provider
 
 
 def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
@@ -1569,22 +1592,35 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
                              domains: dict | None = None,
                              active_ids: list[str] | None = None,
                              provider=None,
-                             rotation_path: Path = LINKEDIN_POSTS_ROTATION_FILE
+                             rotation_path: Path = LINKEDIN_POSTS_ROTATION_FILE,
+                             now: datetime | None = None
                              ) -> tuple[list[dict], SourceStatus]:
     """Posts LinkedIn publics indexés par un moteur de recherche — jamais LinkedIn.
 
     Ce connecteur n'ouvre jamais linkedin.com : il lit uniquement ce qu'un
-    moteur de recherche public (Exa, ou DuckDuckGo en repli) expose déjà sur
-    les URLs de posts publics. Le budget par run reste prudent et rotatif
-    (rotation persistée), et la fraîcheur d'un post trouvé via un
-    moteur n'est jamais garantie : toute offre sans date vérifiable dans la
-    fenêtre de 24 h est rejetée plutôt que conservée par précaution.
+    moteur de recherche public (Tavily, Exa, ou DuckDuckGo en repli) expose
+    déjà sur les URLs de posts publics. Le budget par run reste prudent et
+    rotatif (rotation persistée). Une offre sans fraîcheur vérifiable — ni
+    date précise, ni fenêtre garantie côté moteur — est rejetée plutôt que
+    conservée par précaution.
     """
     regions = regions or REGIONS
     domains = domains or DOMAINS
     region_config = region_config or regions[region_id]
     status = source_status("LinkedIn Posts", region_id, regions)
     started = time.monotonic()
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+
+    if now.hour not in LINKEDIN_POSTS_RUN_HOURS_UTC:
+        # Hors créneau : aucune requête, aucun crédit, rotation intacte.
+        # Le statut reste "error"-neutre (ni succès ni échec) pour ne jamais
+        # faire disparaître les offres des créneaux précédents.
+        hours = " et ".join(f"{h:02d}h" for h in LINKEDIN_POSTS_RUN_HOURS_UTC)
+        status.status = "deferred"
+        status.note = (f"créneaux {hours} UTC — quota gratuit Tavily "
+                       "préservé (1000 recherches/mois)")
+        log_collection_summary(status)
+        return [], status
 
     start_index = load_rotation_index(rotation_path)
     plan, next_index = linkedin_posts_query_plan(
@@ -1668,13 +1704,19 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
                     result.published_at.isoformat()
                     if result.published_at is not None else ""
                 )
+                # Fraîcheur : soit une date précise parsée depuis l'extrait,
+                # soit une fenêtre garantie côté moteur (time_range=day de
+                # Tavily) — même mécanique que hours_old de JobSpy. Sans
+                # l'une ni l'autre, rejet plutôt que conservation.
+                source_fresh = bool(getattr(result, "source_fresh", False))
                 offer, reason = make_offer(
                     result.title, result.author or "Post LinkedIn",
                     region_config["label"], result.url, "LinkedIn Posts",
                     date_value, confirmed_internship=True,
                     description=result.snippet, domains=domains,
                     active_ids=active_ids, region_id=region_id, regions=regions,
-                    reject_missing_date=True,
+                    freshness_verified=source_fresh,
+                    reject_missing_date=not source_fresh,
                 )
                 register_offer(status, offers, offer, reason)
             if len(results) < 30:
@@ -1845,8 +1887,15 @@ def source_succeeded_for_offer(offer: dict, statuses: list[SourceStatus]) -> boo
     ``empty`` est un succès réseau fiable : il confirme précisément que la
     source n'a rien renvoyé. Les statuts bloqués, en erreur, non configurés ou
     non applicables ne doivent jamais faire disparaître une offre persistée.
+
+    Une source à couverture rotative ne confirme jamais une absence : le run
+    suivant interroge d'autres requêtes du catalogue, ne pas retrouver l'offre
+    n'apporte aucune information. Ses offres expirent par la fenêtre de
+    fraîcheur uniquement.
     """
     source = offer.get("source")
+    if source in ROTATING_COVERAGE_SOURCES:
+        return False
     region_ids = offer.get("regions") or [DEFAULT_REGION_ID]
     by_region = {
         status.region_id: status.status
@@ -1958,9 +2007,17 @@ def dashboard_offers_from_store(store: dict[str, dict],
             elif published and published < cutoff:
                 continue
         else:
-            first_seen = _store_datetime(offer.get("first_seen", ""))
-            if first_seen and first_seen < now - timedelta(days=days_window):
-                continue
+            # Date de publication inconnue mais fraîcheur garantie côté
+            # source au moment de la collecte : l'offre expire 24 h après
+            # sa dernière vérification, pas après ``days_window``.
+            verified_at = _store_datetime(offer.get("freshness_verified_at", ""))
+            if verified_at:
+                if verified_at < cutoff:
+                    continue
+            else:
+                first_seen = _store_datetime(offer.get("first_seen", ""))
+                if first_seen and first_seen < now - timedelta(days=days_window):
+                    continue
         visible.append(offer)
     return visible
 
@@ -2027,6 +2084,7 @@ STATUS_CSS = {
     "error": "bad",
     "disabled_missing_credentials": "muted",
     "not_applicable_region": "muted",
+    "deferred": "muted",
 }
 
 
@@ -2128,7 +2186,8 @@ def render_dashboard(offers: list[dict], new_ids: set,
 
     source_chips = []
     status_priority = {"blocked": 0, "error": 1, "disabled_missing_credentials": 2,
-                       "empty": 3, "not_applicable_region": 4, "success": 5}
+                       "empty": 3, "deferred": 4, "not_applicable_region": 5,
+                       "success": 6}
     for source_name in SOURCE_NAMES:
         related = [st for st in statuses if st.source == source_name]
         if not related:

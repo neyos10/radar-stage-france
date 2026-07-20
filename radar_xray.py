@@ -38,6 +38,8 @@ DUCKDUCKGO_LITE_ENDPOINT = "https://lite.duckduckgo.com/lite/"
 DUCKDUCKGO_LITE_PROVIDER_NAME = "duckduckgo_lite"
 EXA_SEARCH_ENDPOINT = "https://api.exa.ai/search"
 EXA_PROVIDER_NAME = "exa"
+TAVILY_SEARCH_ENDPOINT = "https://api.tavily.com/search"
+TAVILY_PROVIDER_NAME = "tavily"
 LINKEDIN_POST_HOSTS = ("linkedin.com", "fr.linkedin.com")
 
 _SPACE_RE = re.compile(r"\s+")
@@ -68,6 +70,11 @@ _CANDIDATE_POST_RE = re.compile(
 )
 _AUTHOR_RE = re.compile(
     r"^\s*(?P<author>.+?)\s+(?:on|sur)\s+LinkedIn\s*[:|\-]",
+    re.IGNORECASE,
+)
+# Variante française des titres indexés par Tavily : « Post de Alice Martin ».
+_AUTHOR_POST_DE_RE = re.compile(
+    r"^\s*Post\s+de\s+(?P<author>[^|:\-]+?)\s*(?:[|:\-]|$)",
     re.IGNORECASE,
 )
 _ACTIVITY_ID_RE = re.compile(
@@ -119,7 +126,12 @@ class XRayTimeoutError(XRayProviderError):
 
 @dataclass(frozen=True)
 class SearchResult:
-    """Résultat minimal exposé par un moteur de recherche public."""
+    """Résultat minimal exposé par un moteur de recherche public.
+
+    ``source_fresh`` indique que le moteur a garanti nativement la fenêtre de
+    fraîcheur demandée (ex. ``time_range=day`` de Tavily) : l'absence de date
+    précise dans l'extrait ne signifie alors pas une fraîcheur invérifiable.
+    """
 
     title: str
     snippet: str
@@ -127,6 +139,7 @@ class SearchResult:
     author: str | None = None
     published_at: datetime | None = None
     provider: str = DUCKDUCKGO_PROVIDER_NAME
+    source_fresh: bool = False
 
     @property
     def external_id(self) -> str:
@@ -214,8 +227,13 @@ def linkedin_post_identity(url: str) -> str:
 
 
 def extract_linkedin_author(title: str) -> str | None:
-    """Extrait seulement les signatures explicites « Nom on/sur LinkedIn »."""
-    match = _AUTHOR_RE.search(_clean_text(title))
+    """Extrait seulement les signatures explicites d'auteur.
+
+    Deux formes réellement observées dans les index moteur : « Nom on/sur
+    LinkedIn : … » et la variante française « Post de Nom | … ».
+    """
+    cleaned = _clean_text(title)
+    match = _AUTHOR_RE.search(cleaned) or _AUTHOR_POST_DE_RE.search(cleaned)
     if not match:
         return None
     author = _clean_text(match.group("author")).strip('"“”')
@@ -687,6 +705,163 @@ class ExaProvider:
         return [result for result in parsed if result is not None][:max_results]
 
 
+def _adapt_query_for_tavily(query: str, region_hint: str = "") -> str:
+    """Reconstruit la requête au format qui remonte des posts chez Tavily.
+
+    Tavily ne supporte pas l'opérateur ``site:`` (le domaine est restreint via
+    ``include_domains``) et sa recherche est sémantique. Mesuré en conditions
+    réelles : les termes entre guillemets précédés de ``post`` et suivis de
+    ``recrutement`` + la région ramènent des ``/posts/`` de recruteurs, là où
+    la requête brute ne renvoie que du bruit SEO hors ``/posts/``.
+    """
+    quoted_terms = _QUOTED_TERM_RE.findall(query)
+    base = (
+        " ".join(f'"{term}"' for term in quoted_terms) if quoted_terms
+        else _SITE_PREFIX_RE.sub("", query).strip()
+    )
+    suffix = f"recrutement {region_hint}".strip()
+    return f"post {base} {suffix}".strip()
+
+
+def _parse_tavily_result(item: Any, now: datetime) -> SearchResult | None:
+    if not isinstance(item, Mapping):
+        return None
+    canonical = canonicalize_linkedin_post_url(str(item.get("url") or ""))
+    if canonical is None:
+        return None
+    title = _clean_text(str(item.get("title") or ""))
+    if not title:
+        return None
+    snippet = _clean_text(str(item.get("content") or ""))
+    published_at = None
+    for candidate in (snippet, str(item.get("published_date") or "")):
+        cleaned = _clean_text(candidate)
+        if cleaned and _PRECISE_TIME_HINT_RE.search(cleaned.lower()):
+            published_at = parse_engine_date(cleaned, now)
+            if published_at is not None:
+                break
+    return SearchResult(
+        title=title,
+        snippet=snippet,
+        url=canonical,
+        author=extract_linkedin_author(title),
+        published_at=published_at,
+        provider=TAVILY_PROVIDER_NAME,
+        # time_range="day" est appliqué côté serveur : la fraîcheur est
+        # garantie par le moteur même sans date précise dans l'extrait.
+        source_fresh=True,
+    )
+
+
+class TavilyProvider:
+    """Provider basé sur l'API officielle Tavily (https://tavily.com).
+
+    Comme Exa, Tavily est un produit d'API dont les conditions d'usage
+    autorisent explicitement l'appel programmatique — aucune notion de
+    contournement d'anti-bot. Le plan gratuit offre 1000 crédits/mois ;
+    une recherche ``basic`` coûte 1 crédit. Le domaine est restreint côté
+    serveur (``include_domains``) et la fenêtre de fraîcheur est demandée
+    nativement (``time_range``).
+    """
+
+    name = TAVILY_PROVIDER_NAME
+
+    def __init__(
+        self,
+        api_key: str,
+        session=None,
+        *,
+        timeout: float = 8.0,
+        endpoint: str = TAVILY_SEARCH_ENDPOINT,
+        region_hint: str = "France",
+    ):
+        if not api_key or not api_key.strip():
+            raise ValueError("TavilyProvider requiert une clé API non vide")
+        hostname = (urlsplit(endpoint).hostname or "").lower()
+        if hostname != "api.tavily.com":
+            raise ValueError("Le provider Tavily doit cibler api.tavily.com")
+        self.api_key = api_key
+        self.session = session or requests.Session()
+        self.timeout = timeout
+        self.endpoint = endpoint
+        self.region_hint = region_hint
+
+    def search(
+        self,
+        query: str,
+        freshness: str | None = None,
+        *,
+        page: int = 1,
+        max_results: int = 10,
+        now: datetime | None = None,
+    ) -> list[SearchResult]:
+        if not _clean_text(query):
+            raise ValueError("La requête X-ray ne peut pas être vide")
+        if page < 1 or max_results < 1:
+            raise ValueError("page et max_results doivent être strictement positifs")
+        now = now or datetime.now(timezone.utc)
+        if now.tzinfo is None:
+            now = now.replace(tzinfo=timezone.utc)
+        now = now.astimezone(timezone.utc)
+        if page > 1:
+            # Pas de pagination par décalage documentée : une seule page,
+            # comme Exa — jamais deux crédits pour la même requête.
+            return []
+
+        payload = {
+            "query": _adapt_query_for_tavily(query, self.region_hint),
+            "search_depth": "basic",
+            "max_results": min(max_results, 20),
+            "include_domains": list(LINKEDIN_POST_HOSTS),
+            "time_range": "day",
+        }
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        try:
+            response = self.session.post(
+                self.endpoint, json=payload, headers=headers, timeout=self.timeout,
+            )
+        except requests.Timeout as exc:
+            raise XRayTimeoutError("Timeout Tavily") from exc
+        except requests.RequestException as exc:
+            raise XRayProviderError(
+                f"Erreur réseau Tavily: {type(exc).__name__}"
+            ) from exc
+
+        status_code = int(getattr(response, "status_code", 0) or 0)
+        if status_code in {402, 432}:
+            # 432 est le code documenté par Tavily pour un dépassement de
+            # plan ; 402 par prudence (même sémantique chez d'autres API).
+            raise XRayBlockedError(
+                f"crédits Tavily épuisés (HTTP {status_code}) — "
+                "quota gratuit 1000/mois, voir app.tavily.com",
+                status_code=status_code,
+            )
+        if status_code in {401, 403, 429}:
+            raise XRayBlockedError(
+                f"Tavily a refusé la requête (HTTP {status_code})",
+                status_code=status_code,
+            )
+        try:
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            raise XRayProviderError(
+                f"Tavily a répondu HTTP {status_code or '?'}"
+            ) from exc
+        try:
+            body = response.json()
+        except ValueError as exc:
+            raise XRayProviderError("Réponse Tavily invalide (JSON)") from exc
+
+        raw_results = body.get("results") if isinstance(body, Mapping) else None
+        if not isinstance(raw_results, list):
+            return []
+        parsed = [_parse_tavily_result(item, now) for item in raw_results]
+        return [result for result in parsed if result is not None][:max_results]
+
+
 class FallbackXRayProvider:
     """Chaîne un provider principal et un secours, sans jamais boucler.
 
@@ -782,6 +957,8 @@ __all__ = [
     "DuckDuckGoHtmlProvider",
     "DuckDuckGoLiteProvider",
     "ExaProvider",
+    "TAVILY_SEARCH_ENDPOINT",
+    "TavilyProvider",
     "FallbackXRayProvider",
     "LinkedInDestinationError",
     "SearchResult",
