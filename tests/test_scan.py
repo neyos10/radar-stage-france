@@ -1508,6 +1508,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
         now = datetime.now(timezone.utc)
         provider = FakeXRayProvider([[xray_result(published_at=now - timedelta(hours=1))]])
         offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
@@ -1523,6 +1524,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             snippet="Retour sur notre conférence annuelle, merci à tous.",
         )]])
         offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
@@ -1534,6 +1536,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
     def test_post_without_verifiable_date_is_rejected_not_kept(self):
         provider = FakeXRayProvider([[xray_result(published_at=None)]])
         offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
@@ -1550,6 +1553,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             xray.XRayBlockedError("bloqué", status_code=202),
         ])
         offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
             domains=self.CATALOG, active_ids=list(self.CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
@@ -1584,6 +1588,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
             FailingProvider(),
         )
         offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
             domains=self.CATALOG, active_ids=list(self.CATALOG),
             provider=chain,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
@@ -1602,6 +1607,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             rotation_path = Path(tmp) / "rotation.json"
             offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
                 domains=self.CATALOG, active_ids=list(self.CATALOG),
                 provider=provider, rotation_path=rotation_path,
                 now=off_schedule,
@@ -1625,6 +1631,7 @@ class TestLinkedInPostsSource(unittest.TestCase):
         )
         provider = FakeXRayProvider([[fresh]])
         offers, status = scan.fetch_linkedin_posts_all(
+                "maroc",
             domains=self.DATA_CATALOG, active_ids=list(self.DATA_CATALOG),
             provider=provider,
             rotation_path=Path(tempfile.mkdtemp()) / "rotation.json",
@@ -1659,16 +1666,69 @@ class TestLinkedInPostsSource(unittest.TestCase):
             {"a": fresh, "b": recent, "c": stale}, now=now)
         self.assertEqual([o["id"] for o in visible], ["a", "b"])
 
+    def test_linkedin_posts_only_runs_where_the_region_enables_it(self):
+        provider = FakeXRayProvider([[xray_result()]])
+        offers, status = scan.fetch_linkedin_posts_all(
+            "france", provider=provider, now=SCHEDULED_XRAY_HOUR,
+            rotation_path=Path(tempfile.mkdtemp()) / "rotation.json")
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "not_applicable_region")
+        self.assertIn("mesuré", status.note)
+        self.assertIn("LinkedIn Posts", scan.REGIONS["maroc"]["local_sources"])
+
+    def test_real_moroccan_posts_scoring(self):
+        """Posts réels Tavily (Maroc, 26/11/2026)."""
+        accept = [
+            ("Post de CIRCET MOROCCO - LinkedIn",
+             "We are hiring | Stage PFE – Data Tu termines tes études et tu veux un PFE "
+             "qui ait un vrai impact ? CIRCET MOROCCO ouvre ses portes aux"),
+            ("#pfe2027 #sofrecom #internship #artificialintelligence #data",
+             "Sofrecom Maroc is launching its PFE 2027 recruitment campaign, with 20 "
+             "internship topics across data, AI and software."),
+        ]
+        reject = [
+            ("#drh #maroc #rh | DRH.ma - LinkedIn",
+             "PFE 2027 : enquête auprès de 189 entreprises, ressources humaines, recrutement."),
+            ("#pfe #stagepfe #géniedesprocédés #énergie",
+             "Recherche de Stage PFE (4 à 6 mois) – Génie des Procédés, de l'Énergie."),
+        ]
+        for title, text in accept:
+            self.assertEqual(scan.score_offer_domains(
+                title, text, overrides=scan.LINKEDIN_POSTS_SCORING)[0], ["data_ia"], title)
+        for title, text in reject:
+            self.assertEqual(scan.score_offer_domains(
+                title, text, overrides=scan.LINKEDIN_POSTS_SCORING)[0], [], title)
+        self.assertEqual(scan.DOMAIN_SCORE_THRESHOLD, 2)
+
+    def test_post_display_title_replaces_hashtags(self):
+        self.assertEqual(scan.post_display_title(
+            "Post de CIRCET MOROCCO - LinkedIn",
+            "We are hiring | Stage PFE – Data"), "We are hiring | Stage PFE – Data")
+        long = scan.post_display_title(
+            "#expleomaroc #pfe2027 #stagepfe",
+            "Aucune description alternative pour cette image " + "mot " * 60)
+        self.assertTrue(long.startswith("mot mot") and long.endswith("…"))
+        self.assertLessEqual(len(long), 111)
+        self.assertEqual(scan.post_display_title("Stage PFE Data chez X", "y"),
+                         "Stage PFE Data chez X")
+
+    def test_posts_provider_uses_advanced_tavily_search(self):
+        with mock.patch.dict(os.environ, {"TAVILY_API_KEY": "tvly-x", "EXA_API_KEY": ""}):
+            provider = scan._build_linkedin_posts_provider(5, region_hint="Maroc")
+        self.assertEqual(provider.providers[0].search_depth, "advanced")
+
     def test_rotation_cursor_persists_and_advances_across_runs(self):
         with tempfile.TemporaryDirectory() as tmp:
             rotation_path = Path(tmp) / "linkedin_posts_rotation.json"
             scan.fetch_linkedin_posts_all(
+                "maroc",
                 domains=self.CATALOG, active_ids=list(self.CATALOG),
                 provider=FakeXRayProvider([]), rotation_path=rotation_path,
                 now=SCHEDULED_XRAY_HOUR,
             )
             first_index = json.loads(rotation_path.read_text())["next_index"]
             scan.fetch_linkedin_posts_all(
+                "maroc",
                 domains=self.CATALOG, active_ids=list(self.CATALOG),
                 provider=FakeXRayProvider([]), rotation_path=rotation_path,
                 now=SCHEDULED_XRAY_HOUR,
@@ -1966,8 +2026,10 @@ class TestDashboard(unittest.TestCase):
             for r in ("belgique", "luxembourg", "maroc")
         ]
         page = self.render([], statuses)
-        self.assertIn("France Travail <b>0 accepté / 71 reçus</b>", page)
-        self.assertNotIn("France Travail <b>non applicable</b>", page)
+        # Sans offre affichée, plus de puce de filtre : l'état réel reste
+        # dans « État des connecteurs », jamais masqué par « non applicable ».
+        self.assertIn("<b>France Travail · France</b> · 0 accepté / 71 reçus", page)
+        self.assertNotIn('data-src="France Travail"', page)
 
     def test_product_config_controls_dashboard(self):
         candidate, _ = offer()
@@ -2032,8 +2094,9 @@ class TestDashboard(unittest.TestCase):
                       javascript)
         self.assertIn("Bloqué temporairement — HTTP 403", page)
         self.assertIn("Non configuré — identifiants manquants", page)
-        # une source jamais appelée n'affiche pas un simple « 0 »
-        self.assertIn("non configuré", page)
+        # une source sans offre n'a pas de puce de filtre
+        self.assertNotIn('data-src="France Travail"', page)
+        self.assertIn('data-src="LinkedIn"', page)
         self.assertNotIn("APEC-DESACTIVEE", page)
         self.assertNotIn('data-src="APEC"', page)
         self.assertNotIn('data-src="The Muse"', page)

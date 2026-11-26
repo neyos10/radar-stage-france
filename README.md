@@ -39,9 +39,17 @@ un radar personnel pour un stage PFE Data (début 2027, 4 à 6 mois).
 - **Sources désactivées** (`config.json` → `disabled_sources`, code conservé) :
   APEC et The Muse (anti-bot HTTP 403, y compris depuis GitHub Actions),
   Adzuna (clé à renouveler). Elles ne sont ni appelées ni affichées.
-- **LinkedIn Posts** : requête au vocabulaire des recruteurs (« stage PFE …
-  recrute stagiaire ») sur une semaine. Mesuré : les moteurs indexent très
-  peu de posts LinkedIn ; la source reste marginale.
+- **LinkedIn Posts** : recherche Tavily « advanced » (2 crédits) au
+  vocabulaire des recruteurs (« stage PFE … Maroc recrute stagiaire ») sur
+  une semaine, **activée au Maroc seulement** (`local_sources`). Mesuré le
+  26/11/2026 : au Maroc, 13 posts trouvés dont 3 retenus (Expleo, Circet
+  « Stage PFE – Data »…) ; en France, 0 post sur 6 formulations, le moteur
+  n'indexe quasiment pas les posts LinkedIn français. Seuil de score 1 pour
+  les posts (`LINKEDIN_POSTS_SCORING`), titre de carte = début du post.
+  Aucun connecteur ni API LinkedIn n'est utilisé : l'API officielle ne permet
+  pas de rechercher des posts ou des offres.
+- **Dashboard** : seules les sources ayant des offres affichées ont une puce
+  de filtre ; l'état de chaque connecteur reste dans « État des connecteurs ».
 - **Requêtes Maroc** : les requêtes françaises du domaine. Les variantes
   anglaises testées sur LinkedIn Maroc (« data engineer intern », « data
   internship », « PFE data ») ont rapporté 0 offre acceptée pour ~50 s de

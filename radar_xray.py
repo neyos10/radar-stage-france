@@ -778,9 +778,13 @@ class TavilyProvider:
         timeout: float = 8.0,
         endpoint: str = TAVILY_SEARCH_ENDPOINT,
         region_hint: str = "France",
+        search_depth: str = "basic",
     ):
         if not api_key or not api_key.strip():
             raise ValueError("TavilyProvider requiert une clé API non vide")
+        if search_depth not in {"basic", "advanced"}:
+            raise ValueError("search_depth doit valoir basic ou advanced")
+        self.search_depth = search_depth
         hostname = (urlsplit(endpoint).hostname or "").lower()
         if hostname != "api.tavily.com":
             raise ValueError("Le provider Tavily doit cibler api.tavily.com")
@@ -814,7 +818,10 @@ class TavilyProvider:
 
         payload = {
             "query": _adapt_query_for_tavily(query, self.region_hint),
-            "search_depth": "basic",
+            # « advanced » coûte 2 crédits mais, mesuré le 26/11/2026 sur
+            # « stage PFE data Maroc recrute stagiaire » : 13 posts dont 8
+            # pertinents, contre 1 seul en « basic ».
+            "search_depth": self.search_depth,
             "max_results": min(max_results, 20),
             "include_domains": list(LINKEDIN_POST_HOSTS),
             # Une semaine, comme la fenêtre du dashboard : les posts de

@@ -166,3 +166,8 @@ retirées (`linkedin_extra_queries: []`).
 - `TITLE_MUST_MATCH` accepte les pluriels (stagiaires, stages, interns).
 - Les identifiants d'API sont masqués dans toutes les erreurs enregistrées
   (`safe_error`) : une clé Adzuna avait fuité dans `source_status.json`.
+- LinkedIn Posts : Tavily « advanced » (13 posts Maroc contre 1 en
+  « basic »), Maroc uniquement, seuil de score 1 pour les posts. Budget
+  Tavily : 16 (posts) + 10 (Sites Maroc) crédits/jour ≈ 800/mois sur 1000.
+- Dreamjob : le flux RSS est filtré depuis GitHub Actions (page HTML au lieu
+  du RSS) ; source directe désactivée, dreamjob.ma couvert par Sites Maroc.

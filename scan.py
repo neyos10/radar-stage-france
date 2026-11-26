@@ -268,6 +268,11 @@ FRANCE_TRAVAIL_PAGE_SIZE = 150
 # resterait sous 1000/mois. Hors créneau, la source est simplement
 # différée — jamais un crédit dépensé. Pagination limitée : ni Tavily ni
 # Exa ne paginent au-delà d'une page.
+# Mesuré le 26/11/2026 : en France le moteur n'indexe quasiment aucun post
+# LinkedIn de recruteur (0 sur 6 formulations, basic comme advanced) ; au
+# Maroc, la recherche « advanced » en trouve. La source n'est donc activée
+# que pour les régions qui la listent dans ``local_sources`` (Maroc).
+# Budget : 4 requêtes × 2 crédits (advanced) × 2 créneaux = 16 crédits/jour.
 LINKEDIN_POSTS_QUERY_BUDGET = 4
 LINKEDIN_POSTS_MAX_PAGES = 1
 LINKEDIN_POSTS_RUN_HOURS_UTC = (6, 18)
@@ -674,8 +679,9 @@ def apply_scoring_overrides(domain: dict, overrides: dict | None) -> dict:
     for field_name in ("negative", "negative_title_only"):
         adjusted[field_name] = [value for value in domain.get(field_name, [])
                                 if value.casefold() not in ignored]
-    if "description_only_min_positives" in overrides:
-        adjusted["description_only_min_positives"] = overrides["description_only_min_positives"]
+    for key in ("description_only_min_positives", "score_threshold"):
+        if key in overrides:
+            adjusted[key] = overrides[key]
     return adjusted
 
 
@@ -692,7 +698,8 @@ def score_offer_domains(title: str, description: str,
         scores[domain_id] = score
         min_description_hits = domain.get(
             "description_only_min_positives", DESCRIPTION_ONLY_MIN_POSITIVES)
-        if score >= DOMAIN_SCORE_THRESHOLD and (
+        threshold = domain.get("score_threshold", DOMAIN_SCORE_THRESHOLD)
+        if score >= threshold and (
                 title_hits or description_hits >= min_description_hits):
             matched.append(domain_id)
     return matched, scores
@@ -1727,6 +1734,22 @@ def linkedin_posts_query_plan(
     return plan, next_index
 
 
+POST_UNINFORMATIVE_TITLE_RE = re.compile(r"^\s*(?:#|post\s+de\s)|linkedin\s*$", re.I)
+POST_SNIPPET_NOISE_RE = re.compile(r"aucune description alternative pour cette image", re.I)
+
+
+def post_display_title(title: str, snippet: str, limit: int = 110) -> str:
+    """Titre lisible pour une carte : le début du post plutôt que des hashtags
+    ou « Post de X - LinkedIn ». Le scoring et l'identifiant restent calculés
+    sur le titre d'origine."""
+    if not POST_UNINFORMATIVE_TITLE_RE.search(title or ""):
+        return title
+    text = " ".join(POST_SNIPPET_NOISE_RE.sub(" ", snippet or "").split())
+    if not text:
+        return title
+    return text if len(text) <= limit else text[:limit].rsplit(" ", 1)[0] + "…"
+
+
 def _build_linkedin_posts_provider(timeout: float, region_hint: str = "France"):
     """Tavily puis Exa (API officielles) selon les clés fournies.
 
@@ -1750,7 +1773,8 @@ def _build_linkedin_posts_provider(timeout: float, region_hint: str = "France"):
     tavily_key = os.environ.get("TAVILY_API_KEY", "").strip()
     if tavily_key:
         provider = FallbackXRayProvider(
-            TavilyProvider(tavily_key, timeout=timeout, region_hint=region_hint),
+            TavilyProvider(tavily_key, timeout=timeout, region_hint=region_hint,
+                           search_depth="advanced"),
             provider,
         )
     return provider
@@ -1777,6 +1801,11 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
     regions = regions or REGIONS
     domains = domains or DOMAINS
     region_config = region_config or regions[region_id]
+    skipped = local_source_status("LinkedIn Posts", region_id, region_config, regions)
+    if skipped:
+        skipped.note = ("posts LinkedIn quasi absents de l'index du moteur pour "
+                        f"{region_config['label']} (mesuré le 26/11/2026)")
+        return [], skipped
     status = source_status("LinkedIn Posts", region_id, regions)
     started = time.monotonic()
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
@@ -1887,7 +1916,13 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
                     active_ids=active_ids, region_id=region_id, regions=regions,
                     freshness_verified=source_fresh,
                     reject_missing_date=not source_fresh,
+                    # Posts de recruteurs : hashtags et phrases (« #data »,
+                    # « recrute des stagiaires PFE en IT, data ») comme sur
+                    # les sites marocains.
+                    scoring=LINKEDIN_POSTS_SCORING,
                 )
+                if offer is not None:
+                    offer["title"] = post_display_title(result.title, result.snippet)
                 register_offer(status, offers, offer, reason)
             if len(results) < 30:
                 break
@@ -1928,6 +1963,13 @@ MAROC_LOCAL_SCORING = {
     "ignore_negative": ["recrutement"],
     "description_only_min_positives": 1,
 }
+# Posts LinkedIn : le titre (« Post de CIRCET MOROCCO », hashtags) ne porte
+# pas le métier et un post long cite en passant des négatifs (commercial,
+# finance…). Mesuré le 26/11/2026 sur 8 posts Maroc : seuil 1 avec au moins
+# un positif dans le texte retient Expleo, Circet « Stage PFE – Data » et
+# Sofrecom, et rejette toujours le candidat, le billet d'opinion et l'article
+# RH (scores ≤ -1).
+LINKEDIN_POSTS_SCORING = {**MAROC_LOCAL_SCORING, "score_threshold": 1}
 MOROCCAN_CITIES = (
     "Casablanca", "Rabat", "Tanger", "Marrakech", "Fès", "Agadir", "Kénitra",
     "Meknès", "Oujda", "Tétouan", "Mohammedia", "Benguerir", "El Jadida",
@@ -2699,6 +2741,10 @@ def render_dashboard(offers: list[dict], new_ids: set,
                              key=lambda st: status_priority.get(st.status, 9))
         name = html.escape(source_name, quote=True)
         count = final_counts.get(source_name, 0)
+        if not count:
+            # Une source sans offre affichée n'a rien à filtrer : son état
+            # (différé, bloqué…) reste lisible dans « État des connecteurs ».
+            continue
         hint = html.escape(chip_hint(representative, count))
         note_attr = ("" if count else
                      f' data-note="{html.escape(status_label(representative, count), quote=True)}"')
