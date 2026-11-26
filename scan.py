@@ -353,6 +353,21 @@ class SourceStatus:
 BLOCK_CODE_RE = re.compile(r"\b(403|429)\b")
 
 
+# Les exceptions requests incluent l'URL complète, donc les identifiants
+# passés en paramètres (Adzuna app_id/app_key, The Muse api_key). Sans ce
+# masquage, une erreur 503 Adzuna a écrit la clé en clair dans
+# data/source_status.json, fichier commité à chaque run.
+SECRET_PARAM_RE = re.compile(
+    r"((?:app_id|app_key|api_key|apikey|key|token|access_token|client_id|client_secret)=)[^&\s'\"]+",
+    re.I,
+)
+
+
+def safe_error(exc: Exception | str) -> str:
+    """Texte d'erreur sans aucun identifiant passé en paramètre d'URL."""
+    return SECRET_PARAM_RE.sub(r"\1***", str(exc))
+
+
 def block_code(exc: Exception) -> str | None:
     """Extrait un code HTTP de blocage (403/429) du message d'une exception."""
     match = BLOCK_CODE_RE.search(str(exc))
@@ -964,8 +979,8 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
                 status.http_error = f"HTTP {code}"
                 print(f"[WARN] {label} '{query}' bloqué ({status.http_error})", file=sys.stderr)
             else:
-                status.http_error = status.http_error or str(exc)[:200]
-                print(f"[WARN] {label} '{query}' a échoué : {exc}", file=sys.stderr)
+                status.http_error = status.http_error or safe_error(exc)[:200]
+                print(f"[WARN] {label} '{query}' a échoué : {safe_error(exc)}", file=sys.stderr)
             continue
         finally:
             if capture in jobspy_logger.handlers:
@@ -1091,7 +1106,7 @@ def fetch_apec_detail_description(number: str) -> tuple[str, bool]:
         text = " ".join(str(b) for b in blocks if b)
         return re.sub(r"<[^>]+>", " ", text), False
     except Exception as exc:
-        print(f"[WARN] APEC détail {number} a échoué : {exc}", file=sys.stderr)
+        print(f"[WARN] APEC détail {number} a échoué : {safe_error(exc)}", file=sys.stderr)
         return "", bool(block_code(exc))
 
 
@@ -1141,10 +1156,10 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
             except Exception as exc:
                 code = block_code(exc)
                 status.http_error = (f"HTTP {code}" if code
-                                     else (status.http_error or str(exc)[:200]))
+                                     else (status.http_error or safe_error(exc)[:200]))
                 if code:
                     consecutive_blocks += 1
-                print(f"[WARN] APEC '{query}' page {page + 1} a échoué : {exc}",
+                print(f"[WARN] APEC '{query}' page {page + 1} a échoué : {safe_error(exc)}",
                       file=sys.stderr)
                 break
             consecutive_blocks = 0
@@ -1288,8 +1303,8 @@ def fetch_adzuna_all(region_id: str = DEFAULT_REGION_ID,
                     consecutive_blocks += 1
                     status.http_error = f"HTTP {code}"
                 else:
-                    status.http_error = status.http_error or str(exc)[:200]
-                print(f"[WARN] Adzuna '{query}' page {page} a échoué : {exc}",
+                    status.http_error = status.http_error or safe_error(exc)[:200]
+                print(f"[WARN] Adzuna '{query}' page {page} a échoué : {safe_error(exc)}",
                       file=sys.stderr)
                 break
             query_succeeded = True
@@ -1437,8 +1452,8 @@ def fetch_the_muse_all(region_id: str = DEFAULT_REGION_ID,
                 status.http_error = f"HTTP {code}"
             else:
                 consecutive_blocks = 0
-                status.http_error = status.http_error or str(exc)[:200]
-            print(f"[WARN] The Muse page {page} a échoué : {exc}", file=sys.stderr)
+                status.http_error = status.http_error or safe_error(exc)[:200]
+            print(f"[WARN] The Muse page {page} a échoué : {safe_error(exc)}", file=sys.stderr)
             break
 
         consecutive_blocks = 0
@@ -1586,9 +1601,9 @@ def fetch_france_travail_all(region_id: str = DEFAULT_REGION_ID,
                     consecutive_blocks += 1
                     status.http_error = f"HTTP {code}"
                 else:
-                    status.http_error = status.http_error or str(exc)[:200]
+                    status.http_error = status.http_error or safe_error(exc)[:200]
                 print(f"[WARN] France Travail '{query}' page {page + 1} "
-                      f"a échoué : {exc}", file=sys.stderr)
+                      f"a échoué : {safe_error(exc)}", file=sys.stderr)
                 break
             query_succeeded = True
             consecutive_blocks = 0
@@ -1779,17 +1794,17 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
                     ]
                     if failures:
                         status.note = " · ".join(failures)[:220]
-                print(f"[WARN] LinkedIn Posts '{query}' page {page} bloquée : {exc}",
+                print(f"[WARN] LinkedIn Posts '{query}' page {page} bloquée : {safe_error(exc)}",
                       file=sys.stderr)
                 break
             except XRayTimeoutError as exc:
-                status.http_error = str(exc)[:200]
-                print(f"[WARN] LinkedIn Posts '{query}' page {page} timeout : {exc}",
+                status.http_error = safe_error(exc)[:200]
+                print(f"[WARN] LinkedIn Posts '{query}' page {page} timeout : {safe_error(exc)}",
                       file=sys.stderr)
                 break
             except XRayProviderError as exc:
-                status.http_error = status.http_error or str(exc)[:200]
-                print(f"[WARN] LinkedIn Posts '{query}' page {page} a échoué : {exc}",
+                status.http_error = status.http_error or safe_error(exc)[:200]
+                print(f"[WARN] LinkedIn Posts '{query}' page {page} a échoué : {safe_error(exc)}",
                       file=sys.stderr)
                 break
 
@@ -1853,11 +1868,11 @@ def run_source_across_regions(source_name: str, fetcher,
         try:
             regional_offers, status = fetcher(region_id, region_config)
         except Exception as exc:  # ceinture : une région n'arrête pas les autres
-            print(f"[ERREUR] {source_name} · {region_config['label']} : {exc}",
+            print(f"[ERREUR] {source_name} · {region_config['label']} : {safe_error(exc)}",
                   file=sys.stderr)
             status = source_status(
                 source_name, region_id, selected_regions, status="error",
-                http_error=str(exc)[:200],
+                http_error=safe_error(exc)[:200],
             )
             regional_offers = []
         for offer in regional_offers:

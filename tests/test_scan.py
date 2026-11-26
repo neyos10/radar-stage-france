@@ -1686,6 +1686,25 @@ class TestMissingCredentials(unittest.TestCase):
         self.assertEqual(st.status, "disabled_missing_credentials")
         self.assertIn("FT_CLIENT_ID", st.note)
 
+    def test_adzuna_http_error_never_leaks_credentials(self):
+        """Régression : un 503 Adzuna a écrit app_key en clair dans
+        data/source_status.json (URL complète dans le message requests)."""
+        failing = mock.Mock(status_code=503)
+        failing.raise_for_status.side_effect = Exception(
+            "503 Server Error: Service Temporarily Unavailable for url: "
+            "https://api.adzuna.com/v1/api/jobs/fr/search/1?app_id=ID-SECRET"
+            "&app_key=KEY-SECRET&what=stage+data")
+        with mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "ID-SECRET",
+                                          "ADZUNA_APP_KEY": "KEY-SECRET"}), \
+             mock.patch.object(scan.requests, "get", return_value=failing), \
+             mock.patch("sys.stderr", new_callable=io.StringIO) as stderr:
+            _, status = scan.fetch_adzuna_all()
+        dumped = json.dumps(scan.asdict(status)) + stderr.getvalue()
+        self.assertNotIn("KEY-SECRET", dumped)
+        self.assertNotIn("ID-SECRET", dumped)
+        self.assertIn("app_key=***", status.http_error)
+        self.assertEqual(scan.safe_error("x?api_key=abc&page=2"), "x?api_key=***&page=2")
+
     def test_france_travail_auth_failure_never_leaks_secret(self):
         with mock.patch.dict(os.environ, {"FT_CLIENT_ID": "id-secret-xyz",
                                           "FT_CLIENT_SECRET": "pass-secret-xyz"}), \
