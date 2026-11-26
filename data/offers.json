@@ -1,4 +1,58 @@
 {
+ "00483e2541b613c8": {
+  "id": "00483e2541b613c8",
+  "title": "Data Analyst Consultant Intern (H/F)",
+  "company": "fifty-five",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494645749",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.420865+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.420865+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "0318c15a65fecc23": {
+  "id": "0318c15a65fecc23",
+  "title": "STAGE - REPRISE/OPTIMISATION DE TRAITEMENT DE DONNÉES GÉOGRAPHIQUES DE GESTIONNAIRES ROUTIERS (F/H)",
+  "company": "Institut national de l'information géographique et forestière (IGN)",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=1174d94a062a9124",
+  "source": "Indeed",
+  "date": "2026-11-24",
+  "date_known": true,
+  "date_raw": "2026-11-24",
+  "sort_date": "2026-11-24T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.077976+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
  "0511ba1fbf1896b2": {
   "id": "0511ba1fbf1896b2",
   "title": "Stage – Assistant(e) chef de projet Data / BI (F/H)",
@@ -23,8 +77,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "0a650346d53593db": {
   "id": "0a650346d53593db",
@@ -50,7 +104,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "0aa206d4fc99fc63": {
+  "id": "0aa206d4fc99fc63",
+  "title": "Stage Ingénieur Data analytics & Dashboards H/F/X",
+  "company": "Hager",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479781406",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.053649+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.053649+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "0d2122867f068be8": {
@@ -77,7 +158,223 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "0effb59f8f68a475": {
+  "id": "0effb59f8f68a475",
+  "title": "Stagiaire Fin d'Études – Data Analyst / Intelligence Artificielle (H/F)",
+  "company": "Réseau DEF",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494661232",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.070663+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.070663+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "0f307ca9f8feb1f6": {
+  "id": "0f307ca9f8feb1f6",
+  "title": "Stage - Chef/Cheffe de projet Numérique Responsable",
+  "company": "Sopra Steria",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495283367",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.341501+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.341501+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "0fd2459ce1934a8d": {
+  "id": "0fd2459ce1934a8d",
+  "title": "Stage - Assistant Analytics Engineer - Horlogerie Joaillerie - H/F/X",
+  "company": "CHANEL",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494927573",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:22.967940+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.967940+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "10055881b29550a9": {
+  "id": "10055881b29550a9",
+  "title": "IT DATA - Stage (H/F)",
+  "company": "Mediterranean Shipping Company",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=0e792c532f180fa9",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.776792+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "10771e0ef048f846": {
+  "id": "10771e0ef048f846",
+  "title": "Stagiaire Chef(fe) de projet IA et automatisation",
+  "company": "WENES STAND",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494942251",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:28:34.819596+00:00",
+  "freshness_verified_at": "2026-11-26T15:28:34.819596+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "12a3e000e709abfb": {
+  "id": "12a3e000e709abfb",
+  "title": "STAGE - Product Program Manager - F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479225729",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.941081+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.941081+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "1607b5d160e9155e": {
+  "id": "1607b5d160e9155e",
+  "title": "Stage - Data Scientist - H/F/X - Janvier 2027",
+  "company": "Veepee",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493811047",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.075762+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.075762+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "1670914c348761fa": {
+  "id": "1670914c348761fa",
+  "title": "Stage : Développeur(se)  Oracle SQL & Pro*C",
+  "company": "CGI",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494676038",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:10.421833+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:10.421833+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "1683d66b92e11820": {
@@ -104,8 +401,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "176df852f89b3cd3": {
   "id": "176df852f89b3cd3",
@@ -131,7 +428,88 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "1809277b9d9b6c7d": {
+  "id": "1809277b9d9b6c7d",
+  "title": "Stagiaire – Chargé de projets Solutions IA & Data H/F",
+  "company": "Groupama",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=8dd9df565e31fda8",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.997918+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "184b224ebf1198a8": {
+  "id": "184b224ebf1198a8",
+  "title": "Stage - Business Data Analyst (x/f/m) - janvier 2027",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=db24ef7adc937f04",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.759065+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "18673aae54480d63": {
+  "id": "18673aae54480d63",
+  "title": "Stage - Data Analyst (H/F)",
+  "company": "Safran.AI (ex Preligens)",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495237001",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.072780+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.072780+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 13
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "1a076242e3976396": {
@@ -158,7 +536,169 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "1a5ca428b5097dc7": {
+  "id": "1a5ca428b5097dc7",
+  "title": "Ingénieur(e) Informatique(H/F) - Stage",
+  "company": "Aumovio",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=fbfc57eb557b55e1",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.089732+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "1ab6bf6902942c55": {
+  "id": "1ab6bf6902942c55",
+  "title": "Stagiaire Projets Intelligence Artificielle (H/F)",
+  "company": "Mercedes-Benz Group",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=196f2014c5e62860",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.240042+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "1ca217346e7ddd2b": {
+  "id": "1ca217346e7ddd2b",
+  "title": "STAGE – Chaines de Pensées et Agents pour assistant IA",
+  "company": "Collins Aerospace",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479046331",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:10.412392+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:10.412392+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "1e227a5321b23f1a": {
+  "id": "1e227a5321b23f1a",
+  "title": "Stage IA & Data - Développement Multi-Agents (F/H)",
+  "company": "Groupe SII",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487007748",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.029019+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.029019+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "1f119c9a9e3515e7": {
+  "id": "1f119c9a9e3515e7",
+  "title": "Data Science - Bac+5 - Stage (H/F)",
+  "company": "Mobilize Financial Services",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495023209",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.076158+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.076158+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "2111583ca64cec29": {
+  "id": "2111583ca64cec29",
+  "title": "STAGE - Qualité et structuration des données radar des IA embarquées - F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487039213",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:22.895937+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.895937+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "23d519d2c6a13869": {
@@ -185,7 +725,61 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "23e677289366b6f5": {
+  "id": "23e677289366b6f5",
+  "title": "Développeuse / Développeur logiciel PLM - Stage",
+  "company": "Capgemini",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=7b3620a66990243b",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.485152+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "2526b22ff1f50539": {
+  "id": "2526b22ff1f50539",
+  "title": "Alternance Stage IA / Low-code",
+  "company": "Groupe ISB",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495514007",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:57.842614+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:57.842614+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "25481e0f8ce3cbf6": {
@@ -212,7 +806,142 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "25bfbb072982c3bb": {
+  "id": "25bfbb072982c3bb",
+  "title": "Data Analyst & Quality - Internship (H/F)",
+  "company": "Air Liquide Healthcare",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487298685",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.261013+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.261013+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "262655e38213b7cf": {
+  "id": "262655e38213b7cf",
+  "title": "STAGE - Modélisation PSS assistée par IA pour la vérification SoC F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494696098",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:10.427952+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:10.427952+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "266a7ad23997b6a3": {
+  "id": "266a7ad23997b6a3",
+  "title": "Stagiaire IA & Ops (H/F)",
+  "company": "Climb",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494999719",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:27:53.183615+00:00",
+  "freshness_verified_at": "2026-11-26T15:27:53.183615+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "269f0b62e4121717": {
+  "id": "269f0b62e4121717",
+  "title": "STAGE - Ingénieur Développement et IA - Experience Core (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479516042",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:29:08.438849+00:00",
+  "freshness_verified_at": "2026-11-26T15:29:08.438849+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "277e9f958a8758d0": {
+  "id": "277e9f958a8758d0",
+  "title": "STAGE - Développement IA agentique pour assister les projets dans la spécifications des logiciels F/H",
+  "company": "EDF",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495259293",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.064883+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.064883+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "292af93783af9e77": {
@@ -239,8 +968,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "2a0b69086ef65698": {
   "id": "2a0b69086ef65698",
@@ -266,8 +995,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "2a34a03bc710e801": {
   "id": "2a34a03bc710e801",
@@ -293,7 +1022,88 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "2a692e2d507e6d4f": {
+  "id": "2a692e2d507e6d4f",
+  "title": "STAGE – INGÉNIEUR CYBERSÉCURITÉ & INTELLIGENCE ARTIFICIELLE – F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479081034",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.877185+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.877185+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "2aab1c73a19a2685": {
+  "id": "2aab1c73a19a2685",
+  "title": "STAGE - Utilisation d'agents IA pour automatiser des calculs Monte Carlo H/F",
+  "company": "CEA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4469453710",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:00.411775+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:00.411775+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "2e432684347f9880": {
+  "id": "2e432684347f9880",
+  "title": "STAGE IA - Cas d'usage, prompts et preuves de concept (H/F)",
+  "company": "Crédit Agricole Toulouse 31",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4486537549",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.666151+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.666151+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "2f0e46d05e366a73": {
@@ -320,8 +1130,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "2f76028925360881": {
   "id": "2f76028925360881",
@@ -347,8 +1157,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "2ff9ccdd60a245be": {
   "id": "2ff9ccdd60a245be",
@@ -374,8 +1184,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "31fed8988a92f4f1": {
   "id": "31fed8988a92f4f1",
@@ -401,8 +1211,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "32cd776a06454ee0": {
   "id": "32cd776a06454ee0",
@@ -428,7 +1238,88 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "38b9447818cc4393": {
+  "id": "38b9447818cc4393",
+  "title": "Stage – Ingénieur IA Générative et Automatisation des Processus d'Ingénierie F/H",
+  "company": "Framatome",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494943599",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.121380+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.121380+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "38de456e18da69ec": {
+  "id": "38de456e18da69ec",
+  "title": "Stage – Data Analyst Workforce Insight - Deploiement (F/H/NB)",
+  "company": "Disney Parks, Experiences and Products",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d6442d3a56919097",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.937246+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "3916476f708692ed": {
+  "id": "3916476f708692ed",
+  "title": "Intern - Data Scientist",
+  "company": "ENGIE - International Supply & Energy Management",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495507018",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.194336+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.194336+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "3a73df6dc9299aa0": {
@@ -455,7 +1346,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "3d19b6cf6a74926d": {
+  "id": "3d19b6cf6a74926d",
+  "title": "Stage de Recherche : IA Agentique & Compression de Modèles Edge AI (F/H)",
+  "company": "Valeo",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=1223888cb045d13d",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.347804+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 10
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "3fd1599389013047": {
@@ -482,8 +1400,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "40bde8ccdc4bbe74": {
   "id": "40bde8ccdc4bbe74",
@@ -509,8 +1427,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "4104295f30df2677": {
   "id": "4104295f30df2677",
@@ -536,7 +1454,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "412723af6acf141e": {
+  "id": "412723af6acf141e",
+  "title": "STAGE - Ingénieur en Intelligence Artificielle (H/F)",
+  "company": "OPmobility",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=c617796b72990f36",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.400042+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "41c3de6eba393fd9": {
@@ -563,7 +1508,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "41e88744f1c37e0f": {
+  "id": "41e88744f1c37e0f",
+  "title": "Data Science Intern - Product & Engineering",
+  "company": "HawkCell",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=db5a259f9bd4b467",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:42.802982+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "446806987bcdd458": {
+  "id": "446806987bcdd458",
+  "title": "Stage – Ingénierie industrielle et solutions d’intelligence artificielle associées aux processus industriels (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487254717",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.271824+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.271824+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "456530bc22a10ba0": {
@@ -590,7 +1589,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "46eb8f5cf05d1262": {
+  "id": "46eb8f5cf05d1262",
+  "title": "Data Science - Bac+5 - Stage (H/F)",
+  "company": "Renault Group",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=6647575acbd6f64c",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.810089+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "472d7385b789f9e4": {
@@ -617,8 +1643,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "47482395840848d4": {
   "id": "47482395840848d4",
@@ -644,7 +1670,88 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "478c964e2b580f7d": {
+  "id": "478c964e2b580f7d",
+  "title": "Stage Ingénieur System, Connectivity & AI (F/H)",
+  "company": "Valeo",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=0a0b5a24ab87e626",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:49.889629+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "47912586fb5c2709": {
+  "id": "47912586fb5c2709",
+  "title": "STAGE - Sécurisation et monitoring des usages de l’IA générative – H/F",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494685519",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.831819+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.831819+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "4c4a7a4499a3bbb3": {
+  "id": "4c4a7a4499a3bbb3",
+  "title": "Stage - Détermination à l'aide de l'IA de paramètres intervenant dans le calcul de plasticité F/H",
+  "company": "Framatome",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4460275593",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.259165+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.259165+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "4d76ddffa7fcbfff": {
@@ -671,7 +1778,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "4e8e724aed515e28": {
+  "id": "4e8e724aed515e28",
+  "title": "Stage - IA et management opérationnel en ingénierie - Industrie - Le Plessis Robinson",
+  "company": "CS GROUP",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494657839",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:10.409457+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:10.409457+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "502f39abce75832c": {
@@ -698,8 +1832,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "5340a0a3b996a352": {
   "id": "5340a0a3b996a352",
@@ -725,8 +1859,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "54b981b44736d512": {
   "id": "54b981b44736d512",
@@ -752,8 +1886,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "55d503cd3f37efa3": {
   "id": "55d503cd3f37efa3",
@@ -779,8 +1913,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "5699ee90da5e8eea": {
   "id": "5699ee90da5e8eea",
@@ -806,7 +1940,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "56d98ae487aee462": {
+  "id": "56d98ae487aee462",
+  "title": "Stage chef de projet données / ingénieur données (H/F)",
+  "company": "Métropole de Lyon",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=a6f596a614b3f31e",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.189673+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "56f67bcdc01bff85": {
+  "id": "56f67bcdc01bff85",
+  "title": "Stagiaire Projets Intelligence Artificielle (H/F)",
+  "company": "Mercedes-Benz France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495291145",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.270199+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.270199+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "572f2d329f1a5da8": {
@@ -833,7 +2021,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "5817eed8df159168": {
+  "id": "5817eed8df159168",
+  "title": "Stage Innovation : Ingénieur Génie logiciel / Fullstack",
+  "company": "ALTEN",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495022867",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.445836+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.445836+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "59c9016655a5830e": {
@@ -860,7 +2075,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "5a51d07a5e04780b": {
+  "id": "5a51d07a5e04780b",
+  "title": "STAGE - Benchmark et évaluation des modèles d'IA générative pour les Géosciences H/F",
+  "company": "TotalEnergies",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487247846",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:57.844441+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:57.844441+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "5be76329f66059da": {
@@ -887,8 +2129,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "5c356789324bf2f5": {
   "id": "5c356789324bf2f5",
@@ -914,8 +2156,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "5f9570d1adf8a3fb": {
   "id": "5f9570d1adf8a3fb",
@@ -941,8 +2183,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "5fbec1246eb56ed3": {
   "id": "5fbec1246eb56ed3",
@@ -968,8 +2210,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "5fed0c8e010a41b2": {
   "id": "5fed0c8e010a41b2",
@@ -995,7 +2237,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "630f1c5b91649041": {
+  "id": "630f1c5b91649041",
+  "title": "Stage – Technicien – Data Analyst et Amélioration Continue – (H/F)",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487021917",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:00.392505+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:00.392505+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "6444fedfbf7cbf0f": {
+  "id": "6444fedfbf7cbf0f",
+  "title": "STAGE DATA ENGINEER - MODERNISATION DE PIPELINE DATA SQL SUR GCP (DATAFORM) F/H",
+  "company": "Air France",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=772b7c3a99f755bc",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:42.757395+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 13
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "6449ebfc05f39db1": {
@@ -1022,8 +2318,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "664c4e558554d3d4": {
   "id": "664c4e558554d3d4",
@@ -1049,8 +2345,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "670d90e3bca60015": {
   "id": "670d90e3bca60015",
@@ -1076,7 +2372,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "67f176d4868bbb96": {
+  "id": "67f176d4868bbb96",
+  "title": "Stage Data Scientist F/H – Certification d'utilisateurs du réseau mobile F/H",
+  "company": "Orange",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=a1e71899dcddc629",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:45.032647+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "697db45211ffcc89": {
+  "id": "697db45211ffcc89",
+  "title": "Stagiaire PFE - Gateway IA avec modules DLP  (H/F)",
+  "company": "Banque Centrale Populaire - BCP",
+  "location": "Maroc",
+  "url": "https://www.linkedin.com/jobs/view/4495278524",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:21.813257+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:21.813257+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "6ba748395cc7bac3": {
@@ -1103,8 +2453,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "6bf4fc6b31d5e6b7": {
   "id": "6bf4fc6b31d5e6b7",
@@ -1130,7 +2480,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:21:15+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": false
  },
  "6ddf51a63f43097c": {
@@ -1157,8 +2507,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "6de08dfd45d7962f": {
   "id": "6de08dfd45d7962f",
@@ -1184,8 +2534,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "6eef119431d47b47": {
   "id": "6eef119431d47b47",
@@ -1211,7 +2561,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "6fa66d6d504ffdd4": {
+  "id": "6fa66d6d504ffdd4",
+  "title": "STAGE - Modélisation PSS assistée par IA pour la vérification SoC F/H",
+  "company": "STMicroelectronics",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=c2f8859b0779b3aa",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.462920+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "7019fb4350a4c253": {
+  "id": "7019fb4350a4c253",
+  "title": "Stagiaire Ingénieur(e) IA (F/H/D)",
+  "company": "Reply",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493438304",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:22.913299+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.913299+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "70a81e1909adb298": {
@@ -1238,8 +2642,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "70acb3ab67c1228b": {
   "id": "70acb3ab67c1228b",
@@ -1265,7 +2669,142 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:34:12+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "721d76d686a7b065": {
+  "id": "721d76d686a7b065",
+  "title": "Stage 2027 - Data Scientist / Data Engineer H/F",
+  "company": "Crédit Agricole du Nord Est",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495015244",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:22.861728+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.861728+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 11
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "7509bca4674ef3bf": {
+  "id": "7509bca4674ef3bf",
+  "title": "Stage Intelligence Artificielle : Etude de solutions d'IA de Confiance  F/H",
+  "company": "MBDA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495290130",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:28:34.813849+00:00",
+  "freshness_verified_at": "2026-11-26T15:28:34.813849+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "751636cbfead4eb8": {
+  "id": "751636cbfead4eb8",
+  "title": "STAGE - Ingénieur Solutions IA Système Satcom - H/F",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4478794634",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:57.847021+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:57.847021+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "754dbcaf600c4d03": {
+  "id": "754dbcaf600c4d03",
+  "title": "STAGE - Intelligence Artificielle et NLP – Automatisation des Processus Techniques et Maintenance Prédictive F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4478581112",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:27:53.197543+00:00",
+  "freshness_verified_at": "2026-11-26T15:27:53.197543+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "757a0ebd62f8173a": {
+  "id": "757a0ebd62f8173a",
+  "title": "Stagiaire - Émulateur de Charges pour éoliennes (h/f)",
+  "company": "Siemens Gamesa",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4469944031",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.274591+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.274591+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "75a72e830fd1e4cc": {
@@ -1292,7 +2831,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "763cc11f939b990e": {
+  "id": "763cc11f939b990e",
+  "title": "Stage ingénieur(e) maintenance - F/H",
+  "company": "Groupe Sector Canada Inc.",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=b807cfe57bbb900f",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.279638+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "76482b7353dc0478": {
+  "id": "76482b7353dc0478",
+  "title": "STAGE - DATA SCIENCE",
+  "company": "Hutchinson",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495503624",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.258832+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.258832+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "76cfad994c83f44b": {
@@ -1319,8 +2912,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "777d4d53a8cf91e1": {
   "id": "777d4d53a8cf91e1",
@@ -1346,8 +2939,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "7a36fc3e16e016ec": {
   "id": "7a36fc3e16e016ec",
@@ -1373,8 +2966,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:21:15+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": false
+ },
+ "7ba7be2d19208449": {
+  "id": "7ba7be2d19208449",
+  "title": "Stage - IA et management opérationnel en ingénierie - Industrie - Le Plessis Robinson",
+  "company": "Groupe Talents Handicap",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=dfef356046e857e4",
+  "source": "Indeed",
+  "date": "2026-11-23",
+  "date_known": true,
+  "date_raw": "2026-11-23",
+  "sort_date": "2026-11-23T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.538533+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
  },
  "7bea62af6f0d2dba": {
   "id": "7bea62af6f0d2dba",
@@ -1400,7 +3020,88 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "7fa1bbbde5f97fa0": {
+  "id": "7fa1bbbde5f97fa0",
+  "title": "Stage - P&C Capital Management",
+  "company": "AXA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494653959",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.326323+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.326323+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "80f2a71c60869f84": {
+  "id": "80f2a71c60869f84",
+  "title": "STAGE - Assistant géomarketing - Solutions IA & Automatisation (H/F)",
+  "company": "Publicis Media",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494960722",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.077444+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.077444+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "816a1648680152d5": {
+  "id": "816a1648680152d5",
+  "title": "Stage PFE – Business Analyst – Data Analytics & IA",
+  "company": "Societe Generale",
+  "location": "Maroc",
+  "url": "https://www.linkedin.com/jobs/view/4494668633",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:21.766106+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:21.766106+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "83e86020b4abfee1": {
@@ -1427,7 +3128,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "84452f1e6218891a": {
+  "id": "84452f1e6218891a",
+  "title": "Stage – Ingénieur IA Générative et Automatisation des Processus d'Ingénierie F/H",
+  "company": "Groupe Talents Handicap",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=09411b999e3f07aa",
+  "source": "Indeed",
+  "date": "2026-11-23",
+  "date_known": true,
+  "date_raw": "2026-11-23",
+  "sort_date": "2026-11-23T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.961720+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "858a8f49130c3fc3": {
@@ -1454,7 +3182,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "86c5a08fa34e95b3": {
+  "id": "86c5a08fa34e95b3",
+  "title": "AI Engineer Intern (2027)",
+  "company": "Qantev",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493491941",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.513287+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.513287+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 11
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "8724831b9255132e": {
@@ -1481,7 +3236,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "880aef3f520cdc16": {
+  "id": "880aef3f520cdc16",
+  "title": "Stage Leader Performance / Data Analyst H/F",
+  "company": "Leroy Merlin",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=f6e1326cddad8305",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.905147+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "8818d6406213926b": {
@@ -1508,8 +3290,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "8b3b8eaa1cbb1024": {
   "id": "8b3b8eaa1cbb1024",
@@ -1535,21 +3317,21 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
- "8b59c1e96e3eabef": {
-  "id": "8b59c1e96e3eabef",
-  "title": "Growth Strategy Data Analyst - Intern (M/F/N)",
-  "company": "HelloFresh",
+ "8d2f64eabf267f1e": {
+  "id": "8d2f64eabf267f1e",
+  "title": "STAGE - Ingénieur Intelligence Artificielle – Analyse de la menace CYBER F/H",
+  "company": "Thales",
   "location": "France",
-  "url": "https://www.linkedin.com/jobs/view/4384325686",
+  "url": "https://www.linkedin.com/jobs/view/4479523100",
   "source": "LinkedIn",
   "date": "",
   "date_known": false,
   "date_raw": "",
-  "sort_date": "2026-11-25T02:55:18.939180+00:00",
-  "freshness_verified_at": "2026-11-25T03:28:44.715865+00:00",
+  "sort_date": "2026-11-26T15:22:56.081278+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.081278+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1559,10 +3341,10 @@
   "domain_scores": {
    "data_ia": 3
   },
-  "highlighted": false,
-  "first_seen": "2026-07-18T17:27:30+00:00",
-  "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "8dc2ca095bc3df22": {
@@ -1589,7 +3371,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "8e96327a7ad50aa3": {
+  "id": "8e96327a7ad50aa3",
+  "title": "STAGE - Ingénieur Pilotage de logiciels SPICE par Agent IA - F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487521604",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.256978+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.256978+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "900bdf2dee8feaa9": {
@@ -1616,7 +3425,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "9082974986c93542": {
+  "id": "9082974986c93542",
+  "title": "Stage - 6 mois - Data Analyst F/H - NIM",
+  "company": "Natixis",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=80d7650bbfb48a58",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.915274+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "90c27a9ee0223d33": {
@@ -1643,7 +3479,88 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "930883baeb5fa819": {
+  "id": "930883baeb5fa819",
+  "title": "Stagiaire Ingénieur Informatique IA / Développement (H/F)",
+  "company": "Boccard",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494672446",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:00.406564+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:00.406564+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "936a4dc2800f0ee7": {
+  "id": "936a4dc2800f0ee7",
+  "title": "STAGE - Ingénieur IA - Experience Core (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479297892",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.069792+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.069792+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "940d32db4758a5cb": {
+  "id": "940d32db4758a5cb",
+  "title": "Data analyst (F/H) - stage",
+  "company": "Assurances Crédit Mutuel",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4486374515",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.376228+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.376228+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "94e9c01d8ab0827b": {
@@ -1670,7 +3587,88 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "94f65bb22722be3e": {
+  "id": "94f65bb22722be3e",
+  "title": "Data Scientist/Analyst - Bac +5 - Stage (H/F)",
+  "company": "Mobilize Financial Services",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495018348",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.255073+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.255073+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "95f9f1dc689ae288": {
+  "id": "95f9f1dc689ae288",
+  "title": "STAGE - Ingénieur Cloud DevOps & IA Agentique  F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487038188",
+  "source": "LinkedIn",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.842367+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "961c17e4fe8a2e19": {
+  "id": "961c17e4fe8a2e19",
+  "title": "Stage - Business Data Analyst (x/f/m) - janvier 2027",
+  "company": "Doctolib",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495291963",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.251303+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.251303+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "96e201a3acac5332": {
@@ -1697,7 +3695,61 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "96e994367cdb8ba9": {
+  "id": "96e994367cdb8ba9",
+  "title": "Stage Chargé/Chargée de Déploiement IA H/F",
+  "company": "Mexens ex.Technique Solaire",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494962537",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:27:53.190704+00:00",
+  "freshness_verified_at": "2026-11-26T15:27:53.190704+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "9764e353419f23d5": {
+  "id": "9764e353419f23d5",
+  "title": "STAGE - Projet Assistant IA – H/F",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479063886",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:27:53.198659+00:00",
+  "freshness_verified_at": "2026-11-26T15:27:53.198659+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "97b978995bbe683c": {
@@ -1724,7 +3776,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "995c635a86cf192d": {
+  "id": "995c635a86cf192d",
+  "title": "6-MONTH INTERNSHIP - Starting January 2027 – Data – Master's ½ - €1700/month",
+  "company": "L'Oréal",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494947155",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.130573+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.130573+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "9a99fe168b5e00c3": {
@@ -1751,8 +3830,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "9c5f3472e3db4664": {
   "id": "9c5f3472e3db4664",
@@ -1778,8 +3857,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "9cb19e35e5476b00": {
   "id": "9cb19e35e5476b00",
@@ -1805,8 +3884,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "9da2f24f6b1c56ad": {
   "id": "9da2f24f6b1c56ad",
@@ -1832,8 +3911,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "9eb0104c02d7e11a": {
   "id": "9eb0104c02d7e11a",
@@ -1859,8 +3938,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "9ee331d869340049": {
   "id": "9ee331d869340049",
@@ -1886,8 +3965,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "9ef1522680fdaa3e": {
   "id": "9ef1522680fdaa3e",
@@ -1913,7 +3992,88 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "9f79f6218c054a75": {
+  "id": "9f79f6218c054a75",
+  "title": "STAGE - Ingénieur Data & IA - R&D Biocarburants durables H/F",
+  "company": "TotalEnergies",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487249690",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:22.923437+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.923437+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "9faa595e51bbd866": {
+  "id": "9faa595e51bbd866",
+  "title": "STAGE PFE - IA Ingénieur H/F",
+  "company": "Groupe Philippe Marraud",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494682505",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.265877+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.265877+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "a22f485275a7e3ce": {
+  "id": "a22f485275a7e3ce",
+  "title": "Stage Chargé/Chargée de Déploiement IA H/F",
+  "company": "Mexens ex.Technique Solaire",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494953813",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:27:53.199026+00:00",
+  "freshness_verified_at": "2026-11-26T15:27:53.199026+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "a56894a6201cc126": {
@@ -1940,8 +4100,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "a6063f4e2b6c38ea": {
   "id": "a6063f4e2b6c38ea",
@@ -1967,7 +4127,196 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "aa8d6da43ccf7503": {
+  "id": "aa8d6da43ccf7503",
+  "title": "STAGE Data Analyst H/F",
+  "company": "Air Liquide",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=603265a8ceab16f7",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.785766+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 12
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "aa9cf6095e2dcd2c": {
+  "id": "aa9cf6095e2dcd2c",
+  "title": "Stage Bac+5 - IA et Machine Learning H/F",
+  "company": "CEA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4478110315",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.391807+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.391807+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 10
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "ab320b0f220ecacc": {
+  "id": "ab320b0f220ecacc",
+  "title": "Stage Chargé/Chargée de Déploiement IA H/F",
+  "company": "Mexens ex.Technique Solaire",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494916954",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.070224+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.070224+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "ad0fbd2f50cefbd5": {
+  "id": "ad0fbd2f50cefbd5",
+  "title": "Stage – Ingénieur IA Générative et Automatisation des Processus d'Ingénierie F/H",
+  "company": "EDF",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495263123",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:22.939386+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.939386+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "ad1880f7c757debf": {
+  "id": "ad1880f7c757debf",
+  "title": "Stage 6 mois – Vision par ordinateur / Détection d'objets IA",
+  "company": "CERBAIR",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495228360",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:29:08.432521+00:00",
+  "freshness_verified_at": "2026-11-26T15:29:08.432521+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "b1094811e9c75265": {
+  "id": "b1094811e9c75265",
+  "title": "STAGE PFE - IA Ingénieur H/F",
+  "company": "Groupe Marraud",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=0c85aa5debb5aa9d",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.311725+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "b165e20a19484467": {
+  "id": "b165e20a19484467",
+  "title": "OW - Stage Développement de solutions IA pour l'automatisation des réseaux F/H",
+  "company": "Orange",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=0b374d5d83e0d13f",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:46.258658+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "b493059922884f8b": {
@@ -1994,7 +4343,61 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "b6347ae8d86aeb18": {
+  "id": "b6347ae8d86aeb18",
+  "title": "Stage ingénieur Conception de solutions IA",
+  "company": "ENGIE",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=7b9e2c89b7b96eb8",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.115140+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "b86573ac3e64a83f": {
+  "id": "b86573ac3e64a83f",
+  "title": "STAGE - Génération par IA de composants RF passifs F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487525599",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.859860+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.859860+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "b8e5d6630b570171": {
@@ -2021,8 +4424,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "b95d6322667d8e38": {
   "id": "b95d6322667d8e38",
@@ -2048,8 +4451,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "bcf1d24c20d2dd80": {
   "id": "bcf1d24c20d2dd80",
@@ -2075,7 +4478,115 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "c1bbcd1d71b349a7": {
+  "id": "c1bbcd1d71b349a7",
+  "title": "STAGE - Ingénieur IA et Performance Opérationnelle - F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479081032",
+  "source": "LinkedIn",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:22.825432+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "c4130c9a8fd1e9ce": {
+  "id": "c4130c9a8fd1e9ce",
+  "title": "Stage - P&C Capital Management",
+  "company": "AXA en France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493461822",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.259641+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.259641+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "c44a0493eeb70a22": {
+  "id": "c44a0493eeb70a22",
+  "title": "Stage de fin d’études : Ingénieur Data Scientist (H/F)",
+  "company": "Saint-Gobain",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=a808d957717d84eb",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:44.880534+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "c4ee3443da974801": {
+  "id": "c4ee3443da974801",
+  "title": "Data analyst Customer Success Stage H/F",
+  "company": "PowerUp",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495266795",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.216985+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.216985+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "c50fa84224fc6e12": {
@@ -2102,7 +4613,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "c65086f7e85c7edb": {
+  "id": "c65086f7e85c7edb",
+  "title": "Intern - Data Scientist",
+  "company": "ENGIE",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=6010b9668e5430ea",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:48.107546+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "c771930abcdba37b": {
@@ -2129,7 +4667,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "c8b74bdb2ba193d2": {
+  "id": "c8b74bdb2ba193d2",
+  "title": "Stage - Ingénieur en machine learning / métrologie H/F",
+  "company": "CEA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494933332",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.253082+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.253082+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "ca0ad584169319b9": {
@@ -2156,8 +4721,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "ced34153722cb767": {
   "id": "ced34153722cb767",
@@ -2183,7 +4748,115 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "d1efbc92186f7dad": {
+  "id": "d1efbc92186f7dad",
+  "title": "AI Transformation Intern (January 2027)",
+  "company": "ODDO BHF",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495021005",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:10.415322+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:10.415322+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "d3de9d6591118ac5": {
+  "id": "d3de9d6591118ac5",
+  "title": "Stage IA de confiance - Abstraction bilinéaires pour les RNN et Transformers -Saclay-H/F",
+  "company": "CEA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4469007365",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.925029+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.925029+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "d9e66443e049deea": {
+  "id": "d9e66443e049deea",
+  "title": "Stage 2027 - Data Scientist / Data Engineer H/F",
+  "company": "Crédit Agricole",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=ebdd3b50ebcced1a",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:42.792441+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 11
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "de508980ec684140": {
+  "id": "de508980ec684140",
+  "title": "STAGE – Génération automatique des interfaces systèmes de combat à l'aide de l'IA H/F",
+  "company": "NAVAL GROUP",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4477073654",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.270676+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.270676+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "deff109ebe1a07f3": {
@@ -2210,8 +4883,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "e030ca1fe3ff77c4": {
   "id": "e030ca1fe3ff77c4",
@@ -2237,8 +4910,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "e0c0591b849d5c6a": {
   "id": "e0c0591b849d5c6a",
@@ -2264,8 +4937,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "e0f800bebcf04f74": {
   "id": "e0f800bebcf04f74",
@@ -2291,7 +4964,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "e2846770735c3b1a": {
+  "id": "e2846770735c3b1a",
+  "title": "STAGE - Ingénieur déploiement outil IA - F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479064710",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:27:53.199527+00:00",
+  "freshness_verified_at": "2026-11-26T15:27:53.199527+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "e28fd8e6bfc61ddd": {
@@ -2318,7 +5018,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "e298ef1ae9a122a2": {
+  "id": "e298ef1ae9a122a2",
+  "title": "STAGE – Service de base de connaissances pour systèmes d’IA – F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495241290",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:26:00.410650+00:00",
+  "freshness_verified_at": "2026-11-26T15:26:00.410650+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "e2c41a6592bf7780": {
@@ -2345,8 +5072,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "e3c12c36af8ee150": {
   "id": "e3c12c36af8ee150",
@@ -2372,8 +5099,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "e608cfbe9c7c3a4c": {
   "id": "e608cfbe9c7c3a4c",
@@ -2399,8 +5126,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "eacbadd22886abdf": {
   "id": "eacbadd22886abdf",
@@ -2426,8 +5153,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "ebedabd30fd944ab": {
   "id": "ebedabd30fd944ab",
@@ -2453,7 +5180,61 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "ec82abe2c9bffc3c": {
+  "id": "ec82abe2c9bffc3c",
+  "title": "STAGIAIRE INGENIEUR(E) METHODOLOGIES SIMULATION MECANISMES ET IA H/F",
+  "company": "Faurecia",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493920410",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:29:08.443099+00:00",
+  "freshness_verified_at": "2026-11-26T15:29:08.443099+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "ee0ea13c855e1db3": {
+  "id": "ee0ea13c855e1db3",
+  "title": "STAGE - Modélisation PSS assistée par IA pour la vérification SoC F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494692241",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:30:10.426340+00:00",
+  "freshness_verified_at": "2026-11-26T15:30:10.426340+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "eeb61bf9d8c477c7": {
@@ -2480,8 +5261,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "ef32e80dbad29a3f": {
   "id": "ef32e80dbad29a3f",
@@ -2507,7 +5288,61 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "f0d4ce913ed56c65": {
+  "id": "f0d4ce913ed56c65",
+  "title": "Stage - Ingénieur IA & Développement Logiciel RADAR F/H",
+  "company": "Thales",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=4c23e718abd29279",
+  "source": "Indeed",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:50.580641+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "f183c77e55642447": {
+  "id": "f183c77e55642447",
+  "title": "Mastère IA & Data (H/F)",
+  "company": "Entreprise non précisée",
+  "location": "59 - Lille",
+  "url": "https://candidat.francetravail.fr/offres/recherche/detail/9220113",
+  "source": "France Travail",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26T14:33:29.434Z",
+  "sort_date": "2026-11-26T14:33:29.434000+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:43.485620+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "f18d109ac937e8f7": {
@@ -2534,8 +5369,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "f1a6a214e40fd460": {
   "id": "f1a6a214e40fd460",
@@ -2561,7 +5396,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "f23fc0070711a198": {
+  "id": "f23fc0070711a198",
+  "title": "AI Cloud DevOps Engineer (stage) - H/F",
+  "company": "Devoteam | AWS Partner",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494941400",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:56.068557+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:56.068557+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "f38d27701780ccb4": {
@@ -2588,7 +5450,34 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "f4f3a30109d4c0e0": {
+  "id": "f4f3a30109d4c0e0",
+  "title": "Machine Learning Engineer Intern",
+  "company": "Criteo",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4470404407",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:24:59.252360+00:00",
+  "freshness_verified_at": "2026-11-26T15:24:59.252360+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "f6153ec111112c9d": {
@@ -2615,8 +5504,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "f6b843d427c9a1c0": {
   "id": "f6b843d427c9a1c0",
@@ -2642,7 +5531,34 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "f6e15b3d21b9c85d": {
+  "id": "f6e15b3d21b9c85d",
+  "title": "Data Scientist/Analyst - Bac +5 - Stage (H/F)",
+  "company": "Renault Group",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=da874b42cea9427b",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T15:19:43.591900+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "f71bb70cde71d396": {
@@ -2669,8 +5585,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "f822b50298094d41": {
   "id": "f822b50298094d41",
@@ -2696,7 +5612,88 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
+ },
+ "fa1cb69717dfda68": {
+  "id": "fa1cb69717dfda68",
+  "title": "STAGE – Data Analysis & Scientist - NETVIBES Operation (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4487018777",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.149647+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.149647+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "fa55227861e13d52": {
+  "id": "fa55227861e13d52",
+  "title": "Stage ingénieur Conception de solutions IA",
+  "company": "TRACTEBEL",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495296622",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.488160+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.488160+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": true
+ },
+ "fb61e135e4fabe8f": {
+  "id": "fb61e135e4fabe8f",
+  "title": "Stage - Operations, Data & Innovation H/F",
+  "company": "Prodigious Paris",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494948023",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T15:22:23.471749+00:00",
+  "freshness_verified_at": "2026-11-26T15:22:23.471749+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
   "active": true
  },
  "fd8ce16fdf55a99f": {
@@ -2723,8 +5720,8 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "ff4211b9c49633ba": {
   "id": "ff4211b9c49633ba",
@@ -2750,8 +5747,8 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  },
  "ff9c3245064c6495": {
   "id": "ff9c3245064c6495",
@@ -2777,7 +5774,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-25T03:34:12+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "active": false
  }
 }

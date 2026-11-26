@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-25T03:34:12+00:00",
- "scan_duration_s": 670.7,
+ "generated_at": "2026-11-26T15:32:00+00:00",
+ "scan_duration_s": 738.8,
  "active_domains": [
   "data_ia"
  ],
@@ -20,33 +20,33 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 738,
-   "accepted_count": 71,
-   "rejected_count": 667,
+   "raw_count": 711,
+   "accepted_count": 78,
+   "rejected_count": 633,
    "reject_reasons": {
-    "pas un stage": 101,
-    "aucun domaine": 402,
-    "doublon": 164
+    "aucun domaine": 409,
+    "pas un stage": 86,
+    "doublon": 138
    },
-   "unknown_date_count": 71,
+   "unknown_date_count": 76,
    "too_old_count": 0,
-   "duplicate_count": 164,
-   "pages_fetched": 33,
-   "duration_s": 565.4,
+   "duplicate_count": 138,
+   "pages_fetched": 32,
+   "duration_s": 628.5,
    "http_error": "",
    "note": "",
    "query_yield": {
     "stage data engineer": {
-     "raw": 79,
-     "accepted": 28
+     "raw": 71,
+     "accepted": 33
     },
     "stage data engineering PFE": {
      "raw": 70,
-     "accepted": 15
+     "accepted": 9
     },
     "stage big data": {
      "raw": 80,
-     "accepted": 8
+     "accepted": 12
     },
     "stage ETL": {
      "raw": 90,
@@ -54,44 +54,45 @@
     },
     "stage data analyst": {
      "raw": 90,
-     "accepted": 8
+     "accepted": 3
     },
     "stage business intelligence": {
-     "raw": 100,
-     "accepted": 1
+     "raw": 80,
+     "accepted": 6
     },
     "stage data scientist": {
      "raw": 70,
-     "accepted": 4
+     "accepted": 2
     },
     "stage machine learning": {
      "raw": 70,
-     "accepted": 1
+     "accepted": 3
     },
     "stage ingénieur données": {
-     "raw": 89,
-     "accepted": 2
+     "raw": 90,
+     "accepted": 6
     }
    },
-   "label": "71 offres"
+   "label": "78 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "success",
-   "raw_count": 105,
+   "raw_count": 124,
    "accepted_count": 2,
-   "rejected_count": 103,
+   "rejected_count": 122,
    "reject_reasons": {
-    "aucun domaine": 61,
-    "pas un stage": 42
+    "pas un stage": 44,
+    "aucun domaine": 62,
+    "doublon": 16
    },
    "unknown_date_count": 2,
    "too_old_count": 0,
-   "duplicate_count": 0,
+   "duplicate_count": 16,
    "pages_fetched": 9,
-   "duration_s": 105.3,
+   "duration_s": 110.3,
    "http_error": "",
    "note": "",
    "query_yield": {
@@ -100,35 +101,35 @@
      "accepted": 2
     },
     "stage data engineering PFE": {
-     "raw": 5,
+     "raw": 7,
      "accepted": 0
     },
     "stage big data": {
-     "raw": 13,
-     "accepted": 0
-    },
-    "stage ETL": {
-     "raw": 15,
-     "accepted": 0
-    },
-    "stage data analyst": {
-     "raw": 16,
-     "accepted": 0
-    },
-    "stage business intelligence": {
-     "raw": 17,
-     "accepted": 0
-    },
-    "stage data scientist": {
-     "raw": 11,
-     "accepted": 0
-    },
-    "stage machine learning": {
      "raw": 10,
      "accepted": 0
     },
+    "stage ETL": {
+     "raw": 20,
+     "accepted": 0
+    },
+    "stage data analyst": {
+     "raw": 17,
+     "accepted": 0
+    },
+    "stage business intelligence": {
+     "raw": 20,
+     "accepted": 0
+    },
+    "stage data scientist": {
+     "raw": 14,
+     "accepted": 0
+    },
+    "stage machine learning": {
+     "raw": 15,
+     "accepted": 0
+    },
     "stage ingénieur données": {
-     "raw": 11,
+     "raw": 14,
      "accepted": 0
     }
    },
@@ -139,93 +140,91 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 166,
-   "accepted_count": 24,
-   "rejected_count": 142,
+   "raw_count": 160,
+   "accepted_count": 31,
+   "rejected_count": 129,
    "reject_reasons": {
-    "pas un stage": 25,
-    "aucun domaine": 94,
-    "doublon": 23
+    "aucun domaine": 55,
+    "pas un stage": 35,
+    "doublon": 39
    },
    "unknown_date_count": 0,
    "too_old_count": 0,
-   "duplicate_count": 23,
+   "duplicate_count": 39,
    "pages_fetched": 9,
-   "duration_s": 12.0,
+   "duration_s": 9.5,
    "http_error": "",
    "note": "",
    "query_yield": {
     "stage data engineer": {
-     "raw": 5,
-     "accepted": 1
+     "raw": 10,
+     "accepted": 3
     },
     "stage data engineering PFE": {
      "raw": 0,
      "accepted": 0
     },
     "stage big data": {
-     "raw": 2,
-     "accepted": 0
+     "raw": 3,
+     "accepted": 1
     },
     "stage ETL": {
-     "raw": 0,
-     "accepted": 0
+     "raw": 1,
+     "accepted": 1
     },
     "stage data analyst": {
-     "raw": 44,
+     "raw": 27,
      "accepted": 10
     },
     "stage business intelligence": {
-     "raw": 14,
-     "accepted": 4
+     "raw": 17,
+     "accepted": 7
     },
     "stage data scientist": {
-     "raw": 23,
-     "accepted": 0
+     "raw": 22,
+     "accepted": 1
     },
     "stage machine learning": {
-     "raw": 71,
-     "accepted": 9
+     "raw": 76,
+     "accepted": 8
     },
     "stage ingénieur données": {
-     "raw": 7,
+     "raw": 4,
      "accepted": 0
     }
    },
-   "label": "24 offres"
+   "label": "31 offres"
   },
   {
    "source": "Indeed",
    "region_id": "maroc",
    "region_label": "Maroc",
-   "status": "success",
-   "raw_count": 11,
-   "accepted_count": 4,
-   "rejected_count": 7,
+   "status": "empty",
+   "raw_count": 1,
+   "accepted_count": 0,
+   "rejected_count": 1,
    "reject_reasons": {
-    "pas un stage": 1,
-    "doublon": 4,
-    "aucun domaine": 2
+    "aucun domaine": 1
    },
    "unknown_date_count": 0,
    "too_old_count": 0,
-   "duplicate_count": 4,
+   "duplicate_count": 0,
    "pages_fetched": 9,
-   "duration_s": 3.8,
+   "duration_s": 2.4,
    "http_error": "",
    "note": "",
    "query_yield": {
     "stage data engineer": {
-     "raw": 1,
-     "accepted": 1
+     "raw": 0,
+     "accepted": 0
     },
     "stage data engineering PFE": {
-     "raw": 1,
+     "raw": 0,
      "accepted": 0
     },
     "stage big data": {
-     "raw": 1,
-     "accepted": 1
+     "raw": 0,
+     "accepted": 0
     },
     "stage ETL": {
      "raw": 0,
@@ -236,23 +235,23 @@
      "accepted": 0
     },
     "stage business intelligence": {
-     "raw": 3,
-     "accepted": 1
+     "raw": 0,
+     "accepted": 0
     },
     "stage data scientist": {
-     "raw": 1,
+     "raw": 0,
      "accepted": 0
     },
     "stage machine learning": {
-     "raw": 2,
-     "accepted": 1
+     "raw": 0,
+     "accepted": 0
     },
     "stage ingénieur données": {
-     "raw": 1,
+     "raw": 0,
      "accepted": 0
     }
    },
-   "label": "4 offres"
+   "label": "0 accepté / 1 reçus"
   },
   {
    "source": "APEC",
@@ -267,7 +266,7 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 0,
-   "duration_s": 0.5,
+   "duration_s": 1.8,
    "http_error": "HTTP 403",
    "note": "circuit breaker : requêtes restantes ignorées",
    "query_yield": {},
@@ -334,7 +333,7 @@
    "source": "The Muse",
    "region_id": "france",
    "region_label": "France",
-   "status": "error",
+   "status": "blocked",
    "raw_count": 0,
    "accepted_count": 0,
    "rejected_count": 0,
@@ -343,11 +342,11 @@
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 0,
-   "duration_s": 0.5,
-   "http_error": "404 Client Error: Not Found for url: https://www.themuse.com/api/public/jobs?page=0&location=France&level=Internship",
+   "duration_s": 0.1,
+   "http_error": "HTTP 403",
    "note": "",
    "query_yield": {},
-   "label": "Erreur — 404 Client Error: Not Found for url: https://www.themuse.com/api/public/jobs?page=0&locati"
+   "label": "Bloqué temporairement — HTTP 403"
   },
   {
    "source": "The Muse",
@@ -372,20 +371,22 @@
    "source": "France Travail",
    "region_id": "france",
    "region_label": "France",
-   "status": "disabled_missing_credentials",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
+   "status": "success",
+   "raw_count": 2,
+   "accepted_count": 1,
+   "rejected_count": 1,
+   "reject_reasons": {
+    "doublon": 1
+   },
    "unknown_date_count": 0,
    "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 0.0,
+   "duplicate_count": 1,
+   "pages_fetched": 9,
+   "duration_s": 6.0,
    "http_error": "",
-   "note": "secrets FT_CLIENT_ID / FT_CLIENT_SECRET absents",
+   "note": "",
    "query_yield": {},
-   "label": "Non configuré — identifiants manquants"
+   "label": "1 offre"
   },
   {
    "source": "France Travail",
