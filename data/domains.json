@@ -6,33 +6,65 @@
     "queries": [
       "stage data engineer",
       "stage data engineering PFE",
+      "stage big data",
+      "stage ETL",
+      "stage data analyst",
+      "stage business intelligence",
       "stage data scientist",
       "stage machine learning",
-      "stage business intelligence",
       "stage ingénieur données"
     ],
     "positive": [
       "data engineer",
       "data engineering",
-      "data scientist",
-      "data science",
-      "machine learning",
-      "deep learning",
-      "data analyst",
-      "data analyst finance",
-      "data analysis",
-      "data analytics",
-      "ia",
-      "data pipeline",
-      "data warehouse",
-      "data quality",
       "big data",
       "spark",
       "pyspark",
+      "kafka",
+      "hadoop",
       "etl",
-      "power bi",
+      "talend",
+      "airflow",
+      "data pipeline",
+      "data warehouse",
+      "modélisation de données",
       "business intelligence",
-      "intelligence artificielle"
+      "power bi",
+      "sql",
+      "data analyst",
+      "data scientist",
+      "machine learning",
+      "nlp",
+      "data science",
+      "data analysis",
+      "data analytics",
+      "data analyst finance",
+      "deep learning",
+      "data quality",
+      "intelligence artificielle",
+      "ia",
+      "ai",
+      "marketing analytics",
+      "ingénieur données",
+      "stage data",
+      "stagiaire data",
+      "data management",
+      "data governance",
+      "gouvernance des données",
+      "gouvernance de la donnée",
+      "analytics engineer",
+      "analyste données",
+      "analyste de données",
+      "gestion de données",
+      "gestion des données",
+      "ingénierie data",
+      "ingénierie des données",
+      "ai engineer",
+      "computer vision",
+      "data officer",
+      "data automation",
+      "mlops",
+      "llm"
     ],
     "negative": [
       "audit",
@@ -41,7 +73,6 @@
       "comptabilité",
       "ressources humaines",
       "rh",
-      "recrutement",
       "juridique",
       "juriste",
       "commercial",
@@ -59,8 +90,23 @@
       "devsecops",
       "supply chain",
       "logistique",
-      "achats"
+      "achats",
+      "marketing"
     ],
+    "negative_title_only": [
+      "recrutement",
+      "commerciale",
+      "seo",
+      "salesforce",
+      "full stack",
+      "fullstack",
+      "java",
+      "documentation"
+    ],
+    "negative_exceptions": [
+      "marketing analytics"
+    ],
+    "description_only_min_positives": 3,
     "enabled": true
   },
   "dev_web": {
@@ -109,7 +155,7 @@
       "business development",
       "comptabilité"
     ],
-    "enabled": true
+    "enabled": false
   },
   "devops_cloud": {
     "label": "DevOps / Cloud",
@@ -154,7 +200,7 @@
       "génie civil",
       "commercial cloud"
     ],
-    "enabled": true
+    "enabled": false
   },
   "cybersecurite": {
     "label": "Cybersécurité",
@@ -199,7 +245,7 @@
       "sécurité incendie",
       "gardiennage"
     ],
-    "enabled": true
+    "enabled": false
   },
   "reseaux_systemes": {
     "label": "Réseaux / Systèmes",
@@ -242,7 +288,7 @@
       "commerce télécom",
       "audit financier"
     ],
-    "enabled": true
+    "enabled": false
   },
   "product_management": {
     "label": "Product Management",
@@ -284,7 +330,7 @@
       "production industrielle",
       "achats"
     ],
-    "enabled": true
+    "enabled": false
   },
   "compta_gestion": {
     "label": "Comptabilité / Contrôle de gestion",
@@ -326,7 +372,7 @@
       "commercial",
       "développeur web"
     ],
-    "enabled": true
+    "enabled": false
   },
   "finance": {
     "label": "Finance / Marchés",
@@ -370,7 +416,7 @@
       "recouvrement",
       "facturation"
     ],
-    "enabled": true
+    "enabled": false
   },
   "audit": {
     "label": "Audit",
@@ -411,7 +457,7 @@
       "marketing",
       "développeur web"
     ],
-    "enabled": true
+    "enabled": false
   },
   "supply_chain": {
     "label": "Supply Chain / Logistique / Achats",
@@ -452,7 +498,7 @@
       "marketing",
       "juridique"
     ],
-    "enabled": true
+    "enabled": false
   },
   "commerce_bizdev": {
     "label": "Commerce / Business Development",
@@ -495,7 +541,7 @@
       "comptabilité",
       "juridique"
     ],
-    "enabled": true
+    "enabled": false
   },
   "marketing_communication": {
     "label": "Marketing / Communication",
@@ -533,7 +579,7 @@
       "product manager",
       "audit"
     ],
-    "enabled": true
+    "enabled": false
   },
   "rh": {
     "label": "Ressources Humaines",
@@ -576,7 +622,7 @@
       "customer success",
       "marketing produit"
     ],
-    "enabled": true
+    "enabled": false
   },
   "juridique": {
     "label": "Juridique / Droit des affaires",
@@ -617,7 +663,7 @@
       "développeur web",
       "marketing"
     ],
-    "enabled": true
+    "enabled": false
   },
   "electronique_embarque": {
     "label": "Électronique / Systèmes embarqués",
@@ -661,7 +707,7 @@
       "marketing digital",
       "réseaux sociaux"
     ],
-    "enabled": true
+    "enabled": false
   },
   "genie_civil_btp": {
     "label": "Génie civil / BTP",
@@ -703,7 +749,7 @@
       "finance",
       "comptabilité"
     ],
-    "enabled": true
+    "enabled": false
   },
   "mecanique_industriel": {
     "label": "Mécanique / Industriel",
@@ -748,6 +794,6 @@
       "juridique",
       "ressources humaines"
     ],
-    "enabled": true
+    "enabled": false
   }
 }

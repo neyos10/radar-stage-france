@@ -8,7 +8,7 @@
 
   let activeSource = "*";
   let activeDomain = "*";
-  let activeRegion = CONFIG.defaultRegion || "france";
+  let activeRegion = CONFIG.defaultRegion || "*";
   let activeStatus = "todo";
   let highlightOnly = false;
   let searchTerm = "";
@@ -112,7 +112,7 @@
     elements.activeFilters.textContent = parts.join(" · ");
 
     const defaultState = activeStatus === "todo" && activeSource === "*" &&
-      activeDomain === "*" && activeRegion === CONFIG.defaultRegion &&
+      activeDomain === "*" && activeRegion === (CONFIG.defaultRegion || "*") &&
       !highlightOnly && !searchTerm;
     elements.resetButton.disabled = defaultState;
   }
@@ -170,7 +170,7 @@
   function resetFilters() {
     activeSource = "*";
     activeDomain = "*";
-    activeRegion = CONFIG.defaultRegion || "france";
+    activeRegion = CONFIG.defaultRegion || "*";
     activeStatus = "todo";
     highlightOnly = false;
     searchTerm = "";

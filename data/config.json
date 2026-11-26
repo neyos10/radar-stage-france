@@ -1,6 +1,6 @@
 {
   "app_name": "Radar Stage France",
-  "tagline": "Veille automatique d'offres de stage multi-sources",
+  "tagline": "Veille automatique de stages PFE Data en France et au Maroc",
   "highlight_companies": [
     "capgemini",
     "sopra",
@@ -44,8 +44,12 @@
     "expleo",
     "akkodis",
     "davidson",
-    "leyton"
+    "leyton",
+    "sopra steria"
   ],
   "highlight_label": "Visa-friendly probable",
+  "highlight_regions": [
+    "france"
+  ],
   "days_window": 7
 }

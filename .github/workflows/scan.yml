@@ -1,12 +1,22 @@
 name: Radar Stage France
 
 on:
-  # Cron suspendu le 20/07/2026 : les runs programmés échouent depuis
-  # 19:19 UTC le 19/07 avec « recent account payments have failed or your
-  # spending limit needs to be increased » (billing GitHub, pas un bug du
-  # workflow — vérifier Settings → Billing & plans avant de réactiver).
-  # schedule:
-  #   - cron: "0 * * * *"    # toutes les heures, à l'heure pile
+  # Un seul scan (pas de profils fast/full : ils n'existent que sur la
+  # branche non fusionnée agent/fast-full-profiles), toutes les heures de
+  # 7 h à 22 h heure de Paris, à la minute 7 pour éviter la cohue de :00.
+  # Le cron GitHub est en UTC et ignore l'heure d'été :
+  #   - hiver (CET = UTC+1, fin octobre → fin mars) : "7 6-21 * * *"
+  #     → 7h07 … 22h07 à Paris, et à la même heure au Maroc (UTC+1 toute
+  #       l'année hors ramadan, où il passe à UTC+0)
+  #   - été (CEST = UTC+2, fin mars → fin octobre)  : "7 5-20 * * *"
+  #     → 7h07 … 22h07 à Paris, 6h07 … 21h07 au Maroc
+  # Valeur hiver retenue : la recherche du PFE (début 2027) se joue
+  # d'ici fin mars. À basculer sur la valeur été le 29/03/2027.
+  # Rappel billing : le dépôt est privé (2 000 min gratuites/mois). 16 runs
+  # × ~10 min ≈ 4 800 min/mois : prévoir de rendre le dépôt public ou
+  # d'espacer les runs, sinon les crons échouent comme en juillet 2026.
+  schedule:
+    - cron: "7 6-21 * * *"
   workflow_dispatch: {}       # bouton "Run workflow" pour lancer à la main
 
 permissions:
@@ -21,6 +31,9 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    # Garde-fou minutes : un run nominal dure ~10 min ; au-delà, quelque
+    # chose boucle ou un site ralentit volontairement le scraping.
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v7

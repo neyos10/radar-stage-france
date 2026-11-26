@@ -34,6 +34,16 @@ def offer(title="Stage Data Engineer", company="ACME", location="Paris",
     return scan.make_offer(title, company, location, url, source, date, **kw)
 
 
+# Le catalogue garde les 17 domaines (seul data_ia est actif). Les tests de
+# calibration multi-domaine s'exécutent contre le catalogue complet pour ne
+# perdre aucune couverture de la version v-multi-domaine.
+ALL_DOMAIN_IDS = list(scan.DOMAINS)
+
+
+def offer_all_domains(**kw):
+    return offer(active_ids=ALL_DOMAIN_IDS, **kw)
+
+
 def fake_response(payload=None, status=200, headers=None):
     response = mock.Mock(status_code=status, headers=headers or {})
     response.json.return_value = payload or {}
@@ -54,15 +64,118 @@ class TestCleanText(unittest.TestCase):
 
 
 class TestDomainCatalogAndScoring(unittest.TestCase):
-    def test_catalog_has_seventeen_enabled_domains(self):
+    def test_catalog_keeps_seventeen_domains_with_only_data_enabled(self):
+        # Usage perso : on désactive, on ne supprime pas.
         self.assertEqual(len(scan.DOMAINS), 17)
-        self.assertEqual(scan.enabled_domain_ids(), list(scan.DOMAINS))
+        with mock.patch.dict(os.environ, {"RADAR_DOMAINS": ""}):
+            self.assertEqual(scan.enabled_domain_ids(), ["data_ia"])
         for domain_id, domain in scan.DOMAINS.items():
+            self.assertEqual(domain["enabled"], domain_id == "data_ia")
             self.assertGreaterEqual(len(domain["queries"]), 4)
-            self.assertLessEqual(len(domain["queries"]), 6)
             self.assertGreaterEqual(len(domain["positive"]), 12)
-            self.assertLessEqual(len(domain["positive"]), 21)
             self.assertEqual(domain["priority"], 3 if domain_id == "data_ia" else 1)
+            if domain_id != "data_ia":
+                self.assertLessEqual(len(domain["queries"]), 6)
+                self.assertLessEqual(len(domain["positive"]), 21)
+
+    def test_data_domain_matches_personal_profile(self):
+        data = scan.DOMAINS["data_ia"]
+        self.assertEqual(data["queries"], [
+            "stage data engineer", "stage data engineering PFE", "stage big data",
+            "stage ETL", "stage data analyst", "stage business intelligence",
+            "stage data scientist", "stage machine learning",
+            "stage ingénieur données",
+        ])
+        for word in ["data engineer", "data engineering", "big data", "spark",
+                     "pyspark", "kafka", "hadoop", "etl", "talend", "airflow",
+                     "data pipeline", "data warehouse", "modélisation de données",
+                     "business intelligence", "power bi", "sql", "data analyst",
+                     "data scientist", "machine learning", "nlp"]:
+            self.assertIn(word, data["positive"])
+        for word in ["audit", "comptabilité", "contrôle de gestion",
+                     "ressources humaines", "juridique", "commercial", "marketing"]:
+            self.assertIn(word, data["negative"])
+        self.assertIn("recrutement", data["negative_title_only"])
+        self.assertNotIn("recrutement", data["negative"])
+        self.assertEqual(data["negative_exceptions"], ["marketing analytics"])
+        self.assertEqual(data["description_only_min_positives"], 3)
+        for domain_id, domain in scan.DOMAINS.items():
+            if domain_id != "data_ia":
+                self.assertNotIn("description_only_min_positives", domain)
+
+    def test_personal_scope_accepts_data_and_rejects_neighbours(self):
+        for title in ["Stage PFE Data Engineer Kafka", "Stage Data Analyst Power BI",
+                      "Stagiaire Big Data Hadoop", "Stage Airflow / Talend",
+                      "Stage Marketing Analytics", "Stage modélisation de données"]:
+            o, reason = offer(title=title, url=f"https://e.com/{title}")
+            self.assertIsNone(reason, title)
+        for title in ["Stage Audit Data", "Stage contrôle de gestion Power BI",
+                      "Stage Data Marketing digital", "Stage recrutement data",
+                      "Stagiaire comptabilité SQL", "Stage ressources humaines data"]:
+            o, reason = offer(title=title, url=f"https://e.com/{title}")
+            self.assertEqual(reason, scan.REASON_NO_DOMAIN, title)
+
+    def test_real_linkedin_data_titles_missed_before_enrichment(self):
+        """Intitulés réels LinkedIn France (run du 25/11/2026, sans
+        description) rejetés « aucun domaine » avant l'enrichissement."""
+        for title in [
+            "Stagiaire Data H/F/NB",
+            "STAGE - Ingénierie Data et KPI maturité ingénierie Satcom - F/H",
+            "Products Analytics Engineer - Internship",
+            "Stagiaire Analyste Données & Supervision Technique H/F",
+            "Stage - Chargé(e) de Data Management & gouvernance de la donnée F/H",
+            "Stage Data Officer - Data Management Pricing H/F",
+            "AI Cloud Engineer (stage) - H/F",
+            "Internship : Computer Vision - Material properties estimation",
+            "Data Automation Specialist Intern",
+        ]:
+            o, reason = offer(title=title, url=f"https://e.com/{title}")
+            self.assertIsNone(reason, title)
+        # Les voisins hors profil restent rejetés.
+        for title in ["Stage : Marketing Opérationnel / Business Development",
+                      "Stage Supply Chain & Logistique (H/F)",
+                      "Stage Data Marketing digital", "Stage communication AI"]:
+            o, reason = offer(title=title, url=f"https://e.com/{title}")
+            self.assertEqual(reason, scan.REASON_NO_DOMAIN, title)
+
+    def test_ai_buzzword_titles_outside_data_are_rejected(self):
+        """Bruit réel du run du 25/11/2026 : « IA » dans un titre non data."""
+        for title in [
+            "Stage - Chargée SEO et GEO SEO, Optimisation Digitale IA F/H",
+            "Stage - Développeur/se java augmenté/e par l'IA - Energy & Telecom - Lyon",
+            "Animation Commerciale et transformation IA - Stage - F/H",
+            "Stagiaire documentation par IA H/F",
+            "Stage - Développeur(se) Full Stack - Energie & Télécom - Nantes",
+            "Stage – Salesforce, Transformation Digitale & IA – F/H",
+        ]:
+            o, reason = offer(title=title, url=f"https://e.com/{title}")
+            self.assertEqual(reason, scan.REASON_NO_DOMAIN, title)
+        # Mots pénalisés dans le titre seulement : une vraie offre data passe.
+        for title in ["Stage Data Engineer Java / Spark",
+                      "Stage Data Analyst – direction commerciale"]:
+            o, reason = offer(title=title, url=f"https://e.com/{title}",
+                              description="Documentation Salesforce et Java.")
+            self.assertIsNone(reason, title)
+
+    def test_recruitment_is_penalised_in_title_only(self):
+        o, reason = offer(
+            title="Stage Data Engineer",
+            description="Notre processus de recrutement : deux entretiens. Spark, SQL.",
+        )
+        self.assertIsNone(reason)
+        # Titre : « data engineer » + « stage data » (2 × 3) ; description :
+        # spark + sql (2 × 1) ; aucune pénalité pour « recrutement ».
+        self.assertEqual(o["domain_scores"]["data_ia"], 2 * 3 + 2)
+
+    def test_description_alone_needs_three_distinct_positive_words(self):
+        two, reason = offer(title="Stage assistant projet",
+                            description="Reporting Power BI et requêtes SQL.")
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
+        three, reason = offer(title="Stage assistant projet",
+                              description="Pipelines ETL, SQL et Power BI.",
+                              url="https://e.com/three")
+        self.assertIsNone(reason)
+        self.assertEqual(three["domains"], ["data_ia"])
 
     def test_marketing_communication_domain_catches_real_linkedin_maroc_titles(self):
         """Titres réels échantillonnés le 17/07/2026 via JobSpy (LinkedIn, région
@@ -75,31 +188,37 @@ class TestDomainCatalogAndScoring(unittest.TestCase):
             "Digital Marketing Intern",
         ]
         for title in real_titles:
-            matched, scores = scan.score_offer_domains(title, "", scan.DOMAINS)
+            matched, scores = scan.score_offer_domains(
+                title, "", scan.DOMAINS, ALL_DOMAIN_IDS)
             self.assertIn("marketing_communication", matched, title)
+            # Domaine désactivé : ces titres ne passent plus en usage perso.
+            self.assertEqual(scan.score_offer_domains(title, "")[0], [], title)
 
     def test_data_analysis_and_business_developer_variants_are_covered(self):
         """Autres lacunes de vocabulaire trouvées dans le même échantillon réel :
         variantes de titres non couvertes par les mots-clés existants."""
         matched, _ = scan.score_offer_domains(
-            "Stagiaire élève ingénieur Data analysis", "", scan.DOMAINS
+            "Stagiaire élève ingénieur Data analysis", "", scan.DOMAINS, ALL_DOMAIN_IDS
         )
         self.assertIn("data_ia", matched)
         matched, _ = scan.score_offer_domains(
-            "Stage Pré-Embauche - Business Developer", "", scan.DOMAINS
+            "Stage Pré-Embauche - Business Developer", "", scan.DOMAINS, ALL_DOMAIN_IDS
         )
         self.assertIn("commerce_bizdev", matched)
         matched, _ = scan.score_offer_domains(
-            "Stagiaire People & Culture", "", scan.DOMAINS
+            "Stagiaire People & Culture", "", scan.DOMAINS, ALL_DOMAIN_IDS
         )
         self.assertIn("rh", matched)
 
     def test_linkedin_plan_covers_every_active_query(self):
-        plan = scan.linkedin_queries()
-        self.assertEqual(set(plan), set(scan.active_queries()))
-        self.assertEqual(len(plan), len(scan.active_queries()))
+        for active_ids in (None, ALL_DOMAIN_IDS):
+            plan = scan.linkedin_queries(active_ids=active_ids)
+            queries = scan.active_queries(active_ids=active_ids)
+            self.assertEqual(set(plan), set(queries))
+            self.assertEqual(len(plan), len(queries))
         for domain in scan.DOMAINS.values():
             self.assertTrue(set(domain["queries"]).issubset(plan))
+        self.assertEqual(scan.linkedin_queries(), scan.DOMAINS["data_ia"]["queries"])
 
     def test_single_data_domain_has_nominal_budget_and_all_linkedin_queries(self):
         with mock.patch.dict(os.environ, {"RADAR_DOMAINS": "data_ia"}):
@@ -194,10 +313,99 @@ class TestRegions(unittest.TestCase):
              "luxembourg": "Luxembourg", "maroc": "Morocco"},
         )
         with mock.patch.dict(os.environ, {"RADAR_REGIONS": ""}):
-            self.assertEqual(
-                scan.enabled_region_ids(),
-                ["france", "belgique", "luxembourg", "maroc"],
-            )
+            self.assertEqual(scan.enabled_region_ids(), ["france", "maroc"])
+        self.assertFalse(scan.REGIONS["belgique"]["enabled"])
+        self.assertFalse(scan.REGIONS["luxembourg"]["enabled"])
+
+    def test_personal_scope_budget_is_nominal(self):
+        with mock.patch.dict(os.environ, {"RADAR_DOMAINS": "", "RADAR_REGIONS": ""}):
+            budget = scan.calculate_scan_budget(
+                len(scan.enabled_domain_ids()), len(scan.enabled_region_ids()))
+        self.assertEqual(budget.combination_count, 2)
+        self.assertFalse(budget.is_high)
+        self.assertEqual(budget.scale, 1.0)
+        self.assertEqual(budget.results_wanted, scan.JOBSPY_RESULTS_WANTED)
+
+    def test_morocco_linkedin_adds_english_variants_only_on_linkedin(self):
+        import pandas as pd
+
+        calls = []
+
+        def fake_scrape(**kwargs):
+            calls.append(kwargs)
+            return pd.DataFrame()
+
+        # Les variantes anglaises mesurées le 25/11/2026 (« data engineer
+        # intern », « data internship », « PFE data ») ont rapporté 0 offre
+        # acceptée pour ~50 s de scan : retirées, le mécanisme reste.
+        self.assertEqual(scan.REGIONS["maroc"]["linkedin_extra_queries"], [])
+        maroc = dict(scan.REGIONS["maroc"],
+                     linkedin_extra_queries=["data engineer intern", "stage data engineer"])
+        scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=fake_scrape,
+                               region_id="maroc", region_config=maroc)
+        terms = [call["search_term"] for call in calls]
+        self.assertEqual(terms[:9], scan.DOMAINS["data_ia"]["queries"])
+        # Ajoutée en fin de plan, doublon exact ignoré.
+        self.assertEqual(terms[9:], ["data engineer intern"])
+        self.assertTrue(all(call["location"] == "Morocco" for call in calls))
+
+        calls.clear()
+        scan.fetch_jobspy_site("linkedin", "LinkedIn", scrape_fn=fake_scrape)
+        self.assertEqual([c["search_term"] for c in calls],
+                         scan.DOMAINS["data_ia"]["queries"])
+
+        calls.clear()
+        scan.fetch_jobspy_site("indeed", "Indeed", scrape_fn=fake_scrape,
+                               region_id="maroc", region_config=maroc)
+        self.assertEqual([c["search_term"] for c in calls],
+                         scan.DOMAINS["data_ia"]["queries"])
+        self.assertEqual(calls[0]["country_indeed"], "Morocco")
+
+    def test_morocco_offer_without_city_is_located_in_morocco(self):
+        import pandas as pd
+
+        frame = pd.DataFrame([{
+            "title": "Stage PFE Data Engineer", "company": "ACME Casablanca",
+            "city": float("nan"), "state": None, "job_url": "https://e.com/ma",
+            "date_posted": TODAY, "description": "",
+        }])
+        offers, status = scan.fetch_jobspy_site(
+            "linkedin", "LinkedIn",
+            scrape_fn=lambda **kw: frame if kw["search_term"] == "stage data engineer"
+            else frame.iloc[0:0],
+            region_id="maroc", region_config=scan.REGIONS["maroc"],
+        )
+        self.assertEqual(offers[0]["location"], "Maroc")
+        self.assertEqual(offers[0]["regions"], ["maroc"])
+        self.assertEqual(status.query_yield["stage data engineer"],
+                         {"raw": 1, "accepted": 1})
+
+    def test_french_national_sources_are_not_applicable_in_morocco(self):
+        with mock.patch.object(scan.requests, "post") as post, \
+             mock.patch.object(scan.requests, "get") as get, \
+             mock.patch.dict(os.environ, {"ADZUNA_APP_ID": "x", "ADZUNA_APP_KEY": "y",
+                                          "FT_CLIENT_ID": "x", "FT_CLIENT_SECRET": "y"}):
+            statuses = [
+                scan.fetch_apec_all("maroc")[1],
+                scan.fetch_adzuna_all("maroc")[1],
+                scan.fetch_france_travail_all("maroc")[1],
+                scan.fetch_the_muse_all("maroc")[1],
+            ]
+        post.assert_not_called()
+        get.assert_not_called()
+        for status in statuses:
+            self.assertEqual(status.status, "not_applicable_region", status.source)
+            self.assertEqual(status.region_label, "Maroc")
+
+    def test_moroccan_pfe_titles_pass_the_contract_filter(self):
+        for title in ["Stage PFE Data Engineer", "Stagiaire PFE Data Analyst",
+                      "Projet de fin d'études : Data Engineering",
+                      "Projet de Fin d’Etudes - Big Data", "PFE - Data pipelines Spark"]:
+            self.assertTrue(scan.TITLE_MUST_MATCH.search(title), title)
+            o, reason = offer(title=title, url=f"https://e.com/{title}",
+                              region_id="maroc")
+            self.assertIsNone(reason, title)
+        self.assertIsNone(scan.TITLE_MUST_MATCH.search("Data Engineer CDI"))
 
     def test_belgium_jobspy_offer_is_tagged_belgium(self):
         import pandas as pd
@@ -421,7 +629,7 @@ class TestMakeOffer(unittest.TestCase):
         self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_generic_rh_offer_matches_rh_domain(self):
-        o, reason = offer(
+        o, reason = offer_all_domains(
             title="Stagiaire RH généraliste F/H", source="APEC",
             confirmed_internship=True,
             description="Gestion administrative du personnel, paie et recrutement.",
@@ -432,7 +640,7 @@ class TestMakeOffer(unittest.TestCase):
     def test_description_can_confirm_data_profile(self):
         o, reason = offer(
             title="Stage ingénieur logiciel",
-            description="Construction ETL et data warehouse pour les équipes.",
+            description="Construction ETL, Airflow et data warehouse pour les équipes.",
         )
         self.assertIsNone(reason)
         self.assertIsNotNone(o)
@@ -457,7 +665,7 @@ class TestDomainTargetingStrict(unittest.TestCase):
         self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_auditeur_junior_matches_audit_domain(self):
-        o, reason = offer(
+        o, reason = offer_all_domains(
             title="Auditeur junior F/H", company="Proaxian",
             source="APEC", confirmed_internship=True,
             description="Missions d'audit avec restitution sous Power BI.",
@@ -466,7 +674,7 @@ class TestDomainTargetingStrict(unittest.TestCase):
         self.assertIn("audit", o["domains"])
 
     def test_finance_controle_gestion_matches_business_domain(self):
-        o, reason = offer(
+        o, reason = offer_all_domains(
             title="Stagiaire Finance et Contrôle de Gestion H/F",
             company="SONEMA", source="Indeed",
             description="Tableaux de bord Power BI, analyses budgétaires.",
@@ -507,10 +715,13 @@ class TestDomainTargetingStrict(unittest.TestCase):
             description="Missions : Data Analytics, dashboards Power BI.",
         )
         self.assertIsNone(reason)
-        # La finance est désormais un domaine actif à part entière.
-        o, reason = offer(title="Stage analyste financier Power BI")
+        # La finance est un domaine à part entière du catalogue complet…
+        o, reason = offer_all_domains(title="Stage analyste financier Power BI")
         self.assertIsNone(reason)
         self.assertIn("finance", o["domains"])
+        # … mais hors du périmètre perso Data.
+        o, reason = offer(title="Stage analyste financier Power BI")
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
         # « juridique / droit » exclu (bruit APEC constaté).
         o, reason = offer(title="Stagiaire en droit du numérique",
                           confirmed_internship=True)
@@ -552,7 +763,7 @@ class TestDomainTargetingStrict(unittest.TestCase):
             self.assertIsNone(o, title)
             self.assertEqual(reason, scan.REASON_NO_DOMAIN, title)
 
-        o, reason = offer(
+        o, reason = offer_all_domains(
             title="Stagiaire Cybersécurité DevSecops",
             description="Analyse des risques et sécurité des pipelines CI/CD.",
         )
@@ -569,12 +780,18 @@ class TestDomainTargetingStrict(unittest.TestCase):
         self.assertEqual(reason, scan.REASON_NO_DOMAIN)
 
     def test_description_rescues_only_technical_generic_title(self):
-        o, reason = offer(
+        # data_ia exige désormais 3 mots positifs en description seule.
+        o, reason = offer_all_domains(
             title="Stage ingénieur logiciel",
             description="Missions ETL et data warehouse.",
         )
+        self.assertEqual(reason, scan.REASON_NO_DOMAIN)
+        o, reason = offer(
+            title="Stage ingénieur logiciel",
+            description="Missions ETL, Spark et data warehouse.",
+        )
         self.assertIsNone(reason)
-        self.assertIsNotNone(o)
+        self.assertEqual(o["domains"], ["data_ia"])
 
     def test_ai_requires_technical_context(self):
         o, reason = offer(title="Stage communication IA")
@@ -883,14 +1100,28 @@ class TestSourcePagination(unittest.TestCase):
         self.assertEqual(offers, [])
         self.assertIn("bloquées", status.note)
 
+    def test_apec_search_circuit_breaker_stops_after_two_403(self):
+        forbidden = mock.Mock(status_code=403)
+        forbidden.raise_for_status.side_effect = Exception("403 Client Error: Forbidden")
+        catalog = dict(self.CATALOG)
+        catalog["data"] = dict(catalog["data"], queries=[
+            "stage data engineer", "stage etl", "stage big data", "stage spark"])
+        with mock.patch.object(scan.requests, "post", return_value=forbidden) as post:
+            offers, status = scan.fetch_apec_all(domains=catalog, active_ids=["data"])
+        self.assertEqual(post.call_count, scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "blocked")
+        self.assertEqual(status.http_error, "HTTP 403")
+        self.assertIn("circuit breaker", status.note)
+
     def test_apec_detail_success_is_not_affected_by_breaker(self):
-        # Deux mots-clés positifs distincts sont nécessaires : le score
-        # description (poids 1 chacun) doit atteindre le seuil 2.
+        # Titre générique : la description seule doit citer au moins
+        # DESCRIPTION_ONLY_MIN_POSITIVES mots positifs distincts.
         catalog = {
             "data": {
                 "label": "Data", "group": "Test",
                 "queries": ["stage data engineer"],
-                "positive": ["data engineer", "pipelines"], "negative": [],
+                "positive": ["data engineer", "pipelines", "spark"], "negative": [],
                 "enabled": True,
             }
         }
@@ -900,7 +1131,7 @@ class TestSourcePagination(unittest.TestCase):
         detail_response = mock.Mock(status_code=200)
         detail_response.raise_for_status.return_value = None
         detail_response.json.return_value = {
-            "texteHtml": "<p>stage data engineer sur des pipelines</p>",
+            "texteHtml": "<p>stage data engineer sur des pipelines Spark</p>",
         }
         with mock.patch.object(scan.requests, "post", return_value=search_response), \
              mock.patch.object(scan.requests, "get", return_value=detail_response) as get:
@@ -1403,16 +1634,24 @@ class TestLinkedInPostsSource(unittest.TestCase):
                                      status="success")]
         self.assertFalse(scan.source_succeeded_for_offer(offer_entry, healthy))
 
-    def test_unknown_date_offer_expires_24h_after_last_verification(self):
+    def test_unknown_date_offer_is_kept_for_days_window_after_first_sighting(self):
         now = datetime.now(timezone.utc)
+        window = scan.MAX_OFFER_AGE_DAYS
+        # Revue dans les 24 h : visible quel que soit son âge.
         fresh = {"id": "a", "active": True, "date_known": False, "date": "",
                  "freshness_verified_at": (now - timedelta(hours=2)).isoformat(),
-                 "first_seen": (now - timedelta(days=3)).isoformat()}
-        stale = {"id": "b", "active": True, "date_known": False, "date": "",
-                 "freshness_verified_at": (now - timedelta(hours=25)).isoformat(),
-                 "first_seen": (now - timedelta(hours=25)).isoformat()}
-        visible = scan.dashboard_offers_from_store({"a": fresh, "b": stale}, now=now)
-        self.assertEqual([o["id"] for o in visible], ["a"])
+                 "first_seen": (now - timedelta(days=window + 3)).isoformat()}
+        # Plus revue, mais apparue il y a moins de days_window : conservée.
+        recent = {"id": "b", "active": True, "date_known": False, "date": "",
+                  "freshness_verified_at": (now - timedelta(hours=25)).isoformat(),
+                  "first_seen": (now - timedelta(hours=25)).isoformat()}
+        # Plus revue et apparue avant la fenêtre : masquée.
+        stale = {"id": "c", "active": True, "date_known": False, "date": "",
+                 "freshness_verified_at": (now - timedelta(days=window + 1)).isoformat(),
+                 "first_seen": (now - timedelta(days=window + 1)).isoformat()}
+        visible = scan.dashboard_offers_from_store(
+            {"a": fresh, "b": recent, "c": stale}, now=now)
+        self.assertEqual([o["id"] for o in visible], ["a", "b"])
 
     def test_rotation_cursor_persists_and_advances_across_runs(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1480,13 +1719,21 @@ class TestOfferStore(unittest.TestCase):
         return candidate
 
     def test_confirmed_absence_is_hidden_after_successful_run(self):
-        candidate = self.candidate()
+        # APEC renvoie la liste complète des offres ouvertes : une absence
+        # après un run sain signifie une offre fermée.
+        candidate, reason = offer(
+            date=self.RUN_N.isoformat(), now=self.RUN_N, source="APEC",
+            confirmed_internship=True, url="https://e.com/apec-closed",
+        )
+        self.assertIsNone(reason)
+        apec_ok = [scan.SourceStatus(source="APEC", region_id="france",
+                                     region_label="France", status="success")]
         store = scan.reconcile_offer_store(
-            [candidate], self.source_state(), store={}, run_at=self.RUN_N
+            [candidate], apec_ok, store={}, run_at=self.RUN_N
         )
         next_run = self.RUN_N + timedelta(hours=1)
         store = scan.reconcile_offer_store(
-            [], self.source_state(), store=store, run_at=next_run
+            [], apec_ok, store=store, run_at=next_run
         )
 
         self.assertFalse(store[candidate["id"]]["active"])
@@ -1495,6 +1742,77 @@ class TestOfferStore(unittest.TestCase):
             next_run.isoformat(timespec="seconds"),
         )
         self.assertEqual(scan.dashboard_offers_from_store(store, next_run), [])
+
+    def test_windowed_source_offer_stays_visible_for_days_window(self):
+        # LinkedIn ne renvoie que les dernières 24 h : sortir de sa fenêtre
+        # ne ferme pas l'offre, elle reste affichée days_window jours.
+        candidate = self.candidate()
+        store = scan.reconcile_offer_store(
+            [candidate], self.source_state(), store={}, run_at=self.RUN_N
+        )
+        later = self.RUN_N + timedelta(days=2)
+        store = scan.reconcile_offer_store(
+            [], self.source_state(), store=store, run_at=later
+        )
+        self.assertFalse(store[candidate["id"]]["active"])
+        self.assertEqual(
+            [o["id"] for o in scan.dashboard_offers_from_store(store, later)],
+            [candidate["id"]],
+        )
+        expired = self.RUN_N + timedelta(days=scan.MAX_OFFER_AGE_DAYS, minutes=1)
+        self.assertEqual(scan.dashboard_offers_from_store(store, expired), [])
+
+    def test_unknown_date_sort_key_is_first_sighting_not_last_scan(self):
+        first_run = self.RUN_N - timedelta(hours=5)
+        old, _ = offer(date=None, now=first_run, url="https://e.com/old",
+                       freshness_verified=True)
+        store = scan.reconcile_offer_store([old], self.source_state(), store={},
+                                           run_at=first_run)
+        seen_again, _ = offer(date=None, now=self.RUN_N, url="https://e.com/old",
+                              freshness_verified=True)
+        newer, _ = offer(date=None, now=self.RUN_N - timedelta(minutes=1),
+                         url="https://e.com/new", freshness_verified=True)
+        store = scan.reconcile_offer_store([seen_again, newer], self.source_state(),
+                                           store=store, run_at=self.RUN_N)
+        self.assertEqual(store[old["id"]]["sort_date"], first_run.isoformat())
+        ordered = scan.sort_offers(scan.dashboard_offers_from_store(store, self.RUN_N))
+        self.assertEqual([o["url"] for o in ordered],
+                         ["https://e.com/new", "https://e.com/old"])
+
+    def test_offers_of_disabled_domains_or_regions_are_hidden(self):
+        base = dict(self.candidate(), active=True,
+                    first_seen=self.RUN_N.isoformat())
+        store = {
+            "data": dict(base, id="data", domains=["data_ia"], regions=["france"]),
+            "data_rh": dict(base, id="data_rh", domains=["data_ia", "rh"],
+                            regions=["maroc"]),
+            "rh": dict(base, id="rh", domains=["rh"], regions=["france"]),
+            "compta": dict(base, id="compta", domains=["compta_gestion"],
+                           regions=["france"]),
+            "belgique": dict(base, id="belgique", domains=["data_ia"],
+                             regions=["belgique"]),
+        }
+        visible = scan.dashboard_offers_from_store(
+            store, self.RUN_N, active_domain_ids=["data_ia"],
+            active_region_ids=["france", "maroc"],
+        )
+        self.assertEqual(sorted(o["id"] for o in visible), ["data", "data_rh"])
+        # Sans filtre explicite, rien n'est masqué (compatibilité).
+        self.assertEqual(len(scan.dashboard_offers_from_store(store, self.RUN_N)), 5)
+
+    def test_entries_never_seen_again_are_purged_after_retention(self):
+        # Une région désactivée ne produit plus aucun statut : son offre ne
+        # peut plus être confirmée absente, elle était conservée à vie.
+        candidate = dict(self.candidate(), regions=["belgique"])
+        old_run = self.RUN_N - timedelta(days=scan.OFFER_RETENTION_DAYS + 1)
+        store = scan.reconcile_offer_store(
+            [candidate], [], store={}, run_at=old_run
+        )
+        self.assertTrue(store[candidate["id"]]["active"])
+        store = scan.reconcile_offer_store(
+            [], self.source_state(), store=store, run_at=self.RUN_N
+        )
+        self.assertNotIn(candidate["id"], store)
 
     def test_blocked_source_keeps_offer_visible_and_unchanged(self):
         candidate = self.candidate()
@@ -1514,9 +1832,12 @@ class TestOfferStore(unittest.TestCase):
         )
 
     def test_native_freshness_verification_expires_after_24_hours(self):
+        # Publication ancienne (republiée) mais confirmée par le filtre natif
+        # de la source : visible tant que la vérification a moins de 24 h.
         checked_at = self.RUN_N
+        published = checked_at - timedelta(days=scan.MAX_OFFER_AGE_DAYS + 3)
         candidate, reason = offer(
-            date=checked_at.isoformat(), now=checked_at, freshness_verified=True,
+            date=published.isoformat(), now=checked_at, freshness_verified=True,
             url="https://e.com/native-window",
         )
         self.assertIsNone(reason)
@@ -1700,12 +2021,18 @@ class TestDashboard(unittest.TestCase):
         self.assertNotIn("sessionStorage", javascript)
         self.assertIn("window.location.reload()", javascript)
 
-    def test_workflow_runs_hourly_and_keeps_manual_github_dispatch(self):
+    def test_workflow_runs_hourly_daytime_and_keeps_manual_github_dispatch(self):
         workflow = (Path(scan.__file__).resolve().parent
                     / ".github/workflows/scan.yml").read_text(encoding="utf-8")
-        self.assertIn('cron: "0 * * * *"', workflow)
-        self.assertNotIn("*/30 * * * *", workflow)
-        self.assertIn("workflow_dispatch", workflow)
+        # Lignes actives seulement : l'ancien test passait sur un cron commenté.
+        active = [line.split("#", 1)[0] for line in workflow.splitlines()
+                  if not line.lstrip().startswith("#")]
+        crons = [line.split("cron:", 1)[1].strip().strip('"')
+                 for line in active if "cron:" in line]
+        self.assertEqual(crons, ["7 6-21 * * *"])
+        self.assertTrue(any("workflow_dispatch" in line for line in active))
+        self.assertTrue(any("cancel-in-progress: false" in line for line in active))
+        self.assertTrue(any("timeout-minutes:" in line for line in active))
         self.assertIn("data/offers.json", workflow)
 
     def test_search_indexes_title_company_and_location(self):
@@ -1731,19 +2058,20 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("Date de publication inconnue", page)
         self.assertIn("date inconnue", page)
 
-    def test_region_filter_defaults_to_france_and_combines_client_side(self):
+    def test_region_filter_defaults_to_all_and_combines_client_side(self):
         france, _ = offer(url="https://e.com/france")
-        belgique, _ = offer(
-            url="https://e.com/belgique", location="Bruxelles",
-            region_id="belgique",
+        maroc, _ = offer(
+            url="https://e.com/maroc", location="Casablanca",
+            region_id="maroc",
         )
-        page = self.render(
-            [france, belgique], regions=scan.REGIONS,
-            active_region_ids=["france", "belgique"],
-        )
-        self.assertIn('class="fchip region-chip on" data-region="france"', page)
-        self.assertIn('data-region="belgique"', page)
-        self.assertEqual(self.dashboard_config(page)["defaultRegion"], "france")
+        page = self.render([france, maroc])
+        self.assertIn('class="fchip region-chip on" data-region="*" aria-pressed="true"', page)
+        self.assertIn('class="fchip region-chip" data-region="france"', page)
+        self.assertIn('class="fchip region-chip" data-region="maroc"', page)
+        self.assertNotIn('data-region="belgique"', page)
+        self.assertNotIn("single-region", page)
+        self.assertEqual(self.dashboard_config(page)["defaultRegion"], "*")
+        self.assertIn('<span class="tag region">Maroc</span>', page)
         javascript = self.dashboard_javascript()
         self.assertIn(
             'const regionMatches = activeRegion === "*" || regions.includes(activeRegion);',
@@ -1753,6 +2081,42 @@ class TestDashboard(unittest.TestCase):
             "const show = sourceMatches && domainMatches && regionMatches && statusMatches &&",
             javascript,
         )
+
+    def test_visa_badge_only_on_french_offers(self):
+        paris, _ = offer(company="Capgemini", url="https://e.com/cap-fr")
+        casa, _ = offer(company="Capgemini Maroc", url="https://e.com/cap-ma",
+                        location="Casablanca", region_id="maroc")
+        self.assertTrue(paris["highlighted"] and casa["highlighted"])
+        self.assertTrue(scan.shows_highlight(paris))
+        self.assertFalse(scan.shows_highlight(casa))
+        page = self.render([paris, casa])
+        cards = {match.group(1): match.group(0) for match in re.finditer(
+            r'<article class="job[^"]*" data-id="([^"]+)".*?</article>', page, re.DOTALL)}
+        self.assertIn('data-highlight="1"', cards[paris["id"]])
+        self.assertIn("✓ Visa-friendly probable</span>", cards[paris["id"]])
+        self.assertIn('data-highlight="0"', cards[casa["id"]])
+        self.assertNotIn("Visa-friendly probable</span>", cards[casa["id"]])
+        # Sans highlight_regions, comportement historique : toutes régions.
+        legacy = {k: v for k, v in scan.APP_CONFIG.items() if k != "highlight_regions"}
+        self.assertTrue(scan.shows_highlight(casa, legacy))
+
+    def test_highlight_company_matches_whole_words_only(self):
+        self.assertTrue(scan.is_highlighted_company("OCTO Technology"))
+        self.assertTrue(scan.is_highlighted_company("Société Générale"))
+        self.assertTrue(scan.is_highlighted_company("Sopra Steria Next"))
+        self.assertFalse(scan.is_highlighted_company("Octopus Energy"))
+        self.assertFalse(scan.is_highlighted_company("Saxa Conseil"))
+
+    def test_single_domain_filter_group_is_hidden(self):
+        candidate, _ = offer()
+        page = self.render([candidate])
+        self.assertIn('class="filter-group single-domain"', page)
+        css = (Path(scan.__file__).resolve().parent
+               / "docs/assets/dashboard.css").read_text(encoding="utf-8")
+        rule = re.search(r"\.filter-group\.single-domain\s*\{([^}]*)\}", css)
+        self.assertIsNotNone(rule)
+        self.assertIn("display: none", rule.group(1))
+        self.assertIn("<strong>1 domaine</strong> et <strong>2 régions</strong>", page)
 
     def test_single_region_filter_is_hidden_but_france_stays_active(self):
         candidate, _ = offer()

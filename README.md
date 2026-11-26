@@ -3,8 +3,61 @@
 Pipeline autonome qui collecte toutes les heures des offres de stage dans
 les régions activées, les classe dans un ou plusieurs domaines, détecte les
 nouveautés, envoie une alerte email optionnelle et publie un dashboard sur
-GitHub Pages. France, Belgique, Luxembourg et Maroc sont préconfigurés et
-actifs par défaut.
+GitHub Pages.
+
+Architecture, état réel des sources et bugs connus : voir
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+## Usage personnel : stage PFE Data, France + Maroc
+
+La branche `perso-data-france-maroc` ramène l'outil à son usage d'origine :
+un radar personnel pour un stage PFE Data (début 2027, 4 à 6 mois).
+
+- **Domaine** : `data_ia` seul (`enabled: true`). Les 16 autres domaines
+  restent dans `data/domains.json` avec `enabled: false`.
+- **Régions** : `france` et `maroc` actives, traitées à égalité (aucune
+  région n'est bridée ; il n'existe pas de priorité par région dans le
+  code). Belgique et Luxembourg restent dans `data/regions.json`, inactives.
+- **Sources** : France → LinkedIn, Indeed, APEC, Adzuna, France Travail,
+  The Muse, LinkedIn Posts ; Maroc → LinkedIn (`Morocco`), Indeed
+  (`country_indeed: "Morocco"`, ma.indeed.com), LinkedIn Posts. APEC, Adzuna
+  (index `/fr`), France Travail et The Muse sont `not_applicable_region` au
+  Maroc. Glassdoor et Google Jobs restent retirés : retestés le 25/11/2026,
+  ils répondent toujours HTTP 400 et 0 résultat.
+- **Requêtes Maroc** : les requêtes françaises du domaine. Les variantes
+  anglaises testées sur LinkedIn Maroc (« data engineer intern », « data
+  internship », « PFE data ») ont rapporté 0 offre acceptée pour ~50 s de
+  scan : retirées, mais le mécanisme reste
+  (`regions.json` → `linkedin_extra_queries`). Le rendement de chaque requête
+  est consigné dans `source_status.json` (`query_yield`).
+- **Durée** : ~11 min en local, dominée par LinkedIn France (~60 s par
+  requête à cause de l'espacement des pages imposé par JobSpy ; ~145 s pour
+  la requête qui récupère les descriptions).
+- **Scoring data_ia** : un mot positif dans le titre, ou au moins **3** mots
+  positifs distincts en description seule (`description_only_min_positives`).
+  « recrutement » n'est pénalisé que dans le titre (`negative_title_only`),
+  « marketing » l'est sauf dans « marketing analytics »
+  (`negative_exceptions`). Les autres domaines gardent leur calibration
+  historique.
+- **Dashboard** : région « Toutes » par défaut, badge région sur chaque
+  carte, groupe Domaine masqué (un seul domaine). Le badge
+  « Visa-friendly probable » n'apparaît que sur les offres en France
+  (`config.json` → `highlight_regions`).
+- **Fenêtre** : la collecte reste limitée aux 24 dernières heures ; le
+  dashboard affiche les offres publiées (ou vues pour la première fois) dans
+  les 7 derniers jours (`days_window`). Seules APEC et The Muse, qui
+  renvoient la liste complète des offres ouvertes, peuvent masquer une offre
+  plus tôt (absence = offre fermée).
+- **Store** : les offres rattachées uniquement à des domaines ou régions
+  désactivés sont masquées à l'affichage (pas supprimées). Toute entrée
+  qu'aucun run n'a revue depuis 14 jours est purgée.
+- **Planification** : un seul scan, `7 6-21 * * *` UTC, soit 7h07–22h07 à
+  Paris en hiver. En été, passer à `7 5-20 * * *` (détail dans
+  `.github/workflows/scan.yml`).
+
+Retour à la version multi-domaine : `git checkout v-multi-domaine`.
+
+## Sources
 
 Les sept sources actives sont LinkedIn et Indeed via JobSpy, APEC, Adzuna,
 The Muse, France Travail et LinkedIn Posts. Chaque source est isolée :
@@ -23,11 +76,12 @@ redevient exploitable un jour.
 
 Le code métier n'est pas personnalisé dans `scan.py` :
 
-- `data/domains.json` contient les 17 domaines actifs, leurs requêtes, leurs
-  vocabulaires positifs/négatifs et leur priorité de collecte optionnelle.
-- `data/regions.json` contient les paramètres natifs de localisation. Les quatre
-  régions sont actives ; passer `enabled` à `false` permet d'en retirer une sans
-  modifier le code.
+- `data/domains.json` contient les 17 domaines (seul `data_ia` est actif sur
+  cette branche), leurs requêtes, leurs vocabulaires positifs/négatifs et leur
+  priorité de collecte optionnelle.
+- `data/regions.json` contient les paramètres natifs de localisation. France
+  et Maroc sont actives ; `enabled` active ou retire une région sans modifier
+  le code.
   Les valeurs `country_indeed` confirmées pour `python-jobspy==1.1.82` sont
   exactement `France`, `Belgium`, `Luxembourg` et `Morocco` dans la
   [documentation officielle JobSpy](https://pypi.org/project/python-jobspy/).
@@ -51,7 +105,9 @@ correctif : « data analysis » (`data_ia`) et « business developer »
 
 Le classifieur attribue par domaine +3 par terme positif dans le titre, +1 dans
 la description, -4 par terme négatif dans le titre et -1 dans la description.
-Une offre est retenue à partir du score 2 et peut porter plusieurs domaines.
+Une offre est retenue à partir du score 2 et peut porter plusieurs domaines ;
+sans mot positif dans le titre, la description doit en citer au moins
+`description_only_min_positives` distincts (2 par défaut, 3 pour `data_ia`).
 Le filtre de contrat reste indépendant et exige `stage`, `stagiaire`, `intern`,
 `internship`, `PFA` ou `PFE` dans le titre, sauf quand l'API certifie déjà le
 stage.
@@ -59,15 +115,17 @@ stage.
 Le dashboard responsive propose une vue synthétique du dernier scan, la santé
 des connecteurs, une recherche par poste/entreprise/ville et des filtres
 combinables par statut de candidature, source, domaine, région et entreprise
-mise en avant. La région par défaut est France. Le groupe Région est masqué
-lorsqu'une seule région est active et réapparaît automatiquement dès la
-seconde. Le statut « postulé » reste dans le `localStorage` du navigateur et
+mise en avant. La région par défaut est « Toutes » dès que plusieurs régions
+sont actives. Les groupes Région et Domaine sont masqués lorsqu'une seule
+valeur est active. Le statut « postulé » reste dans le `localStorage` du navigateur et
 n'est jamais envoyé à GitHub.
 
 `data/offers.json` conserve le contenu complet des offres et leurs dates de
 première/dernière observation. Une offre ne disparaît pas si son connecteur est
-temporairement bloqué ; elle est masquée seulement après une absence confirmée
-par un run sain. Les entrées inactives sont purgées après 14 jours.
+temporairement bloqué. Elle reste affichée 7 jours après sa publication (ou sa
+première observation si la date est inconnue), sauf absence confirmée par APEC
+ou The Muse. Les entrées inactives confirmées et celles qu'aucun run n'a revues
+depuis 14 jours sont purgées.
 
 ## Installation
 
@@ -91,14 +149,14 @@ Sans identifiants optionnels, leur source apparaît « non configurée » et le
 reste du scan continue normalement. The Muse fonctionne même sans clé
 (500 requêtes/heure, largement suffisant pour un run).
 
-Le scan tourne automatiquement chaque heure. Pour un run immédiat, utiliser
+Le scan tourne automatiquement chaque heure de 7 h à 22 h (Paris). Pour un run immédiat, utiliser
 **Run workflow** dans l'onglet GitHub Actions du dépôt. Le bouton
 **Actualiser les offres** recharge uniquement le dernier dashboard publié ; le
 site ne demande et ne conserve aucun token GitHub.
 
 ## Fraîcheur et robustesse
 
-- JobSpy reçoit `hours_old` selon `days_window`. Les dates relatives courantes
+- JobSpy reçoit `hours_old=24` (fenêtre de collecte fixe). Les dates relatives courantes
   sont normalisées ; une date inconnue est conservée et signalée, une date
   réellement trop ancienne est rejetée et journalisée.
 - APEC utilise les filtres serveur stage (`typesContrat=597171`) et Bac+5
@@ -140,8 +198,8 @@ site ne demande et ne conserve aucun token GitHub.
   Pour préserver le quota gratuit Tavily, la source ne tourne que sur deux
   créneaux par jour (`LINKEDIN_POSTS_RUN_HOURS_UTC`, 6h et 18h UTC) ; hors
   créneau le statut est `deferred` et n'affecte aucune offre déjà collectée.
-  Budget par créneau : `LINKEDIN_POSTS_QUERY_BUDGET` (4 requêtes) × 4
-  régions ≈ 32 crédits/jour, soit ~960/mois sur les 1000 gratuits. Curseur de
+  Budget par créneau : `LINKEDIN_POSTS_QUERY_BUDGET` (4 requêtes) × 2
+  régions ≈ 16 crédits/jour, soit ~480/mois sur les 1000 gratuits. Curseur de
   rotation persisté dans `data/linkedin_posts_rotation.json`.
 
   Contrairement aux autres sources, LinkedIn Posts n'interroge qu'un
@@ -155,19 +213,13 @@ site ne demande et ne conserve aucun token GitHub.
   précaution.
 - un circuit breaker interrompt une source après deux blocages 403/429
   consécutifs pendant le run, sans affecter les autres.
-- LinkedIn est limité à six requêtes distribuées selon la priorité des domaines.
-  Chaque domaine reçoit d'abord un créneau lorsque le budget le permet, puis les
-  créneaux restants suivent une rotation pondérée. Les trois requêtes les plus
-  prioritaires récupèrent aussi la description complète pour améliorer le
-  scoring sans enrichir les six appels.
-- le budget est calculé par `domaines actifs × régions actives`. Au-delà de six
-  combinaisons, `results_wanted` est multiplié par `6 / combinaisons`, avec un
-  plancher de cinq résultats. L'estimation affichée utilise `45 s + 35 s ×`
-  le nombre de combinaisons effectives, plafonné à six (maximum indicatif :
-  4 min 15 s). Cette réduction reste uniforme : Indeed exécute toutes les
-  requêtes actives, donc aucun domaine n'y perd de créneau ; seule
-  l'allocation LinkedIn, globalement plafonnée, doit être pondérée par
-  priorité.
+- LinkedIn exécute toutes les requêtes actives (plafond anti-boucle 1000),
+  ordonnées par priorité de domaine ; les trois premières récupèrent aussi la
+  description complète. JobSpy espace lui-même ses pages LinkedIn.
+- le budget `domaines actifs × régions actives` est purement informatif :
+  aucun volume n'est réduit (`results_wanted` reste à 1000 pour LinkedIn et
+  Indeed), un avertissement s'affiche seulement au-delà de six combinaisons.
+  Usage perso : 1 × 2 = 2 combinaisons.
 - le commit automatisé utilise un rebase et trois tentatives sans force-push.
 
 Pour un benchmark ponctuel sans modifier le catalogue, les environnements
@@ -190,7 +242,7 @@ python -m py_compile scan.py
 python -m unittest discover -s tests -v
 ```
 
-La suite contient plus de 70 tests sans accès réseau.
+La suite contient 178 tests sans accès réseau.
 
 Le pipeline ne se connecte à aucun compte des plateformes d'emploi. Il utilise
 les pages publiques et les API officielles ; il est recommandé de conserver la

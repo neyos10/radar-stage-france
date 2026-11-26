@@ -2,6 +2,10 @@
 """
 Radar Stage France — agrégateur multi-sources, multi-domaines et multi-régions.
 
+Usage actuel (branche perso-data-france-maroc) : domaine data_ia seul, régions
+France et Maroc. Les autres domaines/régions restent dans les catalogues JSON
+avec ``enabled: false`` ; la version multi-domaine est le tag v-multi-domaine.
+
 Sources :
   1. LinkedIn (offres publiques, sans compte)   — via JobSpy
   2. Indeed (régions configurées)                — via JobSpy
@@ -107,6 +111,18 @@ def load_domains(path: Path = DOMAINS_FILE) -> dict:
                 raise ValueError(f"Domaine {domain_id}: {field_name} invalide")
             if len({value.casefold() for value in values}) != len(values):
                 raise ValueError(f"Domaine {domain_id}: doublon dans {field_name}")
+        # Optionnels : négatifs pénalisés dans le titre seulement (« recrutement »
+        # apparaît dans presque toutes les descriptions) et expressions qui
+        # neutralisent un négatif (« marketing analytics » ≠ « marketing »).
+        for field_name in ("negative_title_only", "negative_exceptions"):
+            values = domain.get(field_name, [])
+            if not isinstance(values, list) or not all(
+                    isinstance(value, str) and value.strip() for value in values):
+                raise ValueError(f"Domaine {domain_id}: {field_name} invalide")
+        min_hits = domain.get("description_only_min_positives", 1)
+        if isinstance(min_hits, bool) or not isinstance(min_hits, int) or min_hits < 1:
+            raise ValueError(
+                f"Domaine {domain_id}: description_only_min_positives doit être un entier positif")
         priority = domain.get("priority", 1)
         if isinstance(priority, bool) or not isinstance(priority, int) or priority < 1:
             raise ValueError(f"Domaine {domain_id}: priority doit être un entier positif")
@@ -122,6 +138,11 @@ def load_config(path: Path = CONFIG_FILE) -> dict:
         raise ValueError(f"Configuration: champs manquants {sorted(missing)}")
     if int(config["days_window"]) <= 0:
         raise ValueError("days_window doit être strictement positif")
+    highlight_regions = config.get("highlight_regions")
+    if highlight_regions is not None and (
+            not isinstance(highlight_regions, list)
+            or not all(isinstance(value, str) for value in highlight_regions)):
+        raise ValueError("highlight_regions doit être une liste d'identifiants de région")
     return config
 
 
@@ -142,6 +163,10 @@ def load_regions(path: Path = REGIONS_FILE) -> dict:
         for field_name in ("apec_available", "france_travail_available", "enabled"):
             if not isinstance(region[field_name], bool):
                 raise ValueError(f"Région {region_id}: {field_name} doit être booléen")
+        extra = region.get("linkedin_extra_queries", [])
+        if not isinstance(extra, list) or not all(
+                isinstance(value, str) and value.strip() for value in extra):
+            raise ValueError(f"Région {region_id}: linkedin_extra_queries invalide")
     if "france" not in regions:
         raise ValueError("Le catalogue des régions doit contenir 'france'")
     return regions
@@ -159,7 +184,11 @@ SOURCE_NAMES = [
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
-TITLE_MUST_MATCH = re.compile(r"\b(stage|stagiaire|intern|internship|pfa|pfe)\b", re.I)
+TITLE_MUST_MATCH = re.compile(
+    r"\b(stage|stagiaire|intern|internship|pfa|pfe"
+    r"|projet\s+de\s+fin\s+d['’]?\s*[ée]tudes?)\b",
+    re.I,
+)
 
 # Fenêtre métier de collecte : exactement 24 heures glissantes en UTC. La
 # configuration en jours reste utilisée par l'interface et la rétention ; elle
@@ -175,6 +204,12 @@ DESCRIPTION_POSITIVE_WEIGHT = 1
 TITLE_NEGATIVE_WEIGHT = -4
 DESCRIPTION_NEGATIVE_WEIGHT = -1
 DOMAIN_SCORE_THRESHOLD = 2
+# Sans aucun mot positif dans le titre, combien de mots positifs distincts la
+# description seule doit citer. Défaut historique : 2 (= le seuil). Un domaine
+# peut le relever via ``description_only_min_positives`` : data_ia exige 3,
+# car « SQL + Power BI » dans une offre d'assistant ne doit pas suffire depuis
+# que ces outils génériques sont des signaux positifs.
+DESCRIPTION_ONLY_MIN_POSITIVES = 2
 
 # Réseau / robustesse
 REQUEST_TIMEOUT = 20          # secondes, pour tous les appels requests
@@ -182,7 +217,10 @@ MAX_CONSECUTIVE_BLOCKS = 2    # 403/429 consécutifs avant d'arrêter la source 
 MAX_PARALLEL_SOURCES = 4      # parallélisme borné entre sources indépendantes
 APEC_DETAIL_MAX_CALLS = 1000  # plafond technique, jamais un quota métier
 MAX_LINKEDIN_QUERIES = 1000   # plafond anti-boucle ; couvre le catalogue entier
-MAX_LINKEDIN_DESCRIPTION_QUERIES = 3  # descriptions des requêtes prioritaires
+# Descriptions LinkedIn de la seule requête prioritaire. Mesuré le 25/11/2026 :
+# une requête coûte ~50 s sans description et ~145 s avec (une page par
+# offre) ; 3 requêtes enrichies portaient le run France+Maroc à 14 min 35.
+MAX_LINKEDIN_DESCRIPTION_QUERIES = 1
 
 # Plafonds purement techniques de JobSpy. Ils déclenchent sa pagination interne
 # jusqu'à la fin réelle des résultats ; LinkedIn plafonne lui-même à 1000. Ces
@@ -207,8 +245,9 @@ ADZUNA_PAGE_SIZE = 50
 FRANCE_TRAVAIL_PAGE_SIZE = 150
 # LinkedIn Posts (X-ray) : un moteur de recherche public, jamais LinkedIn
 # directement. Budget calibré sur le quota gratuit Tavily (1000 crédits/mois,
-# 1 crédit par recherche) : 2 créneaux/jour × 4 requêtes × 4 régions
-# = 32 crédits/jour ≈ 960/mois. Hors créneau, la source est simplement
+# 1 crédit par recherche) : 2 créneaux/jour × 4 requêtes × régions actives
+# (2 : France + Maroc) = 16 crédits/jour ≈ 480/mois ; le plafond de 4 régions
+# resterait sous 1000/mois. Hors créneau, la source est simplement
 # différée — jamais un crédit dépensé. Pagination limitée : ni Tavily ni
 # Exa ne paginent au-delà d'une page.
 LINKEDIN_POSTS_QUERY_BUDGET = 4
@@ -291,6 +330,9 @@ class SourceStatus:
     duration_s: float = 0.0
     http_error: str = ""
     note: str = ""
+    # Rendement par requête (JobSpy) : {requête: {"raw": n, "accepted": m}}.
+    # Sert à mesurer puis élaguer les requêtes qui n'apportent rien.
+    query_yield: dict = field(default_factory=dict)
 
     def add_reject(self, reason: str | None) -> None:
         reason = reason or "raison inconnue"
@@ -549,30 +591,53 @@ def keyword_matches(text: str, keyword: str) -> bool:
     return bool(keyword_pattern(keyword).search(normalize_for_match(text)))
 
 
-def score_domain(title: str, description: str, domain: dict) -> int:
-    """Score déterministe ; chaque mot-clé compte au plus une fois par zone."""
+def _strip_exceptions(text: str, exceptions: list[str]) -> str:
+    """Retire les expressions qui neutralisent un négatif avant son test."""
+    for phrase in exceptions:
+        text = keyword_pattern(phrase).sub(" ", normalize_for_match(text))
+    return text
+
+
+def _domain_signals(title: str, description: str, domain: dict) -> tuple[int, int, int]:
+    """(score, positifs dans le titre, positifs dans la description)."""
     positive = domain["positive"]
     negative = domain["negative"]
-    return (
-        TITLE_POSITIVE_WEIGHT * sum(keyword_matches(title, word) for word in positive)
-        + DESCRIPTION_POSITIVE_WEIGHT
-        * sum(keyword_matches(description, word) for word in positive)
-        + TITLE_NEGATIVE_WEIGHT * sum(keyword_matches(title, word) for word in negative)
+    title_only = domain.get("negative_title_only", [])
+    exceptions = domain.get("negative_exceptions", [])
+    neg_title = _strip_exceptions(title, exceptions)
+    neg_description = _strip_exceptions(description, exceptions)
+    title_hits = sum(keyword_matches(title, word) for word in positive)
+    description_hits = sum(keyword_matches(description, word) for word in positive)
+    score = (
+        TITLE_POSITIVE_WEIGHT * title_hits
+        + DESCRIPTION_POSITIVE_WEIGHT * description_hits
+        + TITLE_NEGATIVE_WEIGHT
+        * sum(keyword_matches(neg_title, word) for word in [*negative, *title_only])
         + DESCRIPTION_NEGATIVE_WEIGHT
-        * sum(keyword_matches(description, word) for word in negative)
+        * sum(keyword_matches(neg_description, word) for word in negative)
     )
+    return score, title_hits, description_hits
+
+
+def score_domain(title: str, description: str, domain: dict) -> int:
+    """Score déterministe ; chaque mot-clé compte au plus une fois par zone."""
+    return _domain_signals(title, description, domain)[0]
 
 
 def score_offer_domains(title: str, description: str,
                         domains: dict | None = None,
                         active_ids: list[str] | None = None) -> tuple[list[str], dict[str, int]]:
     selected = active_domains(domains, active_ids)
-    scores = {
-        domain_id: score_domain(title, description, domain)
-        for domain_id, domain in selected.items()
-    }
-    matched = [domain_id for domain_id, score in scores.items()
-               if score >= DOMAIN_SCORE_THRESHOLD]
+    scores: dict[str, int] = {}
+    matched: list[str] = []
+    for domain_id, domain in selected.items():
+        score, title_hits, description_hits = _domain_signals(title, description, domain)
+        scores[domain_id] = score
+        min_description_hits = domain.get(
+            "description_only_min_positives", DESCRIPTION_ONLY_MIN_POSITIVES)
+        if score >= DOMAIN_SCORE_THRESHOLD and (
+                title_hits or description_hits >= min_description_hits):
+            matched.append(domain_id)
     return matched, scores
 
 
@@ -601,9 +666,26 @@ def offer_id(url: str, title: str, company: str) -> str:
 
 
 def is_highlighted_company(company: str, config: dict | None = None) -> bool:
+    """Mot entier, insensible aux accents : « octo » ne matche plus « Octopus »."""
     config = config or APP_CONFIG
-    c = (company or "").lower()
-    return any(keyword.lower() in c for keyword in config["highlight_companies"])
+    return any(keyword_matches(company or "", keyword)
+               for keyword in config["highlight_companies"])
+
+
+def shows_highlight(offer: dict, config: dict | None = None) -> bool:
+    """Badge entreprise limité aux régions où il a un sens.
+
+    « Visa-friendly probable » ne concerne que les offres en France : une
+    filiale marocaine du même groupe (Capgemini Maroc…) ne le porte pas.
+    Sans ``highlight_regions`` dans la config, toutes les régions l'affichent.
+    """
+    config = config or APP_CONFIG
+    if not offer.get("highlighted"):
+        return False
+    allowed = config.get("highlight_regions")
+    if allowed is None:
+        return True
+    return any(region_id in allowed for region_id in offer.get("regions", []))
 
 
 def clean_text(value, default="") -> str:
@@ -771,6 +853,10 @@ def publication_age(date_value: str) -> str:
     return f"il y a {days} jours"
 
 
+def plural(count: int, word: str) -> str:
+    return f"{count} {word}{'s' if count > 1 else ''}"
+
+
 def human_duration(seconds: float) -> str:
     seconds = int(round(seconds))
     if seconds < 60:
@@ -813,6 +899,13 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
     offers: dict[str, dict] = {}
     consecutive_blocks = attempted = failed = 0
     site_queries = source_queries(site, domains, active_ids)
+    if site == "linkedin":
+        # Variantes propres à un marché (ex. intitulés anglais au Maroc),
+        # ajoutées après le catalogue métier et dédoublonnées.
+        site_queries = list(dict.fromkeys(
+            site_queries + [query.strip() for query in
+                            region_config.get("linkedin_extra_queries", [])]
+        ))
     logger_name = {"linkedin": "LinkedIn", "indeed": "Indeed"}[site]
 
     class CaptureHandler(logging.Handler):
@@ -850,9 +943,9 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             verbose=int(os.environ.get("JOBSPY_VERBOSE", "1")),
         )
         if site == "linkedin":
-            # Les trois requêtes les plus prioritaires reçoivent la description
-            # complète. Ce compromis réduit le biais « titre seul » sans payer
-            # le coût réseau de l'enrichissement sur les six requêtes.
+            # Les MAX_LINKEDIN_DESCRIPTION_QUERIES premières requêtes reçoivent
+            # la description complète : compromis entre biais « titre seul » et
+            # coût réseau (une page LinkedIn par offre).
             kwargs["linkedin_fetch_description"] = (
                 site_queries.index(query) < MAX_LINKEDIN_DESCRIPTION_QUERIES
             )
@@ -912,10 +1005,13 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
             continue
         status.raw_count += raw
         print(f"[INFO] {label} '{query}' : {raw} résultats bruts")
+        accepted_before = status.accepted_count
         for _, row in df.iterrows():
             offer, reason = make_offer(
                 row.get("title"), row.get("company"),
-                ", ".join(filter(None, [str(row.get("city") or ""), str(row.get("state") or "")])) or "France",
+                ", ".join(filter(None, [clean_text(row.get("city")),
+                                        clean_text(row.get("state"))]))
+                or region_config["label"],
                 row.get("job_url"), label, row.get("date_posted"),
                 description=clean_text(row.get("description")),
                 domains=domains, active_ids=active_ids,
@@ -923,6 +1019,9 @@ def fetch_jobspy_site(site: str, label: str, scrape_fn=None,
                 freshness_verified=True,
             )
             register_offer(status, offers, offer, reason)
+        status.query_yield[query] = {
+            "raw": raw, "accepted": status.accepted_count - accepted_before,
+        }
 
     status.duration_s = round(time.monotonic() - started, 1)
     if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS or (
@@ -1019,8 +1118,14 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
         source_keywords(query) for query in active_queries(domains, active_ids)
     ))
     raw_by_number: dict[str, dict] = {}
-    failed = 0
+    failed = consecutive_blocks = 0
     for query in queries:
+        if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+            # Même garde que les autres sources : la recherche elle-même est
+            # bloquée, inutile de marteler APEC avec les requêtes restantes.
+            status.note = "circuit breaker : requêtes restantes ignorées"
+            failed += 1
+            continue
         query_succeeded = False
         stale_pages = 0
         for page in range(MAX_SOURCE_PAGES):
@@ -1037,9 +1142,12 @@ def fetch_apec_all(region_id: str = DEFAULT_REGION_ID,
                 code = block_code(exc)
                 status.http_error = (f"HTTP {code}" if code
                                      else (status.http_error or str(exc)[:200]))
+                if code:
+                    consecutive_blocks += 1
                 print(f"[WARN] APEC '{query}' page {page + 1} a échoué : {exc}",
                       file=sys.stderr)
                 break
+            consecutive_blocks = 0
             query_succeeded = True
             status.pages_fetched += 1
             status.raw_count += len(results)
@@ -1856,9 +1964,20 @@ def load_seen() -> set:
     return set()
 
 
+SEEN_MAX_ENTRIES = 5000
+
+
 def save_seen(ids: set) -> None:
+    """Ordre d'arrivée conservé : la troncature retire les plus anciens.
+
+    Trier les identifiants (des hash) supprimait des entrées au hasard, qui
+    pouvaient alors être ré-annoncées comme nouvelles.
+    """
     SEEN_FILE.parent.mkdir(parents=True, exist_ok=True)
-    SEEN_FILE.write_text(json.dumps(sorted(ids)[-5000:], ensure_ascii=False, indent=1))
+    previous = json.loads(SEEN_FILE.read_text()) if SEEN_FILE.exists() else []
+    ordered = [value for value in previous if value in ids]
+    ordered += sorted(ids - set(ordered))
+    SEEN_FILE.write_text(json.dumps(ordered[-SEEN_MAX_ENTRIES:], ensure_ascii=False, indent=1))
 
 
 def load_offer_store(path: Path = OFFERS_FILE) -> dict[str, dict]:
@@ -1927,8 +2046,10 @@ def reconcile_offer_store(found_offers: list[dict], statuses: list[SourceStatus]
     """Fusionne un run dans le store sans clignotement lors d'une panne source.
 
     Une absence après un run sain rend l'offre inactive immédiatement. Une
-    absence causée par un connecteur bloqué laisse l'offre inchangée. Les
-    entrées inactives confirmées et âgées de plus de 14 jours sont purgées.
+    absence causée par un connecteur bloqué laisse l'offre inchangée. Sont
+    purgées les entrées inactives confirmées vues pour la première fois il y a
+    plus de ``retention_days`` jours, et toute entrée qu'aucun run n'a revue
+    depuis ``retention_days`` jours.
     """
     run_at = (run_at or datetime.now(timezone.utc)).astimezone(timezone.utc)
     run_iso = run_at.isoformat(timespec="seconds")
@@ -1945,6 +2066,13 @@ def reconcile_offer_store(found_offers: list[dict], statuses: list[SourceStatus]
             updated = dict(existing)
             updated.update(found)
             updated["first_seen"] = first_seen
+            if not found.get("date_known", bool(found.get("date"))):
+                # Date inconnue : sort_date vaut l'heure de la PREMIÈRE
+                # observation. La rafraîchir à chaque run ferait remonter en
+                # tête les offres anciennes revues, au lieu des nouvelles
+                # (cas de toutes les offres LinkedIn : JobSpy 1.1.82 ne lit
+                # plus leur date).
+                updated["sort_date"] = existing.get("sort_date") or found["sort_date"]
             updated["last_seen_run"] = run_iso
             updated["active"] = True
             if source_succeeded_for_offer(found, statuses):
@@ -1976,49 +2104,67 @@ def reconcile_offer_store(found_offers: list[dict], statuses: list[SourceStatus]
             and last_seen_success is not None
             and (last_seen_run is None or last_seen_success >= last_seen_run)
         )
-        if first_seen and first_seen < cutoff and confirmed_absent:
+        # Plus vue par aucun run depuis la rétention : ni affichable (la
+        # fenêtre d'affichage est plus courte) ni utile à la détection de
+        # disparition. Couvre les entrées qu'aucun run sain ne peut plus
+        # confirmer absentes : région ou source désactivée, source rotative.
+        last_sighting = last_seen_run or first_seen
+        stale = last_sighting is not None and last_sighting < cutoff
+        if (first_seen and first_seen < cutoff and confirmed_absent) or stale:
             del merged[offer_id_value]
     return merged
 
 
+# Sources dont la réponse est la liste complète des offres encore ouvertes
+# (aucun filtre de date côté serveur) : une absence confirmée y signifie une
+# offre fermée. Les autres sources ne renvoient que les dernières 24 h ; une
+# offre qui en sort n'est pas fermée pour autant.
+CATALOG_SNAPSHOT_SOURCES = {"APEC", "The Muse"}
+
+
 def dashboard_offers_from_store(store: dict[str, dict],
                                 now: datetime | None = None,
-                                days_window: int = MAX_OFFER_AGE_DAYS) -> list[dict]:
-    """Offres actives validées sur 24 h, extraites du store persistant.
+                                days_window: int = MAX_OFFER_AGE_DAYS,
+                                active_domain_ids: list[str] | None = None,
+                                active_region_ids: list[str] | None = None) -> list[dict]:
+    """Offres affichables, extraites du store persistant.
 
-    ``days_window`` reste réservé au comportement historique des dates
-    inconnues. Une source JobSpy ayant appliqué son filtre natif renseigne
-    ``freshness_verified_at`` sans inventer d'heure de publication.
+    Une offre est visible si sa source l'a revue dans les dernières 24 h, ou
+    si elle a été publiée (date inconnue : vue pour la première fois) dans
+    les ``days_window`` derniers jours. La collecte reste limitée à 24 h ;
+    l'affichage tient la promesse « 7 derniers jours » du dashboard. Seule une
+    source « catalogue complet » peut retirer une offre avant l'échéance.
+
+    Avec ``active_domain_ids`` / ``active_region_ids``, les offres du store
+    rattachées uniquement à des domaines ou régions désactivés sont masquées
+    (elles restent dans le store jusqu'à leur purge par rétention).
     """
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     cutoff = now - timedelta(hours=OFFER_WINDOW_HOURS)
+    window_start = now - timedelta(days=days_window)
     visible: list[dict] = []
     for offer in store.values():
-        if not offer.get("active", True):
+        if active_domain_ids is not None and not (
+                set(offer.get("domains", [])) & set(active_domain_ids)):
+            continue
+        if active_region_ids is not None and not (
+                set(offer.get("regions") or [DEFAULT_REGION_ID]) & set(active_region_ids)):
+            continue
+        active = offer.get("active", True)
+        verified_at = _store_datetime(offer.get("freshness_verified_at", ""))
+        if active and verified_at and verified_at >= cutoff:
+            visible.append(offer)
+            continue
+        if not active and offer.get("source") in CATALOG_SNAPSHOT_SOURCES:
             continue
         if offer.get("date_known", bool(offer.get("date"))):
-            verified_at = _store_datetime(offer.get("freshness_verified_at", ""))
-            published = _store_datetime(
-                offer.get("sort_date", "") or offer.get("date", "")
-            )
-            if verified_at:
-                if verified_at < cutoff:
-                    continue
-            elif published and published < cutoff:
-                continue
+            reference = _store_datetime(offer.get("sort_date", "") or offer.get("date", ""))
         else:
-            # Date de publication inconnue mais fraîcheur garantie côté
-            # source au moment de la collecte : l'offre expire 24 h après
-            # sa dernière vérification, pas après ``days_window``.
-            verified_at = _store_datetime(offer.get("freshness_verified_at", ""))
-            if verified_at:
-                if verified_at < cutoff:
-                    continue
-            else:
-                first_seen = _store_datetime(offer.get("first_seen", ""))
-                if first_seen and first_seen < now - timedelta(days=days_window):
-                    continue
-        visible.append(offer)
+            # Date de publication inconnue : conservée et datée par sa
+            # première observation, comme historiquement.
+            reference = _store_datetime(offer.get("first_seen", ""))
+        if reference is None or reference >= window_start:
+            visible.append(offer)
     return visible
 
 
@@ -2045,7 +2191,7 @@ def send_email(new_offers: list[dict], dashboard_url: str,
         parts.append(f"<h3>{html.escape(src)} ({len(lst)})</h3>")
         for o in lst:
             badge = (f" ✅ <b>{html.escape(config['highlight_label'])}</b>"
-                     if o.get("highlighted") else "")
+                     if shows_highlight(o, config) else "")
             labels = [domains[domain_id]["label"] for domain_id in o.get("domains", [])
                       if domain_id in domains]
             region_labels = [regions[region_id]["label"] for region_id in o.get("regions", [])
@@ -2110,6 +2256,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
                             for name in SOURCE_NAMES]
     active_region_labels = [regions[region_id]["label"]
                             for region_id in active_region_ids]
+    active_domain_labels = [domains[domain_id]["label"] for domain_id in active_ids]
 
     final_counts = {name: 0 for name in SOURCE_NAMES}
     domain_counts = {domain_id: 0 for domain_id in active_ids}
@@ -2155,7 +2302,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
             f'<span class="tag region">{html.escape(regions[region_id]["label"])}</span>'
             for region_id in offer_regions
         )
-        highlighted = bool(o.get("highlighted"))
+        highlighted = shows_highlight(o, config)
         url = safe_url(o["url"])
         link = (f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
                 if url else title)
@@ -2217,8 +2364,10 @@ def render_dashboard(offers: list[dict], new_ids: set,
         for domain_id in active_ids
     )
     single_domain_class = " single-domain" if len(active_ids) == 1 else ""
-    default_region_id = (DEFAULT_REGION_ID if DEFAULT_REGION_ID in active_region_ids
-                         else active_region_ids[0])
+    # Plusieurs marchés actifs : tous visibles d'emblée (« Toutes »), le badge
+    # région de chaque carte suffit à les distinguer. Une seule région : son
+    # chip reste actif, le groupe étant masqué.
+    default_region_id = "*" if len(active_region_ids) > 1 else active_region_ids[0]
     region_chips = "".join(
         f'<button class="fchip region-chip{(" on" if region_id == default_region_id else "")}" '
         f'data-region="{html.escape(region_id, quote=True)}" '
@@ -2263,7 +2412,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
     <span class="brand-mark" aria-hidden="true">◎</span>
     <span>{app_name}</span>
   </a>
-  <div class="automation-status"><span class="live-dot" aria-hidden="true"></span><span>Automatisation active · toutes les heures</span></div>
+  <div class="automation-status"><span class="live-dot" aria-hidden="true"></span><span>Scan automatique · toutes les heures, 7 h–22 h (Paris)</span></div>
 </header>
 <main id="top">
 <section class="hero" aria-labelledby="pageTitle">
@@ -2293,7 +2442,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
 
 <div class="catalog-summary">
   <span class="catalog-icon" aria-hidden="true">⌁</span>
-  <span><strong>{len(active_ids)} domaines</strong> et <strong>{len(active_region_ids)} régions</strong> analysés : {html.escape(' · '.join(active_region_labels))}</span>
+  <span><strong>{plural(len(active_ids), "domaine")}</strong> et <strong>{plural(len(active_region_ids), "région")}</strong> analysés : {html.escape(' · '.join(active_domain_labels + active_region_labels))}</span>
 </div>
 
 <details class="source-health">
@@ -2325,7 +2474,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
     <button class="fchip domain-chip on" data-domain="*" aria-pressed="true">Tous</button>{domain_chips}
   </div>
   <div class="filter-group{single_region_class}" translate="no"><span class="filter-label">Région</span>
-    <button class="fchip region-chip" data-region="*" aria-pressed="false">Toutes</button>{region_chips}
+    <button class="fchip region-chip{" on" if default_region_id == "*" else ""}" data-region="*" aria-pressed="{"true" if default_region_id == "*" else "false"}">Toutes</button>{region_chips}
   </div>
   <div class="filter-group" translate="no"><span class="filter-label">Options</span>
     <button id="highlightFilter" class="fchip" aria-pressed="false">✓ {highlight_label}</button>
@@ -2389,7 +2538,10 @@ def main() -> None:
     offer_store = reconcile_offer_store(
         list(all_offers.values()), statuses, run_at=run_at
     )
-    dashboard_offers = dashboard_offers_from_store(offer_store, run_at)
+    dashboard_offers = dashboard_offers_from_store(
+        offer_store, run_at,
+        active_domain_ids=active_ids, active_region_ids=active_region_ids,
+    )
 
     final_counts = {name: 0 for name in SOURCE_NAMES}
     for o in all_offers.values():
@@ -2420,6 +2572,8 @@ def main() -> None:
               f"doublons={st.duplicate_count} pages={st.pages_fetched} "
               f"dates_inconnues={st.unknown_date_count} "
               f"durée={st.duration_s}s · rejets : {reasons}{extra}{http}")
+        for query, stats in st.query_yield.items():
+            print(f"      · '{query}' : bruts={stats['raw']} acceptés={stats['accepted']}")
     for domain_id, count in domain_counts.items():
         print(f"  - domaine {domain_id}: {count} offres")
     for region_id, count in region_counts.items():

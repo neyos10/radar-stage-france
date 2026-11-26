@@ -446,12 +446,9 @@ h1 {
   padding: 6px 0;
 }
 
-.filter-group.single-region {
-  display: none;
-}
-
+.filter-group.single-region,
 .filter-group.single-domain {
-  opacity: 0.82;
+  display: none;
 }
 
 .filter-label {
