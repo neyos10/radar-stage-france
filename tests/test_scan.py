@@ -1015,8 +1015,7 @@ class TestRetiredNoiseSources(unittest.TestCase):
         # mais ne sont ni interrogés ni affichés.
         self.assertEqual(
             scan.active_source_names(),
-            ["LinkedIn", "Indeed", "France Travail", "LinkedIn Posts",
-             "Dreamjob", "Sites Maroc"],
+            ["LinkedIn", "Indeed", "France Travail", "LinkedIn Posts", "Sites Maroc"],
         )
 
     def test_run_all_sources_never_threads_glassdoor_or_google(self):
