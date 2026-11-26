@@ -58,8 +58,10 @@ jobs:
           # — optionnels : le scan tourne même sans (JobSpy n'a besoin de rien)
           FT_CLIENT_ID: ${{ secrets.FT_CLIENT_ID }}
           FT_CLIENT_SECRET: ${{ secrets.FT_CLIENT_SECRET }}
-          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
-          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          # Adzuna désactivé (clé à renouveler) : la source s'affiche « non
+          # configurée ». Pour la réactiver, remettre :
+          #   ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          #   ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           THEMUSE_API_KEY: ${{ secrets.THEMUSE_API_KEY }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
