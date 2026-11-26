@@ -153,3 +153,16 @@ observé (commerciale, SEO, Salesforce, full stack, Java, documentation).
 Descriptions LinkedIn limitées à la 1re requête (145 s contre 50 s par
 requête). Variantes anglaises au Maroc mesurées à 0 offre acceptée, donc
 retirées (`linkedin_extra_queries: []`).
+
+### Mise à jour du 26/11/2026 — sources
+
+- Runs GitHub Actions : APEC et The Muse répondent 403 (anti-bot) aussi
+  depuis les runners. Désactivées via `disabled_sources`, code conservé.
+- Nouvelles sources Maroc : **Dreamjob** (RSS « Stages ») et **Sites Maroc**
+  (Stagiaires.ma, ReKrute, Emploi.ma via l'index Tavily). Premier test réel :
+  2 + 5 offres PFE IT/data au Maroc, contre 6 pour LinkedIn + Indeed réunis.
+- LinkedIn Posts : nouveau format de requête Tavily et fenêtre d'une
+  semaine. Rendement toujours quasi nul (posts peu indexés par les moteurs).
+- `TITLE_MUST_MATCH` accepte les pluriels (stagiaires, stages, interns).
+- Les identifiants d'API sont masqués dans toutes les erreurs enregistrées
+  (`safe_error`) : une clé Adzuna avait fuité dans `source_status.json`.

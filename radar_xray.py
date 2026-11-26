@@ -709,18 +709,21 @@ def _adapt_query_for_tavily(query: str, region_hint: str = "") -> str:
     """Reconstruit la requête au format qui remonte des posts chez Tavily.
 
     Tavily ne supporte pas l'opérateur ``site:`` (le domaine est restreint via
-    ``include_domains``) et sa recherche est sémantique. Mesuré en conditions
-    réelles : les termes entre guillemets précédés de ``post`` et suivis de
-    ``recrutement`` + la région ramènent des ``/posts/`` de recruteurs, là où
-    la requête brute ne renvoie que du bruit SEO hors ``/posts/``.
+    ``include_domains``) et sa recherche est sémantique : les guillemets et le
+    mot « post » n'aident pas. Mesuré le 26/11/2026 sur les mêmes termes :
+    ``post "stage" "data analyst" recrutement Maroc`` → 0 post pertinent,
+    ``stage PFE data analyst Maroc recrute stagiaire`` → le post « Saham Bank
+    recrute 22 stagiaires PFE en IT ». Le vocabulaire des annonces de
+    recruteurs (PFE, recrute, stagiaire) est ce qui fait remonter les posts.
     """
     quoted_terms = _QUOTED_TERM_RE.findall(query)
-    base = (
-        " ".join(f'"{term}"' for term in quoted_terms) if quoted_terms
-        else _SITE_PREFIX_RE.sub("", query).strip()
+    terms = (
+        [term for term in quoted_terms if term.casefold() != "stage"] if quoted_terms
+        else [_SITE_PREFIX_RE.sub("", query).strip()]
     )
-    suffix = f"recrutement {region_hint}".strip()
-    return f"post {base} {suffix}".strip()
+    base = " ".join(term for term in terms if term)
+    return " ".join(part for part in ("stage PFE", base, region_hint,
+                                      "recrute stagiaire") if part).strip()
 
 
 def _parse_tavily_result(item: Any, now: datetime) -> SearchResult | None:
@@ -747,8 +750,9 @@ def _parse_tavily_result(item: Any, now: datetime) -> SearchResult | None:
         author=extract_linkedin_author(title),
         published_at=published_at,
         provider=TAVILY_PROVIDER_NAME,
-        # time_range="day" est appliqué côté serveur : la fraîcheur est
-        # garantie par le moteur même sans date précise dans l'extrait.
+        # time_range="week" est appliqué côté serveur : la fraîcheur (au
+        # sens de la fenêtre du dashboard) est garantie par le moteur même
+        # sans date précise dans l'extrait.
         source_fresh=True,
     )
 
@@ -813,7 +817,10 @@ class TavilyProvider:
             "search_depth": "basic",
             "max_results": min(max_results, 20),
             "include_domains": list(LINKEDIN_POST_HOSTS),
-            "time_range": "day",
+            # Une semaine, comme la fenêtre du dashboard : les posts de
+            # recruteurs sont rares et indexés avec retard ; sur 24 h le
+            # moteur n'en renvoyait presque jamais.
+            "time_range": "week",
         }
         headers = {
             "Authorization": f"Bearer {self.api_key}",

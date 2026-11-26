@@ -51,11 +51,13 @@ import smtplib
 import sys
 import time
 import unicodedata
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.utils import parsedate_to_datetime
 from functools import lru_cache
 from pathlib import Path
 
@@ -143,6 +145,10 @@ def load_config(path: Path = CONFIG_FILE) -> dict:
             not isinstance(highlight_regions, list)
             or not all(isinstance(value, str) for value in highlight_regions)):
         raise ValueError("highlight_regions doit être une liste d'identifiants de région")
+    disabled = config.get("disabled_sources", {})
+    if not isinstance(disabled, dict) or not all(
+            isinstance(key, str) and isinstance(value, str) for key, value in disabled.items()):
+        raise ValueError("disabled_sources doit associer un nom de source à une raison")
     return config
 
 
@@ -167,6 +173,9 @@ def load_regions(path: Path = REGIONS_FILE) -> dict:
         if not isinstance(extra, list) or not all(
                 isinstance(value, str) and value.strip() for value in extra):
             raise ValueError(f"Région {region_id}: linkedin_extra_queries invalide")
+        local = region.get("local_sources", [])
+        if not isinstance(local, list) or not all(isinstance(value, str) for value in local):
+            raise ValueError(f"Région {region_id}: local_sources invalide")
     if "france" not in regions:
         raise ValueError("Le catalogue des régions doit contenir 'france'")
     return regions
@@ -179,13 +188,22 @@ DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
     "LinkedIn", "Indeed", "APEC", "Adzuna", "The Muse",
-    "France Travail", "LinkedIn Posts",
+    "France Travail", "LinkedIn Posts", "Dreamjob", "Sites Maroc",
 ]
+
+
+def active_source_names(config: dict | None = None) -> list[str]:
+    """Sources interrogées et affichées. ``disabled_sources`` (config) retire
+    une source sans supprimer son code : ni appel réseau, ni puce au dashboard.
+    """
+    config = config or APP_CONFIG
+    disabled = config.get("disabled_sources", {})
+    return [name for name in SOURCE_NAMES if name not in disabled]
 
 # Mots qui doivent apparaître dans le titre pour garder l'offre
 # (filtre anti-bruit : les scrapers remontent parfois des CDI)
 TITLE_MUST_MATCH = re.compile(
-    r"\b(stage|stagiaire|intern|internship|pfa|pfe"
+    r"\b(stages?|stagiaires?|interns?|internships?|pfa|pfe"
     r"|projet\s+de\s+fin\s+d['’]?\s*[ée]tudes?)\b",
     re.I,
 )
@@ -259,7 +277,7 @@ LINKEDIN_POSTS_RUN_HOURS_UTC = (6, 18)
 # sa disparition (la requête qui l'avait trouvée n'a pas été rejouée). Ces
 # sources ne confirment donc jamais une absence ; leurs offres expirent par
 # la fenêtre de fraîcheur, pas par non-réobservation.
-ROTATING_COVERAGE_SOURCES = {"LinkedIn Posts"}
+ROTATING_COVERAGE_SOURCES = {"LinkedIn Posts", "Sites Maroc"}
 
 # Une offre confirmée absente reste archivée brièvement avant purge. Cette
 # marge protège l'historique pendant un blocage prolongé tout en gardant le
@@ -338,7 +356,7 @@ class SourceStatus:
         reason = reason or "raison inconnue"
         self.rejected_count += 1
         self.reject_reasons[reason] = self.reject_reasons.get(reason, 0) + 1
-        if reason == REASON_TOO_OLD:
+        if reason.startswith("plus de "):
             self.too_old_count += 1
         elif reason == REASON_DUPLICATE:
             self.duplicate_count += 1
@@ -639,13 +657,37 @@ def score_domain(title: str, description: str, domain: dict) -> int:
     return _domain_signals(title, description, domain)[0]
 
 
+def apply_scoring_overrides(domain: dict, overrides: dict | None) -> dict:
+    """Ajuste un domaine pour une source au format particulier.
+
+    ``extra_positive`` ajoute des positifs, ``ignore_negative`` retire des
+    négatifs (titre et titre seul), ``description_only_min_positives``
+    remplace le minimum de la description seule. Le catalogue n'est jamais
+    modifié.
+    """
+    if not overrides:
+        return domain
+    ignored = {value.casefold() for value in overrides.get("ignore_negative", [])}
+    adjusted = dict(domain)
+    adjusted["positive"] = list(dict.fromkeys(
+        domain["positive"] + list(overrides.get("extra_positive", []))))
+    for field_name in ("negative", "negative_title_only"):
+        adjusted[field_name] = [value for value in domain.get(field_name, [])
+                                if value.casefold() not in ignored]
+    if "description_only_min_positives" in overrides:
+        adjusted["description_only_min_positives"] = overrides["description_only_min_positives"]
+    return adjusted
+
+
 def score_offer_domains(title: str, description: str,
                         domains: dict | None = None,
-                        active_ids: list[str] | None = None) -> tuple[list[str], dict[str, int]]:
+                        active_ids: list[str] | None = None,
+                        overrides: dict | None = None) -> tuple[list[str], dict[str, int]]:
     selected = active_domains(domains, active_ids)
     scores: dict[str, int] = {}
     matched: list[str] = []
     for domain_id, domain in selected.items():
+        domain = apply_scoring_overrides(domain, overrides)
         score, title_hits, description_hits = _domain_signals(title, description, domain)
         scores[domain_id] = score
         min_description_hits = domain.get(
@@ -788,7 +830,9 @@ def make_offer(title, company, location, url, source, date="",
                regions: dict | None = None,
                now: datetime | None = None,
                freshness_verified: bool = False,
-               reject_missing_date: bool = False) -> tuple[dict | None, str | None]:
+               reject_missing_date: bool = False,
+               max_age_hours: int = OFFER_WINDOW_HOURS,
+               scoring: dict | None = None) -> tuple[dict | None, str | None]:
     """Normalise une offre. Retourne (offre, None) ou (None, raison_du_rejet)."""
     regions = regions or REGIONS
     if region_id not in regions:
@@ -805,8 +849,10 @@ def make_offer(title, company, location, url, source, date="",
     now = now.astimezone(timezone.utc)
     published_at = parse_offer_date(date, now)
     if (published_at and not freshness_verified
-            and published_at < now - timedelta(hours=OFFER_WINDOW_HOURS)):
+            and published_at < now - timedelta(hours=max_age_hours)):
         _log_old_date_rejection(source, title, date, published_at)
+        if max_age_hours != OFFER_WINDOW_HOURS:
+            return None, f"plus de {max_age_hours // 24} jours"
         return None, REASON_TOO_OLD
     if published_at is None and reject_missing_date:
         # Une source X-ray n'a que des indices approximatifs de date : sans
@@ -822,7 +868,8 @@ def make_offer(title, company, location, url, source, date="",
             file=sys.stderr,
         )
     matched_domains, domain_scores = score_offer_domains(
-        title, description, domains=domains, active_ids=active_ids
+        title, description, domains=domains, active_ids=active_ids,
+        overrides=scoring,
     )
     if not matched_domains:
         return None, REASON_NO_DOMAIN
@@ -1856,6 +1903,270 @@ def fetch_linkedin_posts_all(region_id: str = DEFAULT_REGION_ID,
 
 
 # ============================================================
+# SOURCES LOCALES MAROC : Dreamjob (RSS) et Sites Maroc (Tavily)
+# ============================================================
+
+def local_source_status(source: str, region_id: str, region_config: dict,
+                        regions: dict) -> SourceStatus | None:
+    """Statut « non applicable » si la région n'active pas cette source."""
+    if source in region_config.get("local_sources", []):
+        return None
+    status = source_status(source, region_id, regions)
+    status.status = "not_applicable_region"
+    status.note = f"source locale non activée pour {region_config['label']}"
+    log_collection_summary(status)
+    return status
+
+
+# Les deux sources marocaines publient des titres et résumés éditoriaux
+# (« Saham Bank recrute des stagiaires PFE en IT, data et risques ») : le mot
+# « data » seul y est le signal métier, « recrute »/« recrutement » figure dans
+# presque chaque titre, et le résumé d'une ou deux phrases est trop court pour
+# exiger trois mots positifs. Mesuré sur 60 annonces Dreamjob réelles.
+MAROC_LOCAL_SCORING = {
+    "extra_positive": ["data"],
+    "ignore_negative": ["recrutement"],
+    "description_only_min_positives": 1,
+}
+MOROCCAN_CITIES = (
+    "Casablanca", "Rabat", "Tanger", "Marrakech", "Fès", "Agadir", "Kénitra",
+    "Meknès", "Oujda", "Tétouan", "Mohammedia", "Benguerir", "El Jadida",
+    "Settat", "Nador", "Bouskoura", "Témara", "Salé", "Berrechid", "Laâyoune",
+)
+
+
+def moroccan_city(text: str, default: str = "Maroc") -> str:
+    for city in MOROCCAN_CITIES:
+        if keyword_matches(text, city):
+            return f"{city}, Maroc"
+    return default
+
+
+DREAMJOB_FEED = "https://www.dreamjob.ma/stage/feed/"
+DREAMJOB_MAX_PAGES = 2
+# Identifie le radar auprès du site ; le flux RSS est autorisé par son
+# robots.txt (seules /?s=, /wp-admin et /wp-json sont interdites).
+RADAR_USER_AGENT = "radar-stage/1.0 (+https://neyos10.github.io/radar-stage-france/)"
+DREAMJOB_FOOTER_RE = re.compile(r"L['’]article .*? est apparu en premier sur .*$", re.S)
+DREAMJOB_COMPANY_RE = re.compile(r"^(?P<company>.+?)\s+Emploi et Recrutement$", re.I)
+
+
+def parse_dreamjob_feed(xml_text: str) -> list[dict]:
+    """Articles du flux RSS Dreamjob « Stages » : titre, lien, date, résumé."""
+    root = ET.fromstring(xml_text)
+    items = []
+    for item in root.iter("item"):
+        categories = [clean_text(c.text) for c in item.findall("category")]
+        company = next((m.group("company") for m in
+                        (DREAMJOB_COMPANY_RE.match(c) for c in categories) if m), "")
+        description = re.sub(r"<[^>]+>", " ", html.unescape(item.findtext("description") or ""))
+        items.append({
+            "title": html.unescape(clean_text(item.findtext("title"))),
+            "url": clean_text(item.findtext("link")),
+            "date": clean_text(item.findtext("pubDate")),
+            "description": " ".join(DREAMJOB_FOOTER_RE.sub("", description).split()),
+            "company": company,
+        })
+    return items
+
+
+def rss_date_iso(value: str) -> str:
+    try:
+        return parsedate_to_datetime(value).astimezone(timezone.utc).isoformat()
+    except (TypeError, ValueError):
+        return ""
+
+
+def fetch_dreamjob_all(region_id: str = "maroc",
+                       region_config: dict | None = None,
+                       regions: dict | None = None,
+                       domains: dict | None = None,
+                       active_ids: list[str] | None = None,
+                       now: datetime | None = None) -> tuple[list[dict], SourceStatus]:
+    """Dreamjob.ma, rubrique « Stages » : actualité des stages au Maroc.
+
+    Une requête RSS par run (deux si la première page reste dans la
+    fenêtre). Les annonces gardent leur date de publication et restent
+    éligibles ``days_window`` jours, comme sur le dashboard.
+    """
+    regions = regions or REGIONS
+    region_config = region_config or regions[region_id]
+    skipped = local_source_status("Dreamjob", region_id, region_config, regions)
+    if skipped:
+        return [], skipped
+    status = source_status("Dreamjob", region_id, regions)
+    started = time.monotonic()
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    window_start = now - timedelta(days=MAX_OFFER_AGE_DAYS)
+    offers: dict[str, dict] = {}
+    for page in range(1, DREAMJOB_MAX_PAGES + 1):
+        try:
+            resp = requests.get(DREAMJOB_FEED, params={"paged": page} if page > 1 else None,
+                                headers={"User-Agent": RADAR_USER_AGENT},
+                                timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            items = parse_dreamjob_feed(resp.text)
+        except Exception as exc:
+            code = block_code(exc)
+            status.http_error = f"HTTP {code}" if code else safe_error(exc)[:200]
+            if page == 1:
+                status.status = "blocked" if code else "error"
+            print(f"[WARN] Dreamjob page {page} a échoué : {safe_error(exc)}", file=sys.stderr)
+            break
+        status.pages_fetched += 1
+        status.raw_count += len(items)
+        print(f"[INFO] Dreamjob page {page} : {len(items)} résultats bruts")
+        for item in items:
+            offer, reason = make_offer(
+                item["title"], item["company"] or "Entreprise (voir l'annonce)",
+                moroccan_city(item["title"] + " " + item["description"]),
+                item["url"], "Dreamjob", rss_date_iso(item["date"]),
+                confirmed_internship=True, description=item["description"],
+                domains=domains, active_ids=active_ids,
+                region_id=region_id, regions=regions, now=now,
+                max_age_hours=MAX_OFFER_AGE_DAYS * 24, scoring=MAROC_LOCAL_SCORING,
+            )
+            register_offer(status, offers, offer, reason)
+        dates = [_store_datetime(rss_date_iso(item["date"])) for item in items]
+        if not items or any(d is None or d < window_start for d in dates):
+            break
+    status.duration_s = round(time.monotonic() - started, 1)
+    status.finalize()
+    log_collection_summary(status)
+    return list(offers.values()), status
+
+
+# Sites d'emploi marocains interrogés via l'index de Tavily (API officielle),
+# jamais directement : ReKrute interdit le crawl de ses recherches dans son
+# robots.txt et Emploi.ma oppose un anti-bot. Seules les pages d'offre
+# individuelles sont retenues (pas les listes ni les « demandes de stage »).
+MAROC_SITES_DOMAINS = ("stagiaires.ma", "rekrute.com", "emploi.ma")
+MAROC_SITES_OFFER_URL_RE = re.compile(
+    r"^https://(?:www\.)?(?:stagiaires\.ma/stage-emploi-maroc/\d+"
+    r"|rekrute\.com/(?:[a-z]{2}/)?offre-emploi-[^/]+-\d+\.html"
+    r"|emploi\.ma/offre-emploi-maroc/[^/?#]+)",
+    re.I,
+)
+MAROC_SITES_TITLE_SUFFIX_RE = re.compile(
+    r"\s*[|\-–]\s*(?:Stagiaires\.ma|ReKrute(?:\.com)?|Emploi\.ma)\b.*$", re.I)
+MAROC_SITES_COMPANY_RE = re.compile(r"\s+chez\s+(?P<company>[^|–\-]+?)\s*$", re.I)
+# 5 requêtes × 2 créneaux = tout le catalogue data_ia (9 requêtes) chaque
+# jour, soit 10 crédits/jour ; avec LinkedIn Posts (16/jour) le total reste
+# à ~780 crédits/mois sur les 1000 gratuits.
+MAROC_SITES_QUERY_BUDGET = 5
+MAROC_SITES_ROTATION_FILE = Path("data/maroc_sites_rotation.json")
+
+
+def parse_maroc_site_result(item: dict) -> dict | None:
+    url = clean_text(item.get("url"))
+    if not MAROC_SITES_OFFER_URL_RE.match(url):
+        return None
+    title = MAROC_SITES_TITLE_SUFFIX_RE.sub("", clean_text(item.get("title")))
+    company = ""
+    match = MAROC_SITES_COMPANY_RE.search(title)
+    if match:
+        company = match.group("company").strip()
+        title = title[:match.start()].strip()
+    if not title:
+        return None
+    return {"title": title, "url": url.split("#")[0], "company": company,
+            "description": clean_text(item.get("content"))}
+
+
+def fetch_maroc_sites_all(region_id: str = "maroc",
+                          region_config: dict | None = None,
+                          regions: dict | None = None,
+                          domains: dict | None = None,
+                          active_ids: list[str] | None = None,
+                          session=None,
+                          rotation_path: Path = MAROC_SITES_ROTATION_FILE,
+                          now: datetime | None = None) -> tuple[list[dict], SourceStatus]:
+    """Offres de stage publiées sur Stagiaires.ma, ReKrute et Emploi.ma.
+
+    Même créneaux et même quota que LinkedIn Posts (Tavily gratuit) :
+    ``MAROC_SITES_QUERY_BUDGET`` requêtes rotatives par créneau.
+    """
+    regions = regions or REGIONS
+    region_config = region_config or regions[region_id]
+    skipped = local_source_status("Sites Maroc", region_id, region_config, regions)
+    if skipped:
+        return [], skipped
+    status = source_status("Sites Maroc", region_id, regions)
+    started = time.monotonic()
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    if now.hour not in LINKEDIN_POSTS_RUN_HOURS_UTC:
+        hours = " et ".join(f"{h:02d}h" for h in LINKEDIN_POSTS_RUN_HOURS_UTC)
+        status.status = "deferred"
+        status.note = f"créneaux {hours} UTC — quota gratuit Tavily préservé"
+        log_collection_summary(status)
+        return [], status
+    api_key = os.environ.get("TAVILY_API_KEY", "").strip()
+    if not api_key:
+        status.status = "disabled_missing_credentials"
+        status.note = "secret TAVILY_API_KEY absent"
+        log_collection_summary(status)
+        return [], status
+
+    start_index = load_rotation_index(rotation_path)
+    plan, next_index = linkedin_posts_query_plan(
+        domains, active_ids, start_index=start_index, budget=MAROC_SITES_QUERY_BUDGET)
+    session = session or requests.Session()
+    offers: dict[str, dict] = {}
+    failed = 0
+    for raw_query in plan:
+        query = f"stage PFE {source_keywords(raw_query)} Maroc"
+        try:
+            resp = session.post(
+                "https://api.tavily.com/search",
+                json={"query": query, "search_depth": "basic", "max_results": 20,
+                      "include_domains": list(MAROC_SITES_DOMAINS), "time_range": "week"},
+                headers={"Authorization": f"Bearer {api_key}"},
+                timeout=REQUEST_TIMEOUT,
+            )
+            if resp.status_code in {401, 402, 403, 429, 432}:
+                raise RuntimeError(f"HTTP {resp.status_code if resp.status_code != 432 else 429} "
+                                   f"Tavily (quota ou clé)")
+            resp.raise_for_status()
+            results = resp.json().get("results", [])
+        except Exception as exc:
+            failed += 1
+            code = block_code(exc)
+            status.http_error = f"HTTP {code}" if code else safe_error(exc)[:200]
+            print(f"[WARN] Sites Maroc '{query}' a échoué : {safe_error(exc)}", file=sys.stderr)
+            if code:
+                break
+            continue
+        status.pages_fetched += 1
+        status.raw_count += len(results)
+        accepted_before = status.accepted_count
+        for item in results:
+            parsed = parse_maroc_site_result(item)
+            if parsed is None:
+                status.add_reject("page hors offre (liste, demande de stage…)")
+                continue
+            offer, reason = make_offer(
+                parsed["title"], parsed["company"] or "Entreprise (voir l'annonce)",
+                moroccan_city(parsed["title"] + " " + parsed["description"]),
+                parsed["url"], "Sites Maroc", "", description=parsed["description"],
+                domains=domains, active_ids=active_ids, region_id=region_id,
+                regions=regions, now=now, freshness_verified=True,
+                scoring=MAROC_LOCAL_SCORING,
+            )
+            register_offer(status, offers, offer, reason)
+        status.query_yield[query] = {"raw": len(results),
+                                     "accepted": status.accepted_count - accepted_before}
+        print(f"[INFO] Sites Maroc '{query}' : {len(results)} résultats bruts")
+    status.duration_s = round(time.monotonic() - started, 1)
+    if plan and failed == len(plan) or (failed and status.http_error.startswith("HTTP")):
+        status.status = "blocked" if status.http_error.startswith("HTTP") else "error"
+    else:
+        status.finalize()
+    log_collection_summary(status)
+    save_rotation_index(next_index, rotation_path)
+    return list(offers.values()), status
+
+
+# ============================================================
 # ORCHESTRATION
 # ============================================================
 
@@ -1923,20 +2234,25 @@ def run_all_sources(domains: dict | None = None,
             region_id, region_config, regions, domains, active_domain_ids),
         "LinkedIn Posts": lambda region_id, region_config: fetch_linkedin_posts_all(
             region_id, region_config, regions, domains, active_domain_ids),
+        "Dreamjob": lambda region_id, region_config: fetch_dreamjob_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "Sites Maroc": lambda region_id, region_config: fetch_maroc_sites_all(
+            region_id, region_config, regions, domains, active_domain_ids),
     }
+    source_names = active_source_names()
     results: dict[str, tuple[list[dict], list[SourceStatus]]] = {}
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL_SOURCES) as pool:
         futures = {
-            name: pool.submit(run_source_across_regions, name, fetcher,
+            name: pool.submit(run_source_across_regions, name, fetchers[name],
                               selected_regions)
-            for name, fetcher in fetchers.items()
+            for name in source_names
         }
         for name, future in futures.items():
             results[name] = future.result()
 
     all_offers: dict[str, dict] = {}
     statuses: list[SourceStatus] = []
-    for name in SOURCE_NAMES:
+    for name in source_names:
         offers, source_statuses = results[name]
         for offer in offers:
             if offer["id"] in all_offers:
@@ -2267,13 +2583,14 @@ def render_dashboard(offers: list[dict], new_ids: set,
     generated_at = datetime.now(timezone.utc)
     now = generated_at.strftime("%d/%m/%Y %H:%M UTC")
     generated_at_iso = generated_at.isoformat()
-    statuses = statuses or [source_status(name, active_region_ids[0], regions)
-                            for name in SOURCE_NAMES]
+    source_names = active_source_names(config)
+    statuses = [st for st in statuses or [] if st.source in source_names] or [
+        source_status(name, active_region_ids[0], regions) for name in source_names]
     active_region_labels = [regions[region_id]["label"]
                             for region_id in active_region_ids]
     active_domain_labels = [domains[domain_id]["label"] for domain_id in active_ids]
 
-    final_counts = {name: 0 for name in SOURCE_NAMES}
+    final_counts = {name: 0 for name in source_names}
     domain_counts = {domain_id: 0 for domain_id in active_ids}
     region_counts = {region_id: 0 for region_id in active_region_ids}
     for o in offers:
@@ -2350,7 +2667,7 @@ def render_dashboard(offers: list[dict], new_ids: set,
     status_priority = {"blocked": 0, "error": 1, "disabled_missing_credentials": 2,
                        "empty": 3, "deferred": 4, "not_applicable_region": 5,
                        "success": 6}
-    for source_name in SOURCE_NAMES:
+    for source_name in source_names:
         related = [st for st in statuses if st.source == source_name]
         if not related:
             related = [source_status(source_name, active_region_ids[0], regions)]
@@ -2558,7 +2875,7 @@ def main() -> None:
         active_domain_ids=active_ids, active_region_ids=active_region_ids,
     )
 
-    final_counts = {name: 0 for name in SOURCE_NAMES}
+    final_counts = {name: 0 for name in active_source_names()}
     for o in all_offers.values():
         final_counts[o["source"]] = final_counts.get(o["source"], 0) + 1
 

@@ -395,13 +395,13 @@ class TestTavilyProviderRequest(unittest.TestCase):
         self.assertEqual(kwargs["headers"]["Authorization"], "Bearer tvly-key")
         body = kwargs["json"]
         self.assertEqual(body["include_domains"], list(xray.LINKEDIN_POST_HOSTS))
-        self.assertEqual(body["time_range"], "day")
+        self.assertEqual(body["time_range"], "week")
         self.assertEqual(body["search_depth"], "basic")
-        # Format mesuré en conditions réelles : « post » + termes cités +
-        # « recrutement » + région, jamais l'opérateur site: brut.
+        # Format mesuré en conditions réelles (26/11/2026) : vocabulaire des
+        # annonces de recruteurs, jamais l'opérateur site: ni les guillemets.
         self.assertNotIn("site:", body["query"])
         self.assertEqual(body["query"],
-                         'post "stage" "data engineer" recrutement France')
+                         "stage PFE data engineer France recrute stagiaire")
 
     def test_second_page_returns_empty_without_spending_a_credit(self):
         session = FakePostSession(FakeJsonResponse(200, {"results": []}))

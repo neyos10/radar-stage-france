@@ -24,6 +24,24 @@ un radar personnel pour un stage PFE Data (début 2027, 4 à 6 mois).
   (index `/fr`), France Travail et The Muse sont `not_applicable_region` au
   Maroc. Glassdoor et Google Jobs restent retirés : retestés le 25/11/2026,
   ils répondent toujours HTTP 400 et 0 résultat.
+- **Sources Maroc ajoutées (26/11/2026)** :
+  - **Dreamjob** : flux RSS de la rubrique « Stages » de dreamjob.ma (autorisé
+    par son robots.txt), une requête par run, annonces des 7 derniers jours.
+  - **Sites Maroc** : pages d'offre de Stagiaires.ma, ReKrute et Emploi.ma
+    trouvées via l'index de l'API Tavily (jamais de crawl direct : ReKrute
+    l'interdit, Emploi.ma oppose un anti-bot). Mêmes créneaux que LinkedIn
+    Posts, 5 requêtes rotatives par créneau.
+  - Ces deux sources publient des titres éditoriaux (« X recrute des
+    stagiaires PFE en IT, data… ») : le mot « data » seul y compte comme
+    positif, « recrute/recrutement » n'est pas pénalisé et un mot positif en
+    résumé suffit (`MAROC_LOCAL_SCORING`). Activées par région via
+    `regions.json` → `local_sources`.
+- **Sources désactivées** (`config.json` → `disabled_sources`, code conservé) :
+  APEC et The Muse (anti-bot HTTP 403, y compris depuis GitHub Actions),
+  Adzuna (clé à renouveler). Elles ne sont ni appelées ni affichées.
+- **LinkedIn Posts** : requête au vocabulaire des recruteurs (« stage PFE …
+  recrute stagiaire ») sur une semaine. Mesuré : les moteurs indexent très
+  peu de posts LinkedIn ; la source reste marginale.
 - **Requêtes Maroc** : les requêtes françaises du domaine. Les variantes
   anglaises testées sur LinkedIn Maroc (« data engineer intern », « data
   internship », « PFE data ») ont rapporté 0 offre acceptée pour ~50 s de

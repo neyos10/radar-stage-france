@@ -1009,7 +1009,14 @@ class TestRetiredNoiseSources(unittest.TestCase):
         self.assertEqual(
             scan.SOURCE_NAMES,
             ["LinkedIn", "Indeed", "APEC", "Adzuna", "The Muse",
-             "France Travail", "LinkedIn Posts"],
+             "France Travail", "LinkedIn Posts", "Dreamjob", "Sites Maroc"],
+        )
+        # APEC et The Muse (anti-bot) et Adzuna (clé) restent dans le code
+        # mais ne sont ni interrogés ni affichés.
+        self.assertEqual(
+            scan.active_source_names(),
+            ["LinkedIn", "Indeed", "France Travail", "LinkedIn Posts",
+             "Dreamjob", "Sites Maroc"],
         )
 
     def test_run_all_sources_never_threads_glassdoor_or_google(self):
@@ -1992,9 +1999,13 @@ class TestDashboard(unittest.TestCase):
     def test_security_and_ui_attributes(self):
         o, _ = offer()
         statuses = [scan.SourceStatus(source=n) for n in scan.SOURCE_NAMES]
-        statuses[2].status = "blocked"
-        statuses[2].http_error = "HTTP 403"
-        statuses[4].status = "disabled_missing_credentials"
+        by_name = {st.source: st for st in statuses}
+        by_name["Indeed"].status = "blocked"
+        by_name["Indeed"].http_error = "HTTP 403"
+        by_name["France Travail"].status = "disabled_missing_credentials"
+        # Source désactivée par la config : jamais affichée.
+        by_name["APEC"].status = "blocked"
+        by_name["APEC"].note = "APEC-DESACTIVEE"
         page = self.render([o], statuses)
         javascript = self.dashboard_javascript()
         self.assertIn('rel="noopener noreferrer"', page)
@@ -2024,6 +2035,9 @@ class TestDashboard(unittest.TestCase):
         self.assertIn("Non configuré — identifiants manquants", page)
         # une source jamais appelée n'affiche pas un simple « 0 »
         self.assertIn("non configuré", page)
+        self.assertNotIn("APEC-DESACTIVEE", page)
+        self.assertNotIn('data-src="APEC"', page)
+        self.assertNotIn('data-src="The Muse"', page)
 
     def test_manual_scan_controls_and_github_api_code_are_removed(self):
         candidate, _ = offer()
@@ -2155,6 +2169,128 @@ class TestDashboard(unittest.TestCase):
         self.assertEqual(page.count('<article class="job'), 160)
         self.assertIn('data-src="LinkedIn" aria-pressed="false">LinkedIn <b>(160)</b>',
                       page)
+
+
+DREAMJOB_RSS = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>
+<item><title>2 offres de stage PFE en data chez Circet Morocco à Casablanca</title>
+<link>https://www.dreamjob.ma/stage/2-offres-de-stage-pfe-en-data-chez-circet-morocco-a-casablanca/</link>
+<pubDate>{recent}</pubDate><dc:creator><![CDATA[Dreamjob.ma]]></dc:creator>
+<category><![CDATA[Stages]]></category><category><![CDATA[Circet Emploi et Recrutement]]></category>
+<description><![CDATA[Circet Morocco recrute 2 profils de stagiaires en Stage PFE à Casablanca: un Data Engineer et un Data Analyst (H/F). L'article 2 offres de stage PFE en data chez Circet Morocco à Casablanca est apparu en premier sur Dreamjob.ma]]></description></item>
+<item><title>Élèves ingénieurs: Saham Bank recrute des stagiaires PFE en IT, data et risques</title>
+<link>https://www.dreamjob.ma/stage/saham-bank-pfe/</link><pubDate>{recent}</pubDate>
+<category><![CDATA[Stages]]></category><description><![CDATA[Saham Bank recrute.]]></description></item>
+<item><title>4 offres de stage PFE chez Groupe BCP en finance à Casablanca</title>
+<link>https://www.dreamjob.ma/stage/bcp-finance/</link><pubDate>{recent}</pubDate>
+<category><![CDATA[Stages]]></category><description><![CDATA[Stages en finance et contrôle de gestion.]]></description></item>
+<item><title>SQORUS Maroc renforce ses équipes data et web avec des stagiaires PFE à Casablanca</title>
+<link>https://www.dreamjob.ma/stage/sqorus-old/</link><pubDate>{old}</pubDate>
+<category><![CDATA[Stages]]></category><description><![CDATA[Data et web.]]></description></item>
+</channel></rss>"""
+
+
+class TestMoroccanLocalSources(unittest.TestCase):
+    NOW = datetime.now(timezone.utc).replace(microsecond=0)
+
+    def rss(self):
+        from email.utils import format_datetime
+        return DREAMJOB_RSS.format(
+            recent=format_datetime(self.NOW - timedelta(days=2)),
+            old=format_datetime(self.NOW - timedelta(days=scan.MAX_OFFER_AGE_DAYS + 3)),
+        )
+
+    def test_plural_contract_words_are_recognised(self):
+        for title in ["Stagiaires PFE Data", "Stages data 2027", "Data Interns",
+                      "Summer internships - data"]:
+            self.assertTrue(scan.TITLE_MUST_MATCH.search(title), title)
+
+    def test_scoring_overrides_never_mutate_the_catalog(self):
+        before = json.dumps(scan.DOMAINS["data_ia"], sort_keys=True)
+        title = "Saham Bank recrute des stagiaires PFE en IT, data et risques"
+        self.assertEqual(scan.score_offer_domains(title, "")[0], [])
+        matched, _ = scan.score_offer_domains(title, "", overrides=scan.MAROC_LOCAL_SCORING)
+        self.assertEqual(matched, ["data_ia"])
+        self.assertEqual(json.dumps(scan.DOMAINS["data_ia"], sort_keys=True), before)
+
+    def test_dreamjob_feed_parsing_and_selection(self):
+        items = scan.parse_dreamjob_feed(self.rss())
+        self.assertEqual(items[0]["company"], "Circet")
+        self.assertNotIn("apparu en premier", items[0]["description"])
+        with mock.patch.object(scan.requests, "get",
+                               return_value=mock.Mock(text=self.rss(), status_code=200,
+                                                      raise_for_status=lambda: None)) as get:
+            offers, status = scan.fetch_dreamjob_all("maroc", now=self.NOW)
+        titles = sorted(o["title"] for o in offers)
+        self.assertEqual(titles, [
+            "2 offres de stage PFE en data chez Circet Morocco à Casablanca",
+            "Élèves ingénieurs: Saham Bank recrute des stagiaires PFE en IT, data et risques",
+        ])
+        circet = next(o for o in offers if "Circet" in o["title"])
+        self.assertEqual(circet["location"], "Casablanca, Maroc")
+        self.assertEqual(circet["regions"], ["maroc"])
+        self.assertTrue(circet["date_known"])
+        self.assertEqual(status.reject_reasons, {
+            scan.REASON_NO_DOMAIN: 1, f"plus de {scan.MAX_OFFER_AGE_DAYS} jours": 1})
+        self.assertEqual(status.too_old_count, 1)
+        self.assertIn("radar-stage", get.call_args.kwargs["headers"]["User-Agent"])
+        # Une seule requête : la page 1 contient déjà une annonce hors fenêtre.
+        self.assertEqual(get.call_count, 1)
+
+    def test_local_sources_are_not_applicable_in_france(self):
+        with mock.patch.object(scan.requests, "get") as get, \
+             mock.patch.object(scan.requests, "post") as post:
+            _, dreamjob = scan.fetch_dreamjob_all("france")
+            _, sites = scan.fetch_maroc_sites_all("france")
+        get.assert_not_called()
+        post.assert_not_called()
+        self.assertEqual(dreamjob.status, "not_applicable_region")
+        self.assertEqual(sites.status, "not_applicable_region")
+
+    def test_maroc_sites_keeps_offer_pages_only(self):
+        keep = scan.parse_maroc_site_result({
+            "url": "https://www.stagiaires.ma/stage-emploi-maroc/8186-stages-pfe-2027",
+            "title": "Stages PFE 2027 - Profils Ingénieurs data chez Saham Bank | Stagiaires.ma",
+            "content": "Saham Bank recrute des stagiaires PFE en data et IT."})
+        self.assertEqual(keep["title"], "Stages PFE 2027 - Profils Ingénieurs data")
+        self.assertEqual(keep["company"], "Saham Bank")
+        for url in ["https://www.marocannonces.com/categorie/311/Demandes-de-stage/annonce/10484",
+                    "https://www.rekrute.com/en/emploi-Ing%C3%A9nieur-PFE",
+                    "https://www.stagiaires.ma/"]:
+            self.assertIsNone(scan.parse_maroc_site_result({"url": url, "title": "x"}), url)
+        self.assertIsNotNone(scan.parse_maroc_site_result({
+            "url": "https://www.rekrute.com/offre-emploi-stage-pfe-data-engineer-casablanca-178000.html",
+            "title": "Stage PFE Data Engineer - ReKrute.com"}))
+
+    def test_maroc_sites_fetch_slot_budget_and_credentials(self):
+        off_slot = self.NOW.replace(hour=12)
+        _, status = scan.fetch_maroc_sites_all("maroc", now=off_slot)
+        self.assertEqual(status.status, "deferred")
+        slot = self.NOW.replace(hour=scan.LINKEDIN_POSTS_RUN_HOURS_UTC[0])
+        with mock.patch.dict(os.environ, {"TAVILY_API_KEY": ""}):
+            _, status = scan.fetch_maroc_sites_all("maroc", now=slot)
+        self.assertEqual(status.status, "disabled_missing_credentials")
+        session = mock.Mock()
+        session.post.return_value = mock.Mock(status_code=200, raise_for_status=lambda: None)
+        session.post.return_value.json.return_value = {"results": [
+            {"url": "https://www.stagiaires.ma/stage-emploi-maroc/8200",
+             "title": "Stage PFE Data Engineer chez CGI | Stagiaires.ma",
+             "content": "Pipelines Spark à Rabat."},
+            {"url": "https://www.marocannonces.com/categorie/311/Demandes-de-stage/annonce/1",
+             "title": "Je cherche un stage data"},
+        ]}
+        with tempfile.TemporaryDirectory() as tmp, \
+             mock.patch.dict(os.environ, {"TAVILY_API_KEY": "tvly-test"}):
+            offers, status = scan.fetch_maroc_sites_all(
+                "maroc", session=session, now=slot,
+                rotation_path=Path(tmp) / "rotation.json")
+        self.assertEqual(session.post.call_count, scan.MAROC_SITES_QUERY_BUDGET)
+        body = session.post.call_args.kwargs["json"]
+        self.assertEqual(body["include_domains"], list(scan.MAROC_SITES_DOMAINS))
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(offers[0]["company"], "CGI")
+        self.assertEqual(offers[0]["location"], "Rabat, Maroc")
+        self.assertIn("Sites Maroc", scan.ROTATING_COVERAGE_SOURCES)
 
 
 if __name__ == "__main__":

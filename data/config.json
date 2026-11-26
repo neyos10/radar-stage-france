@@ -51,5 +51,10 @@
   "highlight_regions": [
     "france"
   ],
-  "days_window": 7
+  "days_window": 7,
+  "disabled_sources": {
+    "APEC": "anti-bot (HTTP 403) sur la recherche publique depuis novembre 2026, y compris depuis GitHub Actions",
+    "The Muse": "anti-bot Cloudflare (HTTP 403) depuis novembre 2026, y compris depuis GitHub Actions",
+    "Adzuna": "clé API à renouveler"
+  }
 }

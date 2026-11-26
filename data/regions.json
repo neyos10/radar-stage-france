@@ -5,7 +5,8 @@
     "country_indeed": "France",
     "apec_available": true,
     "france_travail_available": true,
-    "enabled": true
+    "enabled": true,
+    "local_sources": []
   },
   "belgique": {
     "label": "Belgique",
@@ -13,7 +14,8 @@
     "country_indeed": "Belgium",
     "apec_available": false,
     "france_travail_available": false,
-    "enabled": false
+    "enabled": false,
+    "local_sources": []
   },
   "luxembourg": {
     "label": "Luxembourg",
@@ -21,7 +23,8 @@
     "country_indeed": "Luxembourg",
     "apec_available": false,
     "france_travail_available": false,
-    "enabled": false
+    "enabled": false,
+    "local_sources": []
   },
   "maroc": {
     "label": "Maroc",
@@ -30,6 +33,10 @@
     "apec_available": false,
     "france_travail_available": false,
     "enabled": true,
-    "linkedin_extra_queries": []
+    "linkedin_extra_queries": [],
+    "local_sources": [
+      "Dreamjob",
+      "Sites Maroc"
+    ]
   }
 }
