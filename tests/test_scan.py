@@ -1009,13 +1009,15 @@ class TestRetiredNoiseSources(unittest.TestCase):
         self.assertEqual(
             scan.SOURCE_NAMES,
             ["LinkedIn", "Indeed", "APEC", "Adzuna", "The Muse",
-             "France Travail", "LinkedIn Posts", "Dreamjob", "Sites Maroc"],
+             "France Travail", "LinkedIn Posts", "Dreamjob", "Stagiaires.ma",
+             "Sites Maroc"],
         )
         # APEC et The Muse (anti-bot) et Adzuna (clé) restent dans le code
         # mais ne sont ni interrogés ni affichés.
         self.assertEqual(
             scan.active_source_names(),
-            ["LinkedIn", "Indeed", "France Travail", "LinkedIn Posts", "Sites Maroc"],
+            ["LinkedIn", "Indeed", "France Travail", "LinkedIn Posts", "Stagiaires.ma",
+             "Sites Maroc"],
         )
 
     def test_run_all_sources_never_threads_glassdoor_or_google(self):
@@ -2384,6 +2386,107 @@ class TestMoroccanLocalSources(unittest.TestCase):
             "title": "Offre d'emploi Stage PFE Data - ReKrute.com"})["title"], "Stage PFE Data")
         self.assertEqual(offers[0]["location"], "Rabat, Maroc")
         self.assertIn("Sites Maroc", scan.ROTATING_COVERAGE_SOURCES)
+
+
+def stagiaires_page(title, company="ACME", city="Casablanca", description="", date=None,
+                    valid_through=None):
+    posting = {"@context": "https://schema.org", "@type": "JobPosting", "title": title,
+               "description": description,
+               "datePosted": date or datetime.now(timezone.utc).isoformat(),
+               "hiringOrganization": {"@type": "Organization", "name": company},
+               "jobLocation": {"@type": "Place", "address": {"addressLocality": city}},
+               "employmentType": "INTERN"}
+    if valid_through:
+        posting["validThrough"] = valid_through
+    return ('<html><head><script type="application/ld+json">' + json.dumps(posting)
+            + "</script></head><body>x</body></html>")
+
+
+class TestStagiairesMa(unittest.TestCase):
+    NOW = datetime.now(timezone.utc).replace(microsecond=0)
+
+    def sitemap(self, entries):
+        urls = "".join(f"<url><loc>{u}</loc><lastmod>{m}</lastmod></url>" for u, m in entries)
+        return ('<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+                + urls + "</urlset>")
+
+    def session(self, pages):
+        calls = []
+
+        def get(url, headers=None, timeout=None):
+            calls.append(url)
+            body = pages[url]
+            if isinstance(body, Exception):
+                resp = mock.Mock(status_code=403)
+                resp.raise_for_status.side_effect = body
+                return resp
+            return mock.Mock(text=body, status_code=200, raise_for_status=lambda: None)
+        return mock.Mock(get=get), calls
+
+    def test_sitemap_only_offer_urls_without_query_strings(self):
+        entries = scan.parse_stagiaires_sitemap(self.sitemap([
+            ("https://www.stagiaires.ma/stage-emploi-maroc/8226-stage-pfe-data-h-f", "2026-11-25T10:00:00+00:00"),
+            ("https://www.stagiaires.ma/entreprise/deloitte", "2026-11-25T10:00:00+00:00"),
+            ("https://www.stagiaires.ma/stage-emploi-maroc/1?x=1", "2026-11-25T10:00:00+00:00"),
+        ]))
+        self.assertEqual([u for u, _ in entries],
+                         ["https://www.stagiaires.ma/stage-emploi-maroc/8226-stage-pfe-data-h-f"])
+
+    def test_fetch_scores_caches_and_respects_delay(self):
+        base = "https://www.stagiaires.ma/stage-emploi-maroc/"
+        recent = (self.NOW - timedelta(hours=3)).isoformat()
+        old = (self.NOW - timedelta(days=scan.MAX_OFFER_AGE_DAYS + 2)).isoformat()
+        pages = {
+            scan.STAGIAIRES_SITEMAP: self.sitemap([
+                (base + "1-stage-pfe-data", recent), (base + "2-marketing", recent),
+                (base + "3-expiree", recent), (base + "4-ancienne", old)]),
+            base + "1-stage-pfe-data": stagiaires_page(
+                "Stage PFE – Data (H/F)", "CIRCET MOROCCO",
+                description="Circet recrute un stagiaire PFE data engineer, pipelines ETL et Power BI."),
+            base + "2-marketing": stagiaires_page("Stage en Marketing Digital", "Maamora"),
+            base + "3-expiree": stagiaires_page(
+                "Stage PFE Data Engineer", valid_through=(self.NOW - timedelta(days=1)).isoformat()),
+        }
+        session, calls = self.session(pages)
+        sleeps = []
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / "cache.json"
+            offers, status = scan.fetch_stagiaires_all(
+                "maroc", session=session, cache_path=cache, now=self.NOW, sleep=sleeps.append)
+            self.assertEqual([o["title"] for o in offers], ["Stage PFE – Data (H/F)"])
+            self.assertEqual(offers[0]["company"], "CIRCET MOROCCO")
+            self.assertEqual(offers[0]["location"], "Casablanca, Maroc")
+            self.assertEqual(offers[0]["regions"], ["maroc"])
+            self.assertEqual(status.reject_reasons,
+                             {scan.REASON_NO_DOMAIN: 1, "offre expirée": 1})
+            self.assertNotIn(base + "4-ancienne", calls)
+            self.assertEqual(sleeps, [scan.STAGIAIRES_DELAY_S] * 2)
+            # Run suivant : seules les pages nouvelles ou modifiées sont relues.
+            calls.clear()
+            scan.fetch_stagiaires_all("maroc", session=session, cache_path=cache, now=self.NOW,
+                                      sleep=sleeps.append)
+            self.assertEqual(calls, [scan.STAGIAIRES_SITEMAP])
+
+    def test_blocked_pages_trip_the_circuit_breaker(self):
+        base = "https://www.stagiaires.ma/stage-emploi-maroc/"
+        recent = self.NOW.isoformat()
+        urls = [base + f"{i}-x" for i in range(5)]
+        pages = {scan.STAGIAIRES_SITEMAP: self.sitemap([(u, recent) for u in urls])}
+        pages.update({u: Exception("403 Client Error: Forbidden") for u in urls})
+        session, calls = self.session(pages)
+        with tempfile.TemporaryDirectory() as tmp, \
+             mock.patch("sys.stderr", new_callable=io.StringIO):
+            offers, status = scan.fetch_stagiaires_all(
+                "maroc", session=session, cache_path=Path(tmp) / "c.json",
+                now=self.NOW, sleep=lambda _s: None)
+        self.assertEqual(len(calls), 1 + scan.MAX_CONSECUTIVE_BLOCKS)
+        self.assertEqual(status.status, "blocked")
+
+    def test_not_applicable_in_france(self):
+        with mock.patch.object(scan.requests, "Session") as session:
+            _, status = scan.fetch_stagiaires_all("france")
+        session.assert_not_called()
+        self.assertEqual(status.status, "not_applicable_region")
 
 
 if __name__ == "__main__":

@@ -27,7 +27,14 @@ un radar personnel pour un stage PFE Data (début 2027, 4 à 6 mois).
 - **Sources Maroc ajoutées (26/11/2026)** :
   - **Dreamjob** : flux RSS de la rubrique « Stages » de dreamjob.ma (autorisé
     par son robots.txt), une requête par run, annonces des 7 derniers jours.
-  - **Sites Maroc** : pages d'offre de Stagiaires.ma, ReKrute et Emploi.ma
+  - **Stagiaires.ma** (source principale au Maroc) : lu directement, dans le
+    respect de son robots.txt (tout est autorisé sauf `/api/` et les URL à
+    paramètres, `Crawl-delay: 1`). Découverte par le sitemap des offres, puis
+    lecture des seules pages nouvelles ou modifiées (données `JobPosting`
+    schema.org), une requête toutes les 1,1 s, cache dans
+    `data/stagiaires_cache.json`, offres expirées écartées. Premier test réel :
+    14 offres PFE data/IA/IT retenues sur 128 publiées en 7 jours.
+  - **Sites Maroc** : pages d'offre de ReKrute, Emploi.ma et Dreamjob
     trouvées via l'index de l'API Tavily (jamais de crawl direct : ReKrute
     l'interdit, Emploi.ma oppose un anti-bot). Mêmes créneaux que LinkedIn
     Posts, 5 requêtes rotatives par créneau.

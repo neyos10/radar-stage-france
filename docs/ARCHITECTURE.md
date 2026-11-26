@@ -171,3 +171,8 @@ retirées (`linkedin_extra_queries: []`).
   Tavily : 16 (posts) + 10 (Sites Maroc) crédits/jour ≈ 800/mois sur 1000.
 - Dreamjob : le flux RSS est filtré depuis GitHub Actions (page HTML au lieu
   du RSS) ; source directe désactivée, dreamjob.ma couvert par Sites Maroc.
+- Stagiaires.ma lu directement (robots.txt respecté : sitemap, pages
+  d'offre, 1 requête / 1,1 s, cache) : 14 offres Maroc retenues au premier
+  test contre 2-3 pour LinkedIn. Non scrapés, par choix : LinkedIn connecté
+  (CGU, risque de bannissement du compte), APEC / The Muse / Emploi.ma
+  (anti-bot), ReKrute (robots.txt l'interdit).

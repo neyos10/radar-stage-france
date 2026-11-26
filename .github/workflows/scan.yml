@@ -84,7 +84,7 @@ jobs:
           git add data/seen_offers.json data/offers.json data/source_status.json docs/index.html
           # linkedin_posts_rotation.json n'existe que si la source a
           # réellement tourné : ajout défensif, jamais requis.
-          for rotation in data/linkedin_posts_rotation.json data/maroc_sites_rotation.json; do
+          for rotation in data/linkedin_posts_rotation.json data/maroc_sites_rotation.json data/stagiaires_cache.json; do
             if [ -e "$rotation" ]; then
               git add "$rotation"
             fi

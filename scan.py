@@ -188,7 +188,7 @@ DEFAULT_REGION_ID = "france"
 
 SOURCE_NAMES = [
     "LinkedIn", "Indeed", "APEC", "Adzuna", "The Muse",
-    "France Travail", "LinkedIn Posts", "Dreamjob", "Sites Maroc",
+    "France Travail", "LinkedIn Posts", "Dreamjob", "Stagiaires.ma", "Sites Maroc",
 ]
 
 
@@ -2085,11 +2085,173 @@ def fetch_dreamjob_all(region_id: str = "maroc",
     return list(offers.values()), status
 
 
+# Stagiaires.ma, lu directement dans le respect de son robots.txt :
+# « User-Agent: * » autorise tout sauf /api/ et les URL à paramètres (?), avec
+# Crawl-delay: 1. Découverte par le sitemap des offres (prévu pour ça), puis
+# lecture des seules pages nouvelles ou modifiées, une requête toutes les
+# STAGIAIRES_DELAY_S secondes. Chaque page porte un JobPosting schema.org.
+STAGIAIRES_SITEMAP = "https://www.stagiaires.ma/offre-sitemap.xml"
+STAGIAIRES_CACHE_FILE = Path("data/stagiaires_cache.json")
+STAGIAIRES_DELAY_S = 1.1
+STAGIAIRES_MAX_FETCH = 200   # plafond technique par run (~3 min au pire)
+STAGIAIRES_OFFER_RE = re.compile(r"^https://www\.stagiaires\.ma/stage-emploi-maroc/\d+[^?#]*$")
+STAGIAIRES_SCORING = {"extra_positive": ["data"], "ignore_negative": ["recrutement"]}
+JSONLD_RE = re.compile(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', re.S | re.I)
+
+
+def parse_stagiaires_sitemap(xml_text: str) -> list[tuple[str, str]]:
+    """(URL d'offre, lastmod ISO) du sitemap des offres."""
+    root = ET.fromstring(xml_text)
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    entries = []
+    for url in root.findall("sm:url", ns):
+        loc = clean_text(url.findtext("sm:loc", namespaces=ns))
+        lastmod = clean_text(url.findtext("sm:lastmod", namespaces=ns))
+        if STAGIAIRES_OFFER_RE.match(loc):
+            entries.append((loc, lastmod))
+    return entries
+
+
+def parse_jobposting(page_html: str) -> dict | None:
+    """Champs utiles du JobPosting schema.org d'une page d'offre."""
+    for block in JSONLD_RE.findall(page_html):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        candidates = data if isinstance(data, list) else data.get("@graph", [data])
+        for item in candidates:
+            if not isinstance(item, dict) or item.get("@type") != "JobPosting":
+                continue
+            organization = item.get("hiringOrganization") or {}
+            location = item.get("jobLocation") or {}
+            if isinstance(location, list):
+                location = location[0] if location else {}
+            address = (location.get("address") or {}) if isinstance(location, dict) else {}
+            description = re.sub(r"<[^>]+>", " ", html.unescape(str(item.get("description") or "")))
+            return {
+                "title": clean_text(item.get("title")),
+                "company": clean_text(organization.get("name") if isinstance(organization, dict) else ""),
+                "city": clean_text(address.get("addressLocality")),
+                "date": clean_text(item.get("datePosted")),
+                "valid_through": clean_text(item.get("validThrough")),
+                "description": " ".join(description.split())[:4000],
+            }
+    return None
+
+
+def load_stagiaires_cache(path: Path) -> dict:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def fetch_stagiaires_all(region_id: str = "maroc",
+                         region_config: dict | None = None,
+                         regions: dict | None = None,
+                         domains: dict | None = None,
+                         active_ids: list[str] | None = None,
+                         session=None,
+                         cache_path: Path = STAGIAIRES_CACHE_FILE,
+                         now: datetime | None = None,
+                         sleep=time.sleep) -> tuple[list[dict], SourceStatus]:
+    regions = regions or REGIONS
+    region_config = region_config or regions[region_id]
+    skipped = local_source_status("Stagiaires.ma", region_id, region_config, regions)
+    if skipped:
+        return [], skipped
+    status = source_status("Stagiaires.ma", region_id, regions)
+    started = time.monotonic()
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    window_start = now - timedelta(days=MAX_OFFER_AGE_DAYS)
+    session = session or requests.Session()
+    headers = {"User-Agent": RADAR_USER_AGENT}
+    try:
+        resp = session.get(STAGIAIRES_SITEMAP, headers=headers, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        entries = parse_stagiaires_sitemap(resp.text)
+    except Exception as exc:
+        code = block_code(exc)
+        status.status = "blocked" if code else "error"
+        status.http_error = f"HTTP {code}" if code else safe_error(exc)[:200]
+        status.duration_s = round(time.monotonic() - started, 1)
+        print(f"[WARN] Stagiaires.ma sitemap a échoué : {safe_error(exc)}", file=sys.stderr)
+        log_collection_summary(status)
+        return [], status
+    status.pages_fetched += 1
+    recent = [(url, lastmod) for url, lastmod in entries
+              if (_store_datetime(lastmod) or now) >= window_start]
+    recent.sort(key=lambda entry: entry[1], reverse=True)
+    status.raw_count = len(recent)
+
+    cache = load_stagiaires_cache(cache_path)
+    fresh_cache: dict[str, dict] = {}
+    offers: dict[str, dict] = {}
+    fetched = consecutive_blocks = 0
+    for url, lastmod in recent:
+        cached = cache.get(url)
+        posting = cached.get("posting") if cached and cached.get("lastmod") == lastmod else None
+        if posting is None:
+            if consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS:
+                status.note = "circuit breaker : pages restantes ignorées"
+                continue
+            if fetched >= STAGIAIRES_MAX_FETCH:
+                status.note = f"plafond de {STAGIAIRES_MAX_FETCH} pages atteint, suite au run suivant"
+                continue
+            if fetched:
+                sleep(STAGIAIRES_DELAY_S)
+            fetched += 1
+            try:
+                page = session.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
+                page.raise_for_status()
+                posting = parse_jobposting(page.text)
+                consecutive_blocks = 0
+            except Exception as exc:
+                code = block_code(exc)
+                consecutive_blocks += 1 if code else 0
+                status.http_error = f"HTTP {code}" if code else safe_error(exc)[:200]
+                print(f"[WARN] Stagiaires.ma {url} a échoué : {safe_error(exc)}", file=sys.stderr)
+                continue
+            status.pages_fetched += 1
+            if posting is None:
+                status.add_reject("page sans JobPosting")
+                continue
+        fresh_cache[url] = {"lastmod": lastmod, "posting": posting}
+        valid_through = _store_datetime(posting.get("valid_through", ""))
+        if valid_through and valid_through < now:
+            status.add_reject("offre expirée")
+            continue
+        city = posting.get("city")
+        offer, reason = make_offer(
+            posting["title"], posting["company"] or "Entreprise (voir l'annonce)",
+            f"{city}, Maroc" if city else "Maroc", url, "Stagiaires.ma",
+            posting.get("date") or lastmod, confirmed_internship=True,
+            description=posting["description"], domains=domains, active_ids=active_ids,
+            region_id=region_id, regions=regions, now=now,
+            max_age_hours=MAX_OFFER_AGE_DAYS * 24, scoring=STAGIAIRES_SCORING,
+        )
+        register_offer(status, offers, offer, reason)
+
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(json.dumps(fresh_cache, ensure_ascii=False, indent=1, sort_keys=True),
+                          encoding="utf-8")
+    status.duration_s = round(time.monotonic() - started, 1)
+    if recent and consecutive_blocks >= MAX_CONSECUTIVE_BLOCKS and not offers:
+        status.status = "blocked"
+    else:
+        status.finalize()
+    log_collection_summary(status)
+    return list(offers.values()), status
+
+
 # Sites d'emploi marocains interrogés via l'index de Tavily (API officielle),
 # jamais directement : ReKrute interdit le crawl de ses recherches dans son
 # robots.txt et Emploi.ma oppose un anti-bot. Seules les pages d'offre
 # individuelles sont retenues (pas les listes ni les « demandes de stage »).
-MAROC_SITES_DOMAINS = ("stagiaires.ma", "rekrute.com", "emploi.ma", "dreamjob.ma")
+# stagiaires.ma n'y figure plus : la source Stagiaires.ma le lit en direct.
+MAROC_SITES_DOMAINS = ("rekrute.com", "emploi.ma", "dreamjob.ma")
 MAROC_SITES_OFFER_URL_RE = re.compile(
     r"^https://(?:www\.)?(?:stagiaires\.ma/stage-emploi-maroc/\d+"
     r"|dreamjob\.ma/stage/[^/?#]+/?$"
@@ -2296,6 +2458,8 @@ def run_all_sources(domains: dict | None = None,
         "LinkedIn Posts": lambda region_id, region_config: fetch_linkedin_posts_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "Dreamjob": lambda region_id, region_config: fetch_dreamjob_all(
+            region_id, region_config, regions, domains, active_domain_ids),
+        "Stagiaires.ma": lambda region_id, region_config: fetch_stagiaires_all(
             region_id, region_config, regions, domains, active_domain_ids),
         "Sites Maroc": lambda region_id, region_config: fetch_maroc_sites_all(
             region_id, region_config, regions, domains, active_domain_ids),
