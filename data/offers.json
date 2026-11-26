@@ -23,8 +23,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "0318c15a65fecc23": {
   "id": "0318c15a65fecc23",
@@ -37,7 +37,7 @@
   "date_known": true,
   "date_raw": "2026-11-24",
   "sort_date": "2026-11-24T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.077976+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:21.933506+00:00",
   "domains": [
    "data_ia"
   ],
@@ -49,8 +49,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "0511ba1fbf1896b2": {
@@ -77,8 +77,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "07e3b1c387065717": {
+  "id": "07e3b1c387065717",
+  "title": "STAGE - Modélisation PSS assistée par IA pour la vérification SoC F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494698059",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:24:28.036558+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:28.036558+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "0a650346d53593db": {
   "id": "0a650346d53593db",
@@ -104,8 +131,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "0a945a001a7eb441": {
+  "id": "0a945a001a7eb441",
+  "title": "STAGE - Chargé de Projet Knowledge Management &amp; IA F/H",
+  "company": "Bpifrance",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495510711",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:26:37.793200+00:00",
+  "freshness_verified_at": "2026-11-26T16:26:37.793200+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "0aa206d4fc99fc63": {
   "id": "0aa206d4fc99fc63",
@@ -118,7 +172,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.053649+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.053649+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.967432+00:00",
   "domains": [
    "data_ia"
   ],
@@ -130,8 +184,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "0d2122867f068be8": {
@@ -158,7 +212,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "0effb59f8f68a475": {
@@ -185,8 +239,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "0f307ca9f8feb1f6": {
   "id": "0f307ca9f8feb1f6",
@@ -199,7 +253,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.341501+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.341501+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.352736+00:00",
   "domains": [
    "data_ia"
   ],
@@ -211,8 +265,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "0fd2459ce1934a8d": {
@@ -226,7 +280,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:22.967940+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:22.967940+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.873378+00:00",
   "domains": [
    "data_ia"
   ],
@@ -238,8 +292,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "10055881b29550a9": {
@@ -253,7 +307,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.776792+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.620991+00:00",
   "domains": [
    "data_ia"
   ],
@@ -265,8 +319,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "10771e0ef048f846": {
@@ -280,7 +334,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:28:34.819596+00:00",
-  "freshness_verified_at": "2026-11-26T15:28:34.819596+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:07.451165+00:00",
   "domains": [
    "data_ia"
   ],
@@ -292,8 +346,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "12a3e000e709abfb": {
@@ -320,8 +374,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "1607b5d160e9155e": {
   "id": "1607b5d160e9155e",
@@ -334,7 +388,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.075762+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.075762+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:07.233625+00:00",
   "domains": [
    "data_ia"
   ],
@@ -346,8 +400,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "1670914c348761fa": {
@@ -361,7 +415,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.421833+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:10.421833+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:21.241202+00:00",
   "domains": [
    "data_ia"
   ],
@@ -373,8 +427,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "1683d66b92e11820": {
@@ -401,7 +455,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "176df852f89b3cd3": {
@@ -428,7 +482,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "1809277b9d9b6c7d": {
@@ -442,7 +496,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.997918+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.867784+00:00",
   "domains": [
    "data_ia"
   ],
@@ -454,8 +508,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "184b224ebf1198a8": {
@@ -469,7 +523,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.759065+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.599227+00:00",
   "domains": [
    "data_ia"
   ],
@@ -481,8 +535,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "18673aae54480d63": {
@@ -496,7 +550,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.072780+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.072780+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.989578+00:00",
   "domains": [
    "data_ia"
   ],
@@ -508,8 +562,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "1a076242e3976396": {
@@ -536,7 +590,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "1a5ca428b5097dc7": {
@@ -550,7 +604,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:50.089732+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.358630+00:00",
   "domains": [
    "data_ia"
   ],
@@ -562,8 +616,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "1ab6bf6902942c55": {
@@ -577,7 +631,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.240042+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:23.713347+00:00",
   "domains": [
    "data_ia"
   ],
@@ -589,8 +643,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "1ca217346e7ddd2b": {
@@ -604,7 +658,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.412392+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:10.412392+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:49.203134+00:00",
   "domains": [
    "data_ia"
   ],
@@ -616,8 +670,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "1e227a5321b23f1a": {
@@ -644,8 +698,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "1f119c9a9e3515e7": {
   "id": "1f119c9a9e3515e7",
@@ -658,7 +712,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.076158+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.076158+00:00",
+  "freshness_verified_at": "2026-11-26T16:26:37.786405+00:00",
   "domains": [
    "data_ia"
   ],
@@ -670,8 +724,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "2111583ca64cec29": {
@@ -681,11 +735,11 @@
   "location": "France",
   "url": "https://www.linkedin.com/jobs/view/4487039213",
   "source": "LinkedIn",
-  "date": "",
-  "date_known": false,
-  "date_raw": "",
-  "sort_date": "2026-11-26T15:22:22.895937+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:22.895937+00:00",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T16:26:37.765944+00:00",
   "domains": [
    "data_ia"
   ],
@@ -693,12 +747,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 9
+   "data_ia": 3
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "23d519d2c6a13869": {
@@ -725,7 +779,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "23e677289366b6f5": {
@@ -739,7 +793,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.485152+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:24.024267+00:00",
   "domains": [
    "data_ia"
   ],
@@ -751,8 +805,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "2526b22ff1f50539": {
@@ -766,7 +820,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:57.842614+00:00",
-  "freshness_verified_at": "2026-11-26T15:26:57.842614+00:00",
+  "freshness_verified_at": "2026-11-26T16:28:09.215019+00:00",
   "domains": [
    "data_ia"
   ],
@@ -778,8 +832,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "25481e0f8ce3cbf6": {
@@ -806,7 +860,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "25bfbb072982c3bb": {
@@ -820,7 +874,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.261013+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.261013+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.855287+00:00",
   "domains": [
    "data_ia"
   ],
@@ -832,8 +886,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "262655e38213b7cf": {
@@ -847,7 +901,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.427952+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:10.427952+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:21.248072+00:00",
   "domains": [
    "data_ia"
   ],
@@ -859,8 +913,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "266a7ad23997b6a3": {
@@ -874,7 +928,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.183615+00:00",
-  "freshness_verified_at": "2026-11-26T15:27:53.183615+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:07.436107+00:00",
   "domains": [
    "data_ia"
   ],
@@ -886,8 +940,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "269f0b62e4121717": {
@@ -901,7 +955,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:29:08.438849+00:00",
-  "freshness_verified_at": "2026-11-26T15:29:08.438849+00:00",
+  "freshness_verified_at": "2026-11-26T16:30:26.482064+00:00",
   "domains": [
    "data_ia"
   ],
@@ -913,8 +967,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "277e9f958a8758d0": {
@@ -928,7 +982,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.064883+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.064883+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:07.218898+00:00",
   "domains": [
    "data_ia"
   ],
@@ -940,8 +994,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "292af93783af9e77": {
@@ -968,8 +1022,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "296d32e3215a718c": {
+  "id": "296d32e3215a718c",
+  "title": "Stagiaire – Chargé de projets Solutions IA & Data H/F",
+  "company": "Groupama Assurances Mutuelles",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494977448",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:30:26.494517+00:00",
+  "freshness_verified_at": "2026-11-26T16:30:26.494517+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "2a0b69086ef65698": {
   "id": "2a0b69086ef65698",
@@ -995,7 +1076,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "2a34a03bc710e801": {
@@ -1022,7 +1103,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "2a692e2d507e6d4f": {
@@ -1036,7 +1117,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.877185+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.877185+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.961638+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1048,8 +1129,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "2aab1c73a19a2685": {
@@ -1063,7 +1144,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:00.411775+00:00",
-  "freshness_verified_at": "2026-11-26T15:26:00.411775+00:00",
+  "freshness_verified_at": "2026-11-26T16:26:37.794177+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1075,8 +1156,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "2e432684347f9880": {
@@ -1090,7 +1171,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.666151+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.666151+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.776272+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1102,8 +1183,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "2f0e46d05e366a73": {
@@ -1130,7 +1211,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "2f76028925360881": {
@@ -1157,7 +1238,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "2ff9ccdd60a245be": {
@@ -1184,7 +1265,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "31fed8988a92f4f1": {
@@ -1211,7 +1292,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "32cd776a06454ee0": {
@@ -1238,8 +1319,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "347ff7629d62627a": {
+  "id": "347ff7629d62627a",
+  "title": "Stage PFE - Ingénieur en structuration du processus de reporting d'activité F/H",
+  "company": "Réseau de Transport d'Électricité",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495031553",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:24:26.894385+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.894385+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "38b9447818cc4393": {
   "id": "38b9447818cc4393",
@@ -1252,7 +1360,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.121380+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.121380+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.068355+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1264,8 +1372,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "38de456e18da69ec": {
@@ -1279,7 +1387,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.937246+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.787773+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1291,8 +1399,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "3916476f708692ed": {
@@ -1306,7 +1414,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.194336+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.194336+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.176676+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1318,8 +1426,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "3a73df6dc9299aa0": {
@@ -1346,7 +1454,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "3d19b6cf6a74926d": {
@@ -1360,7 +1468,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.347804+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:23.817575+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1372,8 +1480,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "3fd1599389013047": {
@@ -1400,7 +1508,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "40bde8ccdc4bbe74": {
@@ -1427,7 +1535,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "4104295f30df2677": {
@@ -1454,7 +1562,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "412723af6acf141e": {
@@ -1481,8 +1589,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "41c3de6eba393fd9": {
   "id": "41c3de6eba393fd9",
@@ -1508,7 +1616,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "41e88744f1c37e0f": {
@@ -1522,7 +1630,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:42.802982+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:20.904511+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1534,8 +1642,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "446806987bcdd458": {
@@ -1562,8 +1670,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "456530bc22a10ba0": {
   "id": "456530bc22a10ba0",
@@ -1589,7 +1697,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "46eb8f5cf05d1262": {
@@ -1603,7 +1711,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.810089+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.631951+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1615,8 +1723,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "472d7385b789f9e4": {
@@ -1643,7 +1751,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "47482395840848d4": {
@@ -1670,7 +1778,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "478c964e2b580f7d": {
@@ -1684,7 +1792,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:49.889629+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.021273+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1696,8 +1804,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "47912586fb5c2709": {
@@ -1724,8 +1832,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "4c4a7a4499a3bbb3": {
   "id": "4c4a7a4499a3bbb3",
@@ -1738,7 +1846,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.259165+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.259165+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.853415+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1750,8 +1858,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "4d76ddffa7fcbfff": {
@@ -1778,7 +1886,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "4e8e724aed515e28": {
@@ -1792,7 +1900,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.409457+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:10.409457+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:21.224330+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1804,8 +1912,35 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
+ },
+ "500053914ae4a3ba": {
+  "id": "500053914ae4a3ba",
+  "title": "Stage PFE - Ingénieur en structuration du processus de reporting d'activité F/H",
+  "company": "RTE - Réseau de Transport d'Electricité",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d81fe77fff799c96",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.405023+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "502f39abce75832c": {
@@ -1832,7 +1967,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5340a0a3b996a352": {
@@ -1859,7 +1994,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "54b981b44736d512": {
@@ -1886,7 +2021,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "55d503cd3f37efa3": {
@@ -1913,7 +2048,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5699ee90da5e8eea": {
@@ -1940,7 +2075,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "56d98ae487aee462": {
@@ -1954,7 +2089,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:50.189673+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.503929+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1966,8 +2101,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "56f67bcdc01bff85": {
@@ -1981,7 +2116,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.270199+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.270199+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.868076+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1993,8 +2128,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "572f2d329f1a5da8": {
@@ -2021,7 +2156,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5817eed8df159168": {
@@ -2035,7 +2170,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.445836+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.445836+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.469094+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2047,8 +2182,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "59c9016655a5830e": {
@@ -2075,7 +2210,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5a51d07a5e04780b": {
@@ -2089,7 +2224,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:57.844441+00:00",
-  "freshness_verified_at": "2026-11-26T15:26:57.844441+00:00",
+  "freshness_verified_at": "2026-11-26T16:28:09.217313+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2101,8 +2236,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "5be76329f66059da": {
@@ -2129,7 +2264,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5c356789324bf2f5": {
@@ -2156,7 +2291,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5f9570d1adf8a3fb": {
@@ -2183,7 +2318,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5fbec1246eb56ed3": {
@@ -2210,7 +2345,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "5fed0c8e010a41b2": {
@@ -2237,7 +2372,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "630f1c5b91649041": {
@@ -2264,8 +2399,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "6444fedfbf7cbf0f": {
   "id": "6444fedfbf7cbf0f",
@@ -2278,7 +2413,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:42.757395+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:20.848363+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2290,8 +2425,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "6449ebfc05f39db1": {
@@ -2318,8 +2453,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "65235f833e2c817a": {
+  "id": "65235f833e2c817a",
+  "title": "Stage PFE – Ingénierie en Intelligence Artificielle & Automatisation Intelligente",
+  "company": "TRIGO",
+  "location": "Maroc",
+  "url": "https://www.linkedin.com/jobs/view/4493836315",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:31:33.697024+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:33.697024+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "664c4e558554d3d4": {
   "id": "664c4e558554d3d4",
@@ -2345,7 +2507,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "670d90e3bca60015": {
@@ -2372,7 +2534,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "67f176d4868bbb96": {
@@ -2386,7 +2548,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:45.032647+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.885139+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2398,8 +2560,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "697db45211ffcc89": {
@@ -2413,7 +2575,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:21.813257+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:21.813257+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:33.734154+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2425,8 +2587,35 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
+ },
+ "6a7f881d2f9c6f8a": {
+  "id": "6a7f881d2f9c6f8a",
+  "title": "Stage Data Scientist IA - Agentic RAG over Heterogeneous Data Sources",
+  "company": "ChapsVision",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4486521447",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:25:52.854668+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.854668+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "6ba748395cc7bac3": {
@@ -2453,7 +2642,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "6bf4fc6b31d5e6b7": {
@@ -2480,7 +2669,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:21:15+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "6ddf51a63f43097c": {
@@ -2507,7 +2696,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "6de08dfd45d7962f": {
@@ -2534,7 +2723,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "6eef119431d47b47": {
@@ -2561,7 +2750,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "6fa66d6d504ffdd4": {
@@ -2575,7 +2764,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.462920+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:23.996475+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2587,8 +2776,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "7019fb4350a4c253": {
@@ -2598,11 +2787,11 @@
   "location": "France",
   "url": "https://www.linkedin.com/jobs/view/4493438304",
   "source": "LinkedIn",
-  "date": "",
-  "date_known": false,
-  "date_raw": "",
-  "sort_date": "2026-11-26T15:22:22.913299+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:22.913299+00:00",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25",
+  "sort_date": "2026-11-25T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-26T16:26:37.766579+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2610,12 +2799,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 9
+   "data_ia": 3
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "70a81e1909adb298": {
@@ -2642,7 +2831,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "70acb3ab67c1228b": {
@@ -2669,7 +2858,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:34:12+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "721d76d686a7b065": {
@@ -2683,7 +2872,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:22.861728+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:22.861728+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.783411+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2695,8 +2884,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "7509bca4674ef3bf": {
@@ -2710,7 +2899,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:28:34.813849+00:00",
-  "freshness_verified_at": "2026-11-26T15:28:34.813849+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:49.200653+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2722,8 +2911,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "751636cbfead4eb8": {
@@ -2750,8 +2939,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "754dbcaf600c4d03": {
   "id": "754dbcaf600c4d03",
@@ -2764,7 +2953,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.197543+00:00",
-  "freshness_verified_at": "2026-11-26T15:27:53.197543+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:49.188913+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2776,8 +2965,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "757a0ebd62f8173a": {
@@ -2791,7 +2980,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.274591+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.274591+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.273290+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2803,8 +2992,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "75a72e830fd1e4cc": {
@@ -2831,7 +3020,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "763cc11f939b990e": {
@@ -2845,7 +3034,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.279638+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:23.794702+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2857,8 +3046,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "76482b7353dc0478": {
@@ -2872,7 +3061,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.258832+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.258832+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.853066+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2884,8 +3073,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "76cfad994c83f44b": {
@@ -2912,7 +3101,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "777d4d53a8cf91e1": {
@@ -2939,7 +3128,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "7a36fc3e16e016ec": {
@@ -2966,7 +3155,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:21:15+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "7ba7be2d19208449": {
@@ -2980,7 +3169,7 @@
   "date_known": true,
   "date_raw": "2026-11-23",
   "sort_date": "2026-11-23T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.538533+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:24.090350+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2992,8 +3181,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "7bea62af6f0d2dba": {
@@ -3020,7 +3209,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "7fa1bbbde5f97fa0": {
@@ -3034,7 +3223,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.326323+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.326323+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.334534+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3046,8 +3235,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "80f2a71c60869f84": {
@@ -3061,7 +3250,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.077444+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.077444+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:21.230091+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3073,8 +3262,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "816a1648680152d5": {
@@ -3088,7 +3277,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:21.766106+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:21.766106+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:33.662894+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3100,8 +3289,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "83e86020b4abfee1": {
@@ -3128,7 +3317,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "84452f1e6218891a": {
@@ -3142,7 +3331,7 @@
   "date_known": true,
   "date_raw": "2026-11-23",
   "sort_date": "2026-11-23T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:50.961720+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:27.223060+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3154,8 +3343,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "858a8f49130c3fc3": {
@@ -3182,7 +3371,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "86c5a08fa34e95b3": {
@@ -3196,7 +3385,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.513287+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.513287+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.549687+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3208,8 +3397,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "8724831b9255132e": {
@@ -3236,7 +3425,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "880aef3f520cdc16": {
@@ -3250,7 +3439,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.905147+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.776362+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3262,8 +3451,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "8818d6406213926b": {
@@ -3290,8 +3479,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "89d11d02ac8566aa": {
+  "id": "89d11d02ac8566aa",
+  "title": "Stagiaire / Alternant(e) IA/Software Engineer",
+  "company": "ALTHEA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493838201",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:24:27.760316+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.760316+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "8b3b8eaa1cbb1024": {
   "id": "8b3b8eaa1cbb1024",
@@ -3317,7 +3533,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "8d2f64eabf267f1e": {
@@ -3331,7 +3547,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.081278+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.081278+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:28.063896+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3339,12 +3555,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3
+   "data_ia": 4
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "8dc2ca095bc3df22": {
@@ -3371,7 +3587,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "8e96327a7ad50aa3": {
@@ -3385,7 +3601,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.256978+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.256978+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.851408+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3397,8 +3613,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "900bdf2dee8feaa9": {
@@ -3425,7 +3641,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9082974986c93542": {
@@ -3439,7 +3655,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.915274+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.804027+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3451,8 +3667,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "90c27a9ee0223d33": {
@@ -3479,7 +3695,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "930883baeb5fa819": {
@@ -3493,7 +3709,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:00.406564+00:00",
-  "freshness_verified_at": "2026-11-26T15:26:00.406564+00:00",
+  "freshness_verified_at": "2026-11-26T16:26:37.787428+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3505,8 +3721,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "936a4dc2800f0ee7": {
@@ -3520,7 +3736,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.069792+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.069792+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:07.225256+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3532,8 +3748,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "940d32db4758a5cb": {
@@ -3547,7 +3763,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.376228+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.376228+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.394432+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3559,8 +3775,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "94e9c01d8ab0827b": {
@@ -3587,7 +3803,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "94f65bb22722be3e": {
@@ -3601,7 +3817,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.255073+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.255073+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:49.185546+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3613,8 +3829,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "95f9f1dc689ae288": {
@@ -3641,7 +3857,34 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
+ },
+ "95fc958eb6e9cd5e": {
+  "id": "95fc958eb6e9cd5e",
+  "title": "[INTERNSHIP] AI Performance Engineering Internship — CPU Benchmarking and Optimization",
+  "company": "SiPearl",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4485510312",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:25:07.228542+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:07.228542+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "961c17e4fe8a2e19": {
@@ -3655,7 +3898,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.251303+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.251303+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.843391+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3667,8 +3910,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "96e201a3acac5332": {
@@ -3695,7 +3938,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "96e994367cdb8ba9": {
@@ -3709,7 +3952,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.190704+00:00",
-  "freshness_verified_at": "2026-11-26T15:27:53.190704+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:49.201959+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3721,8 +3964,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "9764e353419f23d5": {
@@ -3749,8 +3992,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "97b978995bbe683c": {
   "id": "97b978995bbe683c",
@@ -3776,7 +4019,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "995c635a86cf192d": {
@@ -3790,7 +4033,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.130573+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.130573+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.096009+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3802,8 +4045,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "9a99fe168b5e00c3": {
@@ -3830,7 +4073,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9c5f3472e3db4664": {
@@ -3857,7 +4100,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9cb19e35e5476b00": {
@@ -3884,7 +4127,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9da2f24f6b1c56ad": {
@@ -3911,7 +4154,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9eb0104c02d7e11a": {
@@ -3938,7 +4181,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9ee331d869340049": {
@@ -3965,7 +4208,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9ef1522680fdaa3e": {
@@ -3992,7 +4235,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "9f79f6218c054a75": {
@@ -4006,7 +4249,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:22.923437+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:22.923437+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.822499+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4018,8 +4261,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "9faa595e51bbd866": {
@@ -4033,7 +4276,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.265877+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.265877+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.861935+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4045,8 +4288,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "a22f485275a7e3ce": {
@@ -4060,7 +4303,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.199026+00:00",
-  "freshness_verified_at": "2026-11-26T15:27:53.199026+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:07.445989+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4072,8 +4315,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "a56894a6201cc126": {
@@ -4100,7 +4343,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "a6063f4e2b6c38ea": {
@@ -4127,7 +4370,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "aa8d6da43ccf7503": {
@@ -4141,7 +4384,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.785766+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.653337+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4153,8 +4396,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "aa9cf6095e2dcd2c": {
@@ -4168,7 +4411,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.391807+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.391807+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.413300+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4180,8 +4423,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "ab320b0f220ecacc": {
@@ -4208,8 +4451,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "ad0fbd2f50cefbd5": {
   "id": "ad0fbd2f50cefbd5",
@@ -4222,7 +4465,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:22.939386+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:22.939386+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:26.840905+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4234,8 +4477,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "ad1880f7c757debf": {
@@ -4249,7 +4492,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:29:08.432521+00:00",
-  "freshness_verified_at": "2026-11-26T15:29:08.432521+00:00",
+  "freshness_verified_at": "2026-11-26T16:30:26.474511+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4261,8 +4504,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "b1094811e9c75265": {
@@ -4276,7 +4519,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:50.311725+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.070936+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4288,8 +4531,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "b165e20a19484467": {
@@ -4303,7 +4546,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:46.258658+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:23.766157+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4315,8 +4558,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "b493059922884f8b": {
@@ -4343,7 +4586,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "b6347ae8d86aeb18": {
@@ -4357,7 +4600,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:50.115140+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.377908+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4369,8 +4612,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "b86573ac3e64a83f": {
@@ -4384,7 +4627,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.859860+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.859860+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.941280+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4396,8 +4639,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "b8e5d6630b570171": {
@@ -4424,7 +4667,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "b95d6322667d8e38": {
@@ -4451,7 +4694,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "bcf1d24c20d2dd80": {
@@ -4478,7 +4721,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "c1bbcd1d71b349a7": {
@@ -4505,8 +4748,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "c4130c9a8fd1e9ce": {
   "id": "c4130c9a8fd1e9ce",
@@ -4519,7 +4762,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.259641+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.259641+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.254917+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4531,8 +4774,35 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
+ },
+ "c430bba3a5d8f172": {
+  "id": "c430bba3a5d8f172",
+  "title": "BALENCIAGA - Global Data Client & Insights: Data & Analytics Intern - January 2027 (F/M)",
+  "company": "BALENCIAGA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495515476",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:24:27.150970+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.150970+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 13
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "c44a0493eeb70a22": {
@@ -4546,7 +4816,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:44.880534+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:22.746203+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4558,8 +4828,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "c4ee3443da974801": {
@@ -4573,7 +4843,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.216985+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.216985+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.203505+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4585,8 +4855,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "c50fa84224fc6e12": {
@@ -4613,8 +4883,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
+ },
+ "c5eb126f1b94156c": {
+  "id": "c5eb126f1b94156c",
+  "title": "Chef de projet IA - Stage 6 mois",
+  "company": "MEDADOM",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495007834",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:25:52.864457+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.864457+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
  },
  "c65086f7e85c7edb": {
   "id": "c65086f7e85c7edb",
@@ -4627,7 +4924,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:48.107546+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:24.715706+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4639,8 +4936,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "c771930abcdba37b": {
@@ -4667,7 +4964,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "c8b74bdb2ba193d2": {
@@ -4681,7 +4978,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.253082+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.253082+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.845685+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4693,8 +4990,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "ca0ad584169319b9": {
@@ -4721,7 +5018,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "ced34153722cb767": {
@@ -4748,7 +5045,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "d1efbc92186f7dad": {
@@ -4762,7 +5059,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.415322+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:10.415322+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:21.231195+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4774,8 +5071,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "d3de9d6591118ac5": {
@@ -4789,7 +5086,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.925029+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.925029+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:28.017653+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4801,8 +5098,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "d9e66443e049deea": {
@@ -4816,7 +5113,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:42.792441+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:20.891489+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4828,8 +5125,35 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": true
+ },
+ "dc709afae6294773": {
+  "id": "dc709afae6294773",
+  "title": "Stage - Quantitative Researcher H/F",
+  "company": "CHEManager International",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4494927991",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-26T16:24:27.447713+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.447713+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "de508980ec684140": {
@@ -4843,7 +5167,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.270676+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.270676+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.868596+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4855,8 +5179,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "deff109ebe1a07f3": {
@@ -4883,7 +5207,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e030ca1fe3ff77c4": {
@@ -4910,7 +5234,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e0c0591b849d5c6a": {
@@ -4937,7 +5261,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e0f800bebcf04f74": {
@@ -4964,7 +5288,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e2846770735c3b1a": {
@@ -4978,7 +5302,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.199527+00:00",
-  "freshness_verified_at": "2026-11-26T15:27:53.199527+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.026073+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4986,12 +5310,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3
+   "data_ia": 5
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "e28fd8e6bfc61ddd": {
@@ -5018,7 +5342,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e298ef1ae9a122a2": {
@@ -5032,7 +5356,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:00.410650+00:00",
-  "freshness_verified_at": "2026-11-26T15:26:00.410650+00:00",
+  "freshness_verified_at": "2026-11-26T16:29:49.209437+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5044,8 +5368,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "e2c41a6592bf7780": {
@@ -5072,7 +5396,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e3c12c36af8ee150": {
@@ -5099,7 +5423,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "e608cfbe9c7c3a4c": {
@@ -5126,7 +5450,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "eacbadd22886abdf": {
@@ -5153,7 +5477,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "ebedabd30fd944ab": {
@@ -5180,7 +5504,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "ec82abe2c9bffc3c": {
@@ -5207,8 +5531,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
-  "active": true
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "active": false
  },
  "ee0ea13c855e1db3": {
   "id": "ee0ea13c855e1db3",
@@ -5221,7 +5545,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.426340+00:00",
-  "freshness_verified_at": "2026-11-26T15:30:10.426340+00:00",
+  "freshness_verified_at": "2026-11-26T16:31:21.246168+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5233,8 +5557,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "eeb61bf9d8c477c7": {
@@ -5261,7 +5585,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "ef32e80dbad29a3f": {
@@ -5288,7 +5612,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f0d4ce913ed56c65": {
@@ -5302,7 +5626,7 @@
   "date_known": true,
   "date_raw": "2026-11-25",
   "sort_date": "2026-11-25T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:50.580641+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:26.971960+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5314,8 +5638,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "f183c77e55642447": {
@@ -5329,7 +5653,7 @@
   "date_known": true,
   "date_raw": "2026-11-26T14:33:29.434Z",
   "sort_date": "2026-11-26T14:33:29.434000+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:43.485620+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:20.999039+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5341,8 +5665,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "f18d109ac937e8f7": {
@@ -5369,7 +5693,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f1a6a214e40fd460": {
@@ -5396,7 +5720,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f23fc0070711a198": {
@@ -5410,7 +5734,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.068557+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:56.068557+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:07.222645+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5422,8 +5746,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "f38d27701780ccb4": {
@@ -5450,7 +5774,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f4f3a30109d4c0e0": {
@@ -5464,7 +5788,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.252360+00:00",
-  "freshness_verified_at": "2026-11-26T15:24:59.252360+00:00",
+  "freshness_verified_at": "2026-11-26T16:25:52.844620+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5476,8 +5800,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "f6153ec111112c9d": {
@@ -5504,7 +5828,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f6b843d427c9a1c0": {
@@ -5531,7 +5855,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f6e15b3d21b9c85d": {
@@ -5545,7 +5869,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T15:19:43.591900+00:00",
+  "freshness_verified_at": "2026-11-26T16:22:21.324023+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5557,8 +5881,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "f71bb70cde71d396": {
@@ -5585,7 +5909,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "f822b50298094d41": {
@@ -5612,7 +5936,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "fa1cb69717dfda68": {
@@ -5626,7 +5950,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.149647+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.149647+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.118566+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5638,8 +5962,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "fa55227861e13d52": {
@@ -5653,7 +5977,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.488160+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.488160+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.519518+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5665,8 +5989,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "fb61e135e4fabe8f": {
@@ -5680,7 +6004,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.471749+00:00",
-  "freshness_verified_at": "2026-11-26T15:22:23.471749+00:00",
+  "freshness_verified_at": "2026-11-26T16:24:27.499866+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5692,8 +6016,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_run": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": true
  },
  "fd8ce16fdf55a99f": {
@@ -5720,7 +6044,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "ff4211b9c49633ba": {
@@ -5747,7 +6071,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  },
  "ff9c3245064c6495": {
@@ -5774,7 +6098,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T15:32:00+00:00",
+  "last_seen_success": "2026-11-26T16:33:11+00:00",
   "active": false
  }
 }

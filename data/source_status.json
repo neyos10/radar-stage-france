@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-26T15:32:00+00:00",
- "scan_duration_s": 738.8,
+ "generated_at": "2026-11-26T16:33:11+00:00",
+ "scan_duration_s": 651.3,
  "active_domains": [
   "data_ia"
  ],
@@ -20,29 +20,29 @@
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 711,
-   "accepted_count": 78,
-   "rejected_count": 633,
+   "raw_count": 728,
+   "accepted_count": 75,
+   "rejected_count": 653,
    "reject_reasons": {
-    "aucun domaine": 409,
-    "pas un stage": 86,
-    "doublon": 138
+    "aucun domaine": 443,
+    "pas un stage": 91,
+    "doublon": 119
    },
-   "unknown_date_count": 76,
+   "unknown_date_count": 73,
    "too_old_count": 0,
-   "duplicate_count": 138,
+   "duplicate_count": 119,
    "pages_fetched": 32,
-   "duration_s": 628.5,
+   "duration_s": 541.3,
    "http_error": "",
    "note": "",
    "query_yield": {
     "stage data engineer": {
-     "raw": 71,
-     "accepted": 33
+     "raw": 70,
+     "accepted": 32
     },
     "stage data engineering PFE": {
      "raw": 70,
-     "accepted": 9
+     "accepted": 5
     },
     "stage big data": {
      "raw": 80,
@@ -50,19 +50,19 @@
     },
     "stage ETL": {
      "raw": 90,
-     "accepted": 4
+     "accepted": 6
     },
     "stage data analyst": {
      "raw": 90,
-     "accepted": 3
+     "accepted": 2
     },
     "stage business intelligence": {
-     "raw": 80,
-     "accepted": 6
+     "raw": 98,
+     "accepted": 3
     },
     "stage data scientist": {
      "raw": 70,
-     "accepted": 2
+     "accepted": 6
     },
     "stage machine learning": {
      "raw": 70,
@@ -73,47 +73,47 @@
      "accepted": 6
     }
    },
-   "label": "78 offres"
+   "label": "75 offres"
   },
   {
    "source": "LinkedIn",
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "success",
-   "raw_count": 124,
-   "accepted_count": 2,
-   "rejected_count": 122,
+   "raw_count": 128,
+   "accepted_count": 3,
+   "rejected_count": 125,
    "reject_reasons": {
-    "pas un stage": 44,
-    "aucun domaine": 62,
-    "doublon": 16
+    "pas un stage": 43,
+    "aucun domaine": 58,
+    "doublon": 24
    },
-   "unknown_date_count": 2,
+   "unknown_date_count": 3,
    "too_old_count": 0,
-   "duplicate_count": 16,
+   "duplicate_count": 24,
    "pages_fetched": 9,
-   "duration_s": 110.3,
+   "duration_s": 110.0,
    "http_error": "",
    "note": "",
    "query_yield": {
     "stage data engineer": {
-     "raw": 7,
-     "accepted": 2
+     "raw": 9,
+     "accepted": 3
     },
     "stage data engineering PFE": {
      "raw": 7,
      "accepted": 0
     },
     "stage big data": {
-     "raw": 10,
+     "raw": 12,
      "accepted": 0
     },
     "stage ETL": {
-     "raw": 20,
+     "raw": 19,
      "accepted": 0
     },
     "stage data analyst": {
-     "raw": 17,
+     "raw": 16,
      "accepted": 0
     },
     "stage business intelligence": {
@@ -125,7 +125,7 @@
      "accepted": 0
     },
     "stage machine learning": {
-     "raw": 15,
+     "raw": 17,
      "accepted": 0
     },
     "stage ingénieur données": {
@@ -133,31 +133,31 @@
      "accepted": 0
     }
    },
-   "label": "2 offres"
+   "label": "3 offres"
   },
   {
    "source": "Indeed",
    "region_id": "france",
    "region_label": "France",
    "status": "success",
-   "raw_count": 160,
+   "raw_count": 157,
    "accepted_count": 31,
-   "rejected_count": 129,
+   "rejected_count": 126,
    "reject_reasons": {
-    "aucun domaine": 55,
-    "pas un stage": 35,
-    "doublon": 39
+    "aucun domaine": 50,
+    "pas un stage": 36,
+    "doublon": 40
    },
    "unknown_date_count": 0,
    "too_old_count": 0,
-   "duplicate_count": 39,
+   "duplicate_count": 40,
    "pages_fetched": 9,
-   "duration_s": 9.5,
+   "duration_s": 7.7,
    "http_error": "",
    "note": "",
    "query_yield": {
     "stage data engineer": {
-     "raw": 10,
+     "raw": 9,
      "accepted": 3
     },
     "stage data engineering PFE": {
@@ -181,11 +181,11 @@
      "accepted": 7
     },
     "stage data scientist": {
-     "raw": 22,
+     "raw": 23,
      "accepted": 1
     },
     "stage machine learning": {
-     "raw": 76,
+     "raw": 73,
      "accepted": 8
     },
     "stage ingénieur données": {
@@ -200,17 +200,15 @@
    "region_id": "maroc",
    "region_label": "Maroc",
    "status": "empty",
-   "raw_count": 1,
+   "raw_count": 0,
    "accepted_count": 0,
-   "rejected_count": 1,
-   "reject_reasons": {
-    "aucun domaine": 1
-   },
+   "rejected_count": 0,
+   "reject_reasons": {},
    "unknown_date_count": 0,
    "too_old_count": 0,
    "duplicate_count": 0,
    "pages_fetched": 9,
-   "duration_s": 2.4,
+   "duration_s": 1.0,
    "http_error": "",
    "note": "",
    "query_yield": {
@@ -231,7 +229,7 @@
      "accepted": 0
     },
     "stage data analyst": {
-     "raw": 1,
+     "raw": 0,
      "accepted": 0
     },
     "stage business intelligence": {
@@ -251,121 +249,7 @@
      "accepted": 0
     }
    },
-   "label": "0 accepté / 1 reçus"
-  },
-  {
-   "source": "APEC",
-   "region_id": "france",
-   "region_label": "France",
-   "status": "blocked",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
-   "unknown_date_count": 0,
-   "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 1.8,
-   "http_error": "HTTP 403",
-   "note": "circuit breaker : requêtes restantes ignorées",
-   "query_yield": {},
-   "label": "Bloqué temporairement — circuit breaker : requêtes restantes ignorées"
-  },
-  {
-   "source": "APEC",
-   "region_id": "maroc",
-   "region_label": "Maroc",
-   "status": "not_applicable_region",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
-   "unknown_date_count": 0,
-   "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 0.0,
-   "http_error": "",
-   "note": "APEC est une source nationale française",
-   "query_yield": {},
-   "label": "Non applicable à Maroc"
-  },
-  {
-   "source": "Adzuna",
-   "region_id": "france",
-   "region_label": "France",
-   "status": "disabled_missing_credentials",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
-   "unknown_date_count": 0,
-   "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 0.0,
-   "http_error": "",
-   "note": "secrets ADZUNA_APP_ID / ADZUNA_APP_KEY absents",
-   "query_yield": {},
-   "label": "Non configuré — identifiants manquants"
-  },
-  {
-   "source": "Adzuna",
-   "region_id": "maroc",
-   "region_label": "Maroc",
-   "status": "not_applicable_region",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
-   "unknown_date_count": 0,
-   "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 0.0,
-   "http_error": "",
-   "note": "connecteur Adzuna actuel limité à l'index France",
-   "query_yield": {},
-   "label": "Non applicable à Maroc"
-  },
-  {
-   "source": "The Muse",
-   "region_id": "france",
-   "region_label": "France",
-   "status": "blocked",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
-   "unknown_date_count": 0,
-   "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 0.1,
-   "http_error": "HTTP 403",
-   "note": "",
-   "query_yield": {},
-   "label": "Bloqué temporairement — HTTP 403"
-  },
-  {
-   "source": "The Muse",
-   "region_id": "maroc",
-   "region_label": "Maroc",
-   "status": "not_applicable_region",
-   "raw_count": 0,
-   "accepted_count": 0,
-   "rejected_count": 0,
-   "reject_reasons": {},
-   "unknown_date_count": 0,
-   "too_old_count": 0,
-   "duplicate_count": 0,
-   "pages_fetched": 0,
-   "duration_s": 0.0,
-   "http_error": "",
-   "note": "connecteur The Muse actuel limité à la France",
-   "query_yield": {},
-   "label": "Non applicable à Maroc"
+   "label": "Aucune offre reçue"
   },
   {
    "source": "France Travail",
@@ -382,7 +266,7 @@
    "too_old_count": 0,
    "duplicate_count": 1,
    "pages_fetched": 9,
-   "duration_s": 6.0,
+   "duration_s": 4.3,
    "http_error": "",
    "note": "",
    "query_yield": {},
@@ -444,6 +328,82 @@
    "note": "créneaux 06h et 18h UTC — quota gratuit Tavily préservé (1000 recherches/mois)",
    "query_yield": {},
    "label": "Différé — créneaux 06h et 18h UTC — quota gratuit Tavily préservé (1000 recherches/mois)"
+  },
+  {
+   "source": "Dreamjob",
+   "region_id": "france",
+   "region_label": "France",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "too_old_count": 0,
+   "duplicate_count": 0,
+   "pages_fetched": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "source locale non activée pour France",
+   "query_yield": {},
+   "label": "Non applicable à France"
+  },
+  {
+   "source": "Dreamjob",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "error",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "too_old_count": 0,
+   "duplicate_count": 0,
+   "pages_fetched": 0,
+   "duration_s": 0.4,
+   "http_error": "mismatched tag: line 93, column 2",
+   "note": "",
+   "query_yield": {},
+   "label": "Erreur — mismatched tag: line 93, column 2"
+  },
+  {
+   "source": "Sites Maroc",
+   "region_id": "france",
+   "region_label": "France",
+   "status": "not_applicable_region",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "too_old_count": 0,
+   "duplicate_count": 0,
+   "pages_fetched": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "source locale non activée pour France",
+   "query_yield": {},
+   "label": "Non applicable à France"
+  },
+  {
+   "source": "Sites Maroc",
+   "region_id": "maroc",
+   "region_label": "Maroc",
+   "status": "deferred",
+   "raw_count": 0,
+   "accepted_count": 0,
+   "rejected_count": 0,
+   "reject_reasons": {},
+   "unknown_date_count": 0,
+   "too_old_count": 0,
+   "duplicate_count": 0,
+   "pages_fetched": 0,
+   "duration_s": 0.0,
+   "http_error": "",
+   "note": "créneaux 06h et 18h UTC — quota gratuit Tavily préservé",
+   "query_yield": {},
+   "label": "Différé — créneaux 06h et 18h UTC — quota gratuit Tavily préservé"
   }
  ]
 }
