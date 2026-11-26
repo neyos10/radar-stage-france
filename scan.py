@@ -2005,12 +2005,19 @@ def fetch_dreamjob_all(region_id: str = "maroc",
                                 headers={"User-Agent": RADAR_USER_AGENT},
                                 timeout=REQUEST_TIMEOUT)
             resp.raise_for_status()
+            if not resp.text.lstrip().startswith("<?xml"):
+                # Mesuré sur GitHub Actions : le site renvoie une page HTML
+                # (pare-feu sur les IP de datacenter) au lieu du flux. Jamais
+                # contourné ; Sites Maroc couvre dreamjob.ma via Tavily.
+                raise RuntimeError("HTTP 403 réponse non RSS (pare-feu probable)")
             items = parse_dreamjob_feed(resp.text)
         except Exception as exc:
             code = block_code(exc)
             status.http_error = f"HTTP {code}" if code else safe_error(exc)[:200]
             if page == 1:
                 status.status = "blocked" if code else "error"
+                if code:
+                    status.note = "flux filtré depuis ce serveur — couvert par Sites Maroc"
             print(f"[WARN] Dreamjob page {page} a échoué : {safe_error(exc)}", file=sys.stderr)
             break
         status.pages_fetched += 1
@@ -2040,15 +2047,16 @@ def fetch_dreamjob_all(region_id: str = "maroc",
 # jamais directement : ReKrute interdit le crawl de ses recherches dans son
 # robots.txt et Emploi.ma oppose un anti-bot. Seules les pages d'offre
 # individuelles sont retenues (pas les listes ni les « demandes de stage »).
-MAROC_SITES_DOMAINS = ("stagiaires.ma", "rekrute.com", "emploi.ma")
+MAROC_SITES_DOMAINS = ("stagiaires.ma", "rekrute.com", "emploi.ma", "dreamjob.ma")
 MAROC_SITES_OFFER_URL_RE = re.compile(
     r"^https://(?:www\.)?(?:stagiaires\.ma/stage-emploi-maroc/\d+"
+    r"|dreamjob\.ma/stage/[^/?#]+/?$"
     r"|rekrute\.com/(?:[a-z]{2}/)?offre-emploi-[^/]+-\d+\.html"
     r"|emploi\.ma/offre-emploi-maroc/[^/?#]+)",
     re.I,
 )
 MAROC_SITES_TITLE_SUFFIX_RE = re.compile(
-    r"\s*[|\-–]\s*(?:Stagiaires\.ma|ReKrute(?:\.com)?|Emploi\.ma)\b.*$", re.I)
+    r"\s*[|\-–]\s*(?:Stagiaires\.ma|ReKrute(?:\.com)?|Emploi\.ma|Dreamjob(?:\.ma)?)\b.*$", re.I)
 MAROC_SITES_COMPANY_RE = re.compile(r"\s+chez\s+(?P<company>[^|–\-]+?)\s*$", re.I)
 # 5 requêtes × 2 créneaux = tout le catalogue data_ia (9 requêtes) chaque
 # jour, soit 10 crédits/jour ; avec LinkedIn Posts (16/jour) le total reste
@@ -2062,8 +2070,11 @@ def parse_maroc_site_result(item: dict) -> dict | None:
     if not MAROC_SITES_OFFER_URL_RE.match(url):
         return None
     title = MAROC_SITES_TITLE_SUFFIX_RE.sub("", clean_text(item.get("title")))
+    title = re.sub(r"^Offre d['’]emploi\s+", "", title, flags=re.I)
     company = ""
-    match = MAROC_SITES_COMPANY_RE.search(title)
+    # « … chez Entreprise » en fin de titre est la convention de Stagiaires.ma ;
+    # sur Dreamjob, « chez X à Ville » est une phrase éditoriale.
+    match = MAROC_SITES_COMPANY_RE.search(title) if "stagiaires.ma" in url else None
     if match:
         company = match.group("company").strip()
         title = title[:match.start()].strip()
@@ -2112,6 +2123,7 @@ def fetch_maroc_sites_all(region_id: str = "maroc",
         domains, active_ids, start_index=start_index, budget=MAROC_SITES_QUERY_BUDGET)
     session = session or requests.Session()
     offers: dict[str, dict] = {}
+    seen_urls: set[str] = set()
     failed = 0
     for raw_query in plan:
         query = f"stage PFE {source_keywords(raw_query)} Maroc"
@@ -2144,6 +2156,13 @@ def fetch_maroc_sites_all(region_id: str = "maroc",
             if parsed is None:
                 status.add_reject("page hors offre (liste, demande de stage…)")
                 continue
+            # Tavily renvoie parfois la même page sous un titre tronqué
+            # (« … à ... ») : l'URL fait foi, pas le titre.
+            url_key = re.sub(r"^https://(?:www\.)?", "", parsed["url"]).rstrip("/").casefold()
+            if url_key in seen_urls:
+                status.add_reject(REASON_DUPLICATE)
+                continue
+            seen_urls.add(url_key)
             offer, reason = make_offer(
                 parsed["title"], parsed["company"] or "Entreprise (voir l'annonce)",
                 moroccan_city(parsed["title"] + " " + parsed["description"]),

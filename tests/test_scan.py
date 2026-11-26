@@ -2262,6 +2262,27 @@ class TestMoroccanLocalSources(unittest.TestCase):
             "url": "https://www.rekrute.com/offre-emploi-stage-pfe-data-engineer-casablanca-178000.html",
             "title": "Stage PFE Data Engineer - ReKrute.com"}))
 
+    def test_dreamjob_html_answer_is_reported_blocked_not_xml_error(self):
+        page = mock.Mock(text="<!DOCTYPE html><html><body>Access denied", status_code=200,
+                         raise_for_status=lambda: None)
+        with mock.patch.object(scan.requests, "get", return_value=page), \
+             mock.patch("sys.stderr", new_callable=io.StringIO):
+            offers, status = scan.fetch_dreamjob_all("maroc", now=self.NOW)
+        self.assertEqual(offers, [])
+        self.assertEqual(status.status, "blocked")
+        self.assertIn("Sites Maroc", status.note)
+
+    def test_maroc_sites_also_covers_dreamjob_articles(self):
+        parsed = scan.parse_maroc_site_result({
+            "url": "https://www.dreamjob.ma/stage/2-offres-de-stage-pfe-en-data-chez-circet-morocco-a-casablanca/",
+            "title": "2 offres de stage PFE en data chez Circet Morocco à Casablanca - Dreamjob",
+            "content": "Un Data Engineer et un Data Analyst."})
+        self.assertEqual(parsed["title"],
+                         "2 offres de stage PFE en data chez Circet Morocco à Casablanca")
+        self.assertEqual(parsed["company"], "")
+        self.assertIsNone(scan.parse_maroc_site_result(
+            {"url": "https://www.dreamjob.ma/stage/", "title": "Stages"}))
+
     def test_maroc_sites_fetch_slot_budget_and_credentials(self):
         off_slot = self.NOW.replace(hour=12)
         _, status = scan.fetch_maroc_sites_all("maroc", now=off_slot)
@@ -2276,6 +2297,12 @@ class TestMoroccanLocalSources(unittest.TestCase):
             {"url": "https://www.stagiaires.ma/stage-emploi-maroc/8200",
              "title": "Stage PFE Data Engineer chez CGI | Stagiaires.ma",
              "content": "Pipelines Spark à Rabat."},
+            {"url": "https://stagiaires.ma/stage-emploi-maroc/8200/",
+             "title": "Stage PFE Data Engineer chez ...",
+             "content": "Pipelines Spark."},
+            {"url": "https://www.stagiaires.ma/stage-emploi-maroc/8300",
+             "title": "Stage pré-embauche – Service client - ozon express",
+             "content": "Data, SQL, Power BI."},
             {"url": "https://www.marocannonces.com/categorie/311/Demandes-de-stage/annonce/1",
              "title": "Je cherche un stage data"},
         ]}
@@ -2289,6 +2316,10 @@ class TestMoroccanLocalSources(unittest.TestCase):
         self.assertEqual(body["include_domains"], list(scan.MAROC_SITES_DOMAINS))
         self.assertEqual(len(offers), 1)
         self.assertEqual(offers[0]["company"], "CGI")
+        self.assertGreaterEqual(status.duplicate_count, 1)
+        self.assertEqual(scan.parse_maroc_site_result({
+            "url": "https://www.rekrute.com/offre-emploi-stage-pfe-data-casablanca-178000.html",
+            "title": "Offre d'emploi Stage PFE Data - ReKrute.com"})["title"], "Stage PFE Data")
         self.assertEqual(offers[0]["location"], "Rabat, Maroc")
         self.assertIn("Sites Maroc", scan.ROTATING_COVERAGE_SOURCES)
 
