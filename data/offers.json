@@ -23,8 +23,35 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "006d2584b1c1506d": {
+  "id": "006d2584b1c1506d",
+  "title": "Delivery AI Engineering Intern",
+  "company": "Boston Consulting Group (BCG)",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8133-delivery-ai-engineering-intern",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-21",
+  "date_known": true,
+  "date_raw": "2026-11-21T06:04:22.480Z",
+  "sort_date": "2026-11-21T06:04:22.480000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "0318c15a65fecc23": {
   "id": "0318c15a65fecc23",
@@ -50,8 +77,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "0511ba1fbf1896b2": {
   "id": "0511ba1fbf1896b2",
@@ -77,7 +104,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "07e3b1c387065717": {
@@ -104,7 +131,34 @@
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "097f3524954c1262": {
+  "id": "097f3524954c1262",
+  "title": "Stage - Analyste processus estimation & IA",
+  "company": "Air Liquide",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=903ddba61bdaf466",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.601874+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "0a650346d53593db": {
@@ -131,7 +185,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "0a945a001a7eb441": {
@@ -158,8 +212,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "0aa206d4fc99fc63": {
   "id": "0aa206d4fc99fc63",
@@ -172,7 +226,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.053649+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:26.967432+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.859928+00:00",
   "domains": [
    "data_ia"
   ],
@@ -184,8 +238,35 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "0aefd7d088c95f67": {
+  "id": "0aefd7d088c95f67",
+  "title": "Stage PFE - Ingénieur en structuration du processus de reporting d'activité F/H",
+  "company": "Réseau de Transport d'Électricité",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495041106",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:01.755478+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.755478+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "0d2122867f068be8": {
@@ -212,7 +293,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "0effb59f8f68a475": {
@@ -239,7 +320,7 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "0f307ca9f8feb1f6": {
@@ -253,7 +334,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.341501+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.352736+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.139180+00:00",
   "domains": [
    "data_ia"
   ],
@@ -265,8 +346,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "0fd2459ce1934a8d": {
@@ -293,8 +374,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "10055881b29550a9": {
   "id": "10055881b29550a9",
@@ -307,7 +388,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:22.620991+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.312431+00:00",
   "domains": [
    "data_ia"
   ],
@@ -319,8 +400,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "10771e0ef048f846": {
@@ -347,7 +428,34 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "11b7ca0346e56da2": {
+  "id": "11b7ca0346e56da2",
+  "title": "Data Engineer (M/F) - Internship - Paris",
+  "company": "Wiremind",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=461fc35b385dca5a",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:51.088990+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "12a3e000e709abfb": {
@@ -374,8 +482,35 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "13c08a38e45a4e19": {
+  "id": "13c08a38e45a4e19",
+  "title": "Ingénieur IA (F/H) - stage",
+  "company": "AXA en France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493848710",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:40.719527+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.719527+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "1607b5d160e9155e": {
   "id": "1607b5d160e9155e",
@@ -388,7 +523,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.075762+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:07.233625+00:00",
+  "freshness_verified_at": "2026-11-27T00:34:16.338355+00:00",
   "domains": [
    "data_ia"
   ],
@@ -400,8 +535,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "1670914c348761fa": {
@@ -428,8 +563,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "1683d66b92e11820": {
   "id": "1683d66b92e11820",
@@ -455,7 +590,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "176df852f89b3cd3": {
@@ -482,7 +617,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "1809277b9d9b6c7d": {
@@ -509,8 +644,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "184b224ebf1198a8": {
   "id": "184b224ebf1198a8",
@@ -523,7 +658,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:22.599227+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.265005+00:00",
   "domains": [
    "data_ia"
   ],
@@ -535,8 +670,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "18673aae54480d63": {
@@ -563,8 +698,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "1a076242e3976396": {
   "id": "1a076242e3976396",
@@ -590,7 +725,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "1a5ca428b5097dc7": {
@@ -604,7 +739,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:26.358630+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:49.709591+00:00",
   "domains": [
    "data_ia"
   ],
@@ -616,8 +751,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "1ab6bf6902942c55": {
@@ -631,7 +766,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:23.713347+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.441155+00:00",
   "domains": [
    "data_ia"
   ],
@@ -643,8 +778,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "1ca217346e7ddd2b": {
@@ -658,7 +793,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.412392+00:00",
-  "freshness_verified_at": "2026-11-26T16:29:49.203134+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.728033+00:00",
   "domains": [
    "data_ia"
   ],
@@ -670,8 +805,35 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "1caf436d0e3fb20d": {
+  "id": "1caf436d0e3fb20d",
+  "title": "STAGE Data Analyst H/F",
+  "company": "Air Liquide",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495531017",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.038232+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.038232+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 11
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "1e227a5321b23f1a": {
@@ -698,7 +860,7 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "1f119c9a9e3515e7": {
@@ -712,7 +874,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.076158+00:00",
-  "freshness_verified_at": "2026-11-26T16:26:37.786405+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.415918+00:00",
   "domains": [
    "data_ia"
   ],
@@ -724,8 +886,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "2111583ca64cec29": {
@@ -752,8 +914,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "23d519d2c6a13869": {
   "id": "23d519d2c6a13869",
@@ -779,7 +941,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "23e677289366b6f5": {
@@ -806,7 +968,34 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "249b22bb6e7afbc9": {
+  "id": "249b22bb6e7afbc9",
+  "title": "Stage en Planification de la Demande à Court Terme - PFE",
+  "company": "Stellantis Middle East & Africa",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8210-stage-en-planification-de-la-demande-a-court-terme-pfe",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-24",
+  "date_known": true,
+  "date_raw": "2026-11-24T06:07:00.442Z",
+  "sort_date": "2026-11-24T06:07:00.442000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "2526b22ff1f50539": {
@@ -820,7 +1009,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:57.842614+00:00",
-  "freshness_verified_at": "2026-11-26T16:28:09.215019+00:00",
+  "freshness_verified_at": "2026-11-27T00:35:03.202342+00:00",
   "domains": [
    "data_ia"
   ],
@@ -832,8 +1021,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "25481e0f8ce3cbf6": {
@@ -860,7 +1049,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "25bfbb072982c3bb": {
@@ -874,7 +1063,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.261013+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.855287+00:00",
+  "freshness_verified_at": "2026-11-27T00:34:16.341158+00:00",
   "domains": [
    "data_ia"
   ],
@@ -886,8 +1075,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "262655e38213b7cf": {
@@ -914,8 +1103,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "266a7ad23997b6a3": {
   "id": "266a7ad23997b6a3",
@@ -928,7 +1117,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.183615+00:00",
-  "freshness_verified_at": "2026-11-26T16:29:07.436107+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.727277+00:00",
   "domains": [
    "data_ia"
   ],
@@ -940,8 +1129,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "269f0b62e4121717": {
@@ -968,8 +1157,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "277e9f958a8758d0": {
   "id": "277e9f958a8758d0",
@@ -982,7 +1171,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:56.064883+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:07.218898+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.216249+00:00",
   "domains": [
    "data_ia"
   ],
@@ -990,12 +1179,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3
+   "data_ia": 5
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "292af93783af9e77": {
@@ -1022,7 +1211,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "296d32e3215a718c": {
@@ -1036,7 +1225,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:30:26.494517+00:00",
-  "freshness_verified_at": "2026-11-26T16:30:26.494517+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.485330+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1048,8 +1237,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "2a0b69086ef65698": {
@@ -1076,7 +1265,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "2a34a03bc710e801": {
@@ -1103,7 +1292,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "2a692e2d507e6d4f": {
@@ -1130,8 +1319,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "2aab1c73a19a2685": {
   "id": "2aab1c73a19a2685",
@@ -1144,7 +1333,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:26:00.411775+00:00",
-  "freshness_verified_at": "2026-11-26T16:26:37.794177+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.726279+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1156,8 +1345,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "2e432684347f9880": {
@@ -1171,7 +1360,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.666151+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.776272+00:00",
+  "freshness_verified_at": "2026-11-27T00:38:30.484239+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1179,12 +1368,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 4
+   "data_ia": 3
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "2f0e46d05e366a73": {
@@ -1211,7 +1400,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "2f76028925360881": {
@@ -1238,7 +1427,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "2ff9ccdd60a245be": {
@@ -1265,7 +1454,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "31fed8988a92f4f1": {
@@ -1292,7 +1481,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "32cd776a06454ee0": {
@@ -1319,7 +1508,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "347ff7629d62627a": {
@@ -1346,7 +1535,61 @@
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "36b0208654094c82": {
+  "id": "36b0208654094c82",
+  "title": "Stage Ingénieur - Génération automatique de scénarios de couverture fonctionnelle H/F",
+  "company": "Arteris",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4485748158",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.692085+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.692085+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "37be3fe9b109525c": {
+  "id": "37be3fe9b109525c",
+  "title": "Stage Data & Outils de Pilotage - H/F",
+  "company": "Office National des Forêts",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=c8e2f615971b8d3b",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.491855+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "38b9447818cc4393": {
@@ -1373,8 +1616,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "38de456e18da69ec": {
   "id": "38de456e18da69ec",
@@ -1400,8 +1643,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "3916476f708692ed": {
   "id": "3916476f708692ed",
@@ -1427,8 +1670,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "3a73df6dc9299aa0": {
   "id": "3a73df6dc9299aa0",
@@ -1454,7 +1697,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "3d19b6cf6a74926d": {
@@ -1468,7 +1711,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:23.817575+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.584481+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1480,8 +1723,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "3fd1599389013047": {
@@ -1508,7 +1751,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "40bde8ccdc4bbe74": {
@@ -1535,7 +1778,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "4104295f30df2677": {
@@ -1562,7 +1805,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "412723af6acf141e": {
@@ -1589,8 +1832,35 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "41469bf19ab60781": {
+  "id": "41469bf19ab60781",
+  "title": "Stage Traitement d'images : Développement d'un algorithme d'IA pour le guidage infrarouge F/H",
+  "company": "MBDA",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479554067",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.066948+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.066948+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "41c3de6eba393fd9": {
   "id": "41c3de6eba393fd9",
@@ -1616,7 +1886,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "41e88744f1c37e0f": {
@@ -1643,7 +1913,34 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "44518fbb6d1a6017": {
+  "id": "44518fbb6d1a6017",
+  "title": "Stage Développeur Informatique IA / Vibe Coding (H/F)",
+  "company": "RWADTECH",
+  "location": "Fès, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8199-stage-developpeur-informatique-ia-vibe-coding-h-f",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-24",
+  "date_known": true,
+  "date_raw": "2026-11-24T06:03:22.759Z",
+  "sort_date": "2026-11-24T06:03:22.759000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "446806987bcdd458": {
@@ -1670,7 +1967,7 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "456530bc22a10ba0": {
@@ -1697,7 +1994,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "46eb8f5cf05d1262": {
@@ -1711,7 +2008,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:22.631951+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.323451+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1723,8 +2020,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "472d7385b789f9e4": {
@@ -1751,7 +2048,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "47482395840848d4": {
@@ -1778,7 +2075,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "478c964e2b580f7d": {
@@ -1792,7 +2089,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:26.021273+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:49.227486+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1804,8 +2101,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "47912586fb5c2709": {
@@ -1832,7 +2129,7 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "4c4a7a4499a3bbb3": {
@@ -1846,7 +2143,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.259165+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.853415+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.350642+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1854,12 +2151,39 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3
+   "data_ia": 5
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "4c7de643cd3e8a8b": {
+  "id": "4c7de643cd3e8a8b",
+  "title": "STAGE - Ingénieur gouvernance IA & Knowledge (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4470980821",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:01.902243+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.902243+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "4d76ddffa7fcbfff": {
@@ -1886,7 +2210,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "4e8e724aed515e28": {
@@ -1913,8 +2237,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "500053914ae4a3ba": {
   "id": "500053914ae4a3ba",
@@ -1927,7 +2251,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:26.405023+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:49.788685+00:00",
   "domains": [
    "data_ia"
   ],
@@ -1939,8 +2263,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "502f39abce75832c": {
@@ -1967,8 +2291,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "50e463fe140ad173": {
+  "id": "50e463fe140ad173",
+  "title": "Stage Data Scientist – Score d'appétence commerciale et outils d'assistant à la vente H/F",
+  "company": "Credit Agricole Leasing & Factoring",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495520515",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:36:18.093032+00:00",
+  "freshness_verified_at": "2026-11-27T00:36:18.093032+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "5340a0a3b996a352": {
   "id": "5340a0a3b996a352",
@@ -1994,8 +2345,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "5444c510369ee18c": {
+  "id": "5444c510369ee18c",
+  "title": "Stage PFE en Développement, Infrastructure & Applicatif (F/H)",
+  "company": "CGI",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8117-stage-pfe-en-developpement-infrastructure-applicatif-f-h",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-20",
+  "date_known": true,
+  "date_raw": "2026-11-20T06:04:18.286Z",
+  "sort_date": "2026-11-20T06:04:18.286000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "54b981b44736d512": {
   "id": "54b981b44736d512",
@@ -2021,7 +2399,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "55d503cd3f37efa3": {
@@ -2048,7 +2426,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "5699ee90da5e8eea": {
@@ -2075,7 +2453,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "56d98ae487aee462": {
@@ -2089,7 +2467,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:26.503929+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:49.882059+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2101,8 +2479,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "56f67bcdc01bff85": {
@@ -2129,8 +2507,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "572f2d329f1a5da8": {
   "id": "572f2d329f1a5da8",
@@ -2156,7 +2534,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "5817eed8df159168": {
@@ -2183,8 +2561,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "59c9016655a5830e": {
   "id": "59c9016655a5830e",
@@ -2210,7 +2588,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "5a51d07a5e04780b": {
@@ -2237,7 +2615,34 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "5b293dbd3da25289": {
+  "id": "5b293dbd3da25289",
+  "title": "Offre de stage IA - Data & Développement d'Application",
+  "company": "DataValue",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8264-offre-de-stage-ia-data-developpement-d-application",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26T06:40:45.593Z",
+  "sort_date": "2026-11-26T06:40:45.593000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 13
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "5be76329f66059da": {
@@ -2264,7 +2669,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "5c356789324bf2f5": {
@@ -2291,8 +2696,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "5d1a8cd97beba340": {
+  "id": "5d1a8cd97beba340",
+  "title": "Ingénieur IA (F/H) - stage",
+  "company": "AXA / France",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d0787b95afba4fda",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:42.827694+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "5f9570d1adf8a3fb": {
   "id": "5f9570d1adf8a3fb",
@@ -2318,7 +2750,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "5fbec1246eb56ed3": {
@@ -2345,7 +2777,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "5fed0c8e010a41b2": {
@@ -2372,8 +2804,62 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "60f10dd48a932536": {
+  "id": "60f10dd48a932536",
+  "title": "Stage - Évaluation des modèles d’IA - Construire le benchmark Almond et un framework ML interne H/F",
+  "company": "Almond",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493846520",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:36:18.108436+00:00",
+  "freshness_verified_at": "2026-11-27T00:36:18.108436+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "62e289884ca95798": {
+  "id": "62e289884ca95798",
+  "title": "Stages PFE 2027 - Profils Ingénieurs",
+  "company": "Saham Bank",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8227-stages-pfe-2027-profils-ingenieurs",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25T06:01:35.898Z",
+  "sort_date": "2026-11-25T06:01:35.898000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "630f1c5b91649041": {
   "id": "630f1c5b91649041",
@@ -2399,7 +2885,7 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "6444fedfbf7cbf0f": {
@@ -2413,7 +2899,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:20.848363+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:42.804719+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2425,8 +2911,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "6449ebfc05f39db1": {
@@ -2453,7 +2939,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "65235f833e2c817a": {
@@ -2467,7 +2953,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:31:33.697024+00:00",
-  "freshness_verified_at": "2026-11-26T16:31:33.697024+00:00",
+  "freshness_verified_at": "2026-11-27T00:40:08.986805+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2479,8 +2965,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "664c4e558554d3d4": {
@@ -2507,7 +2993,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "670d90e3bca60015": {
@@ -2534,7 +3020,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "67f176d4868bbb96": {
@@ -2561,8 +3047,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "697db45211ffcc89": {
   "id": "697db45211ffcc89",
@@ -2575,7 +3061,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:21.813257+00:00",
-  "freshness_verified_at": "2026-11-26T16:31:33.734154+00:00",
+  "freshness_verified_at": "2026-11-27T00:40:09.022430+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2587,8 +3073,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "6a7f881d2f9c6f8a": {
@@ -2602,7 +3088,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:25:52.854668+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.854668+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.389713+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2610,12 +3096,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 9
+   "data_ia": 15
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "6ba748395cc7bac3": {
@@ -2642,7 +3128,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "6bf4fc6b31d5e6b7": {
@@ -2669,7 +3155,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:21:15+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "6ddf51a63f43097c": {
@@ -2696,7 +3182,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "6de08dfd45d7962f": {
@@ -2723,8 +3209,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "6ea3e3fd74715adc": {
+  "id": "6ea3e3fd74715adc",
+  "title": "Offre de Stage en Prompt Engineer & IA - Marrakech",
+  "company": "Orchid Island Real Estate",
+  "location": "Marrakech, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8101-offre-de-stage-en-prompt-engineer-ia-marrakech",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-20",
+  "date_known": true,
+  "date_raw": "2026-11-20T06:00:44.004Z",
+  "sort_date": "2026-11-20T06:00:44.004000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "6eef119431d47b47": {
   "id": "6eef119431d47b47",
@@ -2750,7 +3263,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "6fa66d6d504ffdd4": {
@@ -2777,8 +3290,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "7019fb4350a4c253": {
   "id": "7019fb4350a4c253",
@@ -2804,8 +3317,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "70a81e1909adb298": {
   "id": "70a81e1909adb298",
@@ -2831,7 +3344,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "70acb3ab67c1228b": {
@@ -2858,7 +3371,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:34:12+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "721d76d686a7b065": {
@@ -2872,7 +3385,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:22.861728+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:26.783411+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.684833+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2884,8 +3397,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "7509bca4674ef3bf": {
@@ -2899,7 +3412,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:28:34.813849+00:00",
-  "freshness_verified_at": "2026-11-26T16:29:49.200653+00:00",
+  "freshness_verified_at": "2026-11-27T00:35:03.217882+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2911,8 +3424,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "751636cbfead4eb8": {
@@ -2939,7 +3452,7 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "754dbcaf600c4d03": {
@@ -2966,8 +3479,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "757a0ebd62f8173a": {
   "id": "757a0ebd62f8173a",
@@ -2980,7 +3493,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.274591+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.273290+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.077606+00:00",
   "domains": [
    "data_ia"
   ],
@@ -2992,8 +3505,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "75a72e830fd1e4cc": {
@@ -3020,7 +3533,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "763cc11f939b990e": {
@@ -3034,7 +3547,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:23.794702+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.562248+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3046,8 +3559,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "76482b7353dc0478": {
@@ -3061,7 +3574,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.258832+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.853066+00:00",
+  "freshness_verified_at": "2026-11-27T00:34:16.336269+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3073,8 +3586,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "76cfad994c83f44b": {
@@ -3101,7 +3614,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "777d4d53a8cf91e1": {
@@ -3128,8 +3641,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "78e13869011aa063": {
+  "id": "78e13869011aa063",
+  "title": "FR - Stage Intelligence Artificielle (Talent Program)",
+  "company": "Valtech",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4479523236",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.499414+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.499414+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 8
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "7a36fc3e16e016ec": {
   "id": "7a36fc3e16e016ec",
@@ -3155,8 +3695,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:21:15+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "7a8080bfbc97bba1": {
+  "id": "7a8080bfbc97bba1",
+  "title": "STAGE - Flux de mise en œuvre physique et vérifications SDC à l’aide de l’IA - F/H",
+  "company": "STMicroelectronics France",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495532787",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:36:18.110360+00:00",
+  "freshness_verified_at": "2026-11-27T00:36:18.110360+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "7ba7be2d19208449": {
   "id": "7ba7be2d19208449",
@@ -3169,7 +3736,7 @@
   "date_known": true,
   "date_raw": "2026-11-23",
   "sort_date": "2026-11-23T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:24.090350+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.737558+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3181,8 +3748,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "7bea62af6f0d2dba": {
@@ -3209,8 +3776,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "7d579b0b37030368": {
+  "id": "7d579b0b37030368",
+  "title": "Stage Compensation & Benefits Analyst F/M",
+  "company": "Egis Group",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=9615259735bf79c2",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.513888+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "7fa1bbbde5f97fa0": {
   "id": "7fa1bbbde5f97fa0",
@@ -3236,8 +3830,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "80f2a71c60869f84": {
   "id": "80f2a71c60869f84",
@@ -3263,8 +3857,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "816a1648680152d5": {
   "id": "816a1648680152d5",
@@ -3290,8 +3884,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "83e86020b4abfee1": {
   "id": "83e86020b4abfee1",
@@ -3317,7 +3911,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "84452f1e6218891a": {
@@ -3331,7 +3925,7 @@
   "date_known": true,
   "date_raw": "2026-11-23",
   "sort_date": "2026-11-23T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:27.223060+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:50.214194+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3343,8 +3937,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "858a8f49130c3fc3": {
@@ -3371,7 +3965,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "86c5a08fa34e95b3": {
@@ -3385,7 +3979,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.513287+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.549687+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.720981+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3393,12 +3987,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 11
+   "data_ia": 6
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "8724831b9255132e": {
@@ -3425,7 +4019,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "880aef3f520cdc16": {
@@ -3439,7 +4033,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:22.776362+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.590950+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3451,8 +4045,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "8818d6406213926b": {
@@ -3479,8 +4073,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "8824e963513285bc": {
+  "id": "8824e963513285bc",
+  "title": "DSC - Stagiaire Data Analyst (94) F/H",
+  "company": "Orange",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=77f91b9d1cbf3c44",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.286472+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 9
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "89d11d02ac8566aa": {
   "id": "89d11d02ac8566aa",
@@ -3493,7 +4114,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:24:27.760316+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.760316+00:00",
+  "freshness_verified_at": "2026-11-27T00:37:52.378273+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3505,8 +4126,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "8b3b8eaa1cbb1024": {
@@ -3533,7 +4154,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "8d2f64eabf267f1e": {
@@ -3560,8 +4181,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "8dc2ca095bc3df22": {
   "id": "8dc2ca095bc3df22",
@@ -3587,7 +4208,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "8e96327a7ad50aa3": {
@@ -3614,8 +4235,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "900bdf2dee8feaa9": {
   "id": "900bdf2dee8feaa9",
@@ -3641,7 +4262,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9082974986c93542": {
@@ -3668,8 +4289,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "90c27a9ee0223d33": {
   "id": "90c27a9ee0223d33",
@@ -3695,8 +4316,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "9241f7c39c6e4fc1": {
+  "id": "9241f7c39c6e4fc1",
+  "title": "STAGE - IA - Qualité de conception GEN7 (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4471443898",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:34:16.351145+00:00",
+  "freshness_verified_at": "2026-11-27T00:34:16.351145+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "930883baeb5fa819": {
   "id": "930883baeb5fa819",
@@ -3722,8 +4370,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "936a4dc2800f0ee7": {
   "id": "936a4dc2800f0ee7",
@@ -3749,8 +4397,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "940d32db4758a5cb": {
   "id": "940d32db4758a5cb",
@@ -3763,7 +4411,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.376228+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.394432+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.181027+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3775,8 +4423,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "94e9c01d8ab0827b": {
@@ -3803,7 +4451,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "94f65bb22722be3e": {
@@ -3817,7 +4465,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.255073+00:00",
-  "freshness_verified_at": "2026-11-26T16:29:49.185546+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.735215+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3829,8 +4477,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "95f9f1dc689ae288": {
@@ -3857,7 +4505,7 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "95fc958eb6e9cd5e": {
@@ -3871,7 +4519,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:25:07.228542+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:07.228542+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.580925+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3879,12 +4527,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 3
+   "data_ia": 4
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "961c17e4fe8a2e19": {
@@ -3898,7 +4546,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.251303+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.843391+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.733291+00:00",
   "domains": [
    "data_ia"
   ],
@@ -3910,8 +4558,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "96e201a3acac5332": {
@@ -3938,7 +4586,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "96e994367cdb8ba9": {
@@ -3965,8 +4613,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "9764e353419f23d5": {
   "id": "9764e353419f23d5",
@@ -3992,7 +4640,7 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "97b978995bbe683c": {
@@ -4019,7 +4667,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "995c635a86cf192d": {
@@ -4046,8 +4694,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "9a99fe168b5e00c3": {
   "id": "9a99fe168b5e00c3",
@@ -4073,8 +4721,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "9ab102917b5461b4": {
+  "id": "9ab102917b5461b4",
+  "title": "Stage PFE - Digital Transformation (DTX) - Tanger",
+  "company": "Expleo Group",
+  "location": "Tanger, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8257-stage-pfe-digital-transformation-dtx-tanger",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25T06:12:22.985Z",
+  "sort_date": "2026-11-25T06:12:22.985000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "9c5f3472e3db4664": {
   "id": "9c5f3472e3db4664",
@@ -4100,7 +4775,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9cb19e35e5476b00": {
@@ -4127,7 +4802,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9da2f24f6b1c56ad": {
@@ -4154,7 +4829,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9eb0104c02d7e11a": {
@@ -4181,7 +4856,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9ee331d869340049": {
@@ -4208,7 +4883,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9ef1522680fdaa3e": {
@@ -4235,7 +4910,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "9f79f6218c054a75": {
@@ -4262,7 +4937,34 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "9f8535b4dae1f921": {
+  "id": "9f8535b4dae1f921",
+  "title": "Stage Assistant Chef de Projet Green Tech - Mars 2027 - F/H",
+  "company": "PwC",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=97d33024c31908aa",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.608142+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "9faa595e51bbd866": {
@@ -4289,7 +4991,34 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "a0d597ded50eb4e0": {
+  "id": "a0d597ded50eb4e0",
+  "title": "Stage PFE SI",
+  "company": "CIH Bank",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8110-stage-pfe-si",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-20",
+  "date_known": true,
+  "date_raw": "2026-11-20T06:02:03.880Z",
+  "sort_date": "2026-11-20T06:02:03.880000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "a22f485275a7e3ce": {
@@ -4316,7 +5045,34 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "a2b711ff040c05b4": {
+  "id": "a2b711ff040c05b4",
+  "title": "Machine Learning & AI Internship",
+  "company": "Pennylane SAS",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=b1761caa7c43fc38",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:49.259097+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 10
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "a56894a6201cc126": {
@@ -4343,7 +5099,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "a6063f4e2b6c38ea": {
@@ -4370,8 +5126,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "a747df0734d0110d": {
+  "id": "a747df0734d0110d",
+  "title": "Stage PFE – Data (H/F)",
+  "company": "CIRCET MOROCCO",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8226-stage-pfe-data-h-f",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25T06:01:30.612Z",
+  "sort_date": "2026-11-25T06:01:30.612000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "aa8d6da43ccf7503": {
   "id": "aa8d6da43ccf7503",
@@ -4384,7 +5167,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:22.653337+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.532661+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4396,8 +5179,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "aa9cf6095e2dcd2c": {
@@ -4424,8 +5207,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "ab320b0f220ecacc": {
   "id": "ab320b0f220ecacc",
@@ -4451,7 +5234,7 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ad0fbd2f50cefbd5": {
@@ -4465,7 +5248,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:22.939386+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:26.840905+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.744361+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4477,8 +5260,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "ad1880f7c757debf": {
@@ -4505,7 +5288,61 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "adc61ef7a90143fc": {
+  "id": "adc61ef7a90143fc",
+  "title": "Stage de Recherche : IA Agentique & Compression de Modèles Edge AI (F/H)",
+  "company": "Valeo",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495538630",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.302580+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.302580+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 10
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "b078a0b5abaa3a7f": {
+  "id": "b078a0b5abaa3a7f",
+  "title": "PFE DTX 2027 - Stage de fin d'études en Transformation Digitale",
+  "company": "Expleo Group",
+  "location": "Tanger, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8247-pfe-dtx-2027-stage-de-fin-d-etudes-en-transformation-digitale",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25T06:07:42.280Z",
+  "sort_date": "2026-11-25T06:07:42.280000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 5
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "b1094811e9c75265": {
@@ -4532,8 +5369,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "b165e20a19484467": {
   "id": "b165e20a19484467",
@@ -4546,7 +5383,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:23.766157+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:46.473512+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4558,8 +5395,89 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "b1cde65e6118227e": {
+  "id": "b1cde65e6118227e",
+  "title": "Stage – Data Scientist - F/H",
+  "company": "Groupe ADP",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=938c9264cf6f4abd",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.240489+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 4
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "b1fbe019bf9ba2b4": {
+  "id": "b1fbe019bf9ba2b4",
+  "title": "Machine Learning & AI Internship",
+  "company": "Pennylane",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495527906",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:37:52.366233+00:00",
+  "freshness_verified_at": "2026-11-27T00:37:52.366233+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "b271e943a433384e": {
+  "id": "b271e943a433384e",
+  "title": "CS27 – BAC+5 – Stage ingénieur digitalisation métier synthèse prestation véhicules H/F",
+  "company": "Renault Group",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495023208",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.235206+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.235206+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "b493059922884f8b": {
@@ -4586,7 +5504,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "b6347ae8d86aeb18": {
@@ -4600,7 +5518,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:26.377908+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:49.377888+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4612,8 +5530,35 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "b7a172adfab9fd2d": {
+  "id": "b7a172adfab9fd2d",
+  "title": "Stage Data Analyst – Ciblages Marketing H/F",
+  "company": "Credit Agricole Leasing & Factoring",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495518641",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:35:03.198041+00:00",
+  "freshness_verified_at": "2026-11-27T00:35:03.198041+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 2
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "b86573ac3e64a83f": {
@@ -4640,7 +5585,34 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
+ },
+ "b86631cfce093608": {
+  "id": "b86631cfce093608",
+  "title": "Stages PFE 2027 - Profils Ingénieurs",
+  "company": "Saham Bank",
+  "location": "Casablanca, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8186-stages-pfe-2027-profils-ingenieurs",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-24",
+  "date_known": true,
+  "date_raw": "2026-11-24T06:00:47.500Z",
+  "sort_date": "2026-11-24T06:00:47.500000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 6
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "b8e5d6630b570171": {
@@ -4667,7 +5639,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "b95d6322667d8e38": {
@@ -4694,7 +5666,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "bcf1d24c20d2dd80": {
@@ -4721,8 +5693,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "bfb956e6520d1b7d": {
+  "id": "bfb956e6520d1b7d",
+  "title": "PFE Projet 2027",
+  "company": "Expleo Group",
+  "location": "Tanger, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8235-pfe-projet-2027",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-25",
+  "date_known": true,
+  "date_raw": "2026-11-25T06:03:25.854Z",
+  "sort_date": "2026-11-25T06:03:25.854000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": true,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "c1bbcd1d71b349a7": {
   "id": "c1bbcd1d71b349a7",
@@ -4748,7 +5747,7 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "c4130c9a8fd1e9ce": {
@@ -4775,8 +5774,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "c430bba3a5d8f172": {
   "id": "c430bba3a5d8f172",
@@ -4789,7 +5788,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:24:27.150970+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.150970+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.979016+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4801,8 +5800,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "c44a0493eeb70a22": {
@@ -4816,7 +5815,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:22.746203+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.561242+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4828,8 +5827,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "c4ee3443da974801": {
@@ -4856,8 +5855,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "c50fa84224fc6e12": {
   "id": "c50fa84224fc6e12",
@@ -4883,7 +5882,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "c5eb126f1b94156c": {
@@ -4897,7 +5896,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T16:25:52.864457+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.864457+00:00",
+  "freshness_verified_at": "2026-11-27T00:37:06.625529+00:00",
   "domains": [
    "data_ia"
   ],
@@ -4909,8 +5908,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "c65086f7e85c7edb": {
@@ -4937,8 +5936,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "c771930abcdba37b": {
   "id": "c771930abcdba37b",
@@ -4964,7 +5963,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "c8b74bdb2ba193d2": {
@@ -4991,8 +5990,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "ca0ad584169319b9": {
   "id": "ca0ad584169319b9",
@@ -5018,7 +6017,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ced34153722cb767": {
@@ -5045,7 +6044,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "d1efbc92186f7dad": {
@@ -5059,7 +6058,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:30:10.415322+00:00",
-  "freshness_verified_at": "2026-11-26T16:31:21.231195+00:00",
+  "freshness_verified_at": "2026-11-27T00:35:03.206000+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5071,8 +6070,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "d3de9d6591118ac5": {
@@ -5086,7 +6085,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.925029+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:28.017653+00:00",
+  "freshness_verified_at": "2026-11-27T00:38:30.469736+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5094,12 +6093,66 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 5
+   "data_ia": 3
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "d4abf91e0d05e16f": {
+  "id": "d4abf91e0d05e16f",
+  "title": "Data Engineer (M/F) - Internship - Paris",
+  "company": "Wiremind",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495041376",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:01.662785+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.662785+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "d9cff397f6e9cf03": {
+  "id": "d9cff397f6e9cf03",
+  "title": "IT DATA - Stage (H/F)",
+  "company": "MEDLOG Transport & Logistics",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=1f1bf9f82836fe92",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.392879+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "d9e66443e049deea": {
@@ -5126,8 +6179,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "dc709afae6294773": {
   "id": "dc709afae6294773",
@@ -5153,8 +6206,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T16:33:11+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "de508980ec684140": {
   "id": "de508980ec684140",
@@ -5180,8 +6233,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "deff109ebe1a07f3": {
   "id": "deff109ebe1a07f3",
@@ -5207,7 +6260,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "e030ca1fe3ff77c4": {
@@ -5234,7 +6287,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "e0c0591b849d5c6a": {
@@ -5261,7 +6314,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "e0f800bebcf04f74": {
@@ -5288,7 +6341,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "e2846770735c3b1a": {
@@ -5302,7 +6355,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:27:53.199527+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.026073+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.882042+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5314,8 +6367,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "e28fd8e6bfc61ddd": {
@@ -5342,7 +6395,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "e298ef1ae9a122a2": {
@@ -5369,8 +6422,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "e2c41a6592bf7780": {
   "id": "e2c41a6592bf7780",
@@ -5396,7 +6449,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "e3c12c36af8ee150": {
@@ -5423,8 +6476,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "e41372974cbe57fa": {
+  "id": "e41372974cbe57fa",
+  "title": "Stage PFE - Ingénieur Génie Informatique/Data & AI",
+  "company": "BTP CONSULTING",
+  "location": "Tétouan, Maroc",
+  "url": "https://www.stagiaires.ma/stage-emploi-maroc/8205-stage-pfe-ingenieur-genie-informatique-data-ai",
+  "source": "Stagiaires.ma",
+  "date": "2026-11-24",
+  "date_known": true,
+  "date_raw": "2026-11-24T06:04:55.818Z",
+  "sort_date": "2026-11-24T06:04:55.818000+00:00",
+  "freshness_verified_at": "",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "maroc"
+  ],
+  "domain_scores": {
+   "data_ia": 14
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "e608cfbe9c7c3a4c": {
   "id": "e608cfbe9c7c3a4c",
@@ -5450,8 +6530,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "e7327b472859c968": {
+  "id": "e7327b472859c968",
+  "title": "Stage – Data Scientist - F/H",
+  "company": "Groupe ADP",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495048256",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:40.728896+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.728896+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "eacbadd22886abdf": {
   "id": "eacbadd22886abdf",
@@ -5477,8 +6584,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "eb10d0b3771986b8": {
+  "id": "eb10d0b3771986b8",
+  "title": "STAGE - Ingénieur Data & IA (F/H)",
+  "company": "Dassault Systèmes",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4470976943",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:01.723613+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.723613+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 10
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "ebedabd30fd944ab": {
   "id": "ebedabd30fd944ab",
@@ -5504,7 +6638,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ec82abe2c9bffc3c": {
@@ -5531,7 +6665,7 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T15:32:00+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ee0ea13c855e1db3": {
@@ -5558,8 +6692,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "eeb61bf9d8c477c7": {
   "id": "eeb61bf9d8c477c7",
@@ -5585,7 +6719,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ef32e80dbad29a3f": {
@@ -5612,8 +6746,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "f026d1eb74620860": {
+  "id": "f026d1eb74620860",
+  "title": "STAGE- Spécification et développement d'un système de maintenance prévisionnelle à base d'IA - H/F",
+  "company": "NAVAL GROUP",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493838565",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:35:03.225395+00:00",
+  "freshness_verified_at": "2026-11-27T00:35:03.225395+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "f0d4ce913ed56c65": {
   "id": "f0d4ce913ed56c65",
@@ -5639,8 +6800,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "f183c77e55642447": {
   "id": "f183c77e55642447",
@@ -5653,7 +6814,7 @@
   "date_known": true,
   "date_raw": "2026-11-26T14:33:29.434Z",
   "sort_date": "2026-11-26T14:33:29.434000+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:20.999039+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:43.152313+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5665,8 +6826,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "f18d109ac937e8f7": {
@@ -5693,8 +6854,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "f19236ff3c987e98": {
+  "id": "f19236ff3c987e98",
+  "title": "STAGE Data Analyst H/F",
+  "company": "Air Liquide",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=6018eaa4c8608512",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:45.345298+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 11
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "f1a6a214e40fd460": {
   "id": "f1a6a214e40fd460",
@@ -5720,7 +6908,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "f23fc0070711a198": {
@@ -5747,8 +6935,8 @@
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "f38d27701780ccb4": {
   "id": "f38d27701780ccb4",
@@ -5774,8 +6962,62 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "f38ff91e4768d65a": {
+  "id": "f38ff91e4768d65a",
+  "title": "Stage Leader Performance / Data Analyst H/F",
+  "company": "Leroy Merlin",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4493827712",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:02.448620+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:02.448620+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
+ },
+ "f409d53fb58b6b0d": {
+  "id": "f409d53fb58b6b0d",
+  "title": "Stage fin d'étude BAC+5 pour 2027 : Data Engineer H/F",
+  "company": "Ippon technologies",
+  "location": "France",
+  "url": "https://fr.indeed.com/viewjob?jk=d01168cc7627cbb7",
+  "source": "Indeed",
+  "date": "2026-11-26",
+  "date_known": true,
+  "date_raw": "2026-11-26",
+  "sort_date": "2026-11-26T00:00:00+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:42.761622+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 10
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "f4f3a30109d4c0e0": {
   "id": "f4f3a30109d4c0e0",
@@ -5788,7 +7030,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:24:59.252360+00:00",
-  "freshness_verified_at": "2026-11-26T16:25:52.844620+00:00",
+  "freshness_verified_at": "2026-11-27T00:34:16.330998+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5800,8 +7042,8 @@
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "f6153ec111112c9d": {
@@ -5828,8 +7070,35 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "f68f32d5928cbff3": {
+  "id": "f68f32d5928cbff3",
+  "title": "Stage – Développement d’outil IA & Python pour la capture du CO2 H/F",
+  "company": "Air Liquide",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495545866",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:01.958494+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:01.958494+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 7
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "f6b843d427c9a1c0": {
   "id": "f6b843d427c9a1c0",
@@ -5855,7 +7124,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "f6e15b3d21b9c85d": {
@@ -5869,7 +7138,7 @@
   "date_known": true,
   "date_raw": "2026-11-26",
   "sort_date": "2026-11-26T00:00:00+00:00",
-  "freshness_verified_at": "2026-11-26T16:22:21.324023+00:00",
+  "freshness_verified_at": "2026-11-27T00:30:44.038825+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5881,8 +7150,8 @@
   },
   "highlighted": true,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "f71bb70cde71d396": {
@@ -5909,7 +7178,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "f822b50298094d41": {
@@ -5936,8 +7205,35 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
+ },
+ "f8ac16b88b963ddf": {
+  "id": "f8ac16b88b963ddf",
+  "title": "Stage Ingénieur System, Connectivity & AI (F/H)",
+  "company": "Valeo",
+  "location": "France",
+  "url": "https://www.linkedin.com/jobs/view/4495526862",
+  "source": "LinkedIn",
+  "date": "",
+  "date_known": false,
+  "date_raw": "",
+  "sort_date": "2026-11-27T00:33:40.737538+00:00",
+  "freshness_verified_at": "2026-11-27T00:33:40.737538+00:00",
+  "domains": [
+   "data_ia"
+  ],
+  "regions": [
+   "france"
+  ],
+  "domain_scores": {
+   "data_ia": 3
+  },
+  "highlighted": false,
+  "first_seen": "2026-11-27T00:41:53+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": true
  },
  "fa1cb69717dfda68": {
   "id": "fa1cb69717dfda68",
@@ -5963,8 +7259,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "fa55227861e13d52": {
   "id": "fa55227861e13d52",
@@ -5977,7 +7273,7 @@
   "date_known": false,
   "date_raw": "",
   "sort_date": "2026-11-26T15:22:23.488160+00:00",
-  "freshness_verified_at": "2026-11-26T16:24:27.519518+00:00",
+  "freshness_verified_at": "2026-11-27T00:38:30.477801+00:00",
   "domains": [
    "data_ia"
   ],
@@ -5985,12 +7281,12 @@
    "france"
   ],
   "domain_scores": {
-   "data_ia": 4
+   "data_ia": 3
   },
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
-  "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_run": "2026-11-27T00:41:53+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": true
  },
  "fb61e135e4fabe8f": {
@@ -6017,8 +7313,8 @@
   "highlighted": false,
   "first_seen": "2026-11-26T15:32:00+00:00",
   "last_seen_run": "2026-11-26T16:33:11+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
-  "active": true
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
+  "active": false
  },
  "fd8ce16fdf55a99f": {
   "id": "fd8ce16fdf55a99f",
@@ -6044,7 +7340,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:21:15+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ff4211b9c49633ba": {
@@ -6071,7 +7367,7 @@
   "highlighted": true,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  },
  "ff9c3245064c6495": {
@@ -6098,7 +7394,7 @@
   "highlighted": false,
   "first_seen": "2026-11-25T03:01:21+00:00",
   "last_seen_run": "2026-11-25T03:34:12+00:00",
-  "last_seen_success": "2026-11-26T16:33:11+00:00",
+  "last_seen_success": "2026-11-27T00:41:53+00:00",
   "active": false
  }
 }
